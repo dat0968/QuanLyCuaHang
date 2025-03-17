@@ -1,3 +1,4 @@
+﻿using APIQuanLyCuaHang.DbInitializer;
 using APIQuanLyCuaHang.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +14,11 @@ builder.Services.AddDbContext<QuanLyCuaHangContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("QuanLyCuaHangContext"));
 });
+
+builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -28,4 +33,24 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+SeedDb();
+
 app.Run();
+
+void SeedDb()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        {
+            var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+            try
+            {
+                dbInitializer.Initializer();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Gặp lỗi khi khởi tại dữ liệu: " + ex.Message);
+            }
+        }
+    }
+}

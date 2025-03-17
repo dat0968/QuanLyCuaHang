@@ -1,0 +1,21 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/APIQuanLyCuaHang/bin
+/APIQuanLyCuaHang/obj
+/APIQuanLyCuaHang/.vs/APIQuanLyCuaHang/FileContentIndex
+/APIQuanLyCuaHang/.vs/APIQuanLyCuaHang/v17
+/APIQuanLyCuaHang/APIQuanLyCuaHang/bin/Debug/net8.0
+/APIQuanLyCuaHang/APIQuanLyCuaHang/obj
+/APIQuanLyCuaHang/.vs/APIQuanLyCuaHang/DesignTimeBuild
+
+# If you see files like /bin or /obj, please run the code below before pushing your code:
+
+# git rm -rf APIQuanLyCuaHang\.vs 
+# git rm -rf APIQuanLyCuaHang\obj
+# git rm -rf APIQuanLyCuaHang\bin
+# git rm -rf APIQuanLyCuaHang\APIQuanLyCuaHang\obj
+# git rm -rf APIQuanLyCuaHang\APIQuanLyCuaHang\bin
+# git rm -rf .vs
