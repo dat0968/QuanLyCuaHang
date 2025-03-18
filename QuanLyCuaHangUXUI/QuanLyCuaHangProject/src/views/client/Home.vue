@@ -13,20 +13,25 @@ import LatestFromBlog from '../../components/LatestFromBlog.vue'
           <div class="col-lg-6">
             <div class="banner_text">
               <div class="banner_text_iner">
-                <h5>Expensive but the best</h5>
-                <h1>Deliciousness jumping into the mouth</h1>
+                <h5>Đắt tiền nhưng tốt nhất</h5>
+                <h1>Sự ngon lành nhảy vào miệng</h1>
                 <p>
-                  Together creeping heaven upon third dominion be upon won't darkness rule land behold it created good
-                  saw after she'd Our set living. Signs midst dominion creepeth morning
+                  Cùng nhau leo ​​lên thiên đường trên sự thống trị thứ ba sẽ không phải là Darkness
+                  Rule Land Behold nó đã tạo ra Saw tốt sau khi cô ấy sống.Dấu hiệu giữa thống trị
+                  creepeth buổi sáng
                 </p>
                 <div class="banner_btn">
                   <div class="banner_btn_iner">
                     <a href="#" class="btn_2"
-                      >Reservation <img src="../src/assets/client/img/icon/left_1.svg" alt=""
+                      >Đặt bàn <img src="../src/assets/client/img/icon/left_1.svg" alt=""
                     /></a>
                   </div>
-                  <a href="https://www.youtube.com/watch?v=pBFQdxA-apI" class="popup-youtube video_popup">
-                    <span><img src="../src/assets/client/img/icon/play.svg" alt="" /></span> Watch our story</a
+                  <a
+                    href="https://www.youtube.com/watch?v=pBFQdxA-apI"
+                    class="popup-youtube video_popup"
+                  >
+                    <span><img src="../src/assets/client/img/icon/play.svg" alt="" /></span> Xem câu
+                    chuyện của chúng tôi</a
                   >
                 </div>
               </div>
@@ -43,8 +48,8 @@ import LatestFromBlog from '../../components/LatestFromBlog.vue'
         <div class="row">
           <div class="col-xl-5">
             <div class="section_tittle">
-              <p>Popular Dishes</p>
-              <h2>Our Exclusive Items</h2>
+              <p>Món ăn phổ biến</p>
+              <h2>Các mặt hàng độc quyền của chúng tôi</h2>
             </div>
           </div>
         </div>
@@ -57,7 +62,9 @@ import LatestFromBlog from '../../components/LatestFromBlog.vue'
               <div class="single_blog_text">
                 <h3>Indian Burger</h3>
                 <p>Was brean shed moveth day yielding tree yielding day were female and</p>
-                <a href="#" class="btn_3">Read More <img src="../assets/client/img/icon/left_2.svg" alt="" /></a>
+                <a href="#" class="btn_3"
+                  >Xem thêm<img src="../assets/client/img/icon/left_2.svg" alt=""
+                /></a>
               </div>
             </div>
           </div>
@@ -69,7 +76,9 @@ import LatestFromBlog from '../../components/LatestFromBlog.vue'
               <div class="single_blog_text">
                 <h3>Cremy Noodles</h3>
                 <p>Was brean shed moveth day yielding tree yielding day were female and</p>
-                <a href="#" class="btn_3">Read More <img src="../assets/client/img/icon/left_2.svg" alt="" /></a>
+                <a href="#" class="btn_3"
+                  >Xem thêm<img src="../assets/client/img/icon/left_2.svg" alt=""
+                /></a>
               </div>
             </div>
           </div>
@@ -81,7 +90,9 @@ import LatestFromBlog from '../../components/LatestFromBlog.vue'
               <div class="single_blog_text">
                 <h3>Honey Meat</h3>
                 <p>Was brean shed moveth day yielding tree yielding day were female and</p>
-                <a href="#" class="btn_3">Read More <img src="../assets/client/img/icon/left_2.svg" alt="" /></a>
+                <a href="#" class="btn_3"
+                  >Xem thêm<img src="../assets/client/img/icon/left_2.svg" alt=""
+                /></a>
               </div>
             </div>
           </div>
@@ -93,7 +104,9 @@ import LatestFromBlog from '../../components/LatestFromBlog.vue'
               <div class="single_blog_text">
                 <h3>Cremy Noodles</h3>
                 <p>Was brean shed moveth day yielding tree yielding day were female and</p>
-                <a href="#" class="btn_3">Read More <img src="../assets/client/img/icon/left_2.svg" alt="" /></a>
+                <a href="#" class="btn_3"
+                  >Xem thêm<img src="../assets/client/img/icon/left_2.svg" alt=""
+                /></a>
               </div>
             </div>
           </div>
@@ -113,14 +126,17 @@ import LatestFromBlog from '../../components/LatestFromBlog.vue'
           </div>
           <div class="col-sm-8 col-lg-4">
             <div class="about_text">
-              <h5>Our History</h5>
+              <h5>Tiểu sử của chúng tôi</h5>
               <h2>Where The Food’s As Good As The Root Beer.</h2>
               <h4>Satisfying people hunger for simple pleasures</h4>
               <p>
-                May over was. Be signs two. Spirit. Brought said dry own firmament lesser best sixth deep abundantly
-                bearing, him, gathering you blessed bearing he our position best ticket in month hole deep
+                May over was. Be signs two. Spirit. Brought said dry own firmament lesser best sixth
+                deep abundantly bearing, him, gathering you blessed bearing he our position best
+                ticket in month hole deep
               </p>
-              <a href="#" class="btn_3">Read More <img src="../assets/client/img/icon/left_2.svg" alt="" /></a>
+              <a href="#" class="btn_3"
+                >Xem thêm<img src="../assets/client/img/icon/left_2.svg" alt=""
+              /></a>
             </div>
           </div>
         </div>
@@ -129,25 +145,21 @@ import LatestFromBlog from '../../components/LatestFromBlog.vue'
     <!-- about part end-->
 
     <!-- food_menu start-->
-    <DeliciousFoodMenu/>
+    <DeliciousFoodMenu />
     <!-- food_menu part end-->
 
     <!--::chefs_part start::-->
-    <OurExperienceChefs/>
+    <OurExperienceChefs />
     <!--::chefs_part end::-->
 
     <!--::regervation_part start::-->
-    <OrderFood/>
+    <OrderFood />
     <!--::regervation_part end::-->
-    
+
     <!--::exclusive_item_part start::-->
-    <LatestFromBlog/>
+    <LatestFromBlog />
     <!--::exclusive_item_part end::-->
   </div>
 </template>
 
-
-
-<style>
-
-</style>
+<style></style>

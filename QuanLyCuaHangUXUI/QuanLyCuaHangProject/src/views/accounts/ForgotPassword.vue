@@ -21,16 +21,26 @@
                   <div class="p-3">
                     <form action="#">
                       <div class="text-center mb-3">
-                        <h4 class="text-black">Forgot Password</h4>
-                        <p class="text-muted">Remember Password? <a href="page-login.html">Sign In</a> Here</p>
+                        <h4 class="text-black">Quên mật khẩu</h4>
+                        <p class="text-muted">
+                          Ghi nhớ mật khẩu? <a href="page-login.html">Đăng nhập</a> ở đây
+                        </p>
                       </div>
                       <p class="text-muted text-center m-b-30">
-                        We’ll send you instructions via email to help you reset your password.
+                        Chúng tôi sẽ gửi cho bạn hướng dẫn qua email để giúp bạn đặt lại mật khẩu.
                       </p>
                       <div class="form-group">
-                        <input type="email" class="form-control" id="email" placeholder="Email" required />
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="email"
+                          placeholder="Email"
+                          required
+                        />
                       </div>
-                      <button type="submit" class="btn btn-primary btn-rounded btn-lg btn-block">Send Email</button>
+                      <button type="submit" class="btn btn-primary btn-rounded btn-lg btn-block">
+                        Gửi email
+                      </button>
                     </form>
                   </div>
                 </div>
@@ -49,11 +59,7 @@
 </template>
 
 <script>
-export default {
-
-}
+export default {}
 </script>
 
-<style>
-
-</style>
+<style></style>

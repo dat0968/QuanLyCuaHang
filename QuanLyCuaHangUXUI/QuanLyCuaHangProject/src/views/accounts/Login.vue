@@ -1,6 +1,4 @@
-<script setup>
-    
-</script>
+<script setup></script>
 <template>
   <div>
     <div class="xp-authenticate-bg"></div>
@@ -24,8 +22,10 @@
                   <div class="p-3">
                     <form action="#">
                       <div class="text-center mb-3">
-                        <h4 class="text-black">Sign In !</h4>
-                        <p class="text-muted">New to Neon? <a href="page-register.html">Sign Up</a> Here</p>
+                        <h4 class="text-black">Đăng nhập !</h4>
+                        <p class="text-muted">
+                          Mới truy cập? <a href="page-register.html">Đăng kí</a> ở đây
+                        </p>
                       </div>
                       <div class="social-login text-center">
                         <button type="button" class="btn btn-facebook btn-rounded mb-1">
@@ -39,25 +39,41 @@
                         <h6 class="text-muted">OR</h6>
                       </div>
                       <div class="form-group">
-                        <input type="text" class="form-control" id="username" placeholder="Username" required />
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="username"
+                          placeholder="Username"
+                          required
+                        />
                       </div>
                       <div class="form-group">
-                        <input type="password" class="form-control" id="password" placeholder="Password" required />
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="password"
+                          placeholder="Password"
+                          required
+                        />
                       </div>
                       <div class="form-row">
                         <div class="form-group col-6">
                           <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="rememberme" />
-                            <label class="custom-control-label" for="rememberme">Remember Me</label>
+                            <label class="custom-control-label" for="rememberme"
+                              >Ghi nhớ mật khẩu</label
+                            >
                           </div>
                         </div>
                         <div class="form-group col-6 text-right">
                           <label class="forgot-psw">
-                            <a id="forgot-psw" href="page-forgotpsw.html">Forgot Password?</a>
+                            <a id="forgot-psw" href="page-forgotpsw.html">Quên mật khẩu?</a>
                           </label>
                         </div>
                       </div>
-                      <button type="submit" class="btn btn-primary btn-rounded btn-lg btn-block">Sign In</button>
+                      <button type="submit" class="btn btn-primary btn-rounded btn-lg btn-block">
+                        Đăng nhập
+                      </button>
                     </form>
                   </div>
                 </div>
@@ -75,6 +91,4 @@
   </div>
 </template>
 
-<style>
-
-</style>
+<style></style>

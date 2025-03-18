@@ -21,8 +21,10 @@
                   <div class="p-3">
                     <form action="#">
                       <div class="text-center mb-3">
-                        <h4 class="text-black">Create New Account</h4>
-                        <p class="text-muted">Already have an account? <a href="page-login.html">Sign in</a> Here</p>
+                        <h4 class="text-black">Tạo tài khoản mới</h4>
+                        <p class="text-muted">
+                          Đã có một tài khoản? <a href="page-login.html">Đăng nhập</a> ở đây
+                        </p>
                       </div>
                       <div class="social-login text-center">
                         <button type="button" class="btn btn-facebook btn-rounded mb-1">
@@ -36,22 +38,42 @@
                         <h6 class="text-muted">OR</h6>
                       </div>
                       <div class="form-group">
-                        <input type="text" class="form-control" id="username" placeholder="Username" required />
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="username"
+                          placeholder="Username"
+                          required
+                        />
                       </div>
                       <div class="form-group">
-                        <input type="email" class="form-control" id="email" placeholder="Email" required />
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="email"
+                          placeholder="Email"
+                          required
+                        />
                       </div>
                       <div class="form-group">
-                        <input type="password" class="form-control" id="password" placeholder="Password" required />
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="password"
+                          placeholder="Password"
+                          required
+                        />
                       </div>
                       <div class="form-group">
                         <div class="custom-control custom-checkbox">
                           <input type="checkbox" class="custom-control-input" id="terms" />
-                          <label class="custom-control-label" for="terms">I Agree to Terms & Conditions of Neon</label>
+                          <label class="custom-control-label" for="terms"
+                            >Tôi đồng ý với các điều khoản và điều kiện của cửa hàng</label
+                          >
                         </div>
                       </div>
                       <button type="submit" class="btn btn-primary btn-rounded btn-lg btn-block">
-                        Create an Account
+                        Tạo một tài khoản
                       </button>
                     </form>
                   </div>
@@ -71,11 +93,7 @@
 </template>
 
 <script>
-export default {
-
-}
+export default {}
 </script>
 
-<style>
-
-</style>
+<style></style>

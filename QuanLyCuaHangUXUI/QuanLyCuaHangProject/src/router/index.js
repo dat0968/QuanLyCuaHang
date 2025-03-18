@@ -10,6 +10,7 @@ import Login from '../views/accounts/Login.vue'
 import Register from '../views/accounts/Register.vue'
 import ForgotPassword from '../views/accounts/ForgotPassword.vue'
 import Error from '../views/error/Error.vue'
+import DetailProduct from '@/views/client/DetailProduct.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -22,6 +23,7 @@ const router = createRouter({
           { path: '/about', name: 'About', component: About },
           { path: '/menu', name: 'Menu', component: Menu },
           { path: '/chefs', name: 'Chefs', component: Chef },
+          { path: '/detail', name: 'DetailProduct', component: DetailProduct },
         ]
     },
     {

@@ -19,12 +19,13 @@
                       ><span class="text-black">4</span>
                     </h1>
                     <h4 class="xp-error-subtitle text-black m-b-30">
-                      <i class="mdi mdi-emoticon-sad text-danger font-32"></i>pps! Page not Found
+                      <i class="mdi mdi-emoticon-sad text-danger font-32"></i>pps! Không tìm thấy
+                      trang
                     </h4>
-                    <p class="text-muted m-b-30">The page you're looking for doesn't exist.</p>
-                    <a href="index.html" class="btn btn-primary btn-rounded mb-3"
-                      ><i class="icon-home"></i> Take Me Home</a
-                    >
+                    <p class="text-muted m-b-30">Trang bạn đang tìm kiếm không tồn tại.</p>
+                    <RouterLink class="btn btn-primary btn-rounded mb-3" to="/">
+                      <i class="icon-home"></i> Đưa tôi trở lại
+                    </RouterLink>
                   </div>
                 </div>
               </div>
@@ -42,11 +43,7 @@
 </template>
 
 <script>
-export default {
-
-}
+import { RouterLink } from 'vue-router'
 </script>
 
-<style>
-
-</style>
+<style></style>
