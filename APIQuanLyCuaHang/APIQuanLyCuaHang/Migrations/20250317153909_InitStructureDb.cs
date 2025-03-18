@@ -152,7 +152,8 @@ namespace APIQuanLyCuaHang.Migrations
                 name: "SANPHAM",
                 columns: table => new
                 {
-                    MaSP = table.Column<int>(type: "int", nullable: false),
+                    MaSP = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     MaDanhMuc = table.Column<int>(type: "int", nullable: false),
                     TenSanPham = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     MoTa = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),

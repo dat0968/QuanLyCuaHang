@@ -1,5 +1,6 @@
 ﻿using APIQuanLyCuaHang.DbInitializer;
 using APIQuanLyCuaHang.Models;
+using APIQuanLyCuaHang.Repositories.Dashboard;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,9 @@ builder.Services.AddDbContext<QuanLyCuaHangContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("QuanLyCuaHangContext"));
 });
+
+builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
+
 
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 
