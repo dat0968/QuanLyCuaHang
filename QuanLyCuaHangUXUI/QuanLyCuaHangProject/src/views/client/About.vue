@@ -31,8 +31,8 @@ import OurExperienceChefs from '../../components/OurExperienceChefs.vue'
           <div class="col-sm-8 col-lg-4">
             <div class="about_text">
               <h5>Tiểu sử của chúng tôi</h5>
-              <h2>Where The Food’s As Good As The Root Beer.</h2>
-              <h4>Satisfying people hunger for simple pleasures</h4>
+              <h2>Nơi thức ăn ngon như Root Beer.</h2>
+              <h4>Làm hài lòng mọi người khao khát những thú vui đơn giản</h4>
               <p>
                 Có thể qua là.Là dấu hiệu hai.Tinh thần.Đã mang lại cho biết sự khô khan của riêng
                 mình ít tốt nhất thứ sáu, anh ta, tập hợp bạn may mắn mang anh ta vị trí tốt nhất

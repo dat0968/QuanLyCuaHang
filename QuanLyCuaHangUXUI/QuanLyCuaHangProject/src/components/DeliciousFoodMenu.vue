@@ -6,7 +6,7 @@
         <div class="col-lg-5">
           <div class="section_tittle">
             <p>Thực đơn phổ biến</p>
-            <h2>Thực đơn thực phẩm ngon</h2>
+            <h2>Thực đơn</h2>
           </div>
         </div>
         <div class="col-lg-6">
@@ -28,7 +28,7 @@
               role="tab"
               aria-controls="Breakfast"
               aria-selected="false"
-              >Bữa sáng <img src="../assets/client/img/icon/play.svg" alt="play"
+              >Gà<img src="../assets/client/img/icon/play.svg" alt="play"
             /></a>
             <a
               id="Launch-tab"
@@ -37,7 +37,7 @@
               role="tab"
               aria-controls="Launch"
               aria-selected="false"
-              >Bữa trưa <img src="../assets/client/img/icon/play.svg" alt="play"
+              >Hamburger<img src="../assets/client/img/icon/play.svg" alt="play"
             /></a>
             <a
               id="Dinner-tab"
@@ -46,7 +46,7 @@
               role="tab"
               aria-controls="Dinner"
               aria-selected="false"
-              >Bữa tối <img src="../assets/client/img/icon/play.svg" alt="play" />
+              >Nước<img src="../assets/client/img/icon/play.svg" alt="play" />
             </a>
             <a
               id="Sneaks-tab"
@@ -55,7 +55,7 @@
               role="tab"
               aria-controls="Sneaks"
               aria-selected="false"
-              >Bữa phụ <img src="../assets/client/img/icon/play.svg" alt="play"
+              >Phụ<img src="../assets/client/img/icon/play.svg" alt="play"
             /></a>
           </div>
         </div>

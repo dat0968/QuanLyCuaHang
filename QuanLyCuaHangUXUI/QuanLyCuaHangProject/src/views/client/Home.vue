@@ -127,12 +127,12 @@ import LatestFromBlog from '../../components/LatestFromBlog.vue'
           <div class="col-sm-8 col-lg-4">
             <div class="about_text">
               <h5>Tiểu sử của chúng tôi</h5>
-              <h2>Where The Food’s As Good As The Root Beer.</h2>
-              <h4>Satisfying people hunger for simple pleasures</h4>
+              <h2>Nơi thức ăn ngon như Root Beer.</h2>
+              <h4>Làm hài lòng mọi người khao khát những thú vui đơn giản</h4>
               <p>
-                May over was. Be signs two. Spirit. Brought said dry own firmament lesser best sixth
-                deep abundantly bearing, him, gathering you blessed bearing he our position best
-                ticket in month hole deep
+                Có thể qua là.Là dấu hiệu hai.Tinh thần.Đã mang lại cho biết sự khô khan của riêng
+                mình ít tốt nhất thứ sáu, anh ta, tập hợp bạn may mắn mang anh ta vị trí tốt nhất
+                của chúng ta trong hố tháng sâu
               </p>
               <a href="#" class="btn_3"
                 >Xem thêm<img src="../assets/client/img/icon/left_2.svg" alt=""

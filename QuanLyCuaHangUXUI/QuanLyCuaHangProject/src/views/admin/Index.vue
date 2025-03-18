@@ -254,7 +254,7 @@
         <div class="col-lg-6 col-xl-4">
           <div class="card m-b-30">
             <div class="card-header bg-white">
-              <h5 class="card-title text-black mb-0">Social Profile</h5>
+              <h5 class="card-title text-black mb-0">Hồ sơ xã hội</h5>
             </div>
             <div class="card-body">
               <div class="xp-social-profile">

@@ -39,7 +39,9 @@
         <div class="col-xl-3 col-sm-6 col-md-4 col-lg-3">
           <div class="single-footer-widget footer_3">
             <h4>Bản tin</h4>
-            <p>Heaven fruitful doesn't over lesser in days. Appear creeping seas</p>
+            <p>
+              Thiên đường không có kết quả không quá ít hơn trong những ngày. Xuất hiện biển leo.
+            </p>
             <form action="#">
               <div class="form-group">
                 <div class="input-group mb-3">

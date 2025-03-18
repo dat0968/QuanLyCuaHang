@@ -19,7 +19,7 @@
             <div class="single_blog_text">
               <div class="date">
                 <a href="#" class="date_item">Apr 06, 2019 </a>
-                <a href="#" class="date_item"> <span>#</span> Tin tức thực phẩm </a>
+                <a href="#" class="date_item"> <span>#</span> Tin tức </a>
               </div>
               <h3><a href="blog.html">Adama kind deep gatherin first over fter his great</a></h3>
               <a href="#" class="btn_3"
@@ -36,7 +36,7 @@
             <div class="single_blog_text">
               <div class="date">
                 <a href="#" class="date_item">Apr 06, 2019 </a>
-                <a href="#" class="date_item"> <span>#</span> Tin tức thực phẩm </a>
+                <a href="#" class="date_item"> <span>#</span> Tin tức </a>
               </div>
               <h3><a href="blog.html">Adama kind deep gatherin first over fter his great</a></h3>
               <a href="#" class="btn_3"
@@ -53,7 +53,7 @@
             <div class="single_blog_text">
               <div class="date">
                 <a href="#" class="date_item">Apr 06, 2019 </a>
-                <a href="#" class="date_item"> <span>#</span> Tin tức thực phẩm </a>
+                <a href="#" class="date_item"> <span>#</span> Tin tức </a>
               </div>
               <h3><a href="blog.html">Adama kind deep gatherin first over fter his great</a></h3>
               <a href="#" class="btn_3"
@@ -70,7 +70,7 @@
             <div class="single_blog_text">
               <div class="date">
                 <a href="#" class="date_item">Apr 06, 2019 </a>
-                <a href="#" class="date_item"> <span>#</span> Tin tức thực phẩm </a>
+                <a href="#" class="date_item"> <span>#</span> Tin tức </a>
               </div>
               <h3><a href="blog.html">Adama kind deep gatherin first over fter his great</a></h3>
               <a href="#" class="btn_3"

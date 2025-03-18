@@ -19,7 +19,9 @@
 # git rm -rf APIQuanLyCuaHang\APIQuanLyCuaHang\obj
 # git rm -rf APIQuanLyCuaHang\APIQuanLyCuaHang\bin
 # git rm -rf .vs
+
 .qodo
 APIQuanLyCuaHang/.vs
 APIQuanLyCuaHang/.vs
 APIQuanLyCuaHang/.vs
+.vscode/settings.json
