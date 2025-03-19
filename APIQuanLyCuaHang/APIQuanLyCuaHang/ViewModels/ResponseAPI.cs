@@ -8,7 +8,7 @@ namespace APIQuanLyCuaHang.ViewModels
     public class ResponseAPI<T> where T : new()
     {
         public int? Status { get; set; } = 500;
-        public bool? Success { get; set; } = false;
+        public bool Success { get; set; } = false;
         public string Message { get; set; } = "Phản hồi không xác định";
         public T? Data { get; set; } = new T();
         public void SetSuccessResponse()

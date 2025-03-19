@@ -1,13 +1,17 @@
 using APIQuanLyCuaHang.ViewModels;
+using APIQuanLyCuaHang.ViewModels.DataChart;
 
 namespace APIQuanLyCuaHang.Repositories.Dashboard
 {
     public interface IDashboardRepository
     {
-        Task<ResponseAPI<dynamic?>> GetAllInvoiceStatisticsAsync();
-        Task<ResponseAPI<dynamic?>> GetAllInvoiceDetailStatisticsAsync();
-        Task<ResponseAPI<dynamic?>> GetEmployeeOrderStatisticsAsync();
-        Task<ResponseAPI<dynamic?>> GetAllInvoiceDataStatisticsAsync();
-        Task<ResponseAPI<dynamic?>> GetUserStatisticsAsync();
+        Task<ResponseAPI<EarningData>> GetEarningDataAsync(string timeRange);
+        Task<ResponseAPI<OrderData>> GetAllOrderDataAsync();
+        Task<ResponseAPI<OrderStatusData>> GetOrderStatusDataAsync();
+        Task<ResponseAPI<OrderOverviewData>> GetOrderOverviewDataAsync(string timeRange);
+        Task<ResponseAPI<TopSellingProductsData>> GetTopSellingProductsAsync();
+        Task<ResponseAPI<List<StaffDC>?>> GetEmployeeOrderStatisticsAsync();
+        Task<ResponseAPI<UserStatisticsData>> GetUserStatisticsAsync();
+        Task<ResponseAPI<ProductDC?>> GetProductFullDetails(int id);
     }
 }

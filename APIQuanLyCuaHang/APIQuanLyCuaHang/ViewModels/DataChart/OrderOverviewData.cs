@@ -15,7 +15,7 @@ namespace APIQuanLyCuaHang.ViewModels.DataChart
     public class OrderOverview
     {
         public string? Name { get; set; }
-        public List<OrderData>? Data { get; set; }
+        public List<ParameterDataOrder>? Data { get; set; }
     }
 
     public class ParameterDataOrder

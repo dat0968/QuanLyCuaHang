@@ -34,6 +34,7 @@ namespace APIQuanLyCuaHang.ViewModels.DataChart
         public bool? IsDelete { get; set; }
 
         public int? MaChucVu { get; set; }
+        public int? SoDonHangDamNhan { get; set; }
         public decimal? DoanhThuMangLai { get; set; }
     }
 }
