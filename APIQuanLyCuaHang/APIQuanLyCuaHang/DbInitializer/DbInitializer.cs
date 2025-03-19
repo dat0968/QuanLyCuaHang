@@ -99,7 +99,7 @@ namespace APIQuanLyCuaHang.DbInitializer
                         HinhThucTt = rand.Next(0, 2) == 0 ? "COD" : "VNPAY", // Thanh Toán
                         TinhTrang = tinhTrang,
                         HoTen = khachHang.HoTen,
-                        Sdt = khachHang.Sdt,
+                        Sdt = khachHang.Sdt ?? "N/A",
                         MoTa = "Tạo tự động hóa đơn cho mục đích test",
                         //GiamGiaMaCoupon = rand.Next(2, 6) * 4000,
                         PhiVanChuyen = rand.NextDouble() > 0.5 ? 40000 : 50000

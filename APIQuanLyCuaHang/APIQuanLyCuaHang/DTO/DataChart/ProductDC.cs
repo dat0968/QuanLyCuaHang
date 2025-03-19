@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace APIQuanLyCuaHang.ViewModels.DataChart
+namespace APIQuanLyCuaHang.DTO.DataChart
 {
     public class ProductDC
     {
@@ -14,7 +14,7 @@ namespace APIQuanLyCuaHang.ViewModels.DataChart
         public string TenSanPham { get; set; } = null!;
 
         public string? MoTa { get; set; }
-        public List<DetailProduct> ChiTietSanPhams { get; set; } = new List<DetailProduct>();
+        public List<DetailProductDC> ChiTietSanPhams { get; set; } = new List<DetailProductDC>();
 
     }
 }

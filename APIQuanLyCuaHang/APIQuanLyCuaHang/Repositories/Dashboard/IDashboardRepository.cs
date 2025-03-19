@@ -1,5 +1,5 @@
-using APIQuanLyCuaHang.ViewModels;
-using APIQuanLyCuaHang.ViewModels.DataChart;
+using APIQuanLyCuaHang.DTO;
+using APIQuanLyCuaHang.DTO.DataChart;
 
 namespace APIQuanLyCuaHang.Repositories.Dashboard
 {

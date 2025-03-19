@@ -35,9 +35,9 @@ namespace APIQuanLyCuaHang.Controllers
             var response = await _dash.GetEarningDataAsync(timeRange);
             if (!response.Success)
             {
-                return BadRequest(response.Message);
+                return BadRequest(response);
             }
-            return Ok(response.Data);
+            return Ok(response);
         }
 
         /// <summary>
@@ -50,9 +50,9 @@ namespace APIQuanLyCuaHang.Controllers
             var response = await _dash.GetAllOrderDataAsync();
             if (!response.Success)
             {
-                return BadRequest(response.Message);
+                return BadRequest(response);
             }
-            return Ok(response.Data);
+            return Ok(response);
         }
 
         /// <summary>
@@ -66,9 +66,9 @@ namespace APIQuanLyCuaHang.Controllers
             var response = await _dash.GetOrderStatusDataAsync();
             if (!response.Success)
             {
-                return BadRequest(response.Message);
+                return BadRequest(response);
             }
-            return Ok(response.Data);
+            return Ok(response);
         }
 
         /// <summary>
@@ -82,9 +82,9 @@ namespace APIQuanLyCuaHang.Controllers
             var response = await _dash.GetOrderOverviewDataAsync(timeRange);
             if (!response.Success)
             {
-                return BadRequest(response.Message);
+                return BadRequest(response);
             }
-            return Ok(response.Data);
+            return Ok(response);
         }
 
         [HttpGet]
@@ -93,9 +93,9 @@ namespace APIQuanLyCuaHang.Controllers
             var response = await _dash.GetTopSellingProductsAsync();
             if (!response.Success)
             {
-                return BadRequest(response.Message);
+                return BadRequest(response);
             }
-            return Ok(response.Data);
+            return Ok(response);
         }
 
         /// <summary>
@@ -108,9 +108,9 @@ namespace APIQuanLyCuaHang.Controllers
             var response = await _dash.GetTopSellingProductsAsync();
             if (!response.Success)
             {
-                return BadRequest(response.Message);
+                return BadRequest(response);
             }
-            return Ok(response.Data);
+            return Ok(response);
         }
 
         /// <summary>
@@ -139,9 +139,9 @@ namespace APIQuanLyCuaHang.Controllers
             var response = await _dash.GetEmployeeOrderStatisticsAsync();
             if (!response.Success)
             {
-                return BadRequest(response.Message);
+                return BadRequest(response);
             }
-            return Ok(response.Data);
+            return Ok(response);
         }
 
         /// <summary>
@@ -154,9 +154,9 @@ namespace APIQuanLyCuaHang.Controllers
             var response = await _dash.GetUserStatisticsAsync();
             if (!response.Success)
             {
-                return BadRequest(response.Message);
+                return BadRequest(response);
             }
-            return Ok(response.Data);
+            return Ok(response);
         }
     }
 }

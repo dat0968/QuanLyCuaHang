@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace APIQuanLyCuaHang.ViewModels
+namespace APIQuanLyCuaHang.DTO
 {
     public class ResponseAPI<T> where T : new()
     {
@@ -20,7 +20,7 @@ namespace APIQuanLyCuaHang.ViewModels
         {
             this.Data = dataSet;
         }
-        public void SetMessageResponseWithException(int? Status = 500, Exception ex = null)
+        public void SetMessageResponseWithException(int? Status = 500, Exception ex = null!)
         {
             this.Status = Status;
             this.Success = false;

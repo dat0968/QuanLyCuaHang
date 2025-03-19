@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using APIQuanLyCuaHang.Models;
-using APIQuanLyCuaHang.ViewModels;
-using APIQuanLyCuaHang.ViewModels.DataChart;
+using APIQuanLyCuaHang.DTO;
+using APIQuanLyCuaHang.DTO.DataChart;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
