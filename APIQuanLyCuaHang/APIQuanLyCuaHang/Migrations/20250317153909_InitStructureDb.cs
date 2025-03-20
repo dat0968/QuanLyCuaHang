@@ -107,7 +107,8 @@ namespace APIQuanLyCuaHang.Migrations
                 name: "REFRESHTOKEN",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false),
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     Token = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     IssuedAt = table.Column<DateTime>(type: "datetime", nullable: false),
