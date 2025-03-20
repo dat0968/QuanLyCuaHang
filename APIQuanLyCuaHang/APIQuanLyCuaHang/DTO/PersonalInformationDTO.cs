@@ -2,7 +2,7 @@
 
 namespace APIQuanLyCuaHang.DTO
 {
-    public class PersonalInformation
+    public class PersonalInformationDTO
     {
         public int Id { get; set; }
         public string HoTen { get; set; }

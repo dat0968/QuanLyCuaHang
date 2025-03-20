@@ -14,7 +14,7 @@ namespace APIQuanLyCuaHang.Respositoies.Token
         {
             this.configuration = configuration;
         }
-        public string GenerateAccessToken(PersonalInformation model)
+        public string GenerateAccessToken(PersonalInformationDTO model)
         {
             var JwtTokenHandler = new JwtSecurityTokenHandler();
             var radomIDToken = Guid.NewGuid();

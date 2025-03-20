@@ -355,7 +355,6 @@ public partial class QuanLyCuaHangContext : DbContext
             entity.ToTable("SANPHAM");
 
             entity.Property(e => e.MaSp)
-                .ValueGeneratedNever()
                 .HasColumnName("MaSP");
             entity.Property(e => e.IsDelete).HasDefaultValue(false);
             entity.Property(e => e.MoTa).HasMaxLength(500);

@@ -2,7 +2,10 @@
 using APIQuanLyCuaHang.Models;
 using APIQuanLyCuaHang.Respositoies.HashPassword;
 using APIQuanLyCuaHang.Respositoies.Token;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 
@@ -50,7 +53,28 @@ var SecretKeyBytes = Encoding.UTF8.GetBytes(SecretKey);
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<ITokenServices, TokenServices>();
-
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(SecretKeyBytes),
+        ClockSkew = TimeSpan.Zero,
+    };
+}).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+.AddGoogle(options =>
+{
+    var googleAuth = builder.Configuration.GetSection("Authentication:Google");
+    options.ClientId = googleAuth["ClientId"];
+    options.ClientSecret = googleAuth["ClientSecret"];
+});
 var app = builder.Build();
 
 
@@ -63,7 +87,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseAuthentication();
+app.UseAuthorization(); ;
 
 app.MapControllers();
 

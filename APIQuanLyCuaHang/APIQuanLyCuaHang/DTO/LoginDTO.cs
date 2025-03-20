@@ -1,6 +1,6 @@
 ﻿namespace APIBanXeDap.ViewModels
 {
-    public class Login
+    public class LoginDTO
     {
         public string Email_TenTaiKhoan { get; set; }
         public string MatKhau { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace APIBanXeDap.ViewModels
 {
-    public class Register
+    public class RegisterDTO
     {
         public string HoTen { get; set; }
 
