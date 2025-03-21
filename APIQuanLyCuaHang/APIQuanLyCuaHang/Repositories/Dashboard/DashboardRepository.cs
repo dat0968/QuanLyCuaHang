@@ -26,7 +26,7 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
             {
                 var invoices = await GetAllInvoiceDataStatisticsAsync();
                 var earningData = CalculateEarningData(invoices, timeRange);
-                response.SetSuccessResponse();
+                response.SetSuccessResponse("Doanh thu theo thời gian đã được lấy.");
                 response.SetData(earningData);
             }
             catch (Exception ex)
@@ -122,7 +122,6 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
 
         public async Task<ResponseAPI<ProductDC?>> GetProductFullDetails(int id)
         {
-            // ! Chưa tạo mã
             ResponseAPI<ProductDC?> response = new();
             try
             {
@@ -146,7 +145,7 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
                     MoTa = productDb.MoTa,
                     ChiTietSanPhams = fullDetailOfProductDb
                 };
-                response.SetSuccessResponse();
+                response.SetSuccessResponse("Thông tin các chi tiết liên quan đến sản phẩm đã được lấy!");
                 response.SetData(productDC);
             }
             catch (Exception ex)
@@ -469,31 +468,7 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
                     })
                     .OrderByDescending(x => x.Quantity)
                     .Take(5) // Lấy 5 sản phẩm bán chạy nhất
-                    .ToList(),
-
-                // Colors = products.GroupBy(p => p.KichThuoc) // Tương tự cho màu sắc
-                //     .Select(g => new ProductStatistics
-                //     {
-                //         ProductId = g.Key,
-                //         ProductName = g.First().TenSanPham,
-                //         Quantity = g.Sum(x => x.SoLuong),
-                //         TotalRevenue = g.Sum(x => x.TongTien)
-                //     })
-                //     .OrderByDescending(x => x.Quantity)
-                //     .Take(5) // Lấy 5 màu sắc bán chạy nhất
-                //     .ToList(),
-
-                // Sizes = products.GroupBy(p => p.KichThuoc) // Tương tự cho kích thước
-                //     .Select(g => new ProductStatistics
-                //     {
-                //         ProductId = g.Key,
-                //         ProductName = g.First().TenSanPham,
-                //         Quantity = g.Sum(x => x.SoLuong),
-                //         TotalRevenue = g.Sum(x => x.TongTien)
-                //     })
-                //     .OrderByDescending(x => x.Quantity)
-                //     .Take(5) // Lấy 5 kích thước bán chạy nhất
-                //     .ToList()
+                    .ToList()
             };
 
             return topSellingProductsData;

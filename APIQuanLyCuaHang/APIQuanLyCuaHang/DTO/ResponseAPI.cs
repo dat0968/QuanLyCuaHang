@@ -11,10 +11,14 @@ namespace APIQuanLyCuaHang.DTO
         public bool Success { get; set; } = false;
         public string Message { get; set; } = "Phản hồi không xác định";
         public T? Data { get; set; } = new T();
-        public void SetSuccessResponse()
+        public void SetSuccessResponse(string? message)
         {
             this.Status = 200;
             this.Success = true;
+            if (message != null)
+            {
+                this.Message = message;
+            }
         }
         public void SetData(T dataSet)
         {
