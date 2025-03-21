@@ -17,6 +17,8 @@ using System.Security.Claims;
 
 namespace APIQuanLyCuaHang.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class AccountController : Controller
     {
         private readonly IPasswordHasher _hasher;
@@ -399,7 +401,7 @@ namespace APIQuanLyCuaHang.Controllers
             };
             db.Refreshtokens.Add(AddRefreshTokenDb);
             await db.SaveChangesAsync();
-            return Redirect($"https://localhost:5173/Accounts/GoogleLoginSuccess?accessToken={AccessToken}&refreshToken={RefreshToken}");
+            return Redirect($"https://localhost:5173/GoogleLoginSuccess?accessToken={AccessToken}&refreshToken={RefreshToken}");
             //return Ok(new
             //{
             //    Success = true,

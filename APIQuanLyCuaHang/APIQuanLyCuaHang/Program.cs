@@ -3,6 +3,7 @@ using APIQuanLyCuaHang.Models;
 using APIQuanLyCuaHang.Respositoies.HashPassword;
 using APIQuanLyCuaHang.Respositoies.Token;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -12,7 +13,15 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost", builder =>
+    {
+        builder.WithOrigins("http://localhost:5173") 
+               .AllowAnyMethod()                     
+               .AllowAnyHeader();                    
+    });
+});
 builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -76,7 +85,7 @@ builder.Services.AddAuthentication(options =>
     options.ClientSecret = googleAuth["ClientSecret"];
 });
 var app = builder.Build();
-
+app.UseCors("AllowLocalhost");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
