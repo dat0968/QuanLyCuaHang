@@ -93,16 +93,16 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
         }
 
         // * Old: EmployeeStatisticsData
-        public async Task<ResponseAPI<List<StaffDC>?>> GetEmployeeOrderStatisticsAsync()
+        public async Task<ResponseAPI<List<StaffDC>>> GetEmployeeOrderStatisticsAsync()
         {
             try
             {
                 var employeeStats = await CalculateEmployeeOrderStatisticsAsync();
-                return new ResponseAPI<List<StaffDC>?> { Data = employeeStats, Success = true };
+                return new ResponseAPI<List<StaffDC>> { Data = employeeStats, Success = true };
             }
             catch (Exception ex)
             {
-                return new ResponseAPI<List<StaffDC>?> { Success = false, Message = ex.Message };
+                return new ResponseAPI<List<StaffDC>> { Success = false, Message = ex.Message };
             }
         }
 
@@ -120,9 +120,9 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
             }
         }
 
-        public async Task<ResponseAPI<ProductDC?>> GetProductFullDetails(int id)
+        public async Task<ResponseAPI<ProductDC>> GetProductFullDetails(int id)
         {
-            ResponseAPI<ProductDC?> response = new();
+            ResponseAPI<ProductDC> response = new();
             try
             {
                 var productDb = await _db.Sanphams.FirstOrDefaultAsync(sp => sp.MaSp == id);
@@ -241,7 +241,7 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
             }).ToList();
         }
 
-        private async Task<List<StaffDC>?> CalculateEmployeeOrderStatisticsAsync()
+        private async Task<List<StaffDC>> CalculateEmployeeOrderStatisticsAsync()
         {
             var nhanviens = await _db.Nhanviens.ToListAsync();
             var staffDCs = nhanviens.Select(nv => new StaffDC

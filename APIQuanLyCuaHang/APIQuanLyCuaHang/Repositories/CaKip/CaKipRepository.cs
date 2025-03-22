@@ -16,23 +16,30 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
         {
             _db = db;
         }
-        public async Task<ResponseAPI<List<CaKipDTO>?>> GetAllAsync()
+
+        public async Task<ResponseAPI<string>> ChangeStatusAsync(int? id)
         {
-            ResponseAPI<List<CaKipDTO>?> response = new();
+            ResponseAPI<string> response = new();
             try
             {
-                var data = await _db.Cakips.Select(ck => new CaKipDTO
+                if (!id.HasValue)
                 {
-                    MaCaKip = ck.MaCaKip,
-                    SoNguoiToiDa = ck.SoNguoiToiDa,
-                    SoNguoiHienTai = ck.SoNguoiHienTai,
-                    GioBatDau = ck.GioBatDau,
-                    GioKetThuc = ck.GioKetThuc,
-                    IsDelete = ck.IsDelete,
-                }).ToListAsync();
+                    throw new Exception("Dữ liệu không nhận được để xử lí.");
+                }
+                var caKip = await _db.Cakips.FindAsync(id);
 
-                response.SetSuccessResponse("Lấy danh sách Ca thành công!");
-                response.SetData(data);
+                if (caKip == null)
+                {
+                    throw new Exception("Dữ liệu không tìm thấy trong hệ thống.");
+                }
+
+                caKip.IsDelete = !caKip.IsDelete;
+
+                _db.Update(caKip);
+                await _db.SaveChangesAsync();
+
+                response.SetSuccessResponse("Đã thay đổi trạng thái Ca thành công.");
+                response.SetData("Ok");
             }
             catch (Exception ex)
             {
@@ -41,12 +48,12 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
             return response;
         }
 
-        public async Task<ResponseAPI<List<CaKipDTO>?>> GetAllTodayAsync()
+        public async Task<ResponseAPI<List<CaKipDTO>>> GetAllAsync()
         {
-            ResponseAPI<List<CaKipDTO>?> response = new();
+            ResponseAPI<List<CaKipDTO>> response = new();
             try
             {
-                // ! Delete this func: .Where(ck => ck.GioBatDau.Date == DateTime.Today.Date)
+                var today = DateOnly.FromDateTime(DateTime.Today);
                 var data = await _db.Cakips.Select(ck => new CaKipDTO
                 {
                     MaCaKip = ck.MaCaKip,
@@ -55,6 +62,7 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
                     GioBatDau = ck.GioBatDau,
                     GioKetThuc = ck.GioKetThuc,
                     IsDelete = ck.IsDelete,
+                    QrCodeData = $"{ck.MaCaKip}-{today}"
                 }).ToListAsync();
 
                 response.SetSuccessResponse("Lấy danh sách Ca thành công!");
@@ -93,9 +101,9 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
             return response;
         }
 
-        public async Task<ResponseAPI<List<CaKipDTO>?>> UpsertCrewAsync(CaKipDTO? caKip, bool? isToday)
+        public async Task<ResponseAPI<List<CaKipDTO>>> UpsertCrewAsync(CaKipDTO? caKip)
         {
-            ResponseAPI<List<CaKipDTO>?> response = new();
+            ResponseAPI<List<CaKipDTO>> response = new();
             try
             {
                 if (caKip == null)
@@ -107,7 +115,6 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
                     Cakip newCaKip = new Cakip
                     {
                         SoNguoiToiDa = caKip.SoNguoiToiDa,
-                        SoNguoiHienTai = caKip.SoNguoiHienTai,
                         GioBatDau = caKip.GioBatDau,
                         GioKetThuc = caKip.GioKetThuc,
                         IsDelete = caKip.IsDelete,
@@ -123,8 +130,7 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
                         throw new Exception("Dữ liệu không tìm thấy trong hệ thống.");
                     }
                     updateCaKip.SoNguoiToiDa = caKip.SoNguoiToiDa;
-                    // updateCaKip.SoNguoiHienTai = caKip.SoNguoiHienTai;
-                    // updateCaKip.GioBatDau = caKip.GioBatDau;
+                    updateCaKip.GioBatDau = caKip.GioBatDau;
                     updateCaKip.GioKetThuc = caKip.GioKetThuc;
                     updateCaKip.IsDelete = caKip.IsDelete;
 
@@ -136,18 +142,10 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
                 {
                     MaCaKip = ck.MaCaKip,
                     SoNguoiToiDa = ck.SoNguoiToiDa,
-                    SoNguoiHienTai = ck.SoNguoiHienTai,
                     GioBatDau = ck.GioBatDau,
                     GioKetThuc = ck.GioKetThuc,
                     IsDelete = ck.IsDelete,
                 }).ToListAsync();
-
-                // ! Fuck ignore this
-
-                // if (isToday.HasValue && isToday.Value)
-                // {
-                //     data = data.Where(ck => ck.GioBatDau == DateTime.Today.Date).ToList();
-                // }
 
                 response.SetSuccessResponse("Lấy danh sách Ca thành công!");
                 response.SetData(data);

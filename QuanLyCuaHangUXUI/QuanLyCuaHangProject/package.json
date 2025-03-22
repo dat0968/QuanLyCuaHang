@@ -22,6 +22,7 @@
     "jquery": "^3.7.1",
     "jwt-decode": "^4.0.0",
     "pinia": "^3.0.1",
+    "qrcode": "^1.5.4",
     "qrcode.vue": "^3.6.0",
     "swiper": "^11.2.5",
     "toastr": "^2.1.4",

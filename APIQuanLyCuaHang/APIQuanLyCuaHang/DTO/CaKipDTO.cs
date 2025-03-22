@@ -11,12 +11,13 @@ namespace APIQuanLyCuaHang.DTO
 
         public int SoNguoiToiDa { get; set; }
 
-        public int SoNguoiHienTai { get; set; }
+        public int? SoNguoiHienTai { get; set; }
 
         public TimeOnly GioBatDau { get; set; }
 
         public TimeOnly GioKetThuc { get; set; }
 
         public bool? IsDelete { get; set; }
+        public string? QrCodeData { get; set; }
     }
 }

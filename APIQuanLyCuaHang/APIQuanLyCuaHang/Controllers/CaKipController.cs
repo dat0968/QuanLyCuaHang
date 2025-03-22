@@ -25,13 +25,6 @@ namespace APIQuanLyCuaHang.Controllers
             return Ok(result);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllToday()
-        {
-            var result = await _caKip.GetAllTodayAsync();
-            return Ok(result);
-        }
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> Remove(int id)
         {
@@ -40,9 +33,15 @@ namespace APIQuanLyCuaHang.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpsertCrew([FromBody] CaKipDTO caKip, [FromQuery] bool isToday = false)
+        public async Task<IActionResult> UpsertCrew([FromBody] CaKipDTO caKip)
         {
-            var result = await _caKip.UpsertCrewAsync(caKip, isToday);
+            var result = await _caKip.UpsertCrewAsync(caKip);
+            return Ok(result);
+        }
+        [HttpPatch]
+        public async Task<IActionResult> ChangeStatusShift(int? id)
+        {
+            var result = await _caKip.ChangeStatusAsync(id);
             return Ok(result);
         }
     }
