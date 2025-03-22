@@ -17,7 +17,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowLocalhost", builder =>
     {
-        builder.WithOrigins("http://localhost:5173") 
+        builder.AllowAnyOrigin()    
                .AllowAnyMethod()                     
                .AllowAnyHeader();                    
     });
@@ -69,6 +69,7 @@ builder.Services.AddAuthentication(options =>
     options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 }).AddJwtBearer(options =>
 {
+
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = false,
@@ -85,7 +86,7 @@ builder.Services.AddAuthentication(options =>
     options.ClientSecret = googleAuth["ClientSecret"];
 });
 var app = builder.Build();
-app.UseCors("AllowLocalhost");
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -95,7 +96,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("AllowLocalhost");
 app.UseAuthentication();
 app.UseAuthorization(); ;
 

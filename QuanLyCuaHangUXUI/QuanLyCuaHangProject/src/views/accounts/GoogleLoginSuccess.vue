@@ -7,8 +7,8 @@ const router = useRouter();
 const route = useRoute();
 
 onMounted(async () => {
-  const accessToken = route.query.accessToken;
-  const refreshToken = route.query.refreshToken;
+  const accessToken = route.query.access_token; 
+  const refreshToken = route.query.refresh_token;
 
   if (accessToken && refreshToken) {
     localStorage.setItem('accessToken', accessToken);

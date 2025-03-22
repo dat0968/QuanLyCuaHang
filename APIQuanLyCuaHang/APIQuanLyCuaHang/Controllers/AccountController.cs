@@ -378,6 +378,7 @@ namespace APIQuanLyCuaHang.Controllers
                     HoTen = name,
                     Email = email,
                     TinhTrang = "Đang hoạt động",
+                    NgayTao = DateTime.Now,
                     IsDelete = false,
                 };
                 db.Khachhangs.Add(existingUser);
@@ -401,12 +402,12 @@ namespace APIQuanLyCuaHang.Controllers
             };
             db.Refreshtokens.Add(AddRefreshTokenDb);
             await db.SaveChangesAsync();
-            return Redirect($"https://localhost:5173/GoogleLoginSuccess?accessToken={AccessToken}&refreshToken={RefreshToken}");
+            return Redirect($"http://localhost:5556/GoogleLoginSuccess?access_token={AccessToken}&refresh_token={RefreshToken}");
             //return Ok(new
-            //{
+            //{   
             //    Success = true,
             //    Message = "Login successfully",
-            //    Data = new TokenResponse
+            //    Data = new TokenResponseDTO
             //    {
             //        AccessToken = AccessToken,
             //        RefreshToken = RefreshToken,
