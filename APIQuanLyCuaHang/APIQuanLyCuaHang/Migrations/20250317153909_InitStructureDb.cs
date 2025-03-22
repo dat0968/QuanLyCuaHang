@@ -22,8 +22,8 @@ namespace APIQuanLyCuaHang.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SoNguoiToiDa = table.Column<int>(type: "int", nullable: false),
                     SoNguoiHienTai = table.Column<int>(type: "int", nullable: false),
-                    GioBatDau = table.Column<DateTime>(type: "datetime", nullable: false),
-                    GioKetThuc = table.Column<DateTime>(type: "datetime", nullable: false),
+                    GioBatDau = table.Column<TimeOnly>(type: "time(7)", nullable: false),
+                    GioKetThuc = table.Column<TimeOnly>(type: "time(7)", nullable: false),
                     IsDelete = table.Column<bool>(type: "bit", nullable: true, defaultValue: false)
                 },
                 constraints: table =>

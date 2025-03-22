@@ -23,14 +23,14 @@ import LatestFromBlog from '../../components/LatestFromBlog.vue'
                 <div class="banner_btn">
                   <div class="banner_btn_iner">
                     <a href="#" class="btn_2"
-                      >Đặt bàn <img src="../src/assets/client/img/icon/left_1.svg" alt=""
+                      >Đặt bàn <img src="/src/assets/client/img/icon/left_1.svg" alt=""
                     /></a>
                   </div>
                   <a
                     href="https://www.youtube.com/watch?v=pBFQdxA-apI"
                     class="popup-youtube video_popup"
                   >
-                    <span><img src="../src/assets/client/img/icon/play.svg" alt="" /></span> Xem câu
+                    <span><img src="/src/assets/client/img/icon/play.svg" alt="" /></span> Xem câu
                     chuyện của chúng tôi</a
                   >
                 </div>
@@ -63,7 +63,7 @@ import LatestFromBlog from '../../components/LatestFromBlog.vue'
                 <h3>Indian Burger</h3>
                 <p>Was brean shed moveth day yielding tree yielding day were female and</p>
                 <a href="#" class="btn_3"
-                  >Xem thêm<img src="../assets/client/img/icon/left_2.svg" alt=""
+                  >Xem thêm<img src="/src/assets/client/img/icon/left_1.svg" alt=""
                 /></a>
               </div>
             </div>
@@ -77,7 +77,7 @@ import LatestFromBlog from '../../components/LatestFromBlog.vue'
                 <h3>Cremy Noodles</h3>
                 <p>Was brean shed moveth day yielding tree yielding day were female and</p>
                 <a href="#" class="btn_3"
-                  >Xem thêm<img src="../assets/client/img/icon/left_2.svg" alt=""
+                  >Xem thêm<img src="/src/assets/client/img/icon/left_2.svg" alt=""
                 /></a>
               </div>
             </div>
@@ -91,7 +91,7 @@ import LatestFromBlog from '../../components/LatestFromBlog.vue'
                 <h3>Honey Meat</h3>
                 <p>Was brean shed moveth day yielding tree yielding day were female and</p>
                 <a href="#" class="btn_3"
-                  >Xem thêm<img src="../assets/client/img/icon/left_2.svg" alt=""
+                  >Xem thêm<img src="/src/assets/client/img/icon/left_2.svg" alt=""
                 /></a>
               </div>
             </div>
@@ -105,7 +105,7 @@ import LatestFromBlog from '../../components/LatestFromBlog.vue'
                 <h3>Cremy Noodles</h3>
                 <p>Was brean shed moveth day yielding tree yielding day were female and</p>
                 <a href="#" class="btn_3"
-                  >Xem thêm<img src="../assets/client/img/icon/left_2.svg" alt=""
+                  >Xem thêm<img src="../../assets/client/img/icon/left_2.svg" alt=""
                 /></a>
               </div>
             </div>
@@ -135,7 +135,7 @@ import LatestFromBlog from '../../components/LatestFromBlog.vue'
                 của chúng ta trong hố tháng sâu
               </p>
               <a href="#" class="btn_3"
-                >Xem thêm<img src="../assets/client/img/icon/left_2.svg" alt=""
+                >Xem thêm<img src="/src/assets/client/img/icon/left_2.svg" alt=""
               /></a>
             </div>
           </div>

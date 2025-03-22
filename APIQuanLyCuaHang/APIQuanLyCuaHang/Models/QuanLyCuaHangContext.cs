@@ -53,8 +53,8 @@ public partial class QuanLyCuaHangContext : DbContext
 
             entity.ToTable("CAKIP");
 
-            entity.Property(e => e.GioBatDau).HasColumnType("datetime");
-            entity.Property(e => e.GioKetThuc).HasColumnType("datetime");
+            entity.Property(e => e.GioBatDau).HasColumnType("time(7)");
+            entity.Property(e => e.GioKetThuc).HasColumnType("time(7)");
             entity.Property(e => e.IsDelete).HasDefaultValue(false);
         });
 

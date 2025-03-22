@@ -115,7 +115,9 @@ const handleResponse = async (callback) => {
 
 // Hàm GET
 async function getFromApi(url, config = ConfigsRequest.getSkipAuthConfig()) {
-  return handleResponse(() => axiosClient.get(url, config))
+  return handleResponse(() =>
+    axiosClient.get(url, { ...config, responseType: config.responseType || 'json' }),
+  )
 }
 
 // Hàm POST

@@ -46,7 +46,8 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
             ResponseAPI<List<CaKipDTO>?> response = new();
             try
             {
-                var data = await _db.Cakips.Where(ck => ck.GioBatDau.Date == DateTime.Today.Date).Select(ck => new CaKipDTO
+                // ! Delete this func: .Where(ck => ck.GioBatDau.Date == DateTime.Today.Date)
+                var data = await _db.Cakips.Select(ck => new CaKipDTO
                 {
                     MaCaKip = ck.MaCaKip,
                     SoNguoiToiDa = ck.SoNguoiToiDa,
@@ -141,10 +142,12 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
                     IsDelete = ck.IsDelete,
                 }).ToListAsync();
 
-                if (isToday.HasValue && isToday.Value)
-                {
-                    data = data.Where(ck => ck.GioBatDau.Date == DateTime.Today.Date).ToList();
-                }
+                // ! Fuck ignore this
+
+                // if (isToday.HasValue && isToday.Value)
+                // {
+                //     data = data.Where(ck => ck.GioBatDau == DateTime.Today.Date).ToList();
+                // }
 
                 response.SetSuccessResponse("Lấy danh sách Ca thành công!");
                 response.SetData(data);
