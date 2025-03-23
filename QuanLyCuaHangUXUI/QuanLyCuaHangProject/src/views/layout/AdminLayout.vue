@@ -51,7 +51,9 @@
                               <i class="icon-layers"></i><span>Danh sách mục</span><i class="icon-arrow-right pull-right"></i>
                             </a>
                             <ul class="xp-vertical-submenu">
-                                <li><a href="d">Mục 1</a></li>
+                                <li>
+                                    <router-link to="/admin/staff">Quản lý nhân viên</router-link>
+                                </li>
                                 <li><a href="d">Mục 2</a></li>
                                 <li><a href="d">Muc 3</a></li>                              
                             </ul>
@@ -240,11 +242,11 @@
             <RouterView/>
 
             <!-- Start XP Footerbar -->
-            <div class="xp-footerbar">
+            <!-- <div class="xp-footerbar">
                 <footer class="footer">
                     <p class="mb-0">© 2020 Neon - All Rights Reserved.</p>
                 </footer>
-            </div>
+            </div> -->
             <!-- End XP Footerbar -->
 
         </div>

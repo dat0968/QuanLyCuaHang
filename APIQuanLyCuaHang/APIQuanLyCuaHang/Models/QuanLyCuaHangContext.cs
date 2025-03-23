@@ -342,7 +342,6 @@ public partial class QuanLyCuaHangContext : DbContext
             entity.ToTable("REFRESHTOKEN");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
                 .HasColumnName("ID");
             entity.Property(e => e.ExpiredAt).HasColumnType("datetime");
             entity.Property(e => e.IssuedAt).HasColumnType("datetime");
@@ -356,7 +355,6 @@ public partial class QuanLyCuaHangContext : DbContext
             entity.ToTable("SANPHAM");
 
             entity.Property(e => e.MaSp)
-                .ValueGeneratedNever()
                 .HasColumnName("MaSP");
             entity.Property(e => e.IsDelete).HasDefaultValue(false);
             entity.Property(e => e.MoTa).HasMaxLength(500);

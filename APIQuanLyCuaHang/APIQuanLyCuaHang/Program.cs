@@ -1,5 +1,6 @@
 ﻿using APIQuanLyCuaHang.DbInitializer;
 using APIQuanLyCuaHang.Models;
+using APIQuanLyCuaHang.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +15,14 @@ builder.Services.AddDbContext<QuanLyCuaHangContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("QuanLyCuaHangContext"));
 });
-
+builder.Services.AddScoped<IStaffRepository, StaffRepository>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+    });
+});
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 
 var app = builder.Build();
@@ -28,7 +36,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("AllowAll");
 app.UseAuthorization();
 
 app.MapControllers();

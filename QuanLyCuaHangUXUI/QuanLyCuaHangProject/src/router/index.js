@@ -4,6 +4,7 @@ import About from '../views/client/About.vue'
 import Menu from '../views/client/FoodMenu.vue'
 import Chef from '../views/client/Chef.vue'
 import dashboard from '../views/admin/Index.vue'
+import Staff from '../views/admin/Staff.vue'
 import ClientLayout from '../views/layout/ClientLayout.vue'
 import AdminLayout from '../views/layout/AdminLayout.vue'
 import Login from '../views/accounts/Login.vue'
@@ -29,7 +30,8 @@ const router = createRouter({
       component: AdminLayout,
       children:
         [
-          {path: '', component: dashboard}
+          {path: '', component: dashboard},
+          { path: 'staff', name: 'Staff', component: Staff },
         ]
     },
     {
