@@ -6,26 +6,25 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">
-              {{ isScanning ? 'Chấm Công Bằng QR Code' : 'Tạo QR Check-in' }}
+              {{ isScanning ? 'Chấm Công Bằng QR Code' : 'Quản lý Ca làm việc.' }}
             </h5>
             <button type="button" class="btn btn-danger rounded" @click="isModalOpen = false">
               x
             </button>
           </div>
-          <div class="modal-body text-center d-flex flex-column align-items-center">
+          <div class="modal-body d-flex flex-column align-items-center">
             <p v-if="isScanning">
               Quét mã QR bằng camera.
-              <button
+              <span
                 type="button"
-                class="btn btn-info btn-sm ml-2"
                 data-bs-toggle="tooltip"
                 :title="currentShiftInfo"
                 id="tooltip-current-shift"
               >
                 ⓘ
-              </button>
+              </span>
             </p>
-            <p v-else>Quản lý Ca làm việc.</p>
+            <p v-else></p>
 
             <div class="content-wrapper w-100 d-flex flex-column align-items-center">
               <div v-if="isScanning" class="w-100 d-flex flex-column align-items-center">
@@ -40,7 +39,7 @@
                   style="width: 200px; height: 200px"
                 ></qrcode-stream>
                 <p class="mt-2">Hoặc tải ảnh QR lên:</p>
-                <div class="row mb-2 align-items-center">
+                <div class="d-flex w-75 mb-2 align-items-center">
                   <input
                     type="file"
                     @change="onFileUpload"
@@ -48,7 +47,7 @@
                     class="form-control col-9"
                   />
                   <button
-                    class="btn btn-primary col"
+                    class="btn btn-primary col-3"
                     @click="confirmImageUpload"
                     :disabled="!uploadedFile"
                   >
@@ -58,8 +57,22 @@
               </div>
               <div v-else class="container-fluid">
                 <div class="row">
-                  <div class="col-4">
+                  <!-- Phần hiển thị Form -->
+                  <div class="col-4 border-right">
+                    <!-- Tiêu đề cho form -->
+                    <h5 class="mb-3">Thông Tin Ca Kíp</h5>
+                    <hr />
+                    <!-- Form -->
                     <form @submit.prevent="saveShift">
+                      <div class="mb-2">
+                        <label>Mã Ca:</label>
+                        <input
+                          v-model="shift.maCaKip"
+                          type="number"
+                          class="form-control"
+                          disabled
+                        />
+                      </div>
                       <div class="mb-2">
                         <label>Số Người Tối Đa:</label>
                         <input
@@ -87,13 +100,22 @@
                           required
                         />
                       </div>
-                      <button type="submit" class="btn btn-primary">
+                      <button type="submit" class="btn btn-primary w-100">
                         {{ shift.maCaKip ? 'Cập nhật' : 'Thêm mới' }}
                       </button>
                     </form>
                   </div>
-                  <div class="col-8">
-                    <table class="table" id="dt-listShifts"></table>
+
+                  <!-- Phần danh sách hiển thị -->
+                  <div class="col-8 border-left">
+                    <!-- Tiêu đề cho danh sách -->
+                    <h5 class="mb-3">Danh Sách Ca Kíp</h5>
+                    <hr />
+                    <div style="height: 400px; overflow-y: auto">
+                      <table class="table" id="dt-listShifts">
+                        <!-- Nội dung bảng sẽ được thêm bằng JavaScript -->
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -123,6 +145,7 @@ import * as configsDt from '@/utils/configsDatatable.js'
 import $ from 'jquery'
 import 'datatables.net'
 import 'datatables.net-dt/css/dataTables.dataTables.css'
+import jsQR from 'jsqr'
 
 export default {
   name: 'QrCheckInModal',
@@ -209,17 +232,30 @@ export default {
             className: 'text-center',
             render: function (data, type, row) {
               const isDelete = row.isDelete
-              return `
-                  <span class='btn btn-warning btn-sm edit-shift' data-id='${data}' title="Sửa">📝</span>
-                  <span class='btn btn-warning btn-sm change-status' data-id='${row.maCaKip}' title="${isDelete ? 'Vô hiệu' : 'Hoạt động'}">
-                    ${isDelete ? '✖️' : '✔️'}
-                  </span>
-                  <span class='btn btn-success btn-sm generate-qr' data-id='${data}' title="Tải QR">🔻</span>
+              return `<span 
+                        class="edit-shift" 
+                        data-id="${data}" 
+                        title="Sửa"
+                      >📝</span>
+                      <span 
+                        class=" change-status" 
+                        data-id="${row.maCaKip}" 
+                        title="${isDelete ? 'Vô hiệu hóa' : 'Kích hoạt'}"
+                      >${isDelete ? '✖️' : '✔️'}</span>
+                      <span 
+                        class=" generate-qr" 
+                        data-id="${data}" 
+                        title="Tải QR"
+                      >📥</span>
+
                 `
             },
           },
         ],
-        language: configsDt.defaultLanguageDatatable,
+        language: {
+          ...configsDt.defaultLanguageDatatable,
+          info: 'Có _START_ đến _END_ ca trong số _TOTAL_ ca',
+        },
       })
       $('#dt-listShifts tbody').on('click', '.change-status', (event) => {
         const id = $(event.currentTarget).data('id')
@@ -240,9 +276,11 @@ export default {
       // Chuyển đổi `gioBatDau` và `gioKetThuc` sang dạng HH:mm:ss
       const formattedShift = {
         ...this.shift,
-        gioBatDau: this.shift.gioBatDau ? `${this.shift.gioBatDau}:00` : '', // Thêm `:00`
-        gioKetThuc: this.shift.gioKetThuc ? `${this.shift.gioKetThuc}:00` : '', // Thêm `:00`
+        gioBatDau: this.shift.gioBatDau ? `${this.shift.gioBatDau}:00`.slice(0, 8) : '', // Đảm bảo đúng HH:mm:ss
+        gioKetThuc: this.shift.gioKetThuc ? `${this.shift.gioKetThuc}:00`.slice(0, 8) : '', // Đảm bảo đúng HH:mm:ss
       }
+
+      console.log('Data being sent: ', formattedShift)
 
       // Gửi request với dữ liệu đã chuyển đổi
       axiosConfig
@@ -256,7 +294,7 @@ export default {
           }
         })
         .catch((error) => {
-          console.error(error)
+          console.error('API Error: ', error)
           toastr.error('Lỗi không xác định khi lưu thông tin ca làm việc.')
         })
     },
@@ -275,30 +313,30 @@ export default {
     },
     async generateQRCode(maCaKip) {
       try {
-        // Tìm dữ liệu qrCodeData trong danh sách các ca làm việc (listShifts)
         const shift = this.listShifts.find((s) => s.maCaKip === maCaKip)
         if (!shift || !shift.qrCodeData) {
           toastr.error('Không tìm thấy dữ liệu QR cho ca làm việc này.')
           return
         }
 
-        // Gán dữ liệu QR từ ca làm việc vào qrCodeData
-        const qrCodeData = shift.qrCodeData
+        const qrCodeData = shift.qrCodeData // Dữ liệu QR
 
-        // Sử dụng thư viện qrcode để tạo ảnh QR
         const canvas = document.createElement('canvas')
-        await QRCode.toCanvas(canvas, qrCodeData, { width: 200 }) // Kích thước tùy chỉnh
-
-        // Tạo tệp hình ảnh từ canvas và tải xuống
+        await QRCode.toCanvas(canvas, qrCodeData, { width: 200 }) // Kích thước ảnh QR
         const link = document.createElement('a')
-        link.href = canvas.toDataURL('image/png') // Dạng hình ảnh PNG
-        link.download = `QRCode_Ca_${maCaKip}.png`
-        link.click()
+        link.href = canvas.toDataURL('image/png') // Chuyển sang ảnh dạng PNG
+        link.download = `QRCode_Ca_${maCaKip}.png` // Đặt tên file
+        link.click() // Tải file xuống
       } catch (error) {
         toastr.error('Đã xảy ra lỗi khi tải QR Code: ' + error.message)
       }
     },
     async onScanSuccess(qrCodeData) {
+      if (!this.employeeId) {
+        toastr.info('Vui lòng nhập ID Người làm việc trước khi quét mã QR.')
+        return
+      }
+
       try {
         const response = await axiosConfig.postToApi(
           `/LichLamViec/ChamCong?maNv=${this.employeeId}&qrCodeData=${encodeURIComponent(qrCodeData)}`,
@@ -309,22 +347,73 @@ export default {
         toastr.error('Lỗi khi chấm công: ' + error.message)
       }
     },
-    onFileUpload(event) {
-      this.uploadedFile = event.target.files[0]
+    async onFileUpload(event) {
+      const file = event.target.files[0]
+      if (!file) return
+
+      const reader = new FileReader()
+      reader.onload = async (e) => {
+        const img = new Image()
+        img.src = e.target.result
+
+        img.onload = async () => {
+          // Sử dụng Canvas để xử lý ảnh
+          const canvas = document.createElement('canvas')
+          const ctx = canvas.getContext('2d')
+
+          canvas.width = img.width
+          canvas.height = img.height
+          ctx.drawImage(img, 0, 0, img.width, img.height)
+
+          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+
+          // Sử dụng jsQR để giải mã
+          const code = jsQR(imageData.data, canvas.width, canvas.height)
+          if (code) {
+            this.onScanSuccess(code.data) // Xử lý dữ liệu khi giải mã thành công
+          } else {
+            // Nếu jsQR không giải mã được, sử dụng BrowserQRCodeReader
+            const qrCodeReader = new BrowserQRCodeReader()
+            try {
+              const result = await qrCodeReader.decodeFromImageElement(img)
+              this.onScanSuccess(result.getText())
+            } catch (error) {
+              toastr.info('Không tìm thấy mã QR trong ảnh.')
+            }
+          }
+        }
+      }
+      reader.readAsDataURL(file) // Đọc tệp dưới dạng Base64
     },
     async confirmImageUpload() {
       if (!this.uploadedFile) return
+
       const reader = new FileReader()
       reader.onload = async (e) => {
-        try {
-          const qrCodeReader = new BrowserQRCodeReader()
-          const result = await qrCodeReader.decodeFromImageUrl(e.target.result)
-          this.onScanSuccess(result.getText())
-        } catch (error) {
-          toastr.info('Không tìm thấy mã QR trong ảnh')
+        const img = new Image()
+        img.src = e.target.result
+
+        img.onload = () => {
+          // Xử lý ảnh bằng Canvas
+          const canvas = document.createElement('canvas')
+          const ctx = canvas.getContext('2d')
+
+          canvas.width = img.width
+          canvas.height = img.height
+          ctx.drawImage(img, 0, 0, img.width, img.height)
+
+          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+
+          // Sử dụng jsQR
+          const code = jsQR(imageData.data, canvas.width, canvas.height)
+          if (code) {
+            this.onScanSuccess(code.data) // Xử lý dữ liệu QR giải mã thành công
+          } else {
+            toastr.info('Không thể giải mã mã QR trong ảnh.')
+          }
         }
       }
-      reader.readAsDataURL(this.uploadedFile)
+      reader.readAsDataURL(this.uploadedFile) // Chuyển tệp sang Base64
     },
     refreshTooltip() {
       const now = new Date() // Lấy thời gian hiện tại
@@ -381,9 +470,5 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100%;
-}
-#dt-listShifts tbody {
-  height: 450px;
-  overflow-y: auto;
 }
 </style>
