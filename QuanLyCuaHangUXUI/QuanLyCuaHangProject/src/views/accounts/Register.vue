@@ -1,3 +1,70 @@
+
+<script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import Swal from 'sweetalert2';
+
+const hoTen = ref('');
+const tenTaiKhoan = ref('');
+const email = ref('');
+const matKhau = ref('');
+const termsAccepted = ref(false);
+const errorMessage = ref('');
+const router = useRouter();
+
+const handleRegister = async () => {
+  errorMessage.value = '';
+  
+  if (!termsAccepted.value) {
+    errorMessage.value = 'Vui lòng đồng ý với các điều khoản và điều kiện!';
+    return;
+  }
+
+  try {
+    const payload = {
+      HoTen: hoTen.value.trim(),
+      TenTaiKhoan: tenTaiKhoan.value.trim(),
+      Email: email.value.trim(),
+      MatKhau: matKhau.value,
+    };
+
+    const response = await fetch('https://localhost:7139/api/Account/Register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Lỗi HTTP ${response.status}: ${errorText || 'Không có chi tiết'}`);
+    }
+
+    const data = await response.json();
+
+    if (data.success) {
+      await Swal.fire({
+        icon: 'success',
+        title: 'Đăng ký thành công!',
+        text: 'Vui lòng đăng nhập để tiếp tục.',
+        confirmButtonText: 'OK',
+      });
+      router.push('/Login');
+    } else {
+      errorMessage.value = data.message || 'Đăng ký thất bại';
+    }
+  } catch (error) {
+    console.error('Lỗi trong handleRegister:', {
+      message: error.message,
+      name: error.name,
+      stack: error.stack,
+    });
+    errorMessage.value = error.message || 'Có lỗi xảy ra, vui lòng thử lại!';
+  }
+};
+</script>
+
 <template>
   <div>
     <div class="xp-authenticate-bg"></div>
@@ -14,44 +81,83 @@
               <div class="card">
                 <div class="card-body">
                   <h3 class="text-center mt-0 m-b-15">
-                    <a href="index.html" class="xp-web-logo"
-                      ><img src="../../assets/admin/images/logo.svg" height="40" alt="logo"
-                    /></a>
+                    <a href="index.html" class="xp-web-logo">
+                      <img src="../../assets/admin/images/logo.svg" height="40" alt="logo" />
+                    </a>
                   </h3>
                   <div class="p-3">
-                    <form action="#">
+                    <form @submit.prevent="handleRegister">
                       <div class="text-center mb-3">
-                        <h4 class="text-black">Create New Account</h4>
-                        <p class="text-muted">Already have an account? <a href="page-login.html">Sign in</a> Here</p>
+                        <h4 class="text-black">Tạo tài khoản</h4>
+                        <p class="text-muted">
+                          Bạn đã có tài khoản ? 
+                          <router-link to="/Login" class="text-primary">Đăng nhập</router-link> 
+                          Here
+                        </p>
                       </div>
-                      <div class="social-login text-center">
-                        <button type="button" class="btn btn-facebook btn-rounded mb-1">
-                          <i class="icon-social-facebook m-r-5"></i> Facebook
-                        </button>
-                        <button type="button" class="btn btn-googleplus btn-rounded mb-1">
-                          <i class="icon-social-google m-r-5"></i> Google+
-                        </button>
+                      <div v-if="errorMessage" class="alert alert-danger text-center">
+                        {{ errorMessage }}
                       </div>
+                      
                       <div class="login-or">
-                        <h6 class="text-muted">OR</h6>
+                        <h6 class="text-muted">Hoặc</h6>
                       </div>
                       <div class="form-group">
-                        <input type="text" class="form-control" id="username" placeholder="Username" required />
+                        <input
+                          v-model="hoTen"
+                          type="text"
+                          class="form-control"
+                          id="hoTen"
+                          placeholder="Họ và tên"
+                          required
+                        />
                       </div>
                       <div class="form-group">
-                        <input type="email" class="form-control" id="email" placeholder="Email" required />
+                        <input
+                          v-model="tenTaiKhoan"
+                          type="text"
+                          class="form-control"
+                          id="username"
+                          placeholder="Tên tài khoản"
+                          required
+                        />
                       </div>
                       <div class="form-group">
-                        <input type="password" class="form-control" id="password" placeholder="Password" required />
+                        <input
+                          v-model="email"
+                          type="email"
+                          class="form-control"
+                          id="email"
+                          placeholder="Email"
+                          required
+                        />
+                      </div>
+                      <div class="form-group">
+                        <input
+                          v-model="matKhau"
+                          type="password"
+                          class="form-control"
+                          id="password"
+                          placeholder="Mật khẩu"
+                          required
+                        />
                       </div>
                       <div class="form-group">
                         <div class="custom-control custom-checkbox">
-                          <input type="checkbox" class="custom-control-input" id="terms" />
-                          <label class="custom-control-label" for="terms">I Agree to Terms & Conditions of Neon</label>
+                          <input
+                            v-model="termsAccepted"
+                            type="checkbox"
+                            class="custom-control-input"
+                            id="terms"
+                            required
+                          />
+                          <label class="custom-control-label" for="terms">
+                            Tôi đồng ý với các điều khoản & điều kiện
+                          </label>
                         </div>
                       </div>
                       <button type="submit" class="btn btn-primary btn-rounded btn-lg btn-block">
-                        Create an Account
+                        Tạo tài khoản
                       </button>
                     </form>
                   </div>
@@ -70,12 +176,15 @@
   </div>
 </template>
 
-<script>
-export default {
-
+<style scoped>
+.alert-danger {
+  margin-bottom: 15px;
 }
-</script>
-
-<style>
-
+.text-primary {
+  color: #007bff;
+  text-decoration: none;
+}
+.text-primary:hover {
+  text-decoration: underline;
+}
 </style>

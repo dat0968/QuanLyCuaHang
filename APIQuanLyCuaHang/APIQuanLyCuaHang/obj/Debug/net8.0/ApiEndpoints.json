@@ -1,5 +1,143 @@
 [
   {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.AccountController",
+    "Method": "ForgotPasswordCustomer",
+    "RelativePath": "api/Account/ForgotPasswordCustomer",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.AccountController",
+    "Method": "ForgotPasswordStaff",
+    "RelativePath": "api/Account/ForgotPasswordStaff",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.AccountController",
+    "Method": "GoogleResponse",
+    "RelativePath": "api/Account/GoogleResponse",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.AccountController",
+    "Method": "LoginCustomer",
+    "RelativePath": "api/Account/LoginCustomer",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "APIBanXeDap.ViewModels.LoginDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.AccountController",
+    "Method": "LoginGoogle",
+    "RelativePath": "api/Account/LoginGoogle",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.AccountController",
+    "Method": "LoginStaff",
+    "RelativePath": "api/Account/LoginStaff",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "APIBanXeDap.ViewModels.LoginDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.AccountController",
+    "Method": "Logout",
+    "RelativePath": "api/Account/Logout",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "RefreshToken",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.AccountController",
+    "Method": "Register",
+    "RelativePath": "api/Account/Register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "APIBanXeDap.ViewModels.RegisterDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.AccountController",
+    "Method": "RenewToken",
+    "RelativePath": "api/Account/RenewAccessToken",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "APIQuanLyCuaHang.DTO.PersonalInformationDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "APIQuanLyCuaHang.Controllers.CategoriesController",
     "Method": "GetAll",
     "RelativePath": "api/Categories",
@@ -25,6 +163,11 @@
       {
         "Name": "filterCatories",
         "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "sort",
+        "Type": "System.String",
         "IsRequired": false
       },
       {

@@ -14,7 +14,7 @@ const handleLogin = async () => {
       Email_TenTaiKhoan: emailOrUsername.value.trim(),
       MatKhau: password.value,
     };
-    const response = await fetch('https://localhost:7139/api/Account/LoginCustomer', {
+    const response = await fetch('https://localhost:7139/api/Account/LoginStaff', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -51,10 +51,6 @@ const handleLogin = async () => {
     errorMessage.value = error.message || 'Có lỗi xảy ra, vui lòng thử lại!';
   }
 };
-const handleGoogleLogin = () => {
-  console.log('Chuyển hướng đến endpoint LoginGoogle...');
-  window.location.href = 'https://localhost:7139/api/Account/LoginGoogle';
-};
 </script>
 
 <template>
@@ -76,24 +72,9 @@ const handleGoogleLogin = () => {
                     <form @submit.prevent="handleLogin">
                       <div class="text-center mb-3">
                         <h4 class="text-black">Đăng nhập</h4>
-                        <p class="text-muted">
-                          Bạn chưa có tài khoản ? <router-link to="/Register" class="text-primary">Đăng ký</router-link>
-                        </p>
                       </div>
                       <div v-if="errorMessage" class="alert alert-danger text-center">
                         {{ errorMessage }}
-                      </div>
-                      <div class="social-login text-center">
-                        <button
-                          type="button"
-                          class="btn btn-googleplus btn-rounded mb-1"
-                          @click="handleGoogleLogin"
-                        >
-                          <i class="icon-social-google m-r-5"></i> Google
-                        </button>
-                      </div>
-                      <div class="login-or">
-                        <h6 class="text-muted">Hoặc</h6>
                       </div>
                       <div class="form-group">
                         <input
@@ -124,7 +105,7 @@ const handleGoogleLogin = () => {
                         </div>
                         <div class="form-group col-6 text-right">
                           <label class="forgot-psw">
-                            <router-link to="/ForgotPassword">Quên mật khẩu</router-link>
+                            <router-link to="/ForgotPasswordStaff">Quên mật khẩu</router-link>
                           </label>
                         </div>
                       </div>

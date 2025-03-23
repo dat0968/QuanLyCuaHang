@@ -342,7 +342,6 @@ public partial class QuanLyCuaHangContext : DbContext
             entity.ToTable("REFRESHTOKEN");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
                 .HasColumnName("ID");
             entity.Property(e => e.ExpiredAt).HasColumnType("datetime");
             entity.Property(e => e.IssuedAt).HasColumnType("datetime");

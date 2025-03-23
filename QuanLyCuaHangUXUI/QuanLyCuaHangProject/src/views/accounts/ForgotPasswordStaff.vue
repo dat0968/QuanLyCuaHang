@@ -13,7 +13,7 @@ const handleForgotPassword = async () => {
   success.value = false;
 
   try {
-    const response = await fetch(`https://localhost:7139/api/Account/ForgotPasswordCustomer?email=${encodeURIComponent(email.value.trim())}`, {
+    const response = await fetch(`https://localhost:7139/api/Account/ForgotPasswordStaff?email=${encodeURIComponent(email.value.trim())}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ const handleForgotPassword = async () => {
         text: message.value,
         confirmButtonText: 'OK',
       });
-      router.push('/Login'); // Chuyển hướng về trang đăng nhập
+      router.push('/LoginStaff'); 
     } else {
       success.value = false;
       message.value = data.message || 'Có lỗi xảy ra, vui lòng thử lại!';
@@ -90,7 +90,7 @@ const handleForgotPassword = async () => {
                         <h4 class="text-black">Quên mật khẩu</h4>
                         <p class="text-muted">
                           Bạn đã nhớ lại mật khẩu ?
-                          <router-link to="/Login" class="text-primary">Đăng nhập</router-link> 
+                          <router-link to="/LoginStaff" class="text-primary">Đăng nhập</router-link> 
                         </p>
                       </div>
                       <p class="text-muted text-center m-b-30">
