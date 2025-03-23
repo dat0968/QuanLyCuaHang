@@ -18,6 +18,7 @@ using APIQuanLyCuaHang.Repositories.Customer;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using OfficeOpenXml;
+using APIQuanLyCuaHang.Repository.MaCoupon;
 var builder = WebApplication.CreateBuilder(args);
 ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 // Add services to the container.
@@ -78,6 +79,7 @@ builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<ITokenServices, TokenServices>();
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IMaCouponRepository, MaCouponRepository>();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
