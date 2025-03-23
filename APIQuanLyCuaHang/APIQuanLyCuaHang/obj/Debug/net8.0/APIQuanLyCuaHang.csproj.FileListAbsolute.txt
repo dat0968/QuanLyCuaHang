@@ -133,9 +133,6 @@ F:\CSHARP_6\QuanLyCuaHang\APIQuanLyCuaHang\APIQuanLyCuaHang\bin\Debug\net8.0\run
 F:\CSHARP_6\QuanLyCuaHang\APIQuanLyCuaHang\APIQuanLyCuaHang\bin\Debug\net8.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
 F:\CSHARP_6\QuanLyCuaHang\APIQuanLyCuaHang\APIQuanLyCuaHang\bin\Debug\net8.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
 F:\CSHARP_6\QuanLyCuaHang\APIQuanLyCuaHang\APIQuanLyCuaHang\bin\Debug\net8.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
-F:\CSHARP_6\QuanLyCuaHang\APIQuanLyCuaHang\APIQuanLyCuaHang\bin\Debug\net8.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
-F:\CSHARP_6\QuanLyCuaHang\APIQuanLyCuaHang\APIQuanLyCuaHang\bin\Debug\net8.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
-F:\CSHARP_6\QuanLyCuaHang\APIQuanLyCuaHang\APIQuanLyCuaHang\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 F:\CSHARP_6\QuanLyCuaHang\APIQuanLyCuaHang\APIQuanLyCuaHang\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
 F:\CSHARP_6\QuanLyCuaHang\APIQuanLyCuaHang\APIQuanLyCuaHang\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
 F:\CSHARP_6\QuanLyCuaHang\APIQuanLyCuaHang\APIQuanLyCuaHang\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
@@ -157,3 +154,10 @@ F:\CSHARP_6\QuanLyCuaHang\APIQuanLyCuaHang\APIQuanLyCuaHang\obj\Debug\net8.0\ref
 F:\CSHARP_6\QuanLyCuaHang\APIQuanLyCuaHang\APIQuanLyCuaHang\obj\Debug\net8.0\APIQuanLyCuaHang.pdb
 F:\CSHARP_6\QuanLyCuaHang\APIQuanLyCuaHang\APIQuanLyCuaHang\obj\Debug\net8.0\APIQuanLyCuaHang.genruntimeconfig.cache
 F:\CSHARP_6\QuanLyCuaHang\APIQuanLyCuaHang\APIQuanLyCuaHang\obj\Debug\net8.0\ref\APIQuanLyCuaHang.dll
+F:\CSHARP_6\QuanLyCuaHang\APIQuanLyCuaHang\APIQuanLyCuaHang\bin\Debug\net8.0\EPPlus.dll
+F:\CSHARP_6\QuanLyCuaHang\APIQuanLyCuaHang\APIQuanLyCuaHang\bin\Debug\net8.0\EPPlus.Interfaces.dll
+F:\CSHARP_6\QuanLyCuaHang\APIQuanLyCuaHang\APIQuanLyCuaHang\bin\Debug\net8.0\EPPlus.System.Drawing.dll
+F:\CSHARP_6\QuanLyCuaHang\APIQuanLyCuaHang\APIQuanLyCuaHang\bin\Debug\net8.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+F:\CSHARP_6\QuanLyCuaHang\APIQuanLyCuaHang\APIQuanLyCuaHang\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Json.dll
+F:\CSHARP_6\QuanLyCuaHang\APIQuanLyCuaHang\APIQuanLyCuaHang\bin\Debug\net8.0\Microsoft.IO.RecyclableMemoryStream.dll
+F:\CSHARP_6\QuanLyCuaHang\APIQuanLyCuaHang\APIQuanLyCuaHang\bin\Debug\net8.0\runtimes\win\lib\net8.0\Microsoft.Win32.SystemEvents.dll

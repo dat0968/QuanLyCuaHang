@@ -228,6 +228,382 @@
         }
       }
     },
+    "/api/Customer": {
+      "get": {
+        "tags": [
+          "Customer"
+        ],
+        "parameters": [
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          },
+          {
+            "name": "searchTerm",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Customer"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "MaKh": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "HoTen": {
+                    "type": "string"
+                  },
+                  "GioiTinh": {
+                    "type": "string"
+                  },
+                  "NgaySinh": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "DiaChi": {
+                    "type": "string"
+                  },
+                  "Cccd": {
+                    "type": "string"
+                  },
+                  "Sdt": {
+                    "type": "string"
+                  },
+                  "Email": {
+                    "type": "string"
+                  },
+                  "TenTaiKhoan": {
+                    "type": "string"
+                  },
+                  "MatKhau": {
+                    "type": "string"
+                  },
+                  "HinhDaiDien": {
+                    "type": "string"
+                  },
+                  "Anh": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "NgayTao": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "TinhTrang": {
+                    "type": "string"
+                  },
+                  "IsDelete": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "encoding": {
+                "MaKh": {
+                  "style": "form"
+                },
+                "HoTen": {
+                  "style": "form"
+                },
+                "GioiTinh": {
+                  "style": "form"
+                },
+                "NgaySinh": {
+                  "style": "form"
+                },
+                "DiaChi": {
+                  "style": "form"
+                },
+                "Cccd": {
+                  "style": "form"
+                },
+                "Sdt": {
+                  "style": "form"
+                },
+                "Email": {
+                  "style": "form"
+                },
+                "TenTaiKhoan": {
+                  "style": "form"
+                },
+                "MatKhau": {
+                  "style": "form"
+                },
+                "HinhDaiDien": {
+                  "style": "form"
+                },
+                "Anh": {
+                  "style": "form"
+                },
+                "NgayTao": {
+                  "style": "form"
+                },
+                "TinhTrang": {
+                  "style": "form"
+                },
+                "IsDelete": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Customer/{id}": {
+      "put": {
+        "tags": [
+          "Customer"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "MaKh": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "HoTen": {
+                    "type": "string"
+                  },
+                  "GioiTinh": {
+                    "type": "string"
+                  },
+                  "NgaySinh": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "DiaChi": {
+                    "type": "string"
+                  },
+                  "Cccd": {
+                    "type": "string"
+                  },
+                  "Sdt": {
+                    "type": "string"
+                  },
+                  "Email": {
+                    "type": "string"
+                  },
+                  "TenTaiKhoan": {
+                    "type": "string"
+                  },
+                  "MatKhau": {
+                    "type": "string"
+                  },
+                  "HinhDaiDien": {
+                    "type": "string"
+                  },
+                  "Anh": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "NgayTao": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "TinhTrang": {
+                    "type": "string"
+                  },
+                  "IsDelete": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "encoding": {
+                "MaKh": {
+                  "style": "form"
+                },
+                "HoTen": {
+                  "style": "form"
+                },
+                "GioiTinh": {
+                  "style": "form"
+                },
+                "NgaySinh": {
+                  "style": "form"
+                },
+                "DiaChi": {
+                  "style": "form"
+                },
+                "Cccd": {
+                  "style": "form"
+                },
+                "Sdt": {
+                  "style": "form"
+                },
+                "Email": {
+                  "style": "form"
+                },
+                "TenTaiKhoan": {
+                  "style": "form"
+                },
+                "MatKhau": {
+                  "style": "form"
+                },
+                "HinhDaiDien": {
+                  "style": "form"
+                },
+                "Anh": {
+                  "style": "form"
+                },
+                "NgayTao": {
+                  "style": "form"
+                },
+                "TinhTrang": {
+                  "style": "form"
+                },
+                "IsDelete": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Customer/Hide/{id}": {
+      "put": {
+        "tags": [
+          "Customer"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Customer/ExportExcel": {
+      "get": {
+        "tags": [
+          "Customer"
+        ],
+        "parameters": [
+          {
+            "name": "searchTerm",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Customer/ImportExcel": {
+      "post": {
+        "tags": [
+          "Customer"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "file": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Products": {
       "get": {
         "tags": [

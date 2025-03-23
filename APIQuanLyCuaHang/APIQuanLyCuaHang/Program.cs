@@ -14,9 +14,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-
+using APIQuanLyCuaHang.Repositories.Customer;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
+using OfficeOpenXml;
 var builder = WebApplication.CreateBuilder(args);
-
+ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 // Add services to the container.
 builder.Services.AddControllers();
 
@@ -55,6 +58,7 @@ builder.Services.AddDbContext<QuanLyCuaHangContext>(options =>
 });
 builder.Services.AddCors(options =>
 {
+
     options.AddPolicy("MyPolicy", ops =>
     {
         ops.AllowAnyHeader();
@@ -72,6 +76,8 @@ var SecretKeyBytes = Encoding.UTF8.GetBytes(SecretKey);
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<ITokenServices, TokenServices>();
+builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -79,7 +85,6 @@ builder.Services.AddAuthentication(options =>
     options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 }).AddJwtBearer(options =>
 {
-
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = false,
@@ -111,6 +116,7 @@ app.UseAuthentication();
 app.UseAuthorization(); ;
 
 app.MapControllers();
+app.UseStaticFiles();
 
 SeedDb();
 
