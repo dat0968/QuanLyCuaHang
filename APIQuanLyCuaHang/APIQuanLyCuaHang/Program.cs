@@ -1,9 +1,11 @@
 ﻿using APIQuanLyCuaHang.DbInitializer;
 using APIQuanLyCuaHang.Models;
+using APIQuanLyCuaHang.Repositories.Customer;
 using Microsoft.EntityFrameworkCore;
-
+using System.ComponentModel;
+using OfficeOpenXml;
 var builder = WebApplication.CreateBuilder(args);
-
+ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -14,8 +16,17 @@ builder.Services.AddDbContext<QuanLyCuaHangContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("QuanLyCuaHangContext"));
 });
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
 var app = builder.Build();
 
@@ -26,12 +37,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseStaticFiles();
 
 SeedDb();
 
