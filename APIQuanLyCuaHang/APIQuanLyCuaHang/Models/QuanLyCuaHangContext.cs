@@ -349,24 +349,23 @@ public partial class QuanLyCuaHangContext : DbContext
             entity.Property(e => e.Token).HasMaxLength(500);
         });
 
-        modelBuilder.Entity<Sanpham>(entity =>
-        {
-            entity.HasKey(e => e.MaSp).HasName("PK__SANPHAM__2725081C40D91290");
+            modelBuilder.Entity<Sanpham>(entity =>
+            {
+                entity.HasKey(e => e.MaSp).HasName("PK__SANPHAM__2725081C40D91290");
 
-            entity.ToTable("SANPHAM");
+                entity.ToTable("SANPHAM");
 
-            entity.Property(e => e.MaSp)
-                .ValueGeneratedNever()
-                .HasColumnName("MaSP");
-            entity.Property(e => e.IsDelete).HasDefaultValue(false);
-            entity.Property(e => e.MoTa).HasMaxLength(500);
-            entity.Property(e => e.TenSanPham).HasMaxLength(100);
+                entity.Property(e => e.MaSp)
+                    .HasColumnName("MaSP");
+                entity.Property(e => e.IsDelete).HasDefaultValue(false);
+                entity.Property(e => e.MoTa).HasMaxLength(500);
+                entity.Property(e => e.TenSanPham).HasMaxLength(100);
 
-            entity.HasOne(d => d.MaDanhMucNavigation).WithMany(p => p.Sanphams)
-                .HasForeignKey(d => d.MaDanhMuc)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__SANPHAM__IsDelet__48CFD27E");
-        });
+                entity.HasOne(d => d.MaDanhMucNavigation).WithMany(p => p.Sanphams)
+                    .HasForeignKey(d => d.MaDanhMuc)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__SANPHAM__IsDelet__48CFD27E");
+            });
 
         OnModelCreatingPartial(modelBuilder);
     }
