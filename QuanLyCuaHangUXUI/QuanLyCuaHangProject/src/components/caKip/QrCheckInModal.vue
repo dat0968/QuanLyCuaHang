@@ -232,21 +232,34 @@ export default {
             className: 'text-center',
             render: function (data, type, row) {
               const isDelete = row.isDelete
-              return `<span 
-                        class="edit-shift" 
-                        data-id="${data}" 
-                        title="Sửa"
-                      >📝</span>
-                      <span 
-                        class=" change-status" 
-                        data-id="${row.maCaKip}" 
-                        title="${isDelete ? 'Vô hiệu hóa' : 'Kích hoạt'}"
-                      >${isDelete ? '✖️' : '✔️'}</span>
-                      <span 
-                        class=" generate-qr" 
-                        data-id="${data}" 
-                        title="Tải QR"
-                      >📥</span>
+              return `
+                      <div class="d-flex gap-1 justify-content-between">
+                        <span
+                          class="text-danger edit-shift"
+                          data-id="${data}"
+                          title="Sửa"
+                          style="cursor: pointer;"
+                        >
+                          <i class="bi icon-pencil"></i>
+                        </span>
+                        <span
+                          class="text-info change-status"
+                          data-id="${row.maCaKip}"
+                          title="${isDelete ? 'Vô hiệu hóa' : 'Kích hoạt'}"
+                          style="cursor: pointer;"
+                        >
+                          <i class="${isDelete ? 'bi icon-close' : 'bi icon-check'}"></i>
+                        </span>
+                        <span
+                          class="text-primary generate-qr"
+                          data-id="${data}"
+                          title="Tải QR"
+                          style="cursor: pointer;"
+                        >
+                          <i class="bi icon-pin"></i>
+                        </span>
+                      </div>
+
 
                 `
             },
