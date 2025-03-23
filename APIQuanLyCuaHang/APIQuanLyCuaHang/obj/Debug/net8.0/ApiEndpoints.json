@@ -432,6 +432,11 @@
         "IsRequired": false
       },
       {
+        "Name": "filterPrices",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
         "Name": "page",
         "Type": "System.Int32",
         "IsRequired": false

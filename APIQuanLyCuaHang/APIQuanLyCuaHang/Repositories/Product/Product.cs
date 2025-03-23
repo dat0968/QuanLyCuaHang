@@ -53,7 +53,7 @@ namespace APIQuanLyCuaHang.Repositories.Product
             }
         }
 
-        async Task<List<ProductResponseDTO>> IProduct.GetAll(string? search, int? filterCatories, string? sort)
+        async Task<List<ProductResponseDTO>> IProduct.GetAll(string? search, int? filterCatories, string? sort, string? filterPrices)
         {
             var GetListProduct = await db.Sanphams
                 .Where(p => p.IsDelete == false)
@@ -116,7 +116,50 @@ namespace APIQuanLyCuaHang.Repositories.Product
                         return p.Chitietsanphams.Min(p => p.DonGia);
                     }).ToList();
                     break;
+                case "des":
+                    GetListProduct = GetListProduct.OrderByDescending(p =>
+                    {
+                        if (!p.Chitietsanphams.Any())
+                        {
+                            return 0;
+                        }
+                        return p.Chitietsanphams.Max(p => p.DonGia);
+                    }).ToList();
+                    break;
+                default:
+                    break;
             }
+
+            switch (filterPrices)
+            {
+                case "0 VNĐ - 10.000 VNĐ":
+                    GetListProduct = GetListProduct
+                        .Where(p => p.Chitietsanphams.Any(ct => ct.DonGia >= 0 && ct.DonGia <= 10000))
+                        .ToList();
+                    break;
+
+                case "10.000 VNĐ - 30.000 VNĐ":
+                    GetListProduct = GetListProduct
+                        .Where(p => p.Chitietsanphams.Any(ct => ct.DonGia >= 10000 && ct.DonGia <= 30000))
+                        .ToList();
+                    break;
+
+                case "30.000 VNĐ - 50.000 VNĐ":
+                    GetListProduct = GetListProduct
+                        .Where(p => p.Chitietsanphams.Any(ct => ct.DonGia >= 30000 && ct.DonGia <= 50000))
+                        .ToList();
+                    break;
+
+                case "50.000 VNĐ trở lên":
+                    GetListProduct = GetListProduct
+                        .Where(p => p.Chitietsanphams.Any(ct => ct.DonGia >= 50000))
+                        .ToList();
+                    break;
+
+                default:
+                    break;
+            }
+
             return GetListProduct;
         }
 

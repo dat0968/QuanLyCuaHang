@@ -633,6 +633,13 @@
             }
           },
           {
+            "name": "filterPrices",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "page",
             "in": "query",
             "schema": {

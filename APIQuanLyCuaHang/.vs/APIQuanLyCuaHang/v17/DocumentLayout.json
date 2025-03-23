@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\migrations\\20250323144057_createtablemaoupon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\migrations\\20250323144057_createtablemaoupon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\repositories\\product\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\repositories\\product\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\migrations\\quanlycuahangcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\migrations\\quanlycuahangcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\repositories\\product\\iproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\repositories\\product\\iproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\models\\macoupon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -43,18 +47,6 @@
       "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\repositories\\product\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\repositories\\product\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\repositories\\product\\iproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\repositories\\product\\iproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\models\\sanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\models\\sanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -65,10 +57,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\repositories\\detailproduct\\idetailproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\repositories\\detailproduct\\idetailproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\services\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\services\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\dto\\imageproductresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -133,8 +121,8 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 388,
-          "SelectedChildIndex": 2,
+          "DockedWidth": 382,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -142,72 +130,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "QuanLyCuaHangContextModelSnapshot.cs",
-              "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Migrations\\QuanLyCuaHangContextModelSnapshot.cs",
-              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Migrations\\QuanLyCuaHangContextModelSnapshot.cs",
-              "ToolTip": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Migrations\\QuanLyCuaHangContextModelSnapshot.cs",
-              "RelativeToolTip": "APIQuanLyCuaHang\\Migrations\\QuanLyCuaHangContextModelSnapshot.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-23T14:45:38.133Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "20250323144057_CreateTableMaoupon.cs",
-              "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Migrations\\20250323144057_CreateTableMaoupon.cs",
-              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Migrations\\20250323144057_CreateTableMaoupon.cs",
-              "ToolTip": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Migrations\\20250323144057_CreateTableMaoupon.cs*",
-              "RelativeToolTip": "APIQuanLyCuaHang\\Migrations\\20250323144057_CreateTableMaoupon.cs*",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAFAAAAAAAAAA==",
+              "Title": "Product.cs",
+              "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Product\\Product.cs",
+              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\Product\\Product.cs",
+              "ToolTip": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Product\\Product.cs",
+              "RelativeToolTip": "APIQuanLyCuaHang\\Repositories\\Product\\Product.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAAAkwJEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-23T14:40:57.852Z",
+              "WhenOpened": "2025-03-18T03:55:55.109Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "MaCoupon.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Models\\MaCoupon.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Models\\MaCoupon.cs",
               "ToolTip": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Models\\MaCoupon.cs",
               "RelativeToolTip": "APIQuanLyCuaHang\\Models\\MaCoupon.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAA+wBgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAIwBYAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-23T14:39:09.472Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "APIQuanLyCuaHang.csproj.user",
-              "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj.user",
-              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj.user",
-              "ToolTip": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj.user",
-              "RelativeToolTip": "APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj.user",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAABqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003464|",
-              "WhenOpened": "2025-03-23T13:48:50.437Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "APIQuanLyCuaHang",
-              "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj",
-              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj",
-              "ToolTip": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj",
-              "RelativeToolTip": "APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-03-23T13:48:46.197Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
               "Title": "appsettings.json",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\appsettings.json",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\appsettings.json",
@@ -220,20 +169,46 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Product.cs",
-              "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Product\\Product.cs",
-              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\Product\\Product.cs",
-              "ToolTip": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Product\\Product.cs",
-              "RelativeToolTip": "APIQuanLyCuaHang\\Repositories\\Product\\Product.cs",
-              "ViewState": "AgIAAFoAAAAAAAAAAAAgwGkAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-18T03:55:55.109Z",
+              "DocumentIndex": 5,
+              "Title": "APIQuanLyCuaHang",
+              "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj",
+              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj",
+              "ToolTip": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj",
+              "RelativeToolTip": "APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-03-23T13:48:46.197Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 6,
+              "Title": "APIQuanLyCuaHang.csproj.user",
+              "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj.user",
+              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj.user",
+              "ToolTip": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj.user",
+              "RelativeToolTip": "APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj.user",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAABqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003464|",
+              "WhenOpened": "2025-03-23T13:48:50.437Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "IProduct.cs",
+              "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Product\\IProduct.cs",
+              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\Product\\IProduct.cs",
+              "ToolTip": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Product\\IProduct.cs*",
+              "RelativeToolTip": "APIQuanLyCuaHang\\Repositories\\Product\\IProduct.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAB1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-18T03:55:49.237Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "CategoriesController.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Controllers\\CategoriesController.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Controllers\\CategoriesController.cs",
@@ -245,7 +220,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 21,
               "Title": "Category.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Category\\Category.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\Category\\Category.cs",
@@ -257,7 +232,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 20,
               "Title": "CategoryResponseDTO.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\DTO\\CategoryResponseDTO.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\DTO\\CategoryResponseDTO.cs",
@@ -269,7 +244,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 19,
               "Title": "ICategory.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Category\\ICategory.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\Category\\ICategory.cs",
@@ -281,7 +256,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "Program.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Program.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Program.cs",
@@ -294,7 +269,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 15,
               "Title": "imageProduct.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\ImageProduct\\imageProduct.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\ImageProduct\\imageProduct.cs",
@@ -306,7 +281,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 27,
               "Title": "IimageProduct.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\ImageProduct\\IimageProduct.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\ImageProduct\\IimageProduct.cs",
@@ -319,18 +294,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 16,
-              "Title": "ProductService.cs",
-              "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Services\\ProductService.cs",
-              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Services\\ProductService.cs",
-              "ToolTip": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Services\\ProductService.cs",
-              "RelativeToolTip": "APIQuanLyCuaHang\\Services\\ProductService.cs",
-              "ViewState": "AgIAADwAAAAAAAAAAAAYwI0AAABBAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-19T00:14:52.436Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
               "Title": "DetailProduct.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\DetailProduct\\DetailProduct.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\DetailProduct\\DetailProduct.cs",
@@ -342,7 +305,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 13,
               "Title": "IDetailProduct.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\DetailProduct\\IDetailProduct.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\DetailProduct\\IDetailProduct.cs",
@@ -354,7 +317,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 24,
               "Title": "ProductCreateRequestDTO.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\DTO\\ProductCreateRequestDTO.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\DTO\\ProductCreateRequestDTO.cs",
@@ -366,7 +329,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 14,
               "Title": "ImageProductResponseDTO.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\DTO\\ImageProductResponseDTO.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\DTO\\ImageProductResponseDTO.cs",
@@ -375,28 +338,29 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-18T13:58:34.375Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "IProduct.cs",
-              "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Product\\IProduct.cs",
-              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\Product\\IProduct.cs",
-              "ToolTip": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Product\\IProduct.cs",
-              "RelativeToolTip": "APIQuanLyCuaHang\\Repositories\\Product\\IProduct.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAABfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-18T03:55:49.237Z"
             }
           ]
         },
         {
-          "DockedWidth": 12,
+          "DockedWidth": 18,
           "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 2,
+              "Title": "ProductsController.cs",
+              "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Controllers\\ProductsController.cs",
+              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Controllers\\ProductsController.cs",
+              "ToolTip": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Controllers\\ProductsController.cs*",
+              "RelativeToolTip": "APIQuanLyCuaHang\\Controllers\\ProductsController.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAIBtwBcAAACDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-18T03:55:08.428Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "QuanLyCuaHangContext.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Models\\QuanLyCuaHangContext.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Models\\QuanLyCuaHangContext.cs",
@@ -409,7 +373,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "launchSettings.json",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Properties\\launchSettings.json",
@@ -422,7 +386,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "AccountController.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Controllers\\AccountController.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Controllers\\AccountController.cs",
@@ -435,7 +399,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 22,
               "Title": "Danhmuc.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Models\\Danhmuc.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Models\\Danhmuc.cs",
@@ -447,7 +411,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 17,
               "Title": "ProductEditRequestDTO.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\DTO\\ProductEditRequestDTO.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\DTO\\ProductEditRequestDTO.cs",
@@ -459,7 +423,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 26,
               "Title": "DetailProductResponseDTO.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\DTO\\DetailProductResponseDTO.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\DTO\\DetailProductResponseDTO.cs",
@@ -471,7 +435,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 23,
               "Title": "Hinhanh.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Models\\Hinhanh.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Models\\Hinhanh.cs",
@@ -483,7 +447,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 11,
               "Title": "Sanpham.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Models\\Sanpham.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Models\\Sanpham.cs",
@@ -495,7 +459,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 25,
               "Title": "Chitietsanpham.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Models\\Chitietsanpham.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Models\\Chitietsanpham.cs",
@@ -507,20 +471,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "ProductsController.cs",
-              "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Controllers\\ProductsController.cs",
-              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Controllers\\ProductsController.cs",
-              "ToolTip": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Controllers\\ProductsController.cs",
-              "RelativeToolTip": "APIQuanLyCuaHang\\Controllers\\ProductsController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAIBtwBoAAABUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-18T03:55:08.428Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 18,
               "Title": "ProductResponseDTO.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\DTO\\ProductResponseDTO.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\DTO\\ProductResponseDTO.cs",

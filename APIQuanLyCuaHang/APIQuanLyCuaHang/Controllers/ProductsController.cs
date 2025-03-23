@@ -21,10 +21,10 @@ namespace APIQuanLyCuaHang.Controllers
             this.productService = productService;
         }
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] string? search, int? filterCatories, string? sort, int page = 1)
+        public async Task<IActionResult> GetAll([FromQuery] string? search, int? filterCatories, string? sort, string? filterPrices, int page = 1)
         {
             Console.WriteLine($"Search Parameter: {search}");
-            var GetListProductVM = await product.GetAll(search, filterCatories, sort);
+            var GetListProductVM = await product.GetAll(search, filterCatories, sort, filterPrices);
             page = page >= 1 ? page : 1;
             int pagesize = 10;
             // Phân trang

@@ -9,9 +9,11 @@ const TotalPages = ref(0)
 const CurrentPage = ref(1)
 const valueSearch = ref('')
 const valueCategory = ref('')
+const valueSort = ref('')
+const valuePrices = ref('')
 async function fetchProducts() {
   try {
-    const response = await fetch(`https://localhost:7139/api/Products?page=${CurrentPage.value}&search=${valueSearch.value}&filterCatories=${valueCategory.value}`, {
+    const response = await fetch(`https://localhost:7139/api/Products?page=${CurrentPage.value}&search=${valueSearch.value}&filterCatories=${valueCategory.value}&sort=${valueSort.value}&filterPrices=${valuePrices.value}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -111,10 +113,10 @@ const RemoveProduct = async (id) => {
         </select>
       </div>
       <div class="col-md-3">
-        <select class="form-select shadow-sm bg-white">
+        <select @change="ReturnProduct()" v-model="valueSort" class="form-select shadow-sm bg-white">
           <option value="">🔄 Sắp xếp theo</option>
-          <option value="name">Giá tăng dần</option>
-          <option value="price">Giá giảm dần</option>
+          <option value="asc">Giá tăng dần</option>
+          <option value="des">Giá giảm dần</option>
         </select>
       </div>
     </div>
@@ -122,7 +124,7 @@ const RemoveProduct = async (id) => {
     <!-- Lọc theo khoảng giá (Đã chỉnh sửa nền trắng) -->
     <div class="row g-3 mb-3 align-items-center">
       <div class="col-md-3">
-        <select class="form-select shadow-sm bg-white">
+        <select v-model="valuePrices" @change="ReturnProduct()" class="form-select shadow-sm bg-white">
           <option value="">💰 Lọc theo giá</option>
           <option value="0 VNĐ - 10.000 VNĐ">0 VNĐ - 10.000 VNĐ</option>
           <option value="10.000 VNĐ - 30.000 VNĐ">10.000 VNĐ - 30.000 VNĐ</option>
