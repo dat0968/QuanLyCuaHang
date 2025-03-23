@@ -1,6 +1,5 @@
 using APIQuanLyCuaHang.DTO;
 using APIQuanLyCuaHang.Repositories.LichLamViec;
-using APIQuanLyCuaHang.Services.QRCode;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;

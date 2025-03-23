@@ -33,6 +33,11 @@ namespace APIQuanLyCuaHang.Repositories.LichLamViec
                     throw new Exception("Ca kíp đã đầy.");
                 }
 
+                if (caKip.IsDelete!.Value)
+                {
+                    throw new Exception("Ca kíp đã bị vô hiệu hóa để đăng kí làm việc.");
+                }
+
                 bool daDangKy = await _db.Lichsulamviecs
                     .AnyAsync(l => l.MaNv == maNv && l.MaCaKip == maCaKip && l.NgayThangNam == ngayLam);
                 if (daDangKy)
