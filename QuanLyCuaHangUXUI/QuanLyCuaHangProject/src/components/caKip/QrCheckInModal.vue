@@ -15,11 +15,14 @@
           <div class="modal-body d-flex flex-column align-items-center">
             <p v-if="isScanning">
               Quét mã QR bằng camera.
+
+              <!-- Tooltip Hiển Thị Ca Hiện Tại -->
               <span
                 type="button"
                 data-bs-toggle="tooltip"
                 :title="currentShiftInfo"
                 id="tooltip-current-shift"
+                @click="toggleShiftTable"
               >
                 ⓘ
               </span>
@@ -27,32 +30,55 @@
             <p v-else></p>
 
             <div class="content-wrapper w-100 d-flex flex-column align-items-center">
-              <div v-if="isScanning" class="w-100 d-flex flex-column align-items-center">
-                <input
-                  v-model="employeeId"
-                  type="text"
-                  placeholder="Nhập ID Người làm việc"
-                  class="form-control mb-2 w-75"
-                />
-                <qrcode-stream
-                  @decode="onScanSuccess"
-                  style="width: 200px; height: 200px"
-                ></qrcode-stream>
-                <p class="mt-2">Hoặc tải ảnh QR lên:</p>
-                <div class="d-flex w-75 mb-2 align-items-center">
+              <div v-if="isScanning" class="w-100 d-flex flex-row align-items-center">
+                <div class="col d-flex justify-content-center flex-column align-items-center">
                   <input
-                    type="file"
-                    @change="onFileUpload"
-                    accept="image/*"
-                    class="form-control col-9"
+                    v-model="employeeId"
+                    type="text"
+                    placeholder="Nhập ID Người làm việc"
+                    class="form-control mb-2 w-75"
                   />
-                  <button
-                    class="btn btn-primary col-3"
-                    @click="confirmImageUpload"
-                    :disabled="!uploadedFile"
-                  >
-                    Xác nhận
-                  </button>
+                  <qrcode-stream
+                    @decode="onScanSuccess"
+                    style="width: 200px; height: 200px"
+                  ></qrcode-stream>
+                  <p class="mt-2">Hoặc tải ảnh QR lên:</p>
+                  <div class="d-flex w-75 mb-2 align-items-center">
+                    <input
+                      type="file"
+                      @change="onFileUpload"
+                      accept="image/*"
+                      class="form-control col-9"
+                    />
+                    <button
+                      class="btn btn-primary col-3"
+                      @click="confirmImageUpload"
+                      :disabled="!uploadedFile"
+                    >
+                      Xác nhận
+                    </button>
+                  </div>
+                </div>
+                <div v-if="showShiftTable" class="col-4 border-left">
+                  <!-- Bảng hiển thị danh sách nhân viên-->
+                  <
+                  <div class="mt-3">
+                    <h5>Nhân Viên Trong Ca</h5>
+                    <div style="overflow-x: auto">
+                      <table class="table table-bordered mt-2" id="dt-employeeList">
+                        <thead>
+                          <tr>
+                            <th>Mã NV</th>
+                            <th>Tên Nhân Viên</th>
+                            <th>Giờ Vào</th>
+                            <th>Giờ Ra</th>
+                            <th>Số Giờ Làm</th>
+                          </tr>
+                        </thead>
+                        <tbody></tbody>
+                      </table>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div v-else class="container-fluid">
@@ -134,18 +160,21 @@
 </template>
 
 <script>
+// Import from external libraries
 import { QrcodeStream } from 'vue-qrcode-reader'
 import QRCode from 'qrcode'
-
 import { BrowserQRCodeReader } from '@zxing/browser'
-import * as axiosConfig from '@/utils/axiosClient'
-import ConfigsRequest from '@/models/ConfigsRequest'
 import toastr from 'toastr'
-import * as configsDt from '@/utils/configsDatatable.js'
 import $ from 'jquery'
 import 'datatables.net'
 import 'datatables.net-dt/css/dataTables.dataTables.css'
 import jsQR from 'jsqr'
+import Swal from 'sweetalert2'
+
+// Import internal modules
+import * as axiosConfig from '@/utils/axiosClient'
+import ConfigsRequest from '@/models/ConfigsRequest'
+import * as configsDt from '@/utils/configsDatatable.js'
 
 export default {
   name: 'QrCheckInModal',
@@ -162,6 +191,8 @@ export default {
       datatable: null,
       shift: { maCaKip: null, soNguoiToiDa: 0, gioBatDau: '', gioKetThuc: '' },
       currentShiftInfo: '',
+      showShiftTable: false,
+      employeeList: [], // Dữ liệu từ API về nhân viên trong ca
     }
   },
   methods: {
@@ -169,6 +200,31 @@ export default {
       this.isScanning = !this.isScanning
       if (!this.isScanning) {
         this.loadShifts()
+      }
+    },
+    toggleShiftTable() {
+      this.showShiftTable = !this.showShiftTable
+      if (this.showShiftTable) {
+        this.loadEmployeesInShift()
+      }
+    },
+    async loadEmployeesInShift() {
+      try {
+        const currentShiftId = 1 // ID ca làm việc hiện tại, có thể thay đổi
+        // Lọc danh sách ca làm việc tương ứng với `currentShiftId`
+        if (currentShift) {
+          // Lấy danh sách nhân viên từ trường `lichLamViecs` của ca hiện tại
+          this.employeeList = currentShift.lichLamViecs || [] // Mặc định là mảng rỗng nếu không có dữ liệu
+
+          if (this.employeeList.length === 0) {
+            toastr.info('Không có nhân viên nào trong ca này.')
+          }
+        } else {
+          toastr.error('Không tìm thấy ca làm việc tương ứng với ID.')
+        }
+      } catch (error) {
+        console.error('Lỗi khi lọc nhân viên trong ca:', error)
+        toastr.error('Đã xảy ra lỗi khi hiển thị danh sách nhân viên trong ca.')
       }
     },
     loadShifts() {
@@ -195,6 +251,7 @@ export default {
       this.datatable = $('#dt-listShifts').DataTable({
         data: this.listShifts,
         columns: [
+          configsDt.defaultTdToShowDetail,
           {
             data: 'maCaKip',
             width: '5%',
@@ -265,11 +322,15 @@ export default {
             },
           },
         ],
+        order: [[1, 'asc']],
         language: {
           ...configsDt.defaultLanguageDatatable,
           info: 'Có _START_ đến _END_ ca trong số _TOTAL_ ca',
         },
       })
+
+      //Gắn sự kiện hiển thị chi tiết
+      configsDt.attachDetailsControl('#dt-listShifts', this.formatDetails)
       $('#dt-listShifts tbody').on('click', '.change-status', (event) => {
         const id = $(event.currentTarget).data('id')
         this.changeStatusShift(id)
@@ -284,6 +345,159 @@ export default {
         const id = $(event.currentTarget).data('id')
         await this.generateQRCode(id)
       })
+    },
+    formatDetails(rowData) {
+      // Tìm dữ liệu của ca làm việc dựa trên `maCaKip`
+      const currentShift = this.listShifts.find((shift) => shift.maCaKip === rowData.maCaKip)
+      const validStatuses = [
+        'Chờ xác nhận',
+        'Đi làm',
+        'Kết thúc ca',
+        'Nghỉ phép',
+        'Trễ',
+        'Nghỉ không phép',
+        'Không được xác nhận',
+      ]
+
+      // Nếu tìm thấy ca tương ứng, hiển thị thông tin chi tiết
+      if (currentShift && currentShift.lichLamViecs && currentShift.lichLamViecs.length > 0) {
+        const detailsHtml = `
+      <div class="container">
+        <!-- Bộ lọc Trạng thái -->
+        <div class="row mb-3">
+          <div class="col-6">
+            <label for="statusFilter">Lọc theo trạng thái:</label>
+            <select id="statusFilter" class="form-control">
+              <option value="">Tất cả</option>
+              ${validStatuses.map((status) => `<option value="${status}">${status}</option>`).join('')}
+            </select>
+          </div>
+          <div class="col-6 d-flex align-items-end">
+            <button id="btnUpdateStatus" class="btn btn-primary w-100" disabled>
+              Cập nhật trạng thái đã chọn
+            </button>
+          </div>
+        </div>
+        
+        <!-- Table danh sách nhân viên -->
+        <div class="row">
+          <div class="col-12 mb-3">
+            <input type="checkbox" id="selectAll" />
+            <label for="selectAll">Chọn tất cả</label>
+          </div>
+        </div>
+        <div class="row border-left border-right" style="max-height: 400px; overflow-y: auto">
+          ${currentShift.lichLamViecs
+            .map(
+              (employee) => `
+                <div class="col-6 mb-3 border rounded d-flex align-items-start">
+                  <input type="checkbox" class="employee-checkbox" data-maNv="${employee.maNv}" />
+                  <div class="ml-2">
+                    <p><strong>${employee.tenNhanVien} <span class="text-secondary">[${employee.maNv}]</span></strong></p>
+                    <p class="text-muted">Trạng thái: ${employee.trangThai}</p>
+                  </div>
+                </div>
+              `,
+            )
+            .join('')}
+        </div>
+      </div>`
+
+        const container = $(detailsHtml)
+
+        // Gắn sự kiện sau khi HTML đã được tạo
+        setTimeout(() => {
+          // Lọc trạng thái
+          container.find('#statusFilter').on('change', (e) => {
+            const selectedStatus = e.target.value
+            const employees = container.find('.col-6')
+
+            employees.each(function () {
+              const employee = $(this)
+              if (!selectedStatus || employee.find('.text-muted').text().includes(selectedStatus)) {
+                employee.show()
+              } else {
+                employee.hide()
+              }
+            })
+
+            const enableUpdate = !!selectedStatus // Chỉ cho phép cập nhật nếu đang lọc trạng thái
+            container.find('#btnUpdateStatus').prop('disabled', !enableUpdate)
+          })
+
+          // Checkbox: Chọn tất cả
+          container.find('#selectAll').on('change', function () {
+            const isChecked = $(this).is(':checked')
+            container.find('.employee-checkbox').prop('checked', isChecked)
+          })
+
+          // Cập nhật trạng thái
+          container.find('#btnUpdateStatus').on('click', () => {
+            const selectedEmployees = container
+              .find('.employee-checkbox:checked')
+              .map((_, checkbox) => $(checkbox).data('manv'))
+              .get()
+
+            if (selectedEmployees.length === 0) {
+              Swal.fire('Thông báo', 'Vui lòng chọn ít nhất một nhân viên.', 'warning')
+              return
+            }
+
+            Swal.fire({
+              title: 'Cập nhật trạng thái',
+              input: 'select',
+              inputOptions: validStatuses.reduce((options, status) => {
+                options[status] = status
+                return options
+              }, {}),
+              inputPlaceholder: 'Chọn trạng thái mới',
+              showCancelButton: true,
+              confirmButtonText: 'Cập nhật',
+              cancelButtonText: 'Hủy',
+            }).then(async (result) => {
+              if (result.isConfirmed) {
+                const newStatus = result.value
+
+                try {
+                  if (selectedEmployees.length === 1) {
+                    // Cập nhật trạng thái cho một nhân viên
+                    await axiosConfig.postToApi(
+                      '/LichLamViec/SetStatusOne',
+                      {
+                        maNv: selectedEmployees[0],
+                        trangThaiCapNhap: newStatus,
+                        maCaKip: rowData.maCaKip,
+                      },
+                      ConfigsRequest.getSkipAuthConfig(),
+                    )
+                  } else {
+                    // Cập nhật trạng thái cho nhiều nhân viên
+                    await axiosConfig.postToApi(
+                      '/LichLamViec/SetStatusList',
+                      {
+                        maNvs: selectedEmployees,
+                        trangThaiCapNhap: newStatus,
+                        maCaKip: rowData.maCaKip,
+                      },
+                      ConfigsRequest.getSkipAuthConfig(),
+                    )
+                  }
+
+                  Swal.fire('Thành công', 'Trạng thái đã được cập nhật.', 'success')
+                } catch (error) {
+                  console.error('Cập nhật trạng thái lỗi:', error)
+                  Swal.fire('Thất bại', 'Không thể cập nhật trạng thái.', 'error')
+                }
+              }
+            })
+          })
+        }, 0)
+
+        return container
+      }
+
+      // Nếu không có thông tin chi tiết
+      return $(`<div>Không có thông tin chi tiết nhân viên trong ca này.</div>`)
     },
     saveShift() {
       // Chuyển đổi `gioBatDau` và `gioKetThuc` sang dạng HH:mm:ss
@@ -356,9 +570,87 @@ export default {
           ConfigsRequest.getSkipAuthConfig(),
         )
         toastr.success(response.message)
+
+        // Sau khi quét QR thành công, lọc danh sách nhân viên trong ca
+        const maCaKip = Number(qrCodeData.split('-')[0]) // ID ca làm việc từ mã QR
+        this.filterEmployeesByShift(maCaKip)
       } catch (error) {
         toastr.error('Lỗi khi chấm công: ' + error.message)
       }
+    },
+    filterEmployeesByShift(maCaKip) {
+      // Tìm ca làm việc dựa trên `maCaKip`
+      const currentShift = this.listShifts.find((shift) => shift.maCaKip === maCaKip)
+
+      console.log('Here!')
+      console.log(maCaKip)
+      console.log(currentShift)
+      if (currentShift) {
+        // Lọc `lichLamViecs` chỉ lấy nhân viên có `trangThai === "Đi làm"`
+        this.employeeList = (currentShift.lichLamViecs || []).filter(
+          (employee) => employee.trangThai === 'Đi làm',
+        )
+
+        if (this.employeeList.length === 0) {
+          toastr.info('Không có nhân viên nào đang đi làm trong ca này.')
+        }
+
+        // Gọi DataTable để hiển thị danh sách nhân viên
+        this.initEmployeeDataTable()
+      } else {
+        toastr.error('Không tìm thấy ca làm việc tương ứng.')
+      }
+    },
+    initEmployeeDataTable() {
+      const employeeTableId = '#dt-employeeList'
+
+      // Nếu DataTable đã khởi tạo trước đó thì phá hủy nó
+      if ($.fn.DataTable.isDataTable(employeeTableId)) {
+        $(employeeTableId).DataTable().destroy()
+      }
+
+      // Khởi tạo lại DataTable với dữ liệu `employeeList`
+      $(employeeTableId).DataTable({
+        data: this.employeeList,
+        columns: [
+          {
+            data: 'maNv',
+            title: 'Mã NV',
+            className: 'text-center',
+          },
+          {
+            data: 'tenNhanVien',
+            title: 'Tên Nhân Viên',
+            className: 'text-center',
+          },
+          {
+            data: 'gioVao',
+            title: 'Giờ Vào',
+            className: 'text-center',
+          },
+          {
+            data: 'gioRa',
+            title: 'Giờ Ra',
+            className: 'text-center',
+          },
+          {
+            data: 'soGioLam',
+            title: 'Số Giờ Làm',
+            className: 'text-center',
+          },
+        ],
+        language: {
+          lengthMenu: 'Hiển thị _MENU_ mục',
+          info: 'Hiển thị mục _START_ đến _END_ trên tổng số _TOTAL_ mục',
+          search: 'Tìm kiếm:',
+          paginate: {
+            first: 'Đầu',
+            previous: 'Trước',
+            next: 'Tiếp',
+            last: 'Cuối',
+          },
+        },
+      })
     },
     async onFileUpload(event) {
       const file = event.target.files[0]
@@ -467,8 +759,6 @@ export default {
     if (tooltipTrigger) {
       new bootstrap.Tooltip(tooltipTrigger)
     }
-
-    // Refresh tooltip khi bảng ca làm việc cập nhật
     this.$watch('listShifts', () => {
       this.refreshTooltip()
     })

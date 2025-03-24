@@ -39,7 +39,7 @@ import OurExperienceChefs from '../../components/OurExperienceChefs.vue'
                 của chúng ta trong hố tháng sâu
               </p>
               <a href="#" class="btn_3"
-                >Xem thêm<img src="../assets/client/img/icon/left_2.svg" alt=""
+                >Xem thêm<img src="../../assets/client/img/icon/left_2.svg" alt=""
               /></a>
             </div>
           </div>

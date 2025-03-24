@@ -4,9 +4,9 @@
       <div class="row align-items-center">
         <div class="col-lg-12">
           <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand" href="index.html">
+            <RouterLink class="navbar-brand" to="/">
               <img src="../assets/client/img/logo.png" alt="logo" />
-            </a>
+            </RouterLink>
             <button
               class="navbar-toggler"
               type="button"
