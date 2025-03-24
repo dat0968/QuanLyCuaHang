@@ -1,5 +1,7 @@
 using APIQuanLyCuaHang.DTO;
+using APIQuanLyCuaHang.DTO.Requests;
 using APIQuanLyCuaHang.Repositories.LichLamViec;
+using APIQuanLyCuaHang.Repositories.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -10,21 +12,21 @@ namespace APIQuanLyCuaHang.Controllers
     [Route("api/[controller]/[action]")]
     public class LichLamViecController : ControllerBase
     {
-        private readonly ILichLamViecRepository _lichLamViecRepo;
+        private readonly IUnitOfWork _unit;
 
-        public LichLamViecController(ILichLamViecRepository lichLamViecRepo)
+        public LichLamViecController(IUnitOfWork unit)
         {
-            _lichLamViecRepo = lichLamViecRepo;
+            _unit = unit;
         }
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _lichLamViecRepo.GetAllAsync());
+            return Ok(await _unit.LichLamViecs.GetAllAsync());
         }
         [HttpPost]
         public async Task<IActionResult> DangKyCaLamViec([FromQuery] int maNv, [FromQuery] int maCaKip, [FromQuery] DateOnly ngayLam)
         {
-            var result = await _lichLamViecRepo.DangKyCaLamViecAsync(maNv, maCaKip, ngayLam);
+            var result = await _unit.LichLamViecs.DangKyCaLamViecAsync(maNv, maCaKip, ngayLam);
             return Ok(result);
         }
         [HttpGet]
@@ -58,9 +60,22 @@ namespace APIQuanLyCuaHang.Controllers
         [HttpPost]
         public async Task<IActionResult> ChamCong([FromQuery] int maNv, [FromQuery] string qrCodeData)
         {
-            var result = await _lichLamViecRepo.ChamCongAsync(maNv, qrCodeData);
+            var result = await _unit.LichLamViecs.ChamCongAsync(maNv, qrCodeData);
             return Ok(result);
         }
+        [HttpPost]
+        public async Task<IActionResult> SetStatusList([FromBody] SetStatusListRequest request)
+        {
+            var result = await _unit.LichLamViecs.SetStatusList(request);
+            return Ok(result);
+        }
+        [HttpPost]
+        public async Task<IActionResult> SetStatusOne([FromBody] SetStatusOneRequest request)
+        {
+            var result = await _unit.LichLamViecs.SetStatusOne(request);
+            return Ok(result);
+        }
+
 
     }
 }

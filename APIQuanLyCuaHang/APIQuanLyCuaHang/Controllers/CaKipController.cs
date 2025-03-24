@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using APIQuanLyCuaHang.DTO;
 using APIQuanLyCuaHang.Repositories.CaKip;
+using APIQuanLyCuaHang.Repositories.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIQuanLyCuaHang.Controllers
@@ -11,37 +12,43 @@ namespace APIQuanLyCuaHang.Controllers
     [Route("api/[controller]/[action]")]
     public class CaKipController : ControllerBase
     {
-        private readonly ICaKipRepository _caKip;
+        private readonly IUnitOfWork _unit;
 
-        public CaKipController(ICaKipRepository caKip)
+        public CaKipController(IUnitOfWork unit)
         {
-            _caKip = caKip;
+            _unit = unit;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAllAsync()
         {
-            var result = await _caKip.GetAllAsync();
+            var result = await _unit.CaKips.GetAllAsync();
+            return Ok(result);
+        }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Employees(int? id)
+        {
+            var result = await _unit.CaKips.GetAllEmployeesInShiftAsync(id);
             return Ok(result);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Remove(int id)
         {
-            var result = await _caKip.RemoveAsync(id);
+            var result = await _unit.CaKips.RemoveAsync(id);
             return Ok(result);
         }
 
         [HttpPost]
         public async Task<IActionResult> UpsertCrew([FromBody] CaKipDTO caKip)
         {
-            var result = await _caKip.UpsertCrewAsync(caKip);
+            var result = await _unit.CaKips.UpsertCrewAsync(caKip);
             return Ok(result);
         }
         [HttpPatch]
         public async Task<IActionResult> ChangeStatusShift(int? id)
         {
-            var result = await _caKip.ChangeStatusAsync(id);
+            var result = await _unit.CaKips.ChangeStatusAsync(id);
             return Ok(result);
         }
     }

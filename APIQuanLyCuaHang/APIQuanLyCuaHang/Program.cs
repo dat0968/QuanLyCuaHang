@@ -3,6 +3,7 @@ using APIQuanLyCuaHang.Models;
 using APIQuanLyCuaHang.Repositories.CaKip;
 using APIQuanLyCuaHang.Repositories.Dashboard;
 using APIQuanLyCuaHang.Repositories.LichLamViec;
+using APIQuanLyCuaHang.Repositories.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,8 +20,8 @@ builder.Services.AddDbContext<QuanLyCuaHangContext>(options =>
 });
 
 builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
-builder.Services.AddScoped<ICaKipRepository, CaKipRepository>();
-builder.Services.AddScoped<ILichLamViecRepository, LichLamViecRepository>();
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
