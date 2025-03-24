@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APIQuanLyCuaHang.Migrations
 {
     [DbContext(typeof(QuanLyCuaHangContext))]
-    [Migration("20250317153909_InitStructureDb")]
-    partial class InitStructureDb
+    [Migration("20250324111406_updateLichSuLamViec_CaKip")]
+    partial class updateLichSuLamViec_CaKip
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,6 +39,9 @@ namespace APIQuanLyCuaHang.Migrations
                     b.Property<TimeOnly>("GioKetThuc")
                         .HasColumnType("time(7)");
 
+                    b.Property<decimal>("HeSoLuong")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<bool?>("IsDelete")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -49,6 +52,9 @@ namespace APIQuanLyCuaHang.Migrations
 
                     b.Property<int>("SoNguoiToiDa")
                         .HasColumnType("int");
+
+                    b.Property<string>("TenCa")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("MaCaKip")
                         .HasName("PK__CAKIP__68C49E4C467ECFEF");
@@ -449,6 +455,15 @@ namespace APIQuanLyCuaHang.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("GhiChu")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeOnly?>("GioRa")
+                        .HasColumnType("time(7)");
+
+                    b.Property<TimeOnly?>("GioVao")
+                        .HasColumnType("time(7)");
+
                     b.Property<bool?>("IsDelete")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -468,11 +483,21 @@ namespace APIQuanLyCuaHang.Migrations
                     b.Property<DateOnly>("NgayThangNam")
                         .HasColumnType("date");
 
+                    b.Property<int?>("NguoiXacNhan")
+                        .HasColumnType("int");
+
                     b.Property<double>("SoGioLam")
                         .HasColumnType("float");
 
                     b.Property<decimal?>("TongLuong")
                         .HasColumnType("decimal(11, 2)");
+
+                    b.Property<string>("TrangThai")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasDefaultValue("Chờ xác nhận");
 
                     b.HasKey("Id")
                         .HasName("PK__LICHSULA__3214EC27C0159D37");
@@ -480,6 +505,8 @@ namespace APIQuanLyCuaHang.Migrations
                     b.HasIndex("MaCaKip");
 
                     b.HasIndex("MaNv");
+
+                    b.HasIndex("NguoiXacNhan");
 
                     b.ToTable("LICHSULAMVIEC", (string)null);
                 });
@@ -744,9 +771,17 @@ namespace APIQuanLyCuaHang.Migrations
                         .IsRequired()
                         .HasConstraintName("FK__LICHSULAMV__MaNV__6477ECF3");
 
+                    b.HasOne("APIQuanLyCuaHang.Models.Nhanvien", "NguoiXacNhanLich")
+                        .WithMany()
+                        .HasForeignKey("NguoiXacNhan")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("FK__LICHSULAMV__NguoiXacNhan__12345678");
+
                     b.Navigation("MaCaKipNavigation");
 
                     b.Navigation("MaNvNavigation");
+
+                    b.Navigation("NguoiXacNhanLich");
                 });
 
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Nhanvien", b =>
