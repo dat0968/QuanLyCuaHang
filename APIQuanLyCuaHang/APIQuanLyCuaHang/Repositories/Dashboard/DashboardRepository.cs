@@ -485,6 +485,29 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
 
             return orderData;
         }
+
+        public async Task<ResponseAPI<WorkHistoryDC>> GetTopEmployeeRegistShift()
+        {
+            ResponseAPI<WorkHistoryDC> response = new();
+            try
+            {
+                var dictionaryNameEmployee = await _db.Nhanviens.ToDictionaryAsync(nv => nv.MaNv, nv => nv.HoTen);
+
+                var allWorkHistory = await _db.Lichsulamviecs.GroupBy(ls => ls.MaNv).Select(ls => new WorkHistoryDC
+                {
+                    MaNv = ls.Key,
+                    TenNhanVien = dictionaryNameEmployee.GetValueOrDefault(ls.Key),
+                    MaCaKip = ls.First().MaCaKip,
+                    TongSoGioLam = ls.Sum(tg => tg.SoGioLam),
+                    TongLuong = ls.Sum(tl => tl.TongLuong),
+                }).OrderByDescending(wh => wh.TongLuong).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                response.SetMessageResponseWithException(500, ex);
+            }
+            return response;
+        }
         #endregion
     }
 }

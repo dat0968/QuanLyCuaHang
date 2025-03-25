@@ -223,12 +223,16 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
                     LyDoNghi = ls.LyDoNghi,
                     TongLuong = ls.TongLuong,
                     IsDelete = ls.IsDelete,
+                    GioVao = ls.GioVao,
+                    GioRa = ls.GioRa,
+                    TrangThai = ls.TrangThai,
+                    GhiChu = ls.GhiChu,
                 }).ToList();
 
                 // Định dạng dữ liệu cho phản hồi
                 var dataFormatted = new CaKipDTO
                 {
-                    MaCaKip = dataOrigin.MaCaKip,
+                    MaCaKip = maCaKip,
                     SoNguoiToiDa = dataOrigin.SoNguoiToiDa,
                     SoNguoiHienTai = dataOrigin.SoNguoiHienTai,
                     GioBatDau = dataOrigin.GioBatDau,

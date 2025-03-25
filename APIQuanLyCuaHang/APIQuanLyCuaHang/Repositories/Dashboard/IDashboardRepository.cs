@@ -13,5 +13,6 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
         Task<ResponseAPI<List<StaffDC>>> GetEmployeeOrderStatisticsAsync();
         Task<ResponseAPI<UserStatisticsData>> GetUserStatisticsAsync();
         Task<ResponseAPI<ProductDC>> GetProductFullDetails(int id);
+        Task<ResponseAPI<WorkHistoryDC>> GetTopEmployeeRegistShift();
     }
 }
