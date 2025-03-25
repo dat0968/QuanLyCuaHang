@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using APIQuanLyCuaHang.Constants;
 using APIQuanLyCuaHang.DTO;
 using APIQuanLyCuaHang.Models;
 using APIQuanLyCuaHang.Repositories.Repository;
@@ -113,9 +114,9 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
                     }
 
                     // Cập nhật trạng thái nếu ca đã kết thúc
-                    if (ls.NgayThangNam < today && ls.TrangThai != "Kết thúc ca")
+                    if (ls.NgayThangNam < today && ls.TrangThai != TrangThaiLichLamViec.KetThucCa)
                     {
-                        ls.TrangThai = "Kết thúc ca";
+                        ls.TrangThai = TrangThaiLichLamViec.KetThucCa;
                         ls.GhiChu = "Auto: Ca làm việc đã kết thúc.";
                         needUpdate = true;
                     }

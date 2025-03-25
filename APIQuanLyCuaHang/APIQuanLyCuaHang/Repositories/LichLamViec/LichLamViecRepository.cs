@@ -1,3 +1,4 @@
+using APIQuanLyCuaHang.Constants;
 using APIQuanLyCuaHang.DTO;
 using APIQuanLyCuaHang.DTO.Requests;
 using APIQuanLyCuaHang.Models;
@@ -55,7 +56,7 @@ namespace APIQuanLyCuaHang.Repositories.LichLamViec
                     SoGioLam = (caKip.GioKetThuc - caKip.GioBatDau).TotalHours,
                     TongLuong = null,
                     IsDelete = false,
-                    TrangThai = "Chờ xác nhận"
+                    TrangThai = TrangThaiLichLamViec.ChoXacNhan
                 };
 
                 await _db.Lichsulamviecs.AddAsync(lichLamViec);
@@ -110,7 +111,7 @@ namespace APIQuanLyCuaHang.Repositories.LichLamViec
                 }
                 else
                 {
-                    if (lichLam.TrangThai == "Chờ xác nhận")
+                    if (lichLam.TrangThai == TrangThaiLichLamViec.ChoXacNhan)
                     {
                         throw new Exception("Lịch làm việc vẫn đang chờ xác nhận, không thể thay đổi trạng thái.");
                     }
@@ -123,7 +124,7 @@ namespace APIQuanLyCuaHang.Repositories.LichLamViec
 
                     double soGioLam = (DateTime.Now - gioBatDau).TotalHours;
                     lichLam.SoGioLam = Math.Max(soGioLam, 0);
-                    lichLam.TrangThai = soGioLam >= 0.5 ? "Kết thúc ca" : "Trễ";
+                    lichLam.TrangThai = soGioLam >= 0.5 ? TrangThaiLichLamViec.KetThucCa : TrangThaiLichLamViec.Tre;
 
                     response.SetSuccessResponse(soGioLam >= 0.5 ? "Check-out thành công." : "Bạn đã trễ.");
                 }
@@ -199,7 +200,10 @@ namespace APIQuanLyCuaHang.Repositories.LichLamViec
                 {
                     throw new InvalidOperationException($"Số lượng nhân viên vượt quá giới hạn {caKip.SoNguoiToiDa} của CaKip.");
                 }
-
+                if (TrangThaiLichLamViec.TrangThaiBatThuong.Contains(request.TrangThaiCapNhap) && String.IsNullOrEmpty(request.GhiChu))
+                {
+                    request.GhiChu = "Không được ghi chú.";
+                }
                 // Cập nhật trạng thái và giờ làm nếu trạng thái là "Đi làm"
                 TimeOnly now = TimeOnly.FromDateTime(DateTime.Now);
                 bool isHaveNote = !String.IsNullOrEmpty(request.GhiChu);
@@ -207,7 +211,7 @@ namespace APIQuanLyCuaHang.Repositories.LichLamViec
                 {
                     ls.NguoiXacNhan = managerUserId;
                     ls.TrangThai = request.TrangThaiCapNhap;
-                    if (request.TrangThaiCapNhap == "Đi làm")
+                    if (request.TrangThaiCapNhap == TrangThaiLichLamViec.DiLam)
                     {
                         ls.GioVao = now;
                     }
@@ -273,10 +277,14 @@ namespace APIQuanLyCuaHang.Repositories.LichLamViec
                 {
                     throw new KeyNotFoundException("Không tìm thấy lịch làm việc phù hợp.");
                 }
+                if (TrangThaiLichLamViec.TrangThaiBatThuong.Contains(request.TrangThaiCapNhap) && String.IsNullOrEmpty(request.GhiChu))
+                {
+                    request.GhiChu = "Không được ghi chú.";
+                }
 
                 // Cập nhật trạng thái và giờ làm nếu trạng thái là "Đi làm"
                 bool isHaveNote = !String.IsNullOrEmpty(request.GhiChu);
-                if (request.TrangThaiCapNhap == "Đi làm")
+                if (request.TrangThaiCapNhap == TrangThaiLichLamViec.DiLam)
                 {
                     lichLamViec.NguoiXacNhan = managerUserId;
                     lichLamViec.GioVao = TimeOnly.FromDateTime(DateTime.Now);
