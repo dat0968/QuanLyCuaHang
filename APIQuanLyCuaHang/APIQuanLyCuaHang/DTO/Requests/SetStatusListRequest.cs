@@ -10,5 +10,6 @@ namespace APIQuanLyCuaHang.DTO.Requests
         public int[] MaNvs { get; set; } = [];
         public string TrangThaiCapNhap { get; set; } = string.Empty;
         public int MaCaKip { get; set; }
+        public string? GhiChu { get; set; } = string.Empty;
     }
 }

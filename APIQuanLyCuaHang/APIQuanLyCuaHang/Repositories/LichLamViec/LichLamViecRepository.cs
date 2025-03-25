@@ -153,11 +153,16 @@ namespace APIQuanLyCuaHang.Repositories.LichLamViec
             }
             return response;
         }
-        public async Task<ResponseAPI<dynamic>> SetStatusList(SetStatusListRequest request)
+        public async Task<ResponseAPI<dynamic>> SetStatusList(SetStatusListRequest request, int? managerUserId)
         {
             ResponseAPI<dynamic> response = new();
             try
             {
+                if (!managerUserId.HasValue)
+                {
+                    throw new ArgumentException("Hiện mã quản lý của bạn không được xác định.");
+                }
+
                 if (request.MaNvs == null || request.MaNvs.Length == 0)
                 {
                     throw new ArgumentException("Danh sách nhân viên không hợp lệ.");
@@ -197,19 +202,21 @@ namespace APIQuanLyCuaHang.Repositories.LichLamViec
 
                 // Cập nhật trạng thái và giờ làm nếu trạng thái là "Đi làm"
                 TimeOnly now = TimeOnly.FromDateTime(DateTime.Now);
+                bool isHaveNote = !String.IsNullOrEmpty(request.GhiChu);
                 lichLamViecs.ForEach(ls =>
                 {
+                    ls.NguoiXacNhan = managerUserId;
                     ls.TrangThai = request.TrangThaiCapNhap;
                     if (request.TrangThaiCapNhap == "Đi làm")
                     {
                         ls.GioVao = now;
                     }
+                    if (isHaveNote) ls.GhiChu = request.GhiChu;
                 });
 
                 await _db.SaveChangesAsync();
 
                 response.SetSuccessResponse($"Đã cập nhật trạng thái {request.TrangThaiCapNhap} cho {lichLamViecs.Count} nhân viên.");
-                response.SetData(lichLamViecs);
             }
             catch (ArgumentException ex)
             {
@@ -230,11 +237,16 @@ namespace APIQuanLyCuaHang.Repositories.LichLamViec
 
             return response;
         }
-        public async Task<ResponseAPI<dynamic>> SetStatusOne(SetStatusOneRequest request)
+        public async Task<ResponseAPI<dynamic>> SetStatusOne(SetStatusOneRequest request, int? managerUserId)
         {
             ResponseAPI<dynamic> response = new();
             try
             {
+                if (!managerUserId.HasValue)
+                {
+                    throw new ArgumentException("Hiện mã quản lý của bạn không được xác định.");
+                }
+
                 if (!request.MaNv.HasValue)
                 {
                     throw new ArgumentException("Mã nhân viên không hợp lệ.");
@@ -263,9 +275,12 @@ namespace APIQuanLyCuaHang.Repositories.LichLamViec
                 }
 
                 // Cập nhật trạng thái và giờ làm nếu trạng thái là "Đi làm"
+                bool isHaveNote = !String.IsNullOrEmpty(request.GhiChu);
                 if (request.TrangThaiCapNhap == "Đi làm")
                 {
+                    lichLamViec.NguoiXacNhan = managerUserId;
                     lichLamViec.GioVao = TimeOnly.FromDateTime(DateTime.Now);
+                    if (isHaveNote) lichLamViec.GhiChu = request.GhiChu;
                 }
 
                 lichLamViec.TrangThai = request.TrangThaiCapNhap;
@@ -273,7 +288,6 @@ namespace APIQuanLyCuaHang.Repositories.LichLamViec
                 await _db.SaveChangesAsync();
 
                 response.SetSuccessResponse($"Đã cập nhật trạng thái {request.TrangThaiCapNhap} cho nhân viên {request.MaNv}.");
-                response.SetData(lichLamViec);
             }
             catch (ArgumentException ex)
             {

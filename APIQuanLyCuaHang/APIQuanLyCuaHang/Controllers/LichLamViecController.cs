@@ -4,6 +4,7 @@ using APIQuanLyCuaHang.Repositories.LichLamViec;
 using APIQuanLyCuaHang.Repositories.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace APIQuanLyCuaHang.Controllers
@@ -66,13 +67,15 @@ namespace APIQuanLyCuaHang.Controllers
         [HttpPost]
         public async Task<IActionResult> SetStatusList([FromBody] SetStatusListRequest request)
         {
-            var result = await _unit.LichLamViecs.SetStatusList(request);
+            int? userManagerId = 120; // Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var result = await _unit.LichLamViecs.SetStatusList(request, userManagerId);
             return Ok(result);
         }
         [HttpPost]
         public async Task<IActionResult> SetStatusOne([FromBody] SetStatusOneRequest request)
         {
-            var result = await _unit.LichLamViecs.SetStatusOne(request);
+            int? userManagerId = 120; // Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var result = await _unit.LichLamViecs.SetStatusOne(request, userManagerId);
             return Ok(result);
         }
 

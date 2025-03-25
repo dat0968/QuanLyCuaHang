@@ -116,7 +116,7 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
                     if (ls.NgayThangNam < today && ls.TrangThai != "Kết thúc ca")
                     {
                         ls.TrangThai = "Kết thúc ca";
-                        ls.GhiChu = "Ca làm việc đã kết thúc.";
+                        ls.GhiChu = "Auto: Ca làm việc đã kết thúc.";
                         needUpdate = true;
                     }
 
@@ -201,7 +201,6 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
                 // Truy vấn lịch làm việc
                 var lichLamViecs = await _db.Lichsulamviecs
                     .AsNoTracking()
-                    .Where(ls => ls.MaCaKip == maCaKip && ls.SoGioLam == 0)
                     .ToListAsync();
 
                 // Truy vấn danh sách nhân viên để giảm số lần truy vấn

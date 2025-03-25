@@ -14,7 +14,7 @@ namespace APIQuanLyCuaHang.Repositories.LichLamViec
         Task<ResponseAPI<dynamic>> GetAllAsync();
         Task<ResponseAPI<dynamic>> DangKyCaLamViecAsync(int? maNv, int maCaKip, DateOnly? ngayLam);
         Task<ResponseAPI<dynamic>> ChamCongAsync(int maNv, string qrCodeData);
-        Task<ResponseAPI<dynamic>> SetStatusOne(SetStatusOneRequest request);
-        Task<ResponseAPI<dynamic>> SetStatusList(SetStatusListRequest request);
+        Task<ResponseAPI<dynamic>> SetStatusOne(SetStatusOneRequest request, int? managerUserId);
+        Task<ResponseAPI<dynamic>> SetStatusList(SetStatusListRequest request, int? managerUserId);
     }
 }
