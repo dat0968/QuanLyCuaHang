@@ -17,10 +17,11 @@ namespace APIQuanLyCuaHang.Repository.MaCoupon
         {
             var newCouponCode = new APIQuanLyCuaHang.Models.MaCoupon
             {
-                MaCode = maCoupon.MaCode,
                 SoTienGiam = maCoupon.SoTienGiam > 0 ? maCoupon.SoTienGiam : null,
                 PhanTramGiam = maCoupon.PhanTramGiam > 0 ? maCoupon.PhanTramGiam : null,
                 NgayKetThuc = maCoupon.NgayKetThuc,
+                NgayBatDau = maCoupon.NgayBatDau,
+                SoLuong = maCoupon.SoLuong,
                 TrangThai = true,
                 DonHangToiThieu = maCoupon.DonHangToiThieu,
             };
@@ -80,6 +81,8 @@ namespace APIQuanLyCuaHang.Repository.MaCoupon
                     PhanTramGiam = item.PhanTramGiam,
                     SoTienGiam = item.SoTienGiam,
                     NgayKetThuc = item.NgayKetThuc,
+                    SoLuong = item.SoLuong,
+                    SoLuongDaDung = item.SoLuongDaDung,
                     TrangThai = item.TrangThai,
                     NgayBatDau = item.NgayBatDau,
                     DonHangToiThieu = item.DonHangToiThieu,
@@ -96,8 +99,10 @@ namespace APIQuanLyCuaHang.Repository.MaCoupon
                 SoTienGiam = maCoupon.SoTienGiam > 0 ? maCoupon.SoTienGiam : null,
                 PhanTramGiam = maCoupon.PhanTramGiam > 0 ? maCoupon.PhanTramGiam : null,
                 NgayKetThuc = maCoupon.NgayKetThuc,
+                SoLuong = maCoupon.SoLuong,
                 TrangThai = maCoupon.TrangThai,
                 NgayBatDau = maCoupon.NgayBatDau,
+                SoLuongDaDung = maCoupon.SoLuongDaDung,
                 DonHangToiThieu = maCoupon.DonHangToiThieu,
             };
             db.MaCoupons.Update(editCouponCode);

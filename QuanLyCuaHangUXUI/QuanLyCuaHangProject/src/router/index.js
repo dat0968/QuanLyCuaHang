@@ -12,6 +12,7 @@ import Register from '../views/accounts/Register.vue'
 import ForgotPassword from '../views/accounts/ForgotPassword.vue'
 import Error from '../views/error/Error.vue'
 import ProductIndex from '../views/admin/Product/Index.vue'
+import Coupon from '../views/admin/Coupon/Index.vue'
 import ForgotPasswordStaff from '../views/accounts/ForgotPasswordStaff.vue'
 import GoogleLoginSuccess from '../views/accounts/GoogleLoginSuccess.vue'
 import CustomerIndex from '../views/Customer/Index.vue'
@@ -27,6 +28,7 @@ const router = createRouter({
           { path: '/about', name: 'About', component: About },
           { path: '/menu', name: 'Menu', component: Menu },
           { path: '/chefs', name: 'Chefs', component: Chef },
+          
         ]
     },
     {
@@ -37,6 +39,7 @@ const router = createRouter({
           { path: '', component: dashboard },
           { path: '/admin/Product', component: ProductIndex },
           { path: 'customer', name: 'CustomerIndex', component: CustomerIndex },
+          { path: '/admin/Coupon', name: 'Coupon', component: Coupon },
         ]
     },
     {
