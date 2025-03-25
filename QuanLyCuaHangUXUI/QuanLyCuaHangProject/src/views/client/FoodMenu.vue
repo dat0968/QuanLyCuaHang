@@ -12,7 +12,7 @@
             <div class="col-lg-12">
               <div class="breadcrumb_iner text-center">
                 <div class="breadcrumb_iner_item">
-                  <h2>Food Menu</h2>
+                  <h2>  Thực đơn món ăn</h2>
                 </div>
               </div>
             </div>

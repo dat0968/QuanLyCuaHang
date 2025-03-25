@@ -10,6 +10,7 @@ namespace APIQuanLyCuaHang.Controllers
     public class StaffController : ControllerBase
     {
         private readonly IStaffRepository _staffRepository;
+        private const string DefaultImagePath = "/uploads/default-image.jpg";
 
         public StaffController(IStaffRepository staffRepository)
         {
@@ -64,25 +65,15 @@ namespace APIQuanLyCuaHang.Controllers
         {
             try
             {
-                if (staffDto == null)
+                if (!ModelState.IsValid)
                 {
-                    return BadRequest("Dữ liệu nhân viên không hợp lệ.");
+                    return BadRequest(ModelState);
                 }
 
-                if (string.IsNullOrEmpty(staffDto.HoTen) ||
-                    string.IsNullOrEmpty(staffDto.GioiTinh) ||
-                    string.IsNullOrEmpty(staffDto.Sdt) ||
-                    string.IsNullOrEmpty(staffDto.Email) ||
-                    string.IsNullOrEmpty(staffDto.MatKhau))
+                if (string.IsNullOrEmpty(staffDto.MatKhau))
                 {
-                    return BadRequest("Các trường bắt buộc (Họ Tên, Giới Tính, SĐT, Email, Mật Khẩu) không được để trống.");
+                    return BadRequest("Mật Khẩu là bắt buộc khi thêm mới nhân viên.");
                 }
-
-                if (staffDto.NgayVaoLam == default(DateOnly))
-                {
-                    return BadRequest("Ngày Vào Làm là bắt buộc.");
-                }
-
                 if (staffDto.HinhAnh != null)
                 {
                     var validExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
@@ -92,10 +83,14 @@ namespace APIQuanLyCuaHang.Controllers
                         return BadRequest("Định dạng file ảnh không hợp lệ. Chỉ chấp nhận .jpg, .jpeg, .png, .gif");
                     }
 
-                    if (staffDto.HinhAnh.Length > 5 * 1024 * 1024) // 5MB
+                    if (staffDto.HinhAnh.Length > 5 * 1024 * 1024)
                     {
                         return BadRequest("Kích thước file ảnh không được vượt quá 5MB");
                     }
+                }
+                if (staffDto.HinhAnh == null && string.IsNullOrEmpty(staffDto.HinhAnhDuongDan))
+                {
+                    staffDto.HinhAnhDuongDan = DefaultImagePath;
                 }
 
                 var addedStaff = await _staffRepository.AddStaff(staffDto);
@@ -113,25 +108,10 @@ namespace APIQuanLyCuaHang.Controllers
         {
             try
             {
-                if (staffDto == null)
+                if (!ModelState.IsValid)
                 {
-                    return BadRequest("Dữ liệu nhân viên không hợp lệ.");
+                    return BadRequest(ModelState);
                 }
-
-                if (string.IsNullOrEmpty(staffDto.HoTen) ||
-                    string.IsNullOrEmpty(staffDto.GioiTinh) ||
-                    string.IsNullOrEmpty(staffDto.Sdt) ||
-                    string.IsNullOrEmpty(staffDto.Email) ||
-                    string.IsNullOrEmpty(staffDto.MatKhau))
-                {
-                    return BadRequest("Các trường bắt buộc (Họ Tên, Giới Tính, SĐT, Email, Mật Khẩu) không được để trống.");
-                }
-
-                if (staffDto.NgayVaoLam == default(DateOnly))
-                {
-                    return BadRequest("Ngày Vào Làm là bắt buộc.");
-                }
-
                 if (staffDto.HinhAnh != null)
                 {
                     var validExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
@@ -141,10 +121,14 @@ namespace APIQuanLyCuaHang.Controllers
                         return BadRequest("Định dạng file ảnh không hợp lệ. Chỉ chấp nhận .jpg, .jpeg, .png, .gif");
                     }
 
-                    if (staffDto.HinhAnh.Length > 5 * 1024 * 1024) // 5MB
+                    if (staffDto.HinhAnh.Length > 5 * 1024 * 1024)
                     {
                         return BadRequest("Kích thước file ảnh không được vượt quá 5MB");
                     }
+                }
+                if (staffDto.HinhAnh == null && string.IsNullOrEmpty(staffDto.HinhAnhDuongDan))
+                {
+                    staffDto.HinhAnhDuongDan = DefaultImagePath;
                 }
 
                 var updatedStaff = await _staffRepository.UpdateStaff(id, staffDto);
@@ -176,7 +160,7 @@ namespace APIQuanLyCuaHang.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Lỗi server: {ex.Message}");
+                return StatusCode(500, $"Lỗi server: {ex.Message} {(ex.InnerException != null ? $"Inner Exception: {ex.InnerException.Message}" : "")}");
             }
         }
     }

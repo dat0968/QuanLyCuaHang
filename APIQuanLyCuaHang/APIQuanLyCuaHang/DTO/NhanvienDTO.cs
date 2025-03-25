@@ -17,7 +17,8 @@ namespace APIQuanLyCuaHang.DTO
         public string TinhTrang { get; set; }
         public bool? IsDelete { get; set; }
         public int? MaChucVu { get; set; }
-        public IFormFile HinhAnh { get; set; } // Dùng để upload file
+        public IFormFile HinhAnh { get; set; } // Dùng để upload file, không bắt buộc
+
         public string HinhAnhDuongDan { get; set; }
     }
 }
