@@ -362,46 +362,46 @@ export default {
       // Nếu tìm thấy ca tương ứng, hiển thị thông tin chi tiết
       if (currentShift && currentShift.lichLamViecs && currentShift.lichLamViecs.length > 0) {
         const detailsHtml = `
-      <div class="container">
-        <!-- Bộ lọc Trạng thái -->
-        <div class="row mb-3">
-          <div class="col-6">
-            <label for="statusFilter">Lọc theo trạng thái:</label>
-            <select id="statusFilter" class="form-control">
-              <option value="">Tất cả</option>
-              ${validStatuses.map((status) => `<option value="${status}">${status}</option>`).join('')}
-            </select>
+        <div class="container">
+          <!-- Bộ lọc Trạng thái -->
+          <div class="row mb-3">
+            <div class="col-6">
+              <label for="statusFilter">Lọc theo trạng thái:</label>
+              <select id="statusFilter" class="form-control">
+                <option value="">Tất cả</option>
+                ${validStatuses.map((status) => `<option value="${status}">${status}</option>`).join('')}
+              </select>
+            </div>
+            <div class="col-6 d-flex align-items-end">
+              <button id="btnUpdateStatus" class="btn btn-primary w-100" title="Cập nhật trạng thái đã chọn!" disabled>
+                Cập nhật
+              </button>
+            </div>
           </div>
-          <div class="col-6 d-flex align-items-end">
-            <button id="btnUpdateStatus" class="btn btn-primary w-100" disabled>
-              Cập nhật trạng thái đã chọn
-            </button>
+
+          <!-- Table danh sách nhân viên -->
+          <div class="row">
+            <div class="col-12 mb-3">
+              <input type="checkbox" id="selectAll" />
+              <label for="selectAll">Chọn tất cả</label>
+            </div>
           </div>
-        </div>
-        
-        <!-- Table danh sách nhân viên -->
-        <div class="row">
-          <div class="col-12 mb-3">
-            <input type="checkbox" id="selectAll" />
-            <label for="selectAll">Chọn tất cả</label>
-          </div>
-        </div>
-        <div class="row border-left border-right" style="max-height: 400px; overflow-y: auto">
-          ${currentShift.lichLamViecs
-            .map(
-              (employee) => `
-                <div class="col-6 mb-3 border rounded d-flex align-items-start">
-                  <input type="checkbox" class="employee-checkbox" data-maNv="${employee.maNv}" />
-                  <div class="ml-2">
-                    <p><strong>${employee.tenNhanVien} <span class="text-secondary">[${employee.maNv}]</span></strong></p>
-                    <p class="text-muted">Trạng thái: ${employee.trangThai}</p>
+          <div class="row border-left border-right" style="max-height: 400px; overflow-y: auto">
+            ${currentShift.lichLamViecs
+              .map(
+                (employee) => `
+                  <div class="col-6 mb-3 border rounded d-flex align-items-start">
+                    <input type="checkbox" class="employee-checkbox" data-maNv="${employee.maNv}" />
+                    <div class="ml-2">
+                      <p><strong>${employee.tenNhanVien} <span class="text-secondary">[${employee.maNv}]</span></strong></p>
+                      <p class="text-muted">Trạng thái: ${employee.trangThai}</p>
+                    </div>
                   </div>
-                </div>
-              `,
-            )
-            .join('')}
-        </div>
-      </div>`
+                `,
+              )
+              .join('')}
+          </div>
+        </div>`
 
         const container = $(detailsHtml)
 
@@ -459,28 +459,10 @@ export default {
                 const newStatus = result.value
 
                 try {
-                  if (selectedEmployees.length === 1) {
-                    // Cập nhật trạng thái cho một nhân viên
-                    await axiosConfig.postToApi(
-                      '/LichLamViec/SetStatusOne',
-                      {
-                        maNv: selectedEmployees[0],
-                        trangThaiCapNhap: newStatus,
-                        maCaKip: rowData.maCaKip,
-                      },
-                      ConfigsRequest.getSkipAuthConfig(),
-                    )
+                  if (selectedEmployees && selectedEmployees.length > 0) {
+                    await this.updateEmployeeStatus(selectedEmployees, newStatus, rowData)
                   } else {
-                    // Cập nhật trạng thái cho nhiều nhân viên
-                    await axiosConfig.postToApi(
-                      '/LichLamViec/SetStatusList',
-                      {
-                        maNvs: selectedEmployees,
-                        trangThaiCapNhap: newStatus,
-                        maCaKip: rowData.maCaKip,
-                      },
-                      ConfigsRequest.getSkipAuthConfig(),
-                    )
+                    Swal.fire('Thông báo', 'Vui lòng chọn ít nhất một nhân viên.', 'warning')
                   }
 
                   Swal.fire('Thành công', 'Trạng thái đã được cập nhật.', 'success')
@@ -498,6 +480,78 @@ export default {
 
       // Nếu không có thông tin chi tiết
       return $(`<div>Không có thông tin chi tiết nhân viên trong ca này.</div>`)
+    },
+    async updateEmployeeStatus(selectedEmployees, newStatus, rowData) {
+      // Hiển thị SweetAlert để người dùng nhập hoặc bỏ qua ghi chú
+      const { value: ghiChu } = await Swal.fire({
+        title: 'Cập nhật Trạng thái',
+        input: 'textarea',
+        inputPlaceholder: 'Nhập ghi chú (Không bắt buộc)...',
+        inputAttributes: {
+          'aria-label': 'Nhập ghi chú',
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Cập nhật',
+        cancelButtonText: 'Hủy',
+      })
+
+      const apiEndpoint =
+        selectedEmployees.length === 1 ? '/LichLamViec/SetStatusOne' : '/LichLamViec/SetStatusList'
+
+      const requestBody =
+        selectedEmployees.length === 1
+          ? {
+              maNv: selectedEmployees[0],
+              trangThaiCapNhap: newStatus,
+              maCaKip: rowData.maCaKip,
+              ghiChu: ghiChu || '', // Ghi chú không bắt buộc, nếu không có thì truyền ""
+            }
+          : {
+              maNvs: selectedEmployees,
+              trangThaiCapNhap: newStatus,
+              maCaKip: rowData.maCaKip,
+              ghiChu: ghiChu || '', // Ghi chú không bắt buộc
+            }
+
+      try {
+        // Gọi API cập nhật trạng thái
+        const response = await axiosConfig.postToApi(
+          apiEndpoint,
+          requestBody,
+          ConfigsRequest.getSkipAuthConfig(),
+        )
+
+        // Nếu cập nhật thành công, gọi API để lấy lại thông tin CaKip
+        if (response && response.data.success) {
+          await this.fetchAndUpdateShift(rowData.maCaKip)
+        }
+      } catch (error) {
+        console.error('Lỗi khi cập nhật trạng thái:', error)
+        Swal.fire('Thất bại', 'Không thể cập nhật trạng thái.', 'error')
+      }
+    },
+    async fetchAndUpdateShift(maCaKip) {
+      try {
+        // Gọi API lấy thông tin cập nhật của CaKip
+        const updatedShiftResponse = await axiosConfig.getFromApi(
+          `/CaKip/Employees/${maCaKip}`,
+          ConfigsRequest.getSkipAuthConfig(),
+        )
+
+        if (updatedShiftResponse && updatedShiftResponse.data.success) {
+          // Cập nhật dữ liệu trong listShifts
+          const updatedShiftData = updatedShiftResponse.data.data
+          const shiftIndex = this.listShifts.findIndex((shift) => shift.maCaKip === maCaKip)
+
+          if (shiftIndex !== -1) {
+            this.listShifts[shiftIndex] = updatedShiftData
+            this.listShifts = [...this.listShifts] // Đảm bảo reactivity
+          }
+        }
+      } catch (error) {
+        console.error('Lỗi khi lấy thông tin CaKip:', error)
+        Swal.fire('Thất bại', 'Không thể tải lại thông tin CaKip.', 'error')
+      }
     },
     saveShift() {
       // Chuyển đổi `gioBatDau` và `gioKetThuc` sang dạng HH:mm:ss
