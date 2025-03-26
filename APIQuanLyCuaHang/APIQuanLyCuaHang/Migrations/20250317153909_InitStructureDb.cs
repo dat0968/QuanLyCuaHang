@@ -92,7 +92,7 @@ namespace APIQuanLyCuaHang.Migrations
                     SDT = table.Column<string>(type: "char(11)", unicode: false, fixedLength: true, maxLength: 11, nullable: true),
                     Email = table.Column<string>(type: "char(50)", unicode: false, fixedLength: true, maxLength: 50, nullable: false),
                     TenTaiKhoan = table.Column<string>(type: "char(15)", unicode: false, fixedLength: true, maxLength: 15, nullable: true),
-                    MatKhau = table.Column<string>(type: "char(30)", unicode: false, fixedLength: true, maxLength: 30, nullable: true),
+                    MatKhau = table.Column<string>(type: "varchar(255)", unicode: false, fixedLength: true, maxLength: 30, nullable: true),
                     HinhDaiDien = table.Column<string>(type: "text", nullable: true),
                     NgayTao = table.Column<DateTime>(type: "datetime", nullable: false),
                     TinhTrang = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: true, defaultValue: "Đang hoạt động"),
