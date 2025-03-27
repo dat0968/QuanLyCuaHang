@@ -50,131 +50,18 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
             ResponseAPI<List<CaKipDTO>> response = new();
             try
             {
-                var today = DateOnly.FromDateTime(DateTime.Today);
+                // Lấy dữ liệu
+                var data = await GetData();
 
-                // Truy vấn dữ liệu ca kíp
-                var dataOrigin = await _db.Cakips
-                    .AsNoTracking()
-                    .ToListAsync();
-
-                if (dataOrigin == null || !dataOrigin.Any())
-                {
-                    throw new KeyNotFoundException("Không tìm thấy ca kíp.");
-                }
-
-                // Truy vấn lịch làm việc
-                var lichLamViecs = await _db.Lichsulamviecs
-                    .Where(ls => ls.NgayThangNam <= today) // Chỉ lấy lịch làm việc của ngày hôm trước hoặc hôm nay
-                    .ToListAsync();
-
-                // Truy vấn danh sách nhân viên
-                var maNhanVienList = lichLamViecs
-                    .Select(ls => ls.MaNv)
-                    .Distinct()
-                    .ToList();
-
-                var nhanVienDict = await _db.Nhanviens
-                    .AsNoTracking()
-                    .Where(nv => maNhanVienList.Contains(nv.MaNv))
-                    .ToDictionaryAsync(nv => nv.MaNv, nv => nv.HoTen);
-
-                // Cập nhật thông tin ca làm việc nếu cần
-                bool needUpdate = false;
-                foreach (var ls in lichLamViecs)
-                {
-                    var caKip = dataOrigin.FirstOrDefault(ca => ca.MaCaKip == ls.MaCaKip);
-                    if (caKip == null) continue;
-
-
-                    // Cập nhật giờ vào/giờ ra nếu chưa có
-                    if (ls.GioVao == null)
-                    {
-                        ls.GioVao = caKip.GioBatDau;
-                        needUpdate = true;
-                    }
-
-                    if (ls.GioRa == null)
-                    {
-                        ls.GioRa = caKip.GioKetThuc;
-                        needUpdate = true;
-                    }
-
-                    // Tính số giờ làm nếu chưa có dữ liệu
-                    if (ls.SoGioLam == 0)
-                    {
-                        ls.SoGioLam = (caKip.GioKetThuc - caKip.GioBatDau).TotalHours;
-                        needUpdate = true;
-                    }
-
-                    // Cập nhật tổng lương nếu chưa có dữ liệu
-                    if (ls.TongLuong == null)
-                    {
-                        ls.TongLuong = 0;
-                        needUpdate = true;
-                    }
-
-                    // Cập nhật trạng thái nếu ca đã kết thúc
-                    if (ls.NgayThangNam < today && ls.TrangThai != TrangThaiLichLamViec.KetThucCa)
-                    {
-                        ls.TrangThai = TrangThaiLichLamViec.KetThucCa;
-                        ls.GhiChu = "Auto: Ca làm việc đã kết thúc.";
-                        needUpdate = true;
-                    }
-
-                }
-                if (needUpdate)
-                {
-                    _db.Lichsulamviecs.UpdateRange(lichLamViecs);
-                }
-
-                await _db.SaveChangesAsync();
-
-                // Cập nhật số lượng nhân viên hiện tại của mỗi ca kíp dựa trên trạng thái "Đi làm"
-                foreach (var caKip in dataOrigin)
-                {
-                    caKip.SoNguoiHienTai = lichLamViecs.Count(ls => ls.MaCaKip == caKip.MaCaKip && ls.TrangThai == "Đi làm");
-                }
-
-                // Lưu thay đổi nếu có thay đổi dữ liệu
-                await _db.SaveChangesAsync();
-
-                // Định dạng dữ liệu ca kíp
-                var dataFormatted = dataOrigin.Select(caKip => new CaKipDTO
-                {
-                    MaCaKip = caKip.MaCaKip,
-                    SoNguoiToiDa = caKip.SoNguoiToiDa,
-                    SoNguoiHienTai = caKip.SoNguoiHienTai,
-                    GioBatDau = caKip.GioBatDau,
-                    GioKetThuc = caKip.GioKetThuc,
-                    IsDelete = caKip.IsDelete,
-                    QrCodeData = $"{caKip.MaCaKip}-{today}",
-                    LichLamViecs = lichLamViecs
-                        .Where(ls => ls.MaCaKip == caKip.MaCaKip)
-                        .Select(ls => new LichLamViecDTO
-                        {
-                            Id = ls.Id,
-                            MaNv = ls.MaNv,
-                            TenNhanVien = nhanVienDict.GetValueOrDefault(ls.MaNv),
-                            MaCaKip = ls.MaCaKip,
-                            NgayThangNam = ls.NgayThangNam,
-                            GioVao = ls.GioVao,
-                            GioRa = ls.GioRa,
-                            SoGioLam = ls.SoGioLam,
-                            LyDoNghi = ls.LyDoNghi,
-                            TongLuong = ls.TongLuong,
-                            TrangThai = ls.TrangThai,
-                            GhiChu = ls.GhiChu,
-                            IsDelete = ls.IsDelete,
-                        }).ToList()
-                }).ToList();
-
-                response.SetSuccessResponse("Lấy danh sách Ca thành công!");
-                response.SetData(dataFormatted);
+                // Đặt dữ liệu trả về
+                response.SetSuccessResponse("Lấy danh sách ca kíp thành công!");
+                response.SetData(data);
             }
             catch (Exception ex)
             {
                 response.SetMessageResponseWithException(500, ex);
             }
+
             return response;
         }
         public async Task<ResponseAPI<CaKipDTO>> GetAllEmployeesInShiftAsync(int? maCaKip)
@@ -202,6 +89,7 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
                 // Truy vấn lịch làm việc
                 var lichLamViecs = await _db.Lichsulamviecs
                     .AsNoTracking()
+                    .Where(ls => ls.MaCaKip == maCaKip)
                     .ToListAsync();
 
                 // Truy vấn danh sách nhân viên để giảm số lần truy vấn
@@ -275,9 +163,13 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
                 {
                     throw new Exception("Dữ liệu không thấy được trong hệ thống.");
                 }
+                if (await _db.Lichsulamviecs.AnyAsync(ls => ls.MaCaKip == id))
+                {
+                    throw new Exception("Ca này đã có dữ liệu làm việc nên không thể xóa.");
+                }
                 _db.Remove(targetRemove);
                 await _db.SaveChangesAsync();
-                response.SetSuccessResponse("Lấy danh sách Ca thành công!");
+                response.SetSuccessResponse("Xóa ca thành công!");
 
             }
             catch (Exception ex)
@@ -304,6 +196,7 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
                     Cakip newCaKip = new Cakip
                     {
                         SoNguoiToiDa = caKip.SoNguoiToiDa,
+                        TenCa = caKip.TenCa,
                         GioBatDau = caKip.GioBatDau,
                         GioKetThuc = caKip.GioKetThuc,
                         IsDelete = caKip.IsDelete,
@@ -319,6 +212,7 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
                         throw new Exception("Dữ liệu không tìm thấy trong hệ thống.");
                     }
                     updateCaKip.SoNguoiToiDa = caKip.SoNguoiToiDa;
+                    updateCaKip.TenCa = caKip.TenCa;
                     updateCaKip.GioBatDau = caKip.GioBatDau;
                     updateCaKip.GioKetThuc = caKip.GioKetThuc;
                     updateCaKip.IsDelete = caKip.IsDelete;
@@ -345,5 +239,186 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
             }
             return response;
         }
+        public async Task AutoUpdateAsync()
+        {
+            var today = DateOnly.FromDateTime(DateTime.Today);
+
+            // Lấy lịch làm việc (trước và bằng ngày hôm nay)
+            var lichLamViecs = await _db.Lichsulamviecs
+                .Where(ls => ls.NgayThangNam <= today)
+                .ToListAsync();
+
+            // Lấy mã nhân viên từ lịch làm việc
+            var maNhanVienList = lichLamViecs.Select(ls => ls.MaNv).Distinct().ToList();
+
+            // Truy vấn thông tin nhân viên
+            var nhanVienDict = await _db.Nhanviens
+                .AsNoTracking()
+                .Where(nv => maNhanVienList.Contains(nv.MaNv))
+                .ToDictionaryAsync(nv => nv.MaNv, nv => (nv.HoTen, nv.MaChucVu));
+
+            // Lấy thông tin lương theo mã chức vụ
+            var maChucVuList = nhanVienDict.Values.Select(nv => nv.MaChucVu).Distinct().ToList();
+            var roleStaffDict = await _db.Chucvus
+                .AsNoTracking()
+                .Where(role => maChucVuList.Contains(role.MaChucVu))
+                .ToDictionaryAsync(role => role.MaChucVu, role => role.LuongTheoGio);
+
+            // Cập nhật thông tin lịch làm việc và trạng thái nếu cần thiết
+            bool needUpdate = false;
+            foreach (var ls in lichLamViecs)
+            {
+                var caKip = await _db.Cakips.FirstOrDefaultAsync(ca => ca.MaCaKip == ls.MaCaKip);
+                if (caKip == null) continue;
+
+                // Lấy lương theo giờ từ chức vụ
+                var luongTheoGio = roleStaffDict.TryGetValue(nhanVienDict.GetValueOrDefault(ls.MaNv).MaChucVu!.Value, out var luong) ? luong : 0;
+
+                // Cập nhật giờ vào/ra nếu chưa có
+                if (ls.TongLuong == 0 && ls.SoGioLam == 0 && ls.TrangThai == TrangThaiLichLamViec.ChoXacNhan)
+                {
+                    ls.GioVao ??= caKip.GioBatDau;
+                    ls.GioRa ??= caKip.GioKetThuc;
+                }
+
+                // Kiểm tra tính hợp lệ của dữ liệu
+                if (ls.SoGioLam == 0 || ls.TongLuong == 0)
+                {
+                    if (ls.TrangThai == TrangThaiLichLamViec.ChoXacNhan)
+                    {
+                        ls.TrangThai = TrangThaiLichLamViec.KhongDuocXacNhan;
+                        ls.GhiChu = "Auto: Dữ liệu SoGioLam hoặc TongLuong không đầy đủ, không thể cập nhật.";
+                        needUpdate = true;
+                        continue;
+                    }
+                }
+
+                // Giờ ra không hợp lệ
+                if (ls.GioRa.HasValue && ls.GioVao.HasValue && ls.GioRa < ls.GioVao)
+                {
+                    ls.TrangThai = TrangThaiLichLamViec.KhongDuocXacNhan;
+                    ls.GhiChu = "Auto: Giờ ra nhỏ hơn giờ vào.";
+                    needUpdate = true;
+                    continue;
+                }
+
+                // Tính toán số giờ làm
+                if (ls.GioVao.HasValue && ls.GioRa.HasValue)
+                {
+                    ls.SoGioLam = (ls.GioRa.Value - ls.GioVao.Value).TotalHours;
+                }
+
+                // Gán tổng lương nếu chưa có nhưng số giờ làm hợp lệ
+                if (ls.TongLuong == 0 && ls.SoGioLam > 0)
+                {
+                    ls.TongLuong = (decimal)ls.SoGioLam * luongTheoGio;
+                }
+
+                // Xử lý trạng thái tự động
+                if (ls.NgayThangNam < today)
+                {
+                    if (ls.TrangThai == TrangThaiLichLamViec.ChoXacNhan)
+                    {
+                        if (ls.GioVao.HasValue && ls.GioRa.HasValue && ls.SoGioLam > 0 && ls.TongLuong > 0)
+                        {
+                            ls.TrangThai = TrangThaiLichLamViec.KetThucCa;
+                            ls.GhiChu = "Auto: Ca làm đã kết thúc tự động.";
+                        }
+                        else
+                        {
+                            ls.TrangThai = TrangThaiLichLamViec.KhongDuocXacNhan;
+                            ls.GhiChu = "Auto: Dữ liệu không đầy đủ.";
+                        }
+                        needUpdate = true;
+                    }
+                }
+                else if (ls.NgayThangNam > today)
+                {
+                    if (ls.TrangThai == TrangThaiLichLamViec.ChoXacNhan)
+                    {
+                        ls.TrangThai = TrangThaiLichLamViec.KhongDuocXacNhan;
+                        ls.GhiChu = "Auto: Lịch làm việc chưa bắt đầu.";
+                        needUpdate = true;
+                    }
+                }
+            }
+
+            // Save changes nếu cần cập nhật thông tin lịch làm việc
+            if (needUpdate)
+            {
+                _db.Lichsulamviecs.UpdateRange(lichLamViecs);
+                await _db.SaveChangesAsync();
+            }
+        }
+
+
+        #region [Just Method]
+        private async Task<List<CaKipDTO>> GetData()
+        {
+            var today = DateOnly.FromDateTime(DateTime.Today);
+
+            // Lấy danh sách ca kíp từ Database
+            var dataOrigin = await _db.Cakips.AsNoTracking().ToListAsync();
+            if (dataOrigin == null || dataOrigin.Count == 0)
+            {
+                throw new Exception("Không tìm thấy ca kíp.");
+            }
+
+            // Lấy lịch làm việc
+            var lichLamViecs = await _db.Lichsulamviecs
+                .Where(ls => ls.NgayThangNam <= today)
+                .ToListAsync();
+
+            // Lấy mã nhân viên từ lịch làm việc
+            var maNhanVienList = lichLamViecs.Select(ls => ls.MaNv).Distinct().ToList();
+
+            // Truy vấn thông tin nhân viên
+            var nhanVienDict = await _db.Nhanviens
+                .AsNoTracking()
+                .Where(nv => maNhanVienList.Contains(nv.MaNv))
+                .ToDictionaryAsync(nv => nv.MaNv, nv => (nv.HoTen, nv.MaChucVu));
+
+            // Tính số lượng nhân viên hiện tại đi làm cho từng ca kíp
+            foreach (var caKip in dataOrigin)
+            {
+                caKip.SoNguoiHienTai = lichLamViecs
+                    .Count(ls => ls.MaCaKip == caKip.MaCaKip && ls.TrangThai == TrangThaiLichLamViec.DiLam);
+            }
+
+            // Chuẩn bị dữ liệu đầu ra qua DTO
+            var dataFormatted = dataOrigin.Select(caKip => new CaKipDTO
+            {
+                MaCaKip = caKip.MaCaKip,
+                TenCa = caKip.TenCa,
+                SoNguoiToiDa = caKip.SoNguoiToiDa,
+                SoNguoiHienTai = caKip.SoNguoiHienTai,
+                GioBatDau = caKip.GioBatDau,
+                GioKetThuc = caKip.GioKetThuc,
+                IsDelete = caKip.IsDelete,
+                QrCodeData = $"{caKip.MaCaKip}-{today}",
+                LichLamViecs = lichLamViecs
+                    .Where(ls => ls.MaCaKip == caKip.MaCaKip)
+                    .Select(ls => new LichLamViecDTO
+                    {
+                        Id = ls.Id,
+                        MaNv = ls.MaNv,
+                        TenNhanVien = nhanVienDict[ls.MaNv].HoTen,
+                        MaCaKip = ls.MaCaKip,
+                        NgayThangNam = ls.NgayThangNam,
+                        GioVao = ls.GioVao,
+                        GioRa = ls.GioRa,
+                        SoGioLam = ls.SoGioLam,
+                        LyDoNghi = ls.LyDoNghi,
+                        TongLuong = ls.TongLuong,
+                        TrangThai = ls.TrangThai,
+                        GhiChu = ls.GhiChu,
+                        IsDelete = ls.IsDelete,
+                    }).ToList()
+            }).ToList();
+
+            return dataFormatted;
+        }
+        #endregion
+
     }
 }

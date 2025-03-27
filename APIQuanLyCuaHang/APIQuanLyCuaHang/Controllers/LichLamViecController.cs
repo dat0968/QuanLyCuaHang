@@ -33,6 +33,7 @@ namespace APIQuanLyCuaHang.Controllers
         [HttpGet]
         public IActionResult GenerateQRCode([FromQuery] int maCaKip, [FromQuery] string ngayLam)
         {
+            // ! Change This
             ResponseAPI<string> response = new();
             try
             {
@@ -61,13 +62,14 @@ namespace APIQuanLyCuaHang.Controllers
         [HttpPost]
         public async Task<IActionResult> ChamCong([FromQuery] int maNv, [FromQuery] string qrCodeData)
         {
-            var result = await _unit.LichLamViecs.ChamCongAsync(maNv, qrCodeData);
+            // ! Change This
+            var result = await _unit.LichLamViecs.TimeKeepingAsync(maNv, qrCodeData);
             return Ok(result);
         }
         [HttpPost]
         public async Task<IActionResult> SetStatusList([FromBody] SetStatusListRequest request)
         {
-            int? userManagerId = 120; // Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            int? userManagerId = 120; // ! Change This: Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
             var result = await _unit.LichLamViecs.SetStatusList(request, userManagerId);
             return Ok(result);
         }

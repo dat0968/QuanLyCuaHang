@@ -35,6 +35,8 @@ namespace APIQuanLyCuaHang.Repositories.LichLamViec
                 {
                     throw new Exception("Ca kíp không hợp lệ hoặc đã bị xóa.");
                 }
+                if (caKip.IsDelete!.Value) throw new Exception("Ca này đã bị vô hiệu hóa.");
+
 
                 if (caKip.SoNguoiHienTai >= caKip.SoNguoiToiDa)
                 {
@@ -73,7 +75,7 @@ namespace APIQuanLyCuaHang.Repositories.LichLamViec
             return response;
         }
 
-        public async Task<ResponseAPI<dynamic>> ChamCongAsync(int maNv, string qrCodeData)
+        public async Task<ResponseAPI<dynamic>> TimeKeepingAsync(int maNv, string qrCodeData)
         {
             ResponseAPI<dynamic> response = new();
 
@@ -91,6 +93,7 @@ namespace APIQuanLyCuaHang.Repositories.LichLamViec
 
                 var caKip = await _db.Cakips.FindAsync(maCaKip);
                 if (caKip == null) throw new Exception("Ca kíp không hợp lệ.");
+                if (caKip.IsDelete!.Value) throw new Exception("Ca này đã bị vô hiệu hóa.");
 
                 var lichLam = await _db.Lichsulamviecs
                     .FirstOrDefaultAsync(l => l.MaNv == maNv && l.MaCaKip == maCaKip && l.NgayThangNam == ngayLam);
@@ -217,7 +220,7 @@ namespace APIQuanLyCuaHang.Repositories.LichLamViec
                     }
                     if (isHaveNote) ls.GhiChu = request.GhiChu;
                 });
-
+                _db.UpdateRange(lichLamViecs);
                 await _db.SaveChangesAsync();
 
                 response.SetSuccessResponse($"Đã cập nhật trạng thái {request.TrangThaiCapNhap} cho {lichLamViecs.Count} nhân viên.");
@@ -292,7 +295,7 @@ namespace APIQuanLyCuaHang.Repositories.LichLamViec
                 }
 
                 lichLamViec.TrangThai = request.TrangThaiCapNhap;
-
+                _db.Update(lichLamViec);
                 await _db.SaveChangesAsync();
 
                 response.SetSuccessResponse($"Đã cập nhật trạng thái {request.TrangThaiCapNhap} cho nhân viên {request.MaNv}.");

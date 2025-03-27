@@ -18,12 +18,6 @@ namespace APIQuanLyCuaHang.Controllers
             _dash = dashboardRepository;
         }
 
-        [HttpGet]
-        public IActionResult IsAuth()
-        {
-            return Ok();
-        }
-
         /// <summary>
         /// Dữ liệu thống kê tổng tiền đơn hàng đã xác nhận theo thời gian
         /// </summary>
@@ -58,9 +52,8 @@ namespace APIQuanLyCuaHang.Controllers
         /// <summary>
         /// Dữ liệu thống kê đơn hàng theo trạng thái
         /// </summary>
-        /// <param name="timeRange">Nhập thời gian day/week/month/year</param>
         /// <returns></returns>
-        [HttpGet("{timeRange}")]
+        [HttpGet()]
         public async Task<IActionResult> GetOrderStatusData()
         {
             var response = await _dash.GetOrderStatusDataAsync();
@@ -152,6 +145,19 @@ namespace APIQuanLyCuaHang.Controllers
         public async Task<IActionResult> GetUserStatisticsAsync()
         {
             var response = await _dash.GetUserStatisticsAsync();
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+        /// <summary>
+        /// Số liệu thống kê theo tình trạng người dùng
+        /// </summary>
+        [HttpGet]
+        public async Task<IActionResult> GetListStatObject()
+        {
+            var response = await _dash.GetListStatObjectAsync();
             if (!response.Success)
             {
                 return BadRequest(response);

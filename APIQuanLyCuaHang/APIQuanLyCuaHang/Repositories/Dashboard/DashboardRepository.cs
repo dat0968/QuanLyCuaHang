@@ -155,6 +155,63 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
             return response;
         }
 
+
+        public async Task<ResponseAPI<WorkHistoryDC>> GetTopEmployeeRegistShift()
+        {
+            ResponseAPI<WorkHistoryDC> response = new();
+            try
+            {
+                var dictionaryNameEmployee = await _db.Nhanviens.ToDictionaryAsync(nv => nv.MaNv, nv => nv.HoTen);
+
+                var allWorkHistory = await _db.Lichsulamviecs.GroupBy(ls => ls.MaNv).Select(ls => new WorkHistoryDC
+                {
+                    MaNv = ls.Key,
+                    TenNhanVien = dictionaryNameEmployee.GetValueOrDefault(ls.Key),
+                    MaCaKip = ls.First().MaCaKip,
+                    TongSoGioLam = ls.Sum(tg => tg.SoGioLam),
+                    TongLuong = ls.Sum(tl => tl.TongLuong),
+                }).OrderByDescending(wh => wh.TongLuong).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                response.SetMessageResponseWithException(500, ex);
+            }
+            return response;
+        }
+
+        public async Task<ResponseAPI<List<StatObjectDC>>> GetListStatObjectAsync()
+        {
+            ResponseAPI<List<StatObjectDC>> response = new();
+            List<StatObjectDC> data = new();
+            try
+            {
+                // ? Dữ liệu tình trạng khách hàng
+                StatObjectDC statClient = new StatObjectDC
+                {
+                    NameObject = "Khách hàng",
+                    AmountActive = await _db.Khachhangs.CountAsync(x => !(x.IsDelete ?? true)),
+                    AmountInactive = await _db.Khachhangs.CountAsync(x => x.IsDelete ?? false)
+                };
+                data.Add(statClient);
+
+                // ? Dữ liệu tình trạng nhân viên
+                StatObjectDC statStaff = new StatObjectDC
+                {
+                    NameObject = "Nhân viên",
+                    AmountActive = await _db.Nhanviens.CountAsync(x => !(x.IsDelete ?? true)),
+                    AmountInactive = await _db.Nhanviens.CountAsync(x => x.IsDelete ?? false)
+                };
+                data.Add(statStaff);
+
+                response.SetSuccessResponse("Lấy dữ liệu thống kê thành công.");
+                response.SetData(data);
+            }
+            catch (Exception ex)
+            {
+                response.SetMessageResponseWithException(500, ex);
+            }
+            return response;
+        }
         #region [Private Methods]
 
         private async Task<List<InvoiceDC>> GetAllInvoiceDataStatisticsAsync()
@@ -484,29 +541,6 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
             };
 
             return orderData;
-        }
-
-        public async Task<ResponseAPI<WorkHistoryDC>> GetTopEmployeeRegistShift()
-        {
-            ResponseAPI<WorkHistoryDC> response = new();
-            try
-            {
-                var dictionaryNameEmployee = await _db.Nhanviens.ToDictionaryAsync(nv => nv.MaNv, nv => nv.HoTen);
-
-                var allWorkHistory = await _db.Lichsulamviecs.GroupBy(ls => ls.MaNv).Select(ls => new WorkHistoryDC
-                {
-                    MaNv = ls.Key,
-                    TenNhanVien = dictionaryNameEmployee.GetValueOrDefault(ls.Key),
-                    MaCaKip = ls.First().MaCaKip,
-                    TongSoGioLam = ls.Sum(tg => tg.SoGioLam),
-                    TongLuong = ls.Sum(tl => tl.TongLuong),
-                }).OrderByDescending(wh => wh.TongLuong).ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                response.SetMessageResponseWithException(500, ex);
-            }
-            return response;
         }
         #endregion
     }

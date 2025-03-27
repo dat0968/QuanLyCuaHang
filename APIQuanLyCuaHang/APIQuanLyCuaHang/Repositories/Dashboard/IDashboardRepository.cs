@@ -14,5 +14,6 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
         Task<ResponseAPI<UserStatisticsData>> GetUserStatisticsAsync();
         Task<ResponseAPI<ProductDC>> GetProductFullDetails(int id);
         Task<ResponseAPI<WorkHistoryDC>> GetTopEmployeeRegistShift();
+        Task<ResponseAPI<List<StatObjectDC>>> GetListStatObjectAsync();
     }
 }
