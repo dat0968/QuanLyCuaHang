@@ -2,9 +2,14 @@
 import EarningChart from '@/components/charts/EarningChart.vue'
 import GetAllOrderData from '@/components/charts/AllOrderChart.vue'
 import OrderOverViewChart from '@/components/charts/OrderOverViewChart.vue'
-import TopSellingProductsDt from '@/components/charts/TopSellingProductsDt.vue'
+import TopDashboardEntitiesDt from '@/components/charts/TopDashboardEntitiesDt.vue'
 export default {
-  components: { EarningChart, GetAllOrderData, OrderOverViewChart, TopSellingProductsDt },
+  components: {
+    EarningChart,
+    GetAllOrderData,
+    OrderOverViewChart,
+    TopDashboardEntitiesDt,
+  },
   props: {},
   data() {
     return {}
@@ -33,7 +38,6 @@ export default {
     <!-- Start XP Contentbar -->
     <div class="xp-contentbar">
       <!-- Start Widget -->
-
       <!-- Start XP Row -->
       <div class="row">
         <!-- Start XP Col -->
@@ -95,17 +99,8 @@ export default {
       <div class="row">
         <!-- Start XP Col -->
         <div class="col-md-12 col-lg-8 col-xl-8 align-self-center">
-          <div class="card bg-white m-b-30">
-            <div class="card-header bg-white">
-              <h5 class="card-title text-black mb-0">Danh sách sản phẩm yêu thích</h5>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <TopSellingProductsDt />
-                <!-- ! 1 Table ở đây -->
-              </div>
-            </div>
-          </div>
+          <TopDashboardEntitiesDt />
+          <!-- ! 1 Table ở đây -->
         </div>
         <!-- End XP Col -->
 

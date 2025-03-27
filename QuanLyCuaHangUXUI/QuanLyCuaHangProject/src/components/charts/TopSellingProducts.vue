@@ -1,12 +1,10 @@
 <template>
-  <div>
-    <!-- <h1 class="text-center">Danh sách sản phẩm bán chạy</h1> -->
-    <table class="table" id="dt-topSelling"></table>
+  <div class="table-responsive">
+    <table class="table" :id="tableId"></table>
   </div>
 </template>
 
 <script>
-//#region Import
 import * as configsDt from '@/utils/configsDatatable.js'
 import * as axiosClient from '@/utils/axiosClient'
 import $ from 'jquery'
@@ -14,18 +12,25 @@ import 'datatables.net'
 import 'datatables.net-dt/css/dataTables.dataTables.css'
 import formatCurrency from '@/constants/formatCurrency'
 import * as ajaxClient from '@/utils/jqueryApiClient'
-//#endregion
 
 export default {
   name: 'TopSellingProducts',
+  props: {
+    tableId: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
-    return { products: [] }
+    return {
+      products: [],
+    }
   },
   mounted() {
-    this.loadData()
+    this.loadTopSellingProducts()
   },
   methods: {
-    loadData() {
+    loadTopSellingProducts() {
       axiosClient
         .getFromApi('/Dashboard/GetTopSellingProducts')
         .then((response) => {
@@ -41,23 +46,19 @@ export default {
         })
     },
     initDataTable() {
-      $('#dt-topSelling').DataTable({
+      $(`#${this.tableId}`).DataTable({
         data: this.products,
+        destroy: true,
         columns: [
           configsDt.defaultTdToShowDetail,
-          {
-            data: 'productId',
-            width: '10%',
-            title: 'ID',
-            className: 'text-center',
-          },
+          { data: 'productId', width: '10%', title: 'ID', className: 'text-center' },
           { data: 'productName', width: '30%', title: 'Tên sản phẩm' },
-          { data: 'quantity', width: '20%', title: 'Số lượng bán', className: 'text-center' },
+          { data: 'quantity', width: '25%', title: 'Số lượng bán', className: 'text-center' },
           {
             data: 'totalRevenue',
-            width: '20%',
+            width: '40%',
             title: 'Doanh thu mang lại',
-            className: 'text-center',
+            className: 'text-right',
             render: (data) => formatCurrency(data),
           },
         ],
@@ -66,26 +67,22 @@ export default {
           [2, 'desc'],
         ],
         language: configsDt.defaultLanguageDatatable,
+        initComplete: () => {
+          configsDt.attachDetailsControl(`#${this.tableId}`, this.formatProductDetails.bind(this))
+        },
       })
-
-      //Gắn sự kiện hiển thị chi tiết
-      configsDt.attachDetailsControl('#dt-topSelling', this.formatDetails)
     },
-    formatDetails(rowData) {
-      var div = $('<div/>').addClass('loading').text('Loading...')
-
+    formatProductDetails(rowData) {
+      const div = $('<div/>').addClass('loading').text('Loading...')
       ajaxClient
         .getFromApi(`/Dashboard/GetDetailProduct/${rowData.productId}`)
         .then((json) => {
           if (json.success && json.data) {
             div.removeClass('loading')
-
-            var detailsHtml = `
-              <div class="container">
+            const detailsHtml = `
+                <div class="container">
                   <div class="row">
-                      <p>
-                          <strong>${json.data.tenSanPham}</strong> - ${json.data.moTa}
-                      </p>
+                    <p><strong>${json.data.tenSanPham}</strong> - ${json.data.moTa}</p>
                   </div>
                   <div class="row mb-3">
                     ${json.data.chiTietSanPhams
@@ -93,25 +90,22 @@ export default {
                         (detail) => `
                           <div class="col-6">
                             <div class="row">
-                              
                               <div class="col-md-4 d-flex align-items-center border">
                                 <img src="/images/${detail.tenHinhAnh}" class="img-fluid rounded" alt="${detail.huongVi}">
                               </div>
                               <div class="col-md-8">
-                                  <h5>${detail.huongVi}</h5>
-                                  <p><strong>Giá:</strong> ${detail.donGia.toLocaleString('vi-VN')} VND</p>
-                                  <p><strong>Số lượng tồn:</strong> ${detail.soLuongTon}</p>
-                                  ${detail.kichThuoc ? `<p><strong>Kích thước:</strong> ${detail.kichThuoc}</p>` : ''}
+                                <h5>${detail.huongVi}</h5>
+                                <p><strong>Giá:</strong> ${detail.donGia.toLocaleString('vi-VN')} VND</p>
+                                <p><strong>Số lượng tồn:</strong> ${detail.soLuongTon}</p>
+                                ${detail.kichThuoc ? `<p><strong>Kích thước:</strong> ${detail.kichThuoc}</p>` : ''}
                               </div>
-                              
                             </div>
                           </div>
-                          `,
+                        `,
                       )
                       .join('')}
                   </div>
-              </div>`
-
+                </div>`
             div.html(detailsHtml)
           } else {
             div.html('<p>Không có thông tin chi tiết để hiển thị.</p>')
@@ -121,7 +115,6 @@ export default {
           div.html('<p>Không thể lấy thông tin chi tiết.</p>')
           console.error('Error fetching details:', error)
         })
-
       return div
     },
   },

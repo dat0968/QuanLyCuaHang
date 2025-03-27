@@ -19,10 +19,10 @@ import '../../assets/admin/plugins/datepicker/datepicker.min.js'
 import '../../assets/admin/plugins/datepicker/i18n/datepicker.en.js'
 //import '../../assets/admin/js/init/dashborad.js'
 import '../../assets/admin/js/main.js'
-import QrCheckInModal from '@/components/caKip/QrCheckInModal.vue'
+import QrScanAndShiftManagerModal from '@/components/caKip/QrScanAndShiftManagerModal.vue'
 
 components: {
-  QrCheckInModal
+  QrScanAndShiftManagerModal
 }
 </script>
 <template>
@@ -310,7 +310,8 @@ components: {
                           ><i class="icon-wallet text-success mr-2"></i> Thanh toán</a
                         >
                         <a class="dropdown-item" href="#"
-                          ><i class="icon-user text-primary mr-2"></i> <QrCheckInModal />
+                          ><i class="icon-user text-primary mr-2"></i>
+                          <QrScanAndShiftManagerModal />
                         </a>
                         <a class="dropdown-item" href="#"
                           ><i class="icon-settings text-warning mr-2"></i> Cài đặt</a

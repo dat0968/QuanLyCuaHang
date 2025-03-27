@@ -2,7 +2,6 @@
   <div>
     <div class="d-flex justify-content-between align-items-end">
       <p><strong>Biểu đồ tình trạng đơn hàng</strong></p>
-
       <button @click="toggleChart" class="btn-outline-info btn">Đổi biểu đồ</button>
     </div>
     <div v-if="!isSummaryChart" class="mb-2">
@@ -48,7 +47,12 @@ export default {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { position: 'right' },
+          legend: {
+            position: 'right',
+            labels: {
+              color: '#333',
+            },
+          },
           tooltip: {
             callbacks: {
               label: (tooltipItem) => {
@@ -60,6 +64,14 @@ export default {
             },
           },
         },
+        animation: {
+          duration: 2000,
+        },
+        hover: {
+          mode: 'nearest',
+          intersect: true,
+        },
+        backgroundColor: '#f9f9f9',
       },
     }
   },
@@ -138,12 +150,39 @@ export default {
                 '#FF4560',
                 '#546E7A',
               ],
-              borderColor: ['#FFFFFF'],
-              borderWidth: 1,
             },
           ],
         },
-        options: this.chartOptions,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'right',
+              labels: {
+                color: '#333',
+              },
+            },
+            tooltip: {
+              callbacks: {
+                label: (tooltipItem) => {
+                  let total = tooltipItem.dataset.data.reduce((acc, val) => acc + val, 0)
+                  let value = tooltipItem.raw
+                  let percentage = ((value / total) * 100).toFixed(2) + '%'
+                  return `${tooltipItem.label}: ${value} (${percentage})`
+                },
+              },
+            },
+          },
+          animation: {
+            duration: 2000,
+          },
+          hover: {
+            mode: 'nearest',
+            intersect: true,
+          },
+          backgroundColor: '#f9f9f9', // Thêm màu nền cho biểu đồ
+        },
       })
     },
     toggleChart() {
