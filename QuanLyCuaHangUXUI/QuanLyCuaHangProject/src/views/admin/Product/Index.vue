@@ -13,12 +13,15 @@ const valueSort = ref('')
 const valuePrices = ref('')
 async function fetchProducts() {
   try {
-    const response = await fetch(`https://localhost:7139/api/Products?page=${CurrentPage.value}&search=${valueSearch.value}&filterCatories=${valueCategory.value}&sort=${valueSort.value}&filterPrices=${valuePrices.value}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    const response = await fetch(
+      `https://localhost:7139/api/Products?page=${CurrentPage.value}&search=${valueSearch.value}&filterCatories=${valueCategory.value}&sort=${valueSort.value}&filterPrices=${valuePrices.value}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
 
     if (!response.ok) {
       throw new Error('Lỗi khi lấy dữ liệu' + response.status)
@@ -59,33 +62,45 @@ async function fetchCategory() {
   console.log(categories.value)
 }
 
-
 onMounted(() => {
   fetchProducts()
   fetchCategory()
 })
 
 const RemoveProduct = async (id) => {
-  try{
-    const response = await fetch(`https://localhost:7139/api/Products/${id}/Cancel`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    
-    if(response.ok == false){
-      throw new Error('Failed to cancel product')
-    }
+  try {
     Swal.fire({
-      title: "Đã xóa thông tin sản phẩm!",
-      icon: "success",
-      draggable: true
-    });
-    setTimeout(function(){
-      window.location.reload()
-    }, 2000)
-  }catch(error){
+      title: 'Bạn có muốn xóa sản phẩm này không ?',
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: 'Có',
+      denyButtonText: `Không`,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const response = await fetch(`https://localhost:7139/api/Products/${id}/Cancel`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+
+        if (response.ok == false) {
+          throw new Error('Failed to cancel product')
+        }
+        Swal.fire({
+          title: 'Đã xóa thông tin sản phẩm!',
+          icon: 'success',
+          draggable: true,
+        })
+        setTimeout(function () {
+          window.location.reload()
+        }, 2000)
+      }
+      else if (result.isDenied) {
+        Swal.clickCancel()
+      }
+    })
+  } catch (error) {
     console.error('Error:', error.message)
   }
 }
@@ -107,13 +122,27 @@ const RemoveProduct = async (id) => {
         />
       </div>
       <div class="col-md-3">
-        <select @change="ReturnProduct()" v-model="valueCategory" class="form-select shadow-sm bg-white">
-          <option value=''>📂 Lọc theo danh mục</option>
-          <option v-for="category in categories" :key="category.maDanhMuc" :value=category.maDanhMuc>{{ category.tenDanhMuc }}</option>
+        <select
+          @change="ReturnProduct()"
+          v-model="valueCategory"
+          class="form-select shadow-sm bg-white"
+        >
+          <option value="">📂 Lọc theo danh mục</option>
+          <option
+            v-for="category in categories"
+            :key="category.maDanhMuc"
+            :value="category.maDanhMuc"
+          >
+            {{ category.tenDanhMuc }}
+          </option>
         </select>
       </div>
       <div class="col-md-3">
-        <select @change="ReturnProduct()" v-model="valueSort" class="form-select shadow-sm bg-white">
+        <select
+          @change="ReturnProduct()"
+          v-model="valueSort"
+          class="form-select shadow-sm bg-white"
+        >
           <option value="">🔄 Sắp xếp theo</option>
           <option value="asc">Giá tăng dần</option>
           <option value="des">Giá giảm dần</option>
@@ -124,7 +153,11 @@ const RemoveProduct = async (id) => {
     <!-- Lọc theo khoảng giá (Đã chỉnh sửa nền trắng) -->
     <div class="row g-3 mb-3 align-items-center">
       <div class="col-md-3">
-        <select v-model="valuePrices" @change="ReturnProduct()" class="form-select shadow-sm bg-white">
+        <select
+          v-model="valuePrices"
+          @change="ReturnProduct()"
+          class="form-select shadow-sm bg-white"
+        >
           <option value="">💰 Lọc theo giá</option>
           <option value="0 VNĐ - 10.000 VNĐ">0 VNĐ - 10.000 VNĐ</option>
           <option value="10.000 VNĐ - 30.000 VNĐ">10.000 VNĐ - 30.000 VNĐ</option>
@@ -165,13 +198,15 @@ const RemoveProduct = async (id) => {
             <td class="text-center">{{ product.tenDanhMuc }}</td>
             <td class="text-center">{{ product.khoangGia }}</td>
             <td class="text-center">
-              <button 
+              <button
                 type="button"
                 data-bs-toggle="modal"
-                :data-bs-target="`#productEditModal_${product.maSp}`" class="btn btn-warning btn-sm">
+                :data-bs-target="`#productEditModal_${product.maSp}`"
+                class="btn btn-warning btn-sm"
+              >
                 ✏️ Sửa
               </button>
-              <EditProductModal :Product="product" :categories="categories"/>
+              <EditProductModal :Product="product" :categories="categories" />
               <button
                 type="button"
                 data-bs-toggle="modal"
@@ -196,7 +231,14 @@ const RemoveProduct = async (id) => {
           <li class="page-item disabled">
             <a class="page-link" href="#" tabindex="-1">&laquo;</a>
           </li>
-          <li v-for="page in TotalPages" :key="page" :class="{active: page === CurrentPage}" class="page-item"><a class="page-link" @click="ChangePage(page)" > {{ page }} </a></li>         
+          <li
+            v-for="page in TotalPages"
+            :key="page"
+            :class="{ active: page === CurrentPage }"
+            class="page-item"
+          >
+            <a class="page-link" @click="ChangePage(page)"> {{ page }} </a>
+          </li>
           <li class="page-item">
             <a class="page-link" href="#">&raquo;</a>
           </li>

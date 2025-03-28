@@ -42,7 +42,7 @@ namespace APIQuanLyCuaHang.Repositories.DetailProduct
         {
             try
             {
-                var FindDetailProduct = db.Chitietsanphams.Where(p => p.MaSp == MaSp).ToListAsync();
+                var FindDetailProduct = db.Chitietsanphams.AsNoTracking().Where(p => p.MaSp == MaSp).ToListAsync();
                 return await FindDetailProduct;
             }catch(Exception ex)
             {
@@ -54,13 +54,27 @@ namespace APIQuanLyCuaHang.Repositories.DetailProduct
             try
             {
                 var GetDetailProduct = await db.Chitietsanphams.FindAsync(MaCtsp);
-                db.Chitietsanphams.Remove(GetDetailProduct);
+                GetDetailProduct.IsDelete = true;
+                db.Chitietsanphams.Update(GetDetailProduct);
                 await db.SaveChangesAsync();
             }
             catch (Exception ex)
             {
                 throw;
             }
+        }
+
+        public async Task<Chitietsanpham?> CheckExistDetailProduct(int MaSp, string? KichThuoc, string? HuongVi)
+        {
+            var findDetailProduct = await db.Chitietsanphams.AsNoTracking()
+            .FirstOrDefaultAsync(p => p.MaSp == MaSp &&
+                (p.KichThuoc ?? "").ToLower() == (KichThuoc ?? "").ToLower() &&
+                (p.HuongVi ?? "").ToLower() == (HuongVi ?? "").ToLower());
+            if(findDetailProduct == null)
+            {
+                return null;
+            }
+            return findDetailProduct;
         }
     }
 }

@@ -60,11 +60,10 @@ public partial class QuanLyCuaHangContext : DbContext
 
         modelBuilder.Entity<Chitietcombo>(entity =>
         {
-            entity.HasKey(e => new { e.MaCombo, e.MaCtsp }).HasName("PK__CHITIETC__020940946F0EEEE6");
+            entity.HasKey(e => new { e.MaCombo, e.MaSp }).HasName("PK__CHITIETC__020940946F0EEEE6");
 
             entity.ToTable("CHITIETCOMBO");
 
-            entity.Property(e => e.MaCtsp).HasColumnName("MaCTSP");
             entity.Property(e => e.SoLuongSp).HasColumnName("SoLuongSP");
 
             entity.HasOne(d => d.MaComboNavigation).WithMany(p => p.Chitietcombos)
@@ -72,10 +71,11 @@ public partial class QuanLyCuaHangContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__CHITIETCO__MaCom__5441852A");
 
-            entity.HasOne(d => d.MaCtspNavigation).WithMany(p => p.Chitietcombos)
-                .HasForeignKey(d => d.MaCtsp)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__CHITIETCO__MaCTS__5535A963");
+            entity.HasOne(d => d.MaSpNavigation)
+            .WithMany(p => p.Chitietcombos)
+            .HasForeignKey(d => d.MaSp)
+            .OnDelete(DeleteBehavior.ClientSetNull)
+            .HasConstraintName("FK__CHITIETCO__MaSP__5535A963");
         });
 
         modelBuilder.Entity<Chitietsanpham>(entity =>
@@ -114,7 +114,6 @@ public partial class QuanLyCuaHangContext : DbContext
 
             entity.ToTable("COMBO");
 
-            entity.Property(e => e.GiaCombo).HasColumnType("decimal(11, 2)");
             entity.Property(e => e.Hinh).HasMaxLength(200);
             entity.Property(e => e.IsDelete).HasDefaultValue(false);
             entity.Property(e => e.MoTa).HasMaxLength(500);
@@ -252,7 +251,7 @@ public partial class QuanLyCuaHangContext : DbContext
             entity.Property(e => e.HoTen).HasMaxLength(40);
             entity.Property(e => e.IsDelete).HasDefaultValue(false);
             entity.Property(e => e.MatKhau)
-                .HasMaxLength(30)
+                .HasMaxLength(255)
                 .IsUnicode(false)
                 .IsFixedLength();
             entity.Property(e => e.NgayTao).HasColumnType("datetime");

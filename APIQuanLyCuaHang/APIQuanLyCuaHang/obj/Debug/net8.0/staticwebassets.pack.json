@@ -73,6 +73,10 @@
       "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\an-com-trang-dung-cach-56-0.jpg"
     },
     {
+      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\anh-chan-dung-dep-yodyvn1.jpg",
+      "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\anh-chan-dung-dep-yodyvn1.jpg"
+    },
+    {
       "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\aquafina-500ml.jpg",
       "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\aquafina-500ml.jpg"
     },
@@ -85,16 +89,28 @@
       "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\g_s_t_cay_-_7-compressed.jpg"
     },
     {
-      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\images (SoCoLa).jpg",
-      "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\images (SoCoLa).jpg"
+      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\images (1).jfif",
+      "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\images (1).jfif"
+    },
+    {
+      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\images (SoCoLa).jfif",
+      "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\images (SoCoLa).jfif"
+    },
+    {
+      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\images.jfif",
+      "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\images.jfif"
     },
     {
       "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\images.jpg",
       "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\images.jpg"
     },
     {
-      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\imagesTropicalSundae.jpg",
-      "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\imagesTropicalSundae.jpg"
+      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\imagesTropicalSundae.jfif",
+      "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\imagesTropicalSundae.jfif"
+    },
+    {
+      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\jm_n_tr_ng_mi_ng_-_3-removebg-preview.png",
+      "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\jm_n_tr_ng_mi_ng_-_3-removebg-preview.png"
     },
     {
       "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\kem-socola-5-lit-kem-new-zealand-natural-1637956225.jpg",
@@ -115,6 +131,14 @@
     {
       "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\ph_n_n_ph_-_3_4-compressed.jpg",
       "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\ph_n_n_ph_-_3_4-compressed.jpg"
+    },
+    {
+      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\photo-1-15997930085231081781532.webp",
+      "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\photo-1-15997930085231081781532.webp"
+    },
+    {
+      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\tao-dang-chup-anh-chan-dung-01.jpg",
+      "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\tao-dang-chup-anh-chan-dung-01.jpg"
     },
     {
       "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\th_c_u_ng_-_11_12_1-removebg-preview - Copy.png",

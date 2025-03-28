@@ -4,9 +4,27 @@ import Swal from 'sweetalert2'
 const props = defineProps({
   categories: Object,
 })
-
-const handleFileChange = (variant, event) => {
+// Upload file lên server
+const uploadImage = async (file) => {
+  try {
+    const formData = new FormData()
+    formData.append('file', file)
+    const response = await fetch('https://localhost:7139/api/UploadImage', {
+      method: 'POST',
+      body: formData,
+    })
+    if (!response.ok) {
+      throw new Error(`Lỗi khi upload ảnh: ${response.status} ${response.statusText}`)
+    }
+  } catch (error) {
+    console.error('Error uploading image:', error.message)
+  }
+}
+const handleFileChange = async (variant, event) => {
   variant.images = Array.from(event.target.files)
+  for (const file of variant.images) {
+    await uploadImage(file)
+  }
 }
 // Dữ liệu sản phẩm
 const product = ref({
@@ -81,6 +99,18 @@ const removeVariant = (index) => {
 const submitForm = async () => {
   try {
     let isValid = true
+
+    const hasDuplicates = variants.value.some(
+      (item, index, arr) =>
+        arr.findIndex((obj) => obj.kichThuoc === item.kichThuoc && obj.huongVi === item.huongVi) !==
+        index
+    )
+
+    if(hasDuplicates){
+      Swal.fire('Vui lòng không để hai dòng biến thể trùng lặp', '', 'error')
+      isValid = false;
+    }
+
     const form_input_Product = document.querySelectorAll('.data-createProduct .mb-3')
     form_input_Product.forEach((element) => {
       var inputValueProduct = element.querySelector('.form-control, .form-select')
@@ -96,6 +126,18 @@ const submitForm = async () => {
         }
       }
     })
+
+    variants.value.forEach(e => {
+      if(e.donGia <= 0){
+        Swal.fire('Đơn giá biến thể sản phẩm phải lớn hơn 0 ', '', 'error')
+        isValid = false
+      }
+      if(e.soLuongTon == ''){
+        Swal.fire('Số lượng tồn biến thể sản phẩm không được để trống', '', 'error')
+        isValid = false
+      }
+    })
+
     if (isValid == false) {
       return
     }
@@ -106,8 +148,7 @@ const submitForm = async () => {
       confirmButtonText: 'Xác nhận',
       cancelButtonText: 'Hủy',
     }).then(async (result) => {
-      if (result.isConfirmed) 
-      {
+      if (result.isConfirmed) {
         console.log('Dữ liệu hợp lệ, chuẩn bị gửi request')
         const content = {
           maDanhMuc: product.value.maDanhMuc,
@@ -136,11 +177,13 @@ const submitForm = async () => {
           throw new Error('Failed to add product')
         }
         const result = await response.json()
-
-        Swal.fire('Đã thêm sản phẩm mới thành công', '', 'success')
-        setTimeout(function(){
-          window.location.reload()
-        }, 2000)
+        if (result.success == true) {
+          Swal.fire('Đã thêm sản phẩm mới thành công', '', 'success')
+          setTimeout(function () {
+            window.location.reload()
+          }, 2000)
+        }
+        throw new Error('Failed to add product')
       }
     })
   } catch (error) {
@@ -151,14 +194,6 @@ const submitForm = async () => {
 const blockNegativeNumbers = (event) => {
   if (event.key === '-') {
     event.preventDefault()
-  }
-}
-const handleBlur = (index) => {
-  if (variants.value[index].soLuongTon == '') {
-    variants.value[index].soLuongTon = 1
-  }
-  if (variants.value[index].donGia == '') {
-    variants.value[index].donGia = 0
   }
 }
 </script>
@@ -259,7 +294,6 @@ const handleBlur = (index) => {
                         class="form-control"
                         v-model="variant.soLuongTon"
                         @keydown="blockNegativeNumbers"
-                        @blur="handleBlur(index)"
                         min="1"
                       />
                     </div>
@@ -269,8 +303,7 @@ const handleBlur = (index) => {
                         type="number"
                         class="form-control"
                         v-model="variant.donGia"
-                        @keydown="blockNegativeNumbers"
-                        @blur="handleBlur(index)"
+                        @keydown="blockNegativeNumbers" 
                         min="0"
                       />
                     </div>

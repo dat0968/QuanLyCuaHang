@@ -10,8 +10,9 @@ public partial class Combo
     public string TenCombo { get; set; } = null!;
 
     public string? Hinh { get; set; }
-
-    public decimal? GiaCombo { get; set; }
+    public int SoLuong { get; set; } = 1;
+    public float? PhanTramGiam { get; set; }
+    public decimal? SoTienGiam { get; set; }
 
     public string? MoTa { get; set; }
 

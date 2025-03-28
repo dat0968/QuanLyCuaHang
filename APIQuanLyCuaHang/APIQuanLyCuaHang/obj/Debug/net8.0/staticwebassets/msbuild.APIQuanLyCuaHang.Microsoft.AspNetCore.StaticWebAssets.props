@@ -558,6 +558,24 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\an-com-trang-dung-cach-56-0.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\anh-chan-dung-dep-yodyvn1.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>APIQuanLyCuaHang</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/APIQuanLyCuaHang</BasePath>
+      <RelativePath>HinhAnh/Food_Drink/anh-chan-dung-dep-yodyvn1.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>7rbz4ho5eq</Fingerprint>
+      <Integrity>vbGEJj8jd0r6wSgXKzZ38hKnIpe6OINlWnviCBCSkW4=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\anh-chan-dung-dep-yodyvn1.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\aquafina-500ml.jpg'))">
       <SourceType>Package</SourceType>
       <SourceId>APIQuanLyCuaHang</SourceId>
@@ -630,12 +648,30 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\g_s_t_cay_-_7-compressed.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
-    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\images (SoCoLa).jpg'))">
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\images (1).jfif'))">
       <SourceType>Package</SourceType>
       <SourceId>APIQuanLyCuaHang</SourceId>
       <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
       <BasePath>_content/APIQuanLyCuaHang</BasePath>
-      <RelativePath>HinhAnh/Food_Drink/images (SoCoLa).jpg</RelativePath>
+      <RelativePath>HinhAnh/Food_Drink/images (1).jfif</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>0vu8ynnoxe</Fingerprint>
+      <Integrity>xCN0Hm6UQbD98eYPR/XmBsYwq1byhGUPrsCYuPJ3I2g=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\images (1).jfif'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\images (SoCoLa).jfif'))">
+      <SourceType>Package</SourceType>
+      <SourceId>APIQuanLyCuaHang</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/APIQuanLyCuaHang</BasePath>
+      <RelativePath>HinhAnh/Food_Drink/images (SoCoLa).jfif</RelativePath>
       <AssetKind>All</AssetKind>
       <AssetMode>All</AssetMode>
       <AssetRole>Primary</AssetRole>
@@ -646,7 +682,25 @@
       <Integrity>YA2hHR0h9d2Vlww15ufoVAwqiD7dz9U+NBRgznP+Fqg=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\images (SoCoLa).jpg'))</OriginalItemSpec>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\images (SoCoLa).jfif'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\images.jfif'))">
+      <SourceType>Package</SourceType>
+      <SourceId>APIQuanLyCuaHang</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/APIQuanLyCuaHang</BasePath>
+      <RelativePath>HinhAnh/Food_Drink/images.jfif</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>lpysim0abr</Fingerprint>
+      <Integrity>uYhR1TqV2LVKllHDEsU03qkcSEUL5qMIQ4b5DH5GlkA=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\images.jfif'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\images.jpg'))">
       <SourceType>Package</SourceType>
@@ -666,12 +720,12 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\images.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
-    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\imagesTropicalSundae.jpg'))">
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\imagesTropicalSundae.jfif'))">
       <SourceType>Package</SourceType>
       <SourceId>APIQuanLyCuaHang</SourceId>
       <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
       <BasePath>_content/APIQuanLyCuaHang</BasePath>
-      <RelativePath>HinhAnh/Food_Drink/imagesTropicalSundae.jpg</RelativePath>
+      <RelativePath>HinhAnh/Food_Drink/imagesTropicalSundae.jfif</RelativePath>
       <AssetKind>All</AssetKind>
       <AssetMode>All</AssetMode>
       <AssetRole>Primary</AssetRole>
@@ -682,7 +736,25 @@
       <Integrity>PSwosZCZg0BNj/zIGGM1v+iri5JDgtIQIE7xgfZktQE=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\imagesTropicalSundae.jpg'))</OriginalItemSpec>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\imagesTropicalSundae.jfif'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\jm_n_tr_ng_mi_ng_-_3-removebg-preview.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>APIQuanLyCuaHang</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/APIQuanLyCuaHang</BasePath>
+      <RelativePath>HinhAnh/Food_Drink/jm_n_tr_ng_mi_ng_-_3-removebg-preview.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>kfn8fgge5u</Fingerprint>
+      <Integrity>oFdWDmJ3LjsOLqH66WZuvE9Bj/BV2lTfb87l/6v670o=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\jm_n_tr_ng_mi_ng_-_3-removebg-preview.png'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\kem-socola-5-lit-kem-new-zealand-natural-1637956225.jpg'))">
       <SourceType>Package</SourceType>
@@ -846,6 +918,24 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\PepsiLon.png'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\photo-1-15997930085231081781532.webp'))">
+      <SourceType>Package</SourceType>
+      <SourceId>APIQuanLyCuaHang</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/APIQuanLyCuaHang</BasePath>
+      <RelativePath>HinhAnh/Food_Drink/photo-1-15997930085231081781532.webp</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>s0uh16z3ds</Fingerprint>
+      <Integrity>PBv9y9WJILI+HEJWTnj5BkoncwND4z/NquR1r0AWTgE=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\photo-1-15997930085231081781532.webp'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\ph_n_n_ph_-_1_2-compressed_1_1.jpg'))">
       <SourceType>Package</SourceType>
       <SourceId>APIQuanLyCuaHang</SourceId>
@@ -881,6 +971,24 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\ph_n_n_ph_-_3_4-compressed.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\tao-dang-chup-anh-chan-dung-01.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>APIQuanLyCuaHang</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/APIQuanLyCuaHang</BasePath>
+      <RelativePath>HinhAnh/Food_Drink/tao-dang-chup-anh-chan-dung-01.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>qqc3mvg1ey</Fingerprint>
+      <Integrity>QlUlS3wJEVozbjOqUMPor1lMi5rERhrBxiSlT/U14XA=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\tao-dang-chup-anh-chan-dung-01.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\th_c_u_ng_-_11_12_1-removebg-preview - Copy.png'))">
       <SourceType>Package</SourceType>

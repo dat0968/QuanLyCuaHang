@@ -1,12 +1,12 @@
   <script setup>
-import "bootstrap/dist/js/bootstrap.bundle";
+import 'bootstrap/dist/js/bootstrap.bundle'
 import { onMounted, ref, watch } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Navigation, Pagination } from 'swiper/modules'
 import Swal from 'sweetalert2'
 const Props = defineProps({
   Product: Object,
-  categories: Object
+  categories: Object,
 })
 
 /* Dấu ... nhằm tránh không cho editedVariants tham chiếu trực tiếp đến Props.Product.chitietsanphams 
@@ -29,67 +29,59 @@ onMounted(() => {
     tenSanPham: Props.Product.tenSanPham,
     moTa: Props.Product.moTa,
     isDelete: Props.Product.isDelete,
-  };
-  editedProduct.value = {...initialProduct.value}
+  }
+  editedProduct.value = { ...initialProduct.value }
 
   //Deep copy biến thể
-  initialVariants.value = Props.Product.chitietsanphams.map(variant => ({
+  initialVariants.value = Props.Product.chitietsanphams.map((variant) => ({
     ...variant,
     oldImages: variant.hinhanhs ? [...variant.hinhanhs] : [],
     newImages: [],
-  }));
-  editedVariants.value = initialVariants.value.map(variant => ({
+  }))
+  editedVariants.value = initialVariants.value.map((variant) => ({
     ...variant,
     oldImages: [...(variant.oldImages || [])],
     newImages: [],
-  }));
+  }))
 
-  console.log("CT", editedVariants.value)
+  console.log('CT', editedVariants.value)
 })
 // Upload file lên server
 const uploadImage = async (file) => {
-  try{
-    const formData = new FormData();
+  try {
+    const formData = new FormData()
     formData.append('file', file)
     const response = await fetch('https://localhost:7139/api/UploadImage', {
       method: 'POST',
       body: formData,
-    });
+    })
     if (!response.ok) {
-      throw new Error(`Lỗi khi upload ảnh: ${response.status} ${response.statusText}`);
+      throw new Error(`Lỗi khi upload ảnh: ${response.status} ${response.statusText}`)
     }
-    const result = await response.json();
-  }catch(error){
-    console.error('Error uploading image:', error.message);
+    const result = await response.json()
+  } catch (error) {
+    console.error('Error uploading image:', error.message)
   }
 }
-
 
 // Xử lý upload ảnh mới
 const handleFileChange = async (variant, event) => {
   const files = Array.from(event.target.files)
   for (const file of files) {
-    await uploadImage(file);
+    await uploadImage(file)
   }
 
   const newImages = files.map((file) => ({
     tenHinhAnh: file.name,
   }))
-  variant.newImages = [...(variant.newImages || []), ...newImages];
-}
-const handleBlur = (index) => {
-  if (editedVariants.value[index].soLuongTon == '') {
-    editedVariants.value[index].soLuongTon = parseInt(initialVariants.value[index]?.soLuongTon) || 1
-  }
-  if (editedVariants.value[index].donGia == '') {
-    editedVariants.value[index].donGia = parseInt(initialVariants.value[index]?.donGia) || 0
-  }
+  variant.newImages = [...(variant.newImages || []), ...newImages]
 }
 
 // Xử lí việc hủy thay đổi
 const cancelEdit = () => {
-  const productChanged = JSON.stringify(editedProduct.value) != JSON.stringify(initialProduct.value);
-  const variantsChanged = JSON.stringify(editedVariants.value) != JSON.stringify(initialVariants.value);
+  const productChanged = JSON.stringify(editedProduct.value) != JSON.stringify(initialProduct.value)
+  const variantsChanged =
+    JSON.stringify(editedVariants.value) != JSON.stringify(initialVariants.value)
   console.log(productChanged)
   console.log(variantsChanged)
   if (productChanged == true || variantsChanged == true) {
@@ -113,19 +105,32 @@ const cancelEdit = () => {
         //   window.location.reload()
         // }, 2000)
         Swal.clickCancel()
-      }
-      else{
-        var instanceModal = document.getElementById(`productEditModal_${Props.Product.maSp}`);
-        instanceModal.classList.remove('show')
-        instanceModal.style.display = 'none';
-        document.querySelectorAll('.modal-backdrop.fade.show').forEach(e => e.remove())
+      } else {
+        editedVariants.value = initialVariants.value.map((variant) => ({
+          ...variant,
+          oldImages: [...(variant.oldImages || [])],
+          newImages: [],
+        }))
+        editedProduct.value = { ...initialProduct.value }
+        // var instanceModal = document.getElementById(`productEditModal_${Props.Product.maSp}`)
+        // instanceModal.classList.remove('show')
+        // instanceModal.style.display = 'none'
+        // document.querySelectorAll('.modal-backdrop.fade.show').forEach((e) => e.remove())
+        var instanceModal = document.getElementById(`productEditModal_${Props.Product.maSp}`)
+        const closeButton = instanceModal.querySelector('[data-bs-dismiss="modal"]')
+        if (closeButton) {
+          closeButton.click() // Kích hoạt nút đóng modal
+        }
       }
     })
   } else {
-    var instanceModal = document.getElementById(`productEditModal_${Props.Product.maSp}`);
-    instanceModal.classList.remove('show')
-    instanceModal.style.display = 'none';
-    document.querySelectorAll('.modal-backdrop.fade.show').forEach(e => e.remove())
+    var instanceModal = document.getElementById(`productEditModal_${Props.Product.maSp}`)
+    //instanceModal.classList.remove('show')
+    const closeButton = instanceModal.querySelector('[data-bs-dismiss="modal"]')
+    if (closeButton) {
+      closeButton.click() // Kích hoạt nút đóng modal
+    }
+    //document.querySelectorAll('.modal-backdrop.fade.show').forEach((e) => e.remove())
   }
 }
 
@@ -159,11 +164,11 @@ const addVariant = () => {
 
 const deleteImage = (variant, imageIndex, isOldImage) => {
   if (isOldImage) {
-    variant.oldImages.splice(imageIndex, 1);
+    variant.oldImages.splice(imageIndex, 1)
   } else {
-    variant.newImages.splice(imageIndex, 1);
+    variant.newImages.splice(imageIndex, 1)
   }
-};
+}
 
 watch(
   editedVariants,
@@ -192,6 +197,16 @@ const removeVariant = (index) => {
 async function UpdateProduct() {
   try {
     let isValid = true
+    const hasDuplicates = editedVariants.value.some(
+      (item, index, arr) =>
+        arr.findIndex((obj) => obj.kichThuoc === item.kichThuoc && obj.huongVi === item.huongVi) !==
+        index
+    )
+
+    if (hasDuplicates) {
+      Swal.fire('Vui lòng không để hai dòng biến thể trùng lặp', '', 'error')
+      isValid = false
+    }
     const form_input_Product = document.querySelectorAll('.data-editProduct .mb-3')
     form_input_Product.forEach((element) => {
       var inputValueProduct = element.querySelector('.form-control, .form-select')
@@ -199,12 +214,26 @@ async function UpdateProduct() {
       if (messageErrorProduct) {
         messageErrorProduct.textContent = ''
       }
-      if (inputValueProduct.value.trim() == '') {
+      if (
+        inputValueProduct &&
+        'value' in inputValueProduct &&
+        inputValueProduct.value.trim() == ''
+      ) {
         const label = element.querySelector('.form-label')
         if (messageErrorProduct) {
           messageErrorProduct.textContent = `Không được để trống ${label.textContent}`
           isValid = false
         }
+      }
+    })
+    editedVariants.value.forEach(e => {
+      if(e.donGia <= 0){
+        Swal.fire('Đơn giá biến thể sản phẩm phải lớn hơn 0 ', '', 'error')
+        isValid = false
+      }
+      if(e.soLuongTon == ''){
+        Swal.fire('Số lượng tồn biến thể sản phẩm không được để trống', '', 'error')
+        isValid = false
       }
     })
     if (isValid == false) {
@@ -216,42 +245,45 @@ async function UpdateProduct() {
       moTa: editedProduct.value.moTa,
       isDelete: false,
       detailProductEditRequestDTOs: editedVariants.value.map((variant) => ({
-        // maCtsp: variant.maCtsp,
+        maCtsp: variant.maCtsp,
         kichThuoc: variant.kichThuoc,
         huongVi: variant.huongVi,
         soLuongTon: variant.soLuongTon,
         donGia: variant.donGia,
         imageProductRequestDTOs: [
-        ...(variant.oldImages || []).map(img => ({ tenHinhAnh: img.tenHinhAnh })),
-        ...(variant.newImages || []).map(img => ({ tenHinhAnh: img.tenHinhAnh })),
-      ],
+          ...(variant.oldImages || []).map((img) => ({ tenHinhAnh: img.tenHinhAnh })),
+          ...(variant.newImages || []).map((img) => ({ tenHinhAnh: img.tenHinhAnh })),
+        ],
       })),
     }
     console.log(content)
-    const response = await fetch(`https://localhost:7139/api/Products/${editedProduct.value.maSp}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(content),
-    })
+    const response = await fetch(
+      `https://localhost:7139/api/Products/${editedProduct.value.maSp}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(content),
+      }
+    )
     const result = await response.json()
     if (!response.ok) {
-      let errorMessage = `Lỗi khi cập nhật sản phẩm: ${response.status} ${response.statusText}`;
-      if(result.message){
-        errorMessage += ` - ${result.message}`;
+      let errorMessage = `Lỗi khi cập nhật sản phẩm: ${response.status} ${response.statusText}`
+      if (result.message) {
+        errorMessage += ` - ${result.message}`
       }
       if (result.details) {
-          errorMessage += ` (Chi tiết: ${JSON.stringify(result.details)})`;
+        errorMessage += ` (Chi tiết: ${JSON.stringify(result.details)})`
       }
       throw new Error(errorMessage)
     }
     Swal.fire({
-      title: "Đã cập nhật thông tin sản phẩm!",
-      icon: "success",
-      draggable: true
-    });
-    setTimeout(function(){
+      title: 'Đã cập nhật thông tin sản phẩm!',
+      icon: 'success',
+      draggable: true,
+    })
+    setTimeout(function () {
       window.location.reload()
     }, 2000)
   } catch (error) {
@@ -261,16 +293,15 @@ async function UpdateProduct() {
 
 const SaveChangeServer = async () => {
   Swal.fire({
-  title: "Bạn có muốn lưu các thay đổi này không ?",
-  showCancelButton: true,
-  confirmButtonText: "Xác nhận",
-  cancelButtonText: 'Hủy',
-}).then((result) => {
-  if (result.isConfirmed) {
-    UpdateProduct()
-  }
-});
-  
+    title: 'Bạn có muốn lưu các thay đổi này không ?',
+    showCancelButton: true,
+    confirmButtonText: 'Xác nhận',
+    cancelButtonText: 'Hủy',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      UpdateProduct()
+    }
+  })
 }
 
 const blockNegativeNumbers = (event) => {
@@ -278,7 +309,7 @@ const blockNegativeNumbers = (event) => {
     event.preventDefault()
   }
 }
-const modules = [Navigation, Pagination];
+const modules = [Navigation, Pagination]
 </script>
 
   <template>
@@ -289,6 +320,7 @@ const modules = [Navigation, Pagination];
     data-bs-backdrop="static"
     data-bs-keyboard="false"
   >
+    <button class="btn-close" data-bs-dismiss="modal"></button>
     <div class="modal-dialog modal-xl text-start">
       <div class="modal-content">
         <div class="modal-header bg-primary text-white">
@@ -353,9 +385,7 @@ const modules = [Navigation, Pagination];
                           class="position-relative"
                         >
                           <img
-                            :src="`https://localhost:7139/HinhAnh/Food_Drink/${
-                              image.tenHinhAnh ? image.tenHinhAnh.replace('.jfif', '.jpg') : null
-                            }`"
+                            :src="`https://localhost:7139/HinhAnh/Food_Drink/${image.tenHinhAnh}`"
                             alt="Ảnh biến thể"
                             class="img-fluid rounded"
                             style="max-width: 100px; height: auto"
@@ -368,7 +398,6 @@ const modules = [Navigation, Pagination];
                             X
                           </button>
                         </swiper-slide>
-                      
                       </swiper>
                       <input
                         type="file"
@@ -390,7 +419,6 @@ const modules = [Navigation, Pagination];
                       <input
                         type="number"
                         @keydown="blockNegativeNumbers"
-                        @blur="handleBlur(vindex)"
                         class="form-control"
                         v-model="variant.soLuongTon"
                       />
@@ -400,7 +428,6 @@ const modules = [Navigation, Pagination];
                       <input
                         type="number"
                         @keydown="blockNegativeNumbers"
-                        @blur="handleBlur(vindex)"
                         class="form-control"
                         v-model="variant.donGia"
                       />

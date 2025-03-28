@@ -18,6 +18,10 @@ using APIQuanLyCuaHang.Repositories.Customer;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using OfficeOpenXml;
+using APIQuanLyCuaHang.Repositories.Combo;
+using APIQuanLyCuaHang.Repositories.DetailCombo;
+using APIQuanLyCuaHang.Repositories.Bill;
+using APIQuanLyCuaHang.Repositories.DetailBill;
 var builder = WebApplication.CreateBuilder(args);
 ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 // Add services to the container.
@@ -70,6 +74,8 @@ builder.Services.AddScoped<IProduct, Product>();
 builder.Services.AddScoped<IDetailProduct, DetailProduct>();
 builder.Services.AddScoped<IimageProduct, imageProduct>();
 builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<ComboService>();
+builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<ICategory, Category>();
 var SecretKey = builder.Configuration["JWT:SecretKey"];
 var SecretKeyBytes = Encoding.UTF8.GetBytes(SecretKey);
@@ -78,6 +84,10 @@ builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<ITokenServices, TokenServices>();
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IComboRepository, ComboRepository>();
+builder.Services.AddScoped<IDetailCombo, DetailCombo>();
+builder.Services.AddScoped<IBillRepository, BillRepository>();
+builder.Services.AddScoped<IDetailBill, DetailBill>();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

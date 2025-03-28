@@ -1,5 +1,6 @@
 ﻿using APIQuanLyCuaHang.DTO;
 using APIQuanLyCuaHang.Models;
+using APIQuanLyCuaHang.Repositories.DetailProduct;
 using APIQuanLyCuaHang.Repositories.Product;
 using APIQuanLyCuaHang.Services;
 using Microsoft.AspNetCore.Http;
@@ -13,17 +14,18 @@ namespace APIQuanLyCuaHang.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProduct product;
+        private readonly IDetailProduct detailproduct;
         private readonly ProductService productService;
 
-        public ProductsController(IProduct product, ProductService productService)
+        public ProductsController(IProduct product, ProductService productService, IDetailProduct detailproduct)
         {
             this.product = product;
+            this.detailproduct = detailproduct;
             this.productService = productService;
         }
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] string? search, int? filterCatories, string? sort, string? filterPrices, int page = 1)
+        public async Task<IActionResult> GetAllByPage([FromQuery] string? search, int? filterCatories, string? sort, string? filterPrices, int page = 1)
         {
-            Console.WriteLine($"Search Parameter: {search}");
             var GetListProductVM = await product.GetAll(search, filterCatories, sort, filterPrices);
             page = page >= 1 ? page : 1;
             int pagesize = 10;
@@ -40,6 +42,12 @@ namespace APIQuanLyCuaHang.Controllers
                 CurrentPage = page,
             });
         }
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll()
+        {
+            var GetListProductVM = await product.GetAll(null, null, null, null);
+            return Ok(GetListProductVM);
+        }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
@@ -55,12 +63,13 @@ namespace APIQuanLyCuaHang.Controllers
                 return Ok(new
                 {
                     Success = true,
-                    Message = "Thêm sản phẩm mới thành công"
+                    Message = "Thêm sản phẩm mới thành công",
+                    
                 });
             }
             catch (Exception ex)
             {
-                return BadRequest(new { Success = false, Message = $"{ex.Message}" });
+                return BadRequest(new { Success = false, Message = $"{ex.Message}", Detail = ex.StackTrace, });
             }
         }
         [HttpPut("{id}")]
@@ -77,7 +86,7 @@ namespace APIQuanLyCuaHang.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new { Success = false, Message = $"{ex.Message}" });
+                return BadRequest(new { Success = false, Message = $"{ex.Message}", Details = ex.InnerException?.Message, StackTrace = ex.StackTrace });
             }
         }
         [HttpPut("{id}/Cancel")]
@@ -95,6 +104,30 @@ namespace APIQuanLyCuaHang.Controllers
             catch (Exception ex)
             {
                 return BadRequest(new { Success = false, Message = $"{ex.Message}" });
+            }
+        }
+        [HttpGet("CheckExistDetailProduct")]
+        public async Task<IActionResult> CheckExistDetailProduct(int id, string? KichThuoc, string? HuongVi)
+        {
+            try
+            {
+                var findDetailProduct = await detailproduct.CheckExistDetailProduct(id, KichThuoc, HuongVi);
+                if(findDetailProduct != null)
+                {
+                    return Ok(new
+                    {
+                        Success = true,
+                        Message = "Biến thể sản phẩm này đã tồn tại"
+                    });
+                }
+                return Ok(new
+                {
+                    Success = false,
+                    Message = "Biến thể sản phẩm này chưa tồn tại"
+                });
+            }catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
     }

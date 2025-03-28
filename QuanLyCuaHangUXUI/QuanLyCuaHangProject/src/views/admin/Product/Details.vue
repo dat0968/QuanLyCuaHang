@@ -108,7 +108,7 @@ ListProduct.value = Props.Product?.chitietsanphams
                         <swiper-slide v-for="(image, index) in variant.hinhanhs" :key="index">
                           <img
                             :src="`https://localhost:7139/HinhAnh/Food_Drink/${
-                              image.tenHinhAnh ? image.tenHinhAnh.replace('.jfif', '.jpg') : null
+                              image.tenHinhAnh
                             }`"
                             alt="Ảnh biến thể"
                             class="img-fluid rounded"

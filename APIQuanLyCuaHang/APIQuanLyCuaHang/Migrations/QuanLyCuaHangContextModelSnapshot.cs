@@ -58,18 +58,17 @@ namespace APIQuanLyCuaHang.Migrations
                     b.Property<int>("MaCombo")
                         .HasColumnType("int");
 
-                    b.Property<int>("MaCtsp")
-                        .HasColumnType("int")
-                        .HasColumnName("MaCTSP");
+                    b.Property<int>("MaSp")
+                        .HasColumnType("int");
 
                     b.Property<int?>("SoLuongSp")
                         .HasColumnType("int")
                         .HasColumnName("SoLuongSP");
 
-                    b.HasKey("MaCombo", "MaCtsp")
+                    b.HasKey("MaCombo", "MaSp")
                         .HasName("PK__CHITIETC__020940946F0EEEE6");
 
-                    b.HasIndex("MaCtsp");
+                    b.HasIndex("MaSp");
 
                     b.ToTable("CHITIETCOMBO", (string)null);
                 });
@@ -89,6 +88,9 @@ namespace APIQuanLyCuaHang.Migrations
                     b.Property<string>("HuongVi")
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
 
                     b.Property<string>("KichThuoc")
                         .HasMaxLength(30)
@@ -147,9 +149,6 @@ namespace APIQuanLyCuaHang.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaCombo"));
 
-                    b.Property<decimal?>("GiaCombo")
-                        .HasColumnType("decimal(11, 2)");
-
                     b.Property<string>("Hinh")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
@@ -162,6 +161,15 @@ namespace APIQuanLyCuaHang.Migrations
                     b.Property<string>("MoTa")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<float?>("PhanTramGiam")
+                        .HasColumnType("real");
+
+                    b.Property<int>("SoLuong")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("SoTienGiam")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("TenCombo")
                         .IsRequired()
@@ -401,9 +409,9 @@ namespace APIQuanLyCuaHang.Migrations
                         .HasDefaultValue(false);
 
                     b.Property<string>("MatKhau")
-                        .HasMaxLength(30)
+                        .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("char(30)")
+                        .HasColumnType("char(255)")
                         .IsFixedLength();
 
                     b.Property<DateOnly?>("NgaySinh")
@@ -638,15 +646,15 @@ namespace APIQuanLyCuaHang.Migrations
                         .IsRequired()
                         .HasConstraintName("FK__CHITIETCO__MaCom__5441852A");
 
-                    b.HasOne("APIQuanLyCuaHang.Models.Chitietsanpham", "MaCtspNavigation")
+                    b.HasOne("APIQuanLyCuaHang.Models.Sanpham", "MaSpNavigation")
                         .WithMany("Chitietcombos")
-                        .HasForeignKey("MaCtsp")
+                        .HasForeignKey("MaSp")
                         .IsRequired()
-                        .HasConstraintName("FK__CHITIETCO__MaCTS__5535A963");
+                        .HasConstraintName("FK__CHITIETCO__MaSP__5535A963");
 
                     b.Navigation("MaComboNavigation");
 
-                    b.Navigation("MaCtspNavigation");
+                    b.Navigation("MaSpNavigation");
                 });
 
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Chitietsanpham", b =>
@@ -774,8 +782,6 @@ namespace APIQuanLyCuaHang.Migrations
 
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Chitietsanpham", b =>
                 {
-                    b.Navigation("Chitietcombos");
-
                     b.Navigation("Cthoadons");
 
                     b.Navigation("Giohangs");
@@ -819,6 +825,8 @@ namespace APIQuanLyCuaHang.Migrations
 
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Sanpham", b =>
                 {
+                    b.Navigation("Chitietcombos");
+
                     b.Navigation("Chitietsanphams");
                 });
 #pragma warning restore 612, 618

@@ -46,6 +46,7 @@ namespace APIQuanLyCuaHang.Services
                         HuongVi = detail.HuongVi,
                         SoLuongTon = detail.SoLuongTon,
                         DonGia = detail.DonGia,
+                        IsDelete = false,
                     };
                     NewDetailProduct = await DetailProductRepository.AddDetailProduct(NewDetailProduct);
                     if (detail.ImageProductRequestDTOs != null)
@@ -119,6 +120,7 @@ namespace APIQuanLyCuaHang.Services
                             HuongVi = detail.HuongVi,
                             SoLuongTon = detail.SoLuongTon,
                             DonGia = detail.DonGia,
+                            IsDelete = false,
                         };
                         await DetailProductRepository.UpdateDetailProduct(UpdateDetails);
 
@@ -145,7 +147,8 @@ namespace APIQuanLyCuaHang.Services
                             KichThuoc = detail.KichThuoc,
                             HuongVi = detail.HuongVi,
                             DonGia = detail.DonGia,
-                            SoLuongTon = detail.SoLuongTon
+                            SoLuongTon = detail.SoLuongTon,
+                            IsDelete = false,
                         };
                         NewDetailProduct = await DetailProductRepository.AddDetailProduct(NewDetailProduct);
                         if(detail.ImageProductRequestDTOs != null)

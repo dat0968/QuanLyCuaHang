@@ -27,7 +27,10 @@ namespace APIQuanLyCuaHang.Controllers
                 {
                     await file.CopyToAsync(stream);
                 }
-                return Ok();
+                return Ok(new
+                {
+                    Success = true
+                });
             }
             catch (Exception ex)
             {

@@ -228,6 +228,249 @@
         }
       }
     },
+    "/api/Combos": {
+      "get": {
+        "tags": [
+          "Combos"
+        ],
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Combos"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "TenCombo": {
+                    "type": "string"
+                  },
+                  "Hinh": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "SoTienGiam": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "PhanTramGiam": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "SoLuong": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "MoTa": {
+                    "type": "string"
+                  },
+                  "IsDelete": {
+                    "type": "boolean"
+                  },
+                  "Chitietcombos": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DetaisComboRequestDTO"
+                    }
+                  }
+                }
+              },
+              "encoding": {
+                "TenCombo": {
+                  "style": "form"
+                },
+                "Hinh": {
+                  "style": "form"
+                },
+                "SoTienGiam": {
+                  "style": "form"
+                },
+                "PhanTramGiam": {
+                  "style": "form"
+                },
+                "SoLuong": {
+                  "style": "form"
+                },
+                "MoTa": {
+                  "style": "form"
+                },
+                "IsDelete": {
+                  "style": "form"
+                },
+                "Chitietcombos": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Combos/{id}": {
+      "get": {
+        "tags": [
+          "Combos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Combos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "TenCombo": {
+                    "type": "string"
+                  },
+                  "Hinh": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "SoTienGiam": {
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "PhanTramGiam": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "SoLuong": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "MoTa": {
+                    "type": "string"
+                  },
+                  "IsDelete": {
+                    "type": "boolean"
+                  },
+                  "Chitietcombos": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/DetaisComboRequestDTO"
+                    }
+                  }
+                }
+              },
+              "encoding": {
+                "TenCombo": {
+                  "style": "form"
+                },
+                "Hinh": {
+                  "style": "form"
+                },
+                "SoTienGiam": {
+                  "style": "form"
+                },
+                "PhanTramGiam": {
+                  "style": "form"
+                },
+                "SoLuong": {
+                  "style": "form"
+                },
+                "MoTa": {
+                  "style": "form"
+                },
+                "IsDelete": {
+                  "style": "form"
+                },
+                "Chitietcombos": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Combos/{id}/Cancel": {
+      "put": {
+        "tags": [
+          "Combos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Customer": {
       "get": {
         "tags": [
@@ -685,6 +928,18 @@
         }
       }
     },
+    "/api/Products/GetAll": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Products/{id}": {
       "get": {
         "tags": [
@@ -761,6 +1016,42 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Products/CheckExistDetailProduct": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "KichThuoc",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "HuongVi",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -906,6 +1197,21 @@
             "items": {
               "$ref": "#/components/schemas/ImageProductRequestDTO"
             },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DetaisComboRequestDTO": {
+        "type": "object",
+        "properties": {
+          "maSp": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "soLuongSp": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           }
         },

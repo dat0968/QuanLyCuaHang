@@ -56,6 +56,7 @@ namespace APIQuanLyCuaHang.Repositories.Product
         async Task<List<ProductResponseDTO>> IProduct.GetAll(string? search, int? filterCatories, string? sort, string? filterPrices)
         {
             var GetListProduct = await db.Sanphams
+                .AsNoTracking()
                 .Where(p => p.IsDelete == false)
                 .Include(p => p.MaDanhMucNavigation)
                 .Include(p => p.Chitietsanphams)
@@ -66,21 +67,21 @@ namespace APIQuanLyCuaHang.Repositories.Product
                     TenSanPham = product.TenSanPham,
                     MaDanhMuc = product.MaDanhMuc,
                     TenDanhMuc = product.MaDanhMucNavigation != null ? product.MaDanhMucNavigation.TenDanhMuc : "Không có danh mục",
-                    TongSoLuong = (int)product.Chitietsanphams.Sum(p => p.SoLuongTon),
-                    KhoangGia = product.Chitietsanphams.Any()
-                                ? (product.Chitietsanphams.Min(p => p.DonGia) == product.Chitietsanphams.Max(p => p.DonGia)
-                                    ? $"{product.Chitietsanphams.Min(p => p.DonGia)} VNĐ"
-                                    : $"{product.Chitietsanphams.Min(p => p.DonGia)} VNĐ - {product.Chitietsanphams.Max(p => p.DonGia)} VNĐ")
-                                : "Chưa có giá",
+                    TongSoLuong = (int)product.Chitietsanphams.Where(p => p.IsDelete == false).Sum(p => p.SoLuongTon),
+                    KhoangGia = product.Chitietsanphams.Where(p => p.IsDelete == false).Any()
+                    ? (product.Chitietsanphams.Where(p => p.IsDelete == false).Min(p => p.DonGia) == product.Chitietsanphams.Where(p => p.IsDelete == false).Max(p => p.DonGia)
+                        ? $"{product.Chitietsanphams.Where(p => p.IsDelete == false).Min(p => p.DonGia)} VNĐ"
+                        : $"{product.Chitietsanphams.Where(p => p.IsDelete == false).Min(p => p.DonGia)} VNĐ - {product.Chitietsanphams.Where(p => p.IsDelete == false).Max(p => p.DonGia)} VNĐ")
+                    : "Chưa có giá",
                     MoTa = product.MoTa,
                     IsDelete = product.IsDelete,
-                    Chitietsanphams = product.Chitietsanphams.Select(details => new DetailProductResponseDTO
+                    Chitietsanphams = product.Chitietsanphams.Where(p => p.IsDelete == false).Select(details => new DetailProductResponseDTO
                     {
                         MaCtsp = details.MaCtsp,
                         MaSp = details.MaSp,
                         TenSanPham = details.MaSpNavigation.TenSanPham,
-                        KichThuoc = string.IsNullOrEmpty(details.KichThuoc) == true ? "NO" : details.KichThuoc,
-                        HuongVi = string.IsNullOrEmpty(details.HuongVi) == true ? "NO" : details.HuongVi,
+                        KichThuoc = string.IsNullOrEmpty(details.KichThuoc) == true ? "" : details.KichThuoc,
+                        HuongVi = string.IsNullOrEmpty(details.HuongVi) == true ? "" : details.HuongVi,
                         SoLuongTon = details.SoLuongTon,
                         DonGia = details.DonGia,
                         Hinhanhs = details.Hinhanhs
@@ -166,6 +167,7 @@ namespace APIQuanLyCuaHang.Repositories.Product
         async Task<ProductResponseDTO> IProduct.GetById(int id)
         {
             var ProductVM = await db.Sanphams
+            .AsNoTracking()
             .Where(p => p.MaSp == id)
             .Include(p => p.MaDanhMucNavigation)
             .Include(p => p.Chitietsanphams)
@@ -178,7 +180,7 @@ namespace APIQuanLyCuaHang.Repositories.Product
                 TenDanhMuc = product.MaDanhMucNavigation.TenDanhMuc,
                 MoTa = product.MoTa,
                 IsDelete = product.IsDelete,
-                Chitietsanphams = product.Chitietsanphams.Select(details => new DetailProductResponseDTO
+                Chitietsanphams = product.Chitietsanphams.Where(p => p.IsDelete == false).Select(details => new DetailProductResponseDTO
                 {
                     MaCtsp = details.MaCtsp,
                     MaSp = details.MaSp,
