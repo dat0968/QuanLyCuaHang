@@ -22,6 +22,24 @@ namespace APIQuanLyCuaHang.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("APIQuanLyCuaHang.Models.Ban", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("TinhTrang")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BAN", (string)null);
+                });
+
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Cakip", b =>
                 {
                     b.Property<int>("MaCaKip")
@@ -230,8 +248,11 @@ namespace APIQuanLyCuaHang.Migrations
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Giohang", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("ID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("DonGia")
                         .HasColumnType("decimal(11, 2)");

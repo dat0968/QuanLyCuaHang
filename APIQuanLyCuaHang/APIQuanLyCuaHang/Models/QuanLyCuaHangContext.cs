@@ -44,9 +44,18 @@ public partial class QuanLyCuaHangContext : DbContext
     public virtual DbSet<Refreshtoken> Refreshtokens { get; set; }
 
     public virtual DbSet<Sanpham> Sanphams { get; set; }
+    public virtual DbSet<Sanpham> Bans { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Ban>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+
+            entity.ToTable("BAN");
+
+            entity.Property(e => e.TinhTrang).HasMaxLength(60);
+        });
         modelBuilder.Entity<Cakip>(entity =>
         {
             entity.HasKey(e => e.MaCaKip).HasName("PK__CAKIP__68C49E4C467ECFEF");
