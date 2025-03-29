@@ -1,0 +1,18 @@
+﻿using APIQuanLyCuaHang.DTO;
+using APIQuanLyCuaHang.Models;
+
+namespace APIQuanLyCuaHang.Repositories.Bill
+{
+    public interface IBillRepository
+    {
+        Task<IEnumerable<HoaDonDTO>> GetAllBill();
+        Task<HoaDonDTO?> GetById(int id);
+        Task UpdateStatus(int maHd, string tinhTrang, int? maNv);
+        Task<(IEnumerable<HoaDonDTO>, int)> GetFilteredBill(string? hoTen, string? hinhThucTt, string? tinhTrang, int page, int pageSize);
+        Task<HoaDonDTOWithDetails?> GetBillDetails(int maHd);
+    }
+    public class HoaDonDTOWithDetails : HoaDonDTO
+    {
+        public List<ChiTietHoaDonDTO> ChiTietHoaDon { get; set; }
+    }
+}

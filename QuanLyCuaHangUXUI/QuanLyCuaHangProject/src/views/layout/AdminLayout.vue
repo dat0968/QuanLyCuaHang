@@ -49,6 +49,11 @@ import '../../assets/admin/js/main.js'
                 </RouterLink>
               </li>
               <li>
+                <RouterLink to="/Admin/Bill">
+                  <i class="fas fa-box"></i><span>QUẢN LÝ ĐƠN HÀNG</span>
+                </RouterLink>
+              </li>
+              <li>
                 <a href="javaScript:void();">
                   <i class="icon-layers"></i><span>Danh sách mục</span
                   ><i class="icon-arrow-right pull-right"></i>
