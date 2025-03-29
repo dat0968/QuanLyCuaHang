@@ -309,7 +309,8 @@ namespace APIQuanLyCuaHang.Migrations
                 name: "GIOHANG",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false),
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     MaKH = table.Column<int>(type: "int", nullable: false),
                     MaCTSP = table.Column<int>(type: "int", nullable: false),
                     SoLuong = table.Column<int>(type: "int", nullable: false),
@@ -317,7 +318,8 @@ namespace APIQuanLyCuaHang.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__GIOHANG__3214EC27376B130B", x => x.ID);
+                    table.PrimaryKey("PK__GIOHANG__3214EC27376B130B", x => x.ID)
+                        .Annotation("SqlServer:Identity", "1, 1");
                     table.ForeignKey(
                         name: "FK__GIOHANG__MaCTSP__6B24EA82",
                         column: x => x.MaCTSP,

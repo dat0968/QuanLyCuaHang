@@ -225,6 +225,7 @@ namespace APIQuanLyCuaHang.Migrations
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Giohang", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("ID");
 
