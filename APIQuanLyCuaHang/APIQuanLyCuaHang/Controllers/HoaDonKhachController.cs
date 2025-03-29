@@ -23,7 +23,7 @@ namespace APIQuanLyCuaHang.Controllers
             var response = await _unit.HoaDonKhachs.GetAllInvoiceByUserId(userId);
             return Ok(response);
         }
-        [HttpGet("{userId}&{orderId}&{statusChange}")]
+        [HttpPost]
         public async Task<IActionResult> ChangeStatusOrder(int? userId, int? orderId, string? statusChange)
         {
             var response = await _unit.HoaDonKhachs.UpdateStatusOrderOfUser(userId, orderId, statusChange);

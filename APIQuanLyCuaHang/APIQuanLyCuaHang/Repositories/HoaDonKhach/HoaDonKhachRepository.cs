@@ -25,7 +25,7 @@ namespace APIQuanLyCuaHang.Repositories.HoaDonKhach
                 {
                     throw new Exception("Không nhận diện được tài khoản của bạn trong hệ thống.");
                 }
-                var listOrigin = await base.GetAllAsync(x => x.MaKh == userId, "Cthoadons");
+                var listOrigin = await base.GetAllAsync(x => x.MaKh == userId, "Cthoadons,Cthoadons.MaCtspNavigation,Cthoadons.MaCtspNavigation.MaSpNavigation");
                 var listDTO = listOrigin.Select(lo => new HoaDonKhachDTO
                 {
                     MaHd = lo.MaHd,
@@ -50,6 +50,11 @@ namespace APIQuanLyCuaHang.Repositories.HoaDonKhach
                         MaHd = ct.MaHd,
                         MaCtsp = ct.MaCtsp,
                         SoLuong = ct.SoLuong,
+                        KichThuoc = ct.MaCtspNavigation.KichThuoc,
+                        HuongVi = ct.MaCtspNavigation.HuongVi,
+                        DonGia = ct.MaCtspNavigation.DonGia,
+                        TenSanPham = ct.MaCtspNavigation.MaSpNavigation.TenSanPham,
+                        MoTa = ct.MaCtspNavigation.MaSpNavigation.MoTa
                     }).ToList()
                 }).ToList();
 
@@ -67,9 +72,9 @@ namespace APIQuanLyCuaHang.Repositories.HoaDonKhach
             ResponseAPI<dynamic> response = new();
             try
             {
-                userId = userId ?? throw new Exception("Không nhập được mã người dùng.");
-                orderId = orderId ?? throw new Exception("Không nhận được mã đơn hàng.");
-                statusChange = statusChange ?? throw new Exception("Không xác định được trạng thái muốn đổi.");
+                userId ??= userId ?? throw new Exception($"Không nhận được mã người dùng.");
+                orderId ??= orderId ?? throw new Exception("Không nhận được mã đơn hàng.");
+                statusChange ??= statusChange ?? throw new Exception("Không xác định được trạng thái muốn đổi.");
 
                 var originData = await base.GetAsync(x => x.MaHd == orderId) ?? throw new Exception("Đơn hàng không tồn tại.");
 
