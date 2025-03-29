@@ -157,7 +157,6 @@ public partial class QuanLyCuaHangContext : DbContext
             entity.ToTable("GIOHANG");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
                 .HasColumnName("ID");
             entity.Property(e => e.DonGia).HasColumnType("decimal(11, 2)");
             entity.Property(e => e.MaCtsp).HasColumnName("MaCTSP");
