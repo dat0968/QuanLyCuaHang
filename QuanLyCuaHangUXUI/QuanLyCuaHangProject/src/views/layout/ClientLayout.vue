@@ -24,33 +24,20 @@ import '../../assets/client/js/jquery.nice-select.min.js'
 import '../../assets/client/js/custom.js'
 import Header from '../../../src/components/Header.vue'
 import Footer from '../../../src/components/Footer.vue'
-
 </script>
 
 <template>
   <div>
     <!--::header part start::-->
-    <Header/>
+    <Header />
     <!-- Header part end-->
 
-    <RouterView/>
-
-    
-  
-    
-
-    
-
-
-
-    
+    <RouterView />
 
     <!-- footer part start-->
-    <Footer/>
+    <Footer />
     <!-- footer part end-->
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -11,41 +11,47 @@ import Register from '../views/accounts/Register.vue'
 import ForgotPassword from '../views/accounts/ForgotPassword.vue'
 import Error from '../views/error/Error.vue'
 import DetailProduct from '@/views/client/DetailProduct.vue'
+import OrderClient from '@/views/client/OrderClient.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
       component: ClientLayout,
-      children:
-        [
-          { path: '', name: 'Home', component: Home },
-          { path: '/about', name: 'About', component: About },
-          { path: '/menu', name: 'Menu', component: Menu },
-          { path: '/chefs', name: 'Chefs', component: Chef },
-          { path: '/detail', name: 'DetailProduct', component: DetailProduct },
-        ]
+      children: [
+        { path: '', name: 'Home', component: Home },
+        { path: '/about', name: 'About', component: About },
+        { path: '/menu', name: 'Menu', component: Menu },
+        { path: '/chefs', name: 'Chefs', component: Chef },
+        { path: '/detail', name: 'DetailProduct', component: DetailProduct },
+        { path: '/client-order', name: 'ClientOrder', component: OrderClient },
+      ],
     },
     {
       path: '/admin',
       component: AdminLayout,
-      children:
-        [
-          {path: '', component: dashboard}
-        ]
+      children: [{ path: '', component: dashboard }],
     },
     {
-      path: '/Login', name: 'Login', component: Login
+      path: '/Login',
+      name: 'Login',
+      component: Login,
     },
     {
-      path: '/Register', name: 'Register', component: Register
+      path: '/Register',
+      name: 'Register',
+      component: Register,
     },
     {
-      path: '/ForgotPassword', name: 'ForgotPassword', component: ForgotPassword
+      path: '/ForgotPassword',
+      name: 'ForgotPassword',
+      component: ForgotPassword,
     },
     {
-      path: '/Error', name: 'Error', component: Error
-    }
+      path: '/Error',
+      name: 'Error',
+      component: Error,
+    },
   ],
 })
 
