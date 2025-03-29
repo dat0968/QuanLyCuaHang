@@ -16,6 +16,7 @@
     "@popperjs/core": "^2.11.8",
     "axios": "^1.8.4",
     "bootstrap": "^5.3.3",
+    "jwt-decode": "^4.0.0",
     "pinia": "^3.0.1",
     "sweetalert2": "^11.17.2",
     "swiper": "^11.2.6",

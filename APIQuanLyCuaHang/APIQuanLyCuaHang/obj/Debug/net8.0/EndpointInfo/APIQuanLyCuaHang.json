@@ -216,11 +216,195 @@
         }
       }
     },
+    "/api/Bill/GetAll": {
+      "get": {
+        "tags": [
+          "Bill"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Bill/GetById/{id}": {
+      "get": {
+        "tags": [
+          "Bill"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Bill/UpdateStatus/update-status/{id}": {
+      "put": {
+        "tags": [
+          "Bill"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStatusRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStatusRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStatusRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Bill/GetFiltered/search": {
+      "get": {
+        "tags": [
+          "Bill"
+        ],
+        "parameters": [
+          {
+            "name": "hoTen",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "hinhThucTt",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tinhTrang",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Bill/GetBillDetails/details/{id}": {
+      "get": {
+        "tags": [
+          "Bill"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Categories": {
       "get": {
         "tags": [
           "Categories"
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Checkout": {
+      "post": {
+        "tags": [
+          "Checkout"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderRequestDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderRequestDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderRequestDTO"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -1241,6 +1425,101 @@
         },
         "additionalProperties": false
       },
+      "OrderDetailRequestDTO": {
+        "type": "object",
+        "properties": {
+          "maCtsp": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "soLuong": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrderRequestDTO": {
+        "type": "object",
+        "properties": {
+          "maKh": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maNv": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "ngayTao": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "batDauGiao": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "ngayNhan": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "diaChiNhanHang": {
+            "type": "string",
+            "nullable": true
+          },
+          "ngayThanhToan": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "hinhThucTt": {
+            "type": "string",
+            "nullable": true
+          },
+          "tinhTrang": {
+            "type": "string",
+            "nullable": true
+          },
+          "moTa": {
+            "type": "string",
+            "nullable": true
+          },
+          "hoTen": {
+            "type": "string",
+            "nullable": true
+          },
+          "sdt": {
+            "type": "string",
+            "nullable": true
+          },
+          "lyDoHuy": {
+            "type": "string",
+            "nullable": true
+          },
+          "isDelete": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "phiVanChuyen": {
+            "type": "number",
+            "format": "double"
+          },
+          "tienGoc": {
+            "type": "number",
+            "format": "double"
+          },
+          "cthoadons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderDetailRequestDTO"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "PersonalInformationDTO": {
         "type": "object",
         "properties": {
@@ -1346,6 +1625,21 @@
           },
           "matKhau": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateStatusRequest": {
+        "type": "object",
+        "properties": {
+          "tinhTrang": {
+            "type": "string",
+            "nullable": true
+          },
+          "maNv": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           }
         },
