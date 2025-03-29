@@ -52,8 +52,15 @@ import '../../assets/admin/js/main.js'
                 <RouterLink to="/Admin/Combo">
                   <i class="fas fa-boxes"></i><span>COMBO</span>
                 </RouterLink>
+              </li>
+              <li>
                 <RouterLink to="/Admin/Bill">
                   <i class="fas fa-box"></i><span>QUẢN LÝ ĐƠN HÀNG</span>
+                </RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/Admin/Table">
+                  <i class="fas fa-box"></i><span>QUẢN LÝ BÀN</span>
                 </RouterLink>
               </li>
               <li>

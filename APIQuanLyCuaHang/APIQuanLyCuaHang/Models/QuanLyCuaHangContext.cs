@@ -44,7 +44,7 @@ public partial class QuanLyCuaHangContext : DbContext
     public virtual DbSet<Refreshtoken> Refreshtokens { get; set; }
 
     public virtual DbSet<Sanpham> Sanphams { get; set; }
-    public virtual DbSet<Sanpham> Bans { get; set; }
+    public virtual DbSet<Ban> Bans { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
