@@ -9,7 +9,9 @@ public partial class Giohang
 
     public int MaKh { get; set; }
 
-    public int MaCtsp { get; set; }
+    public int? MaCtsp { get; set; }
+    public int? MaCombo { get; set; } 
+    public string? TenCombo { get; set; }
 
     public int SoLuong { get; set; }
 

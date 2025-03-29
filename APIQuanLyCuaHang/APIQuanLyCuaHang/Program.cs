@@ -22,6 +22,7 @@ using APIQuanLyCuaHang.Repositories.Combo;
 using APIQuanLyCuaHang.Repositories.DetailCombo;
 using APIQuanLyCuaHang.Repositories.Bill;
 using APIQuanLyCuaHang.Repositories.DetailBill;
+using APIQuanLyCuaHang.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 // Add services to the container.
@@ -88,6 +89,7 @@ builder.Services.AddScoped<IComboRepository, ComboRepository>();
 builder.Services.AddScoped<IDetailCombo, DetailCombo>();
 builder.Services.AddScoped<IBillRepository, BillRepository>();
 builder.Services.AddScoped<IDetailBill, DetailBill>();
+builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

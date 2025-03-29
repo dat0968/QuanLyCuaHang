@@ -16,6 +16,8 @@ import ForgotPasswordStaff from '../views/accounts/ForgotPasswordStaff.vue'
 import GoogleLoginSuccess from '../views/accounts/GoogleLoginSuccess.vue'
 import CustomerIndex from '../views/Customer/Index.vue'
 import ComboIndex from '../views/admin/Combo/Index.vue'
+import DetailProduct from '../views/DetailProduct.vue';
+import Cart from '@/components/Cart.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -63,6 +65,18 @@ const router = createRouter({
       path: '/GoogleLoginSuccess',
       name: 'GoogleLoginSuccess',
       component: GoogleLoginSuccess,
+    },
+    {
+      path: '/detail/:type/:id',
+      name: 'DetailProduct',
+      component: DetailProduct,
+      props: true, 
+    },
+    {
+      path: '/cart',
+      name: 'cart',
+      component: Cart,
+      props: true, 
     },
   ],
 })

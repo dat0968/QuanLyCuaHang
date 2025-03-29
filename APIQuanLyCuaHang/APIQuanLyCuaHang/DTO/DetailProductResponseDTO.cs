@@ -14,7 +14,7 @@ namespace APIQuanLyCuaHang.DTO
         public int? SoLuongTon { get; set; }
 
         public decimal? DonGia { get; set; }
-
+        public List<DetailProductResponseDTO> Variants { get; set; } = new List<DetailProductResponseDTO>();
         public List<ImageProductResponseDTO> Hinhanhs { get; set; } = new List<ImageProductResponseDTO>();
     }
 }
