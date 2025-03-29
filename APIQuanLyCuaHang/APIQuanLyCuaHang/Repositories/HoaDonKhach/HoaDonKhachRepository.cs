@@ -78,6 +78,13 @@ namespace APIQuanLyCuaHang.Repositories.HoaDonKhach
 
                 var originData = await base.GetAsync(x => x.MaHd == orderId) ?? throw new Exception("Đơn hàng không tồn tại.");
 
+                DateTime timeNow = DateTime.Now;
+                TimeSpan timeReceivedOrder = (originData.NgayNhan!.Value - timeNow!);
+                if (timeReceivedOrder.Days > 0 && timeReceivedOrder.Hours > 1)
+                {
+                    throw new Exception("Bạn không thể hủy đơn hàng đã quá 3h từ lần cuối bạn nhận đơn.");
+                }
+
                 // Kiểm tra trạng thái hiện tại và trạng thái muốn chuyển đổi
                 if (originData.TinhTrang == statusChange)
                 {
