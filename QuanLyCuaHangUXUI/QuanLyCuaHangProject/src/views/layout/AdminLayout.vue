@@ -44,12 +44,22 @@ components: {
           <!-- Start XP Navigationbar -->
           <div class="xp-navigationbar">
             <ul class="xp-vertical-menu">
-              <li class="xp-vertical-header">Chức năng quản lý</li>
+<li class="xp-vertical-header">Chức năng quản lý</li>
               <li>
                 <a href=""> <i class="icon-speedometer"></i><span>Bảng điều khiển</span> </a>
               </li>
               <li>
-                <a href="#"> <i class="icon-user"></i><span>Quản lý..</span> </a>
+                <RouterLink to="/Admin/Product">
+                  <i class="fas fa-box"></i><span>SẢN PHẨM</span>
+                </RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/Admin/Combo">
+                  <i class="fas fa-boxes"></i><span>COMBO</span>
+                </RouterLink>
+                <RouterLink to="/Admin/Bill">
+                  <i class="fas fa-box"></i><span>QUẢN LÝ ĐƠN HÀNG</span>
+                </RouterLink>
               </li>
               <li>
                 <a href="javaScript:void();">
@@ -335,14 +345,6 @@ components: {
         <!-- End XP Topbar -->
 
         <RouterView />
-
-        <!-- Start XP Footerbar -->
-        <div class="xp-footerbar">
-          <footer class="footer">
-            <p class="mb-0">© 2020 Neon - All Rights Reserved.</p>
-          </footer>
-        </div>
-        <!-- End XP Footerbar -->
       </div>
       <!-- End XP Rightbar -->
     </div>

@@ -16,8 +16,7 @@ public partial class Chitietsanpham
     public int? SoLuongTon { get; set; }
 
     public decimal? DonGia { get; set; }
-
-    public virtual ICollection<Chitietcombo> Chitietcombos { get; set; } = new List<Chitietcombo>();
+    public bool IsDelete { get; set; }
 
     public virtual ICollection<Cthoadon> Cthoadons { get; set; } = new List<Cthoadon>();
 
