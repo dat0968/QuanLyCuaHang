@@ -4,6 +4,7 @@ using APIQuanLyCuaHang.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APIQuanLyCuaHang.Migrations
 {
     [DbContext(typeof(QuanLyCuaHangContext))]
-    partial class QuanLyCuaHangContextModelSnapshot : ModelSnapshot
+    [Migration("20250330064236_removeTenCombo_GioHangTable")]
+    partial class removeTenCombo_GioHangTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -240,8 +243,10 @@ namespace APIQuanLyCuaHang.Migrations
                         .HasColumnType("decimal(11, 2)");
 
                     b.Property<int?>("MaCombo")
-                        .HasColumnType("int")
-                        .HasColumnName("MaComboNavigation");
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MaComboNavigationMaCombo")
+                        .HasColumnType("int");
 
                     b.Property<int?>("MaCtsp")
                         .HasColumnType("int")
@@ -257,7 +262,7 @@ namespace APIQuanLyCuaHang.Migrations
                     b.HasKey("Id")
                         .HasName("PK__GIOHANG__3214EC27376B130B");
 
-                    b.HasIndex("MaCombo");
+                    b.HasIndex("MaComboNavigationMaCombo");
 
                     b.HasIndex("MaCtsp");
 
@@ -700,13 +705,11 @@ namespace APIQuanLyCuaHang.Migrations
                 {
                     b.HasOne("APIQuanLyCuaHang.Models.Combo", "MaComboNavigation")
                         .WithMany("Giohangs")
-                        .HasForeignKey("MaCombo")
-                        .HasConstraintName("FK_GIOHANG_COMBO_MaComboNavigationMaCombo");
+                        .HasForeignKey("MaComboNavigationMaCombo");
 
                     b.HasOne("APIQuanLyCuaHang.Models.Chitietsanpham", "MaCtspNavigation")
                         .WithMany("Giohangs")
                         .HasForeignKey("MaCtsp")
-                        .OnDelete(DeleteBehavior.SetNull)
                         .HasConstraintName("FK__GIOHANG__MaCTSP__6B24EA82");
 
                     b.HasOne("APIQuanLyCuaHang.Models.Khachhang", "MaKhNavigation")

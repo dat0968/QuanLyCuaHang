@@ -19,4 +19,5 @@ public partial class Combo
     public bool? IsDelete { get; set; }
 
     public virtual ICollection<Chitietcombo> Chitietcombos { get; set; } = new List<Chitietcombo>();
+    public virtual ICollection<Giohang> Giohangs { get; set; } = new List<Giohang>();
 }

@@ -29,7 +29,7 @@ namespace APIQuanLyCuaHang.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { Success = false, Message = ex.Message });
+                return StatusCode(500, new { Success = false, Message = ex.Message, Detail = ex.InnerException });
             }
         }
 

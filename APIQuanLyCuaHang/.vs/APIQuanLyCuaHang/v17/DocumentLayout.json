@@ -3,8 +3,16 @@
   "WorkspaceRootPath": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\models\\quanlycuahangcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\models\\quanlycuahangcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\repositories\\cart\\cartrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\repositories\\cart\\cartrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\models\\giohang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\models\\giohang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -15,36 +23,56 @@
       "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\dto\\cartitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\models\\giohang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\models\\giohang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\migrations\\quanlycuahangcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\migrations\\quanlycuahangcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\models\\chitietsanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\models\\chitietsanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\repositories\\combo\\comborepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\repositories\\combo\\comborepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\repositories\\cart\\icartrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\repositories\\cart\\icartrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\models\\combo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\models\\combo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\models\\chitietcombo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\models\\chitietcombo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Migrations\\20250330081801_AddGioHang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:APIQuanLyCuaHang\\Migrations\\20250330081801_AddGioHang.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Migrations\\20250330081016_AddCombo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:APIQuanLyCuaHang\\Migrations\\20250330081016_AddCombo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\models\\sanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\models\\sanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\models\\chitietsanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\models\\chitietsanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\repositories\\product\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\repositories\\product\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\dto\\detailproductresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\dto\\detailproductresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\repositories\\cart\\icartrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\repositories\\cart\\icartrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\repositories\\category\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -59,16 +87,8 @@
       "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\dto\\comboresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\dto\\detailproductresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\dto\\detailproductresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\controllers\\comboscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\controllers\\comboscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\models\\sanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\models\\sanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\dto\\comborequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -85,10 +105,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\repositories\\combo\\comborepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\repositories\\combo\\comborepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|d:\\fpt\\dark team\\apiquanlycuahang\\apiquanlycuahang\\repositories\\combo\\icomborepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -112,7 +128,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 174,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -120,119 +136,107 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "CartItemDTO.cs",
-              "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\DTO\\CartItemDTO.cs",
-              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\DTO\\CartItemDTO.cs",
-              "ToolTip": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\DTO\\CartItemDTO.cs",
-              "RelativeToolTip": "APIQuanLyCuaHang\\DTO\\CartItemDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAkwAUAAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T03:59:30.654Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "CartRepository.cs",
               "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Cart\\CartRepository.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\Cart\\CartRepository.cs",
               "ToolTip": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Cart\\CartRepository.cs",
               "RelativeToolTip": "APIQuanLyCuaHang\\Repositories\\Cart\\CartRepository.cs",
-              "ViewState": "AgIAAHcAAAAAAAAAAAAkwJAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACkAAAAAAAAAAAAiwDsAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-29T03:59:03.833Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Chitietcombo.cs",
-              "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Models\\Chitietcombo.cs",
-              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Models\\Chitietcombo.cs",
-              "ToolTip": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Models\\Chitietcombo.cs",
-              "RelativeToolTip": "APIQuanLyCuaHang\\Models\\Chitietcombo.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T02:51:21.145Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Combo.cs",
-              "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Models\\Combo.cs",
-              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Models\\Combo.cs",
-              "ToolTip": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Models\\Combo.cs",
-              "RelativeToolTip": "APIQuanLyCuaHang\\Models\\Combo.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T02:51:15.374Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "Giohang.cs",
               "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Models\\Giohang.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Models\\Giohang.cs",
               "ToolTip": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Models\\Giohang.cs",
               "RelativeToolTip": "APIQuanLyCuaHang\\Models\\Giohang.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAQAAAAAAAAAAADwvwgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-29T04:04:04.062Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ICartRepository.cs",
-              "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Cart\\ICartRepository.cs",
-              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\Cart\\ICartRepository.cs",
-              "ToolTip": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Cart\\ICartRepository.cs",
-              "RelativeToolTip": "APIQuanLyCuaHang\\Repositories\\Cart\\ICartRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "QuanLyCuaHangContext.cs",
+              "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Models\\QuanLyCuaHangContext.cs",
+              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Models\\QuanLyCuaHangContext.cs",
+              "ToolTip": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Models\\QuanLyCuaHangContext.cs",
+              "RelativeToolTip": "APIQuanLyCuaHang\\Models\\QuanLyCuaHangContext.cs",
+              "ViewState": "AgIAAJYAAAAAAAAAAAAAAKIAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T03:58:48.946Z",
+              "WhenOpened": "2025-03-30T07:07:04.949Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
+              "Title": "CartItemDTO.cs",
+              "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\DTO\\CartItemDTO.cs",
+              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\DTO\\CartItemDTO.cs",
+              "ToolTip": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\DTO\\CartItemDTO.cs",
+              "RelativeToolTip": "APIQuanLyCuaHang\\DTO\\CartItemDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAQwA4AAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-29T03:59:30.654Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "CartController.cs",
               "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Controllers\\CartController.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Controllers\\CartController.cs",
               "ToolTip": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Controllers\\CartController.cs",
               "RelativeToolTip": "APIQuanLyCuaHang\\Controllers\\CartController.cs",
-              "ViewState": "AgIAACYAAAAAAAAAAAAgwEQAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwCUAAAA6AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-29T03:56:51.861Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Chitietsanpham.cs",
-              "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Models\\Chitietsanpham.cs",
-              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Models\\Chitietsanpham.cs",
-              "ToolTip": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Models\\Chitietsanpham.cs",
-              "RelativeToolTip": "APIQuanLyCuaHang\\Models\\Chitietsanpham.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAmwBwAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "ComboRepository.cs",
+              "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Combo\\ComboRepository.cs",
+              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\Combo\\ComboRepository.cs",
+              "ToolTip": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Combo\\ComboRepository.cs",
+              "RelativeToolTip": "APIQuanLyCuaHang\\Repositories\\Combo\\ComboRepository.cs",
+              "ViewState": "AgIAAGIAAAAAAAAAAAAAAFwAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T02:51:51.184Z",
+              "WhenOpened": "2025-03-29T01:32:50.427Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Product.cs",
-              "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Product\\Product.cs",
-              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\Product\\Product.cs",
-              "ToolTip": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Product\\Product.cs",
-              "RelativeToolTip": "APIQuanLyCuaHang\\Repositories\\Product\\Product.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAAowDgAAAAIAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "QuanLyCuaHangContextModelSnapshot.cs",
+              "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Migrations\\QuanLyCuaHangContextModelSnapshot.cs",
+              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Migrations\\QuanLyCuaHangContextModelSnapshot.cs",
+              "ToolTip": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Migrations\\QuanLyCuaHangContextModelSnapshot.cs",
+              "RelativeToolTip": "APIQuanLyCuaHang\\Migrations\\QuanLyCuaHangContextModelSnapshot.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T04:00:47.783Z"
+              "WhenOpened": "2025-03-30T08:17:34.288Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Controllers\\AccountController.cs",
+              "ToolTip": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "APIQuanLyCuaHang\\Controllers\\AccountController.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAAAswEQAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-30T06:50:34.332Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -242,13 +246,110 @@
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Program.cs",
               "ToolTip": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Program.cs",
               "RelativeToolTip": "APIQuanLyCuaHang\\Program.cs",
-              "ViewState": "AgIAAEYAAAAAAAAAAAAqwFsAAAA+AAAAAAAAAA==",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAswDwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-29T02:00:41.354Z"
             },
             {
               "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Sanpham.cs",
+              "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Models\\Sanpham.cs",
+              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Models\\Sanpham.cs",
+              "ToolTip": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Models\\Sanpham.cs",
+              "RelativeToolTip": "APIQuanLyCuaHang\\Models\\Sanpham.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAABQAAABLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-29T02:51:44.654Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 9,
+              "Title": "20250330081801_AddGioHang.cs",
+              "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Migrations\\20250330081801_AddGioHang.cs",
+              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Migrations\\20250330081801_AddGioHang.cs",
+              "ToolTip": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Migrations\\20250330081801_AddGioHang.cs",
+              "RelativeToolTip": "APIQuanLyCuaHang\\Migrations\\20250330081801_AddGioHang.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-30T08:18:01.525Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "20250330081016_AddCombo.cs",
+              "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Migrations\\20250330081016_AddCombo.cs",
+              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Migrations\\20250330081016_AddCombo.cs",
+              "ToolTip": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Migrations\\20250330081016_AddCombo.cs",
+              "RelativeToolTip": "APIQuanLyCuaHang\\Migrations\\20250330081016_AddCombo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-30T08:10:17.08Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Chitietsanpham.cs",
+              "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Models\\Chitietsanpham.cs",
+              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Models\\Chitietsanpham.cs",
+              "ToolTip": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Models\\Chitietsanpham.cs",
+              "RelativeToolTip": "APIQuanLyCuaHang\\Models\\Chitietsanpham.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAmwBoAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-29T02:51:51.184Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "DetailProductResponseDTO.cs",
+              "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\DTO\\DetailProductResponseDTO.cs",
+              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\DTO\\DetailProductResponseDTO.cs",
+              "ToolTip": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\DTO\\DetailProductResponseDTO.cs",
+              "RelativeToolTip": "APIQuanLyCuaHang\\DTO\\DetailProductResponseDTO.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAswBAAAABHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-29T03:36:57.893Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Controllers\\HomeController.cs",
+              "ToolTip": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "APIQuanLyCuaHang\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAACEBAAAAAAAAAAAswC4BAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-30T06:57:16.116Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Product.cs",
+              "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Product\\Product.cs",
+              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\Product\\Product.cs",
+              "ToolTip": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Product\\Product.cs",
+              "RelativeToolTip": "APIQuanLyCuaHang\\Repositories\\Product\\Product.cs",
+              "ViewState": "AgIAAJYAAAAAAAAAAAAswKMAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-29T04:00:47.783Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "ICartRepository.cs",
+              "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Cart\\ICartRepository.cs",
+              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\Cart\\ICartRepository.cs",
+              "ToolTip": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Cart\\ICartRepository.cs",
+              "RelativeToolTip": "APIQuanLyCuaHang\\Repositories\\Cart\\ICartRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-29T03:58:48.946Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\appsettings.json",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\appsettings.json",
@@ -260,7 +361,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 18,
               "Title": "Category.cs",
               "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Category\\Category.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\Category\\Category.cs",
@@ -272,7 +373,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 19,
               "Title": "ProductResponseDTO.cs",
               "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\DTO\\ProductResponseDTO.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\DTO\\ProductResponseDTO.cs",
@@ -284,31 +385,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "DetailProductResponseDTO.cs",
-              "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\DTO\\DetailProductResponseDTO.cs",
-              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\DTO\\DetailProductResponseDTO.cs",
-              "ToolTip": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\DTO\\DetailProductResponseDTO.cs",
-              "RelativeToolTip": "APIQuanLyCuaHang\\DTO\\DetailProductResponseDTO.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAA3wBAAAABsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T03:36:57.893Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "Sanpham.cs",
-              "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Models\\Sanpham.cs",
-              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Models\\Sanpham.cs",
-              "ToolTip": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Models\\Sanpham.cs",
-              "RelativeToolTip": "APIQuanLyCuaHang\\Models\\Sanpham.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T02:51:44.654Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 20,
               "Title": "ComboResponseDTO.cs",
               "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\DTO\\ComboResponseDTO.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\DTO\\ComboResponseDTO.cs",
@@ -320,7 +397,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 21,
               "Title": "CombosController.cs",
               "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Controllers\\CombosController.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Controllers\\CombosController.cs",
@@ -328,11 +405,12 @@
               "RelativeToolTip": "APIQuanLyCuaHang\\Controllers\\CombosController.cs",
               "ViewState": "AgIAAE0AAAAAAAAAAAAgwGEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T01:21:51.291Z"
+              "WhenOpened": "2025-03-29T01:21:51.291Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 22,
               "Title": "ComboRequestDTO.cs",
               "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\DTO\\ComboRequestDTO.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\DTO\\ComboRequestDTO.cs",
@@ -344,7 +422,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 24,
               "Title": "DetailCombo.cs",
               "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\DetailCombo\\DetailCombo.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\DetailCombo\\DetailCombo.cs",
@@ -352,11 +430,12 @@
               "RelativeToolTip": "APIQuanLyCuaHang\\Repositories\\DetailCombo\\DetailCombo.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T02:45:24.22Z"
+              "WhenOpened": "2025-03-29T02:45:24.22Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 25,
               "Title": "ProductsController.cs",
               "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Controllers\\ProductsController.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Controllers\\ProductsController.cs",
@@ -364,23 +443,12 @@
               "RelativeToolTip": "APIQuanLyCuaHang\\Controllers\\ProductsController.cs",
               "ViewState": "AgIAAGUAAAAAAAAAAAAqwIYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T02:45:07.416Z"
+              "WhenOpened": "2025-03-29T02:45:07.416Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "ComboRepository.cs",
-              "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Combo\\ComboRepository.cs",
-              "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\Combo\\ComboRepository.cs",
-              "ToolTip": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Combo\\ComboRepository.cs",
-              "RelativeToolTip": "APIQuanLyCuaHang\\Repositories\\Combo\\ComboRepository.cs",
-              "ViewState": "AgIAAFwAAAAAAAAAAAAmwGwAAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T01:32:50.427Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 23,
               "Title": "DetailProduct.cs",
               "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\DetailProduct\\DetailProduct.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\DetailProduct\\DetailProduct.cs",
@@ -388,11 +456,12 @@
               "RelativeToolTip": "APIQuanLyCuaHang\\Repositories\\DetailProduct\\DetailProduct.cs",
               "ViewState": "AgIAADAAAAAAAAAAAAAmwFAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-29T01:30:37.093Z"
+              "WhenOpened": "2025-03-29T01:30:37.093Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 26,
               "Title": "IComboRepository.cs",
               "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Combo\\IComboRepository.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\Combo\\IComboRepository.cs",
@@ -404,7 +473,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 27,
               "Title": "IDetailCombo.cs",
               "DocumentMoniker": "D:\\FPT\\Dark Team\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\DetailCombo\\IDetailCombo.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\DetailCombo\\IDetailCombo.cs",
@@ -416,7 +485,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 28,
               "Title": "DetailProduct.cs",
               "DocumentMoniker": "C:\\Users\\meow0\\AppData\\Local\\Temp\\Rar$DIa7832.9359.rartemp\\DetailProduct.cs",
               "ToolTip": "C:\\Users\\meow0\\AppData\\Local\\Temp\\Rar$DIa7832.9359.rartemp\\DetailProduct.cs",
@@ -426,7 +495,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 29,
               "Title": "HomeController.cs",
               "DocumentMoniker": "C:\\Users\\meow0\\AppData\\Local\\Temp\\Rar$DIa7832.6014.rartemp\\HomeController.cs",
               "ToolTip": "C:\\Users\\meow0\\AppData\\Local\\Temp\\Rar$DIa7832.6014.rartemp\\HomeController.cs",

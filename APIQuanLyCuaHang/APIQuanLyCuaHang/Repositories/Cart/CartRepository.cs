@@ -53,7 +53,6 @@ namespace APIQuanLyCuaHang.Repositories
                     {
                         MaKh = cartItem.MaKh,
                         MaCombo = cartItem.MaCombo,
-                        TenCombo = cartItem.TenCombo,
                         MaCtsp = cartItem.MaCtsp,
                         SoLuong = cartItem.SoLuong,
                         DonGia = cartItem.DonGia
@@ -97,7 +96,6 @@ namespace APIQuanLyCuaHang.Repositories
                         MaKh = cartItem.MaKh,
                         MaCtsp = cartItem.MaCtsp,
                         MaCombo = null,
-                        TenCombo = null,
                         SoLuong = cartItem.SoLuong,
                         DonGia = cartItem.DonGia
                     };
@@ -117,12 +115,11 @@ namespace APIQuanLyCuaHang.Repositories
                     MaKh = c.MaKh,
                     MaCtsp = c.MaCtsp,
                     MaCombo = c.MaCombo,
-                    TenCombo = c.TenCombo,
                     SoLuong = c.SoLuong,
                     DonGia = c.DonGia,
                     TenSanPham = c.MaCtsp != null
                         ? c.MaCtspNavigation.MaSpNavigation.TenSanPham
-                        : c.TenCombo,
+                        : "",
                     HinhAnhUrls = c.MaCtsp != null
                         ? (c.MaCtspNavigation.Hinhanhs != null
                             ? c.MaCtspNavigation.Hinhanhs.Select(h => h.TenHinhAnh).Where(h => h != null).ToList()
