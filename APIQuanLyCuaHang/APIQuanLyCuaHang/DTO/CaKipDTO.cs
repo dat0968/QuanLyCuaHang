@@ -22,6 +22,6 @@ namespace APIQuanLyCuaHang.DTO
         public decimal HeSoLuong { get; set; } = 1;// Hệ số lương của ca làm việc
         public bool? IsDelete { get; set; }
         public string? QrCodeData { get; set; }
-        public List<LichLamViecDTO>? LichLamViecs { get; set; }
+        public List<ScheduleDTO>? Schedules { get; set; }
     }
 }

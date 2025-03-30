@@ -87,20 +87,20 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
                 }
 
                 // Truy vấn lịch làm việc
-                var lichLamViecs = await _db.Lichsulamviecs
+                var schedules = await _db.Lichsulamviecs
                     .AsNoTracking()
                     .Where(ls => ls.MaCaKip == maCaKip)
                     .ToListAsync();
 
                 // Truy vấn danh sách nhân viên để giảm số lần truy vấn
-                var maNhanVienList = lichLamViecs.Select(ls => ls.MaNv).Distinct().ToList();
+                var maNhanVienList = schedules.Select(ls => ls.MaNv).Distinct().ToList();
                 var nhanVienDict = await _db.Nhanviens
                     .AsNoTracking()
                     .Where(nv => maNhanVienList.Contains(nv.MaNv))
                     .ToDictionaryAsync(nv => nv.MaNv, nv => nv.HoTen);
 
                 // Định dạng dữ liệu lịch làm việc
-                var lichLamViecDtos = lichLamViecs.Select(ls => new LichLamViecDTO
+                var scheduleDtos = schedules.Select(ls => new ScheduleDTO
                 {
                     Id = ls.Id,
                     MaNv = ls.MaNv,
@@ -127,7 +127,7 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
                     GioKetThuc = dataOrigin.GioKetThuc,
                     IsDelete = dataOrigin.IsDelete,
                     QrCodeData = $"{dataOrigin.MaCaKip}-{today}",
-                    LichLamViecs = lichLamViecDtos
+                    Schedules = scheduleDtos
                 };
 
                 response.SetSuccessResponse("Lấy danh sách Ca thành công!");
@@ -244,12 +244,12 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
             var today = DateOnly.FromDateTime(DateTime.Today);
 
             // Lấy lịch làm việc (trước và bằng ngày hôm nay)
-            var lichLamViecs = await _db.Lichsulamviecs
+            var schedules = await _db.Lichsulamviecs
                 .Where(ls => ls.NgayThangNam <= today)
                 .ToListAsync();
 
             // Lấy mã nhân viên từ lịch làm việc
-            var maNhanVienList = lichLamViecs.Select(ls => ls.MaNv).Distinct().ToList();
+            var maNhanVienList = schedules.Select(ls => ls.MaNv).Distinct().ToList();
 
             // Truy vấn thông tin nhân viên
             var nhanVienDict = await _db.Nhanviens
@@ -266,7 +266,7 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
 
             // Cập nhật thông tin lịch làm việc và trạng thái nếu cần thiết
             bool needUpdate = false;
-            foreach (var ls in lichLamViecs)
+            foreach (var ls in schedules)
             {
                 var caKip = await _db.Cakips.FirstOrDefaultAsync(ca => ca.MaCaKip == ls.MaCaKip);
                 if (caKip == null) continue;
@@ -346,7 +346,7 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
             // Save changes nếu cần cập nhật thông tin lịch làm việc
             if (needUpdate)
             {
-                _db.Lichsulamviecs.UpdateRange(lichLamViecs);
+                _db.Lichsulamviecs.UpdateRange(schedules);
                 await _db.SaveChangesAsync();
             }
         }
@@ -365,12 +365,12 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
             }
 
             // Lấy lịch làm việc
-            var lichLamViecs = await _db.Lichsulamviecs
+            var schedules = await _db.Lichsulamviecs
                 .Where(ls => ls.NgayThangNam <= today)
                 .ToListAsync();
 
             // Lấy mã nhân viên từ lịch làm việc
-            var maNhanVienList = lichLamViecs.Select(ls => ls.MaNv).Distinct().ToList();
+            var maNhanVienList = schedules.Select(ls => ls.MaNv).Distinct().ToList();
 
             // Truy vấn thông tin nhân viên
             var nhanVienDict = await _db.Nhanviens
@@ -381,7 +381,7 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
             // Tính số lượng nhân viên hiện tại đi làm cho từng ca kíp
             foreach (var caKip in dataOrigin)
             {
-                caKip.SoNguoiHienTai = lichLamViecs
+                caKip.SoNguoiHienTai = schedules
                     .Count(ls => ls.MaCaKip == caKip.MaCaKip && ls.TrangThai == TrangThaiLichLamViec.DiLam);
             }
 
@@ -396,9 +396,9 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
                 GioKetThuc = caKip.GioKetThuc,
                 IsDelete = caKip.IsDelete,
                 QrCodeData = $"{caKip.MaCaKip}-{today}",
-                LichLamViecs = lichLamViecs
+                Schedules = schedules
                     .Where(ls => ls.MaCaKip == caKip.MaCaKip)
-                    .Select(ls => new LichLamViecDTO
+                    .Select(ls => new ScheduleDTO
                     {
                         Id = ls.Id,
                         MaNv = ls.MaNv,

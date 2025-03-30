@@ -170,7 +170,7 @@ export default {
         'Không được xác nhận',
       ]
 
-      if (currentShift && currentShift.lichLamViecs && currentShift.lichLamViecs.length > 0) {
+      if (currentShift && currentShift.schedules && currentShift.schedules.length > 0) {
         const detailsHtml = `
         <div class="container">
             <div class="row mb-3">
@@ -192,7 +192,7 @@ export default {
             </div>
 
             <div class="row border-left border-right justify-content-center" style="max-height: 400px; overflow-y: auto">
-                ${currentShift.lichLamViecs
+                ${currentShift.schedules
                   .map(
                     (employee) => `
                     <div class="employee-item col-6 mb-3 border rounded d-flex align-items-start p-1">
@@ -348,7 +348,7 @@ export default {
       })
 
       const apiEndpoint =
-        selectedEmployees.length === 1 ? '/LichLamViec/SetStatusOne' : '/LichLamViec/SetStatusList'
+        selectedEmployees.length === 1 ? '/Schedule/SetStatusOne' : '/Schedule/SetStatusList'
 
       const requestBody =
         selectedEmployees.length === 1

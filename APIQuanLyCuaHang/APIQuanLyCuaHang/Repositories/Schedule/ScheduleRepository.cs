@@ -8,9 +8,9 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace APIQuanLyCuaHang.Repositories.LichLamViec
+namespace APIQuanLyCuaHang.Repositories.Schedule
 {
-    public class LichLamViecRepository(QuanLyCuaHangContext db) : Repository<Lichsulamviec>(db), ILichLamViecRepository
+    public class ScheduleRepository(QuanLyCuaHangContext db) : Repository<Lichsulamviec>(db), IScheduleRepository
     {
         private readonly QuanLyCuaHangContext _db = db;
         public async Task<ResponseAPI<dynamic>> DangKyCaLamViecAsync(int? maNv, int maCaKip, DateOnly? ngayLam)
@@ -50,7 +50,7 @@ namespace APIQuanLyCuaHang.Repositories.LichLamViec
                     throw new Exception("Nhân viên đã đăng ký ca này vào ngày hôm nay.");
                 }
 
-                var lichLamViec = new Lichsulamviec
+                var schedule = new Lichsulamviec
                 {
                     MaNv = maNv.Value,
                     MaCaKip = maCaKip,
@@ -61,7 +61,7 @@ namespace APIQuanLyCuaHang.Repositories.LichLamViec
                     TrangThai = TrangThaiLichLamViec.ChoXacNhan
                 };
 
-                await _db.Lichsulamviecs.AddAsync(lichLamViec);
+                await _db.Lichsulamviecs.AddAsync(schedule);
                 caKip.SoNguoiHienTai++;
 
                 await _db.SaveChangesAsync();
@@ -186,11 +186,11 @@ namespace APIQuanLyCuaHang.Repositories.LichLamViec
                     throw new KeyNotFoundException("Không tìm thấy CaKip.");
                 }
 
-                var lichLamViecs = await _db.Lichsulamviecs
+                var schedules = await _db.Lichsulamviecs
                     .Where(ls => request.MaNvs.Contains(ls.MaNv) && ls.MaCaKip == request.MaCaKip)
                     .ToListAsync();
 
-                if (!lichLamViecs.Any())
+                if (!schedules.Any())
                 {
                     throw new KeyNotFoundException("Không tìm thấy lịch làm việc phù hợp.");
                 }
@@ -210,7 +210,7 @@ namespace APIQuanLyCuaHang.Repositories.LichLamViec
                 // Cập nhật trạng thái và giờ làm nếu trạng thái là "Đi làm"
                 TimeOnly now = TimeOnly.FromDateTime(DateTime.Now);
                 bool isHaveNote = !String.IsNullOrEmpty(request.GhiChu);
-                lichLamViecs.ForEach(ls =>
+                schedules.ForEach(ls =>
                 {
                     ls.NguoiXacNhan = managerUserId;
                     ls.TrangThai = request.TrangThaiCapNhap;
@@ -220,10 +220,10 @@ namespace APIQuanLyCuaHang.Repositories.LichLamViec
                     }
                     if (isHaveNote) ls.GhiChu = request.GhiChu;
                 });
-                _db.UpdateRange(lichLamViecs);
+                _db.UpdateRange(schedules);
                 await _db.SaveChangesAsync();
 
-                response.SetSuccessResponse($"Đã cập nhật trạng thái {request.TrangThaiCapNhap} cho {lichLamViecs.Count} nhân viên.");
+                response.SetSuccessResponse($"Đã cập nhật trạng thái {request.TrangThaiCapNhap} cho {schedules.Count} nhân viên.");
             }
             catch (ArgumentException ex)
             {
@@ -273,10 +273,10 @@ namespace APIQuanLyCuaHang.Repositories.LichLamViec
                     throw new KeyNotFoundException("Không tìm thấy CaKip.");
                 }
 
-                var lichLamViec = await _db.Lichsulamviecs
+                var schedule = await _db.Lichsulamviecs
                     .FirstOrDefaultAsync(ls => ls.MaNv == request.MaNv && ls.MaCaKip == request.MaCaKip);
 
-                if (lichLamViec == null)
+                if (schedule == null)
                 {
                     throw new KeyNotFoundException("Không tìm thấy lịch làm việc phù hợp.");
                 }
@@ -289,13 +289,13 @@ namespace APIQuanLyCuaHang.Repositories.LichLamViec
                 bool isHaveNote = !String.IsNullOrEmpty(request.GhiChu);
                 if (request.TrangThaiCapNhap == TrangThaiLichLamViec.DiLam)
                 {
-                    lichLamViec.NguoiXacNhan = managerUserId;
-                    lichLamViec.GioVao = TimeOnly.FromDateTime(DateTime.Now);
-                    if (isHaveNote) lichLamViec.GhiChu = request.GhiChu;
+                    schedule.NguoiXacNhan = managerUserId;
+                    schedule.GioVao = TimeOnly.FromDateTime(DateTime.Now);
+                    if (isHaveNote) schedule.GhiChu = request.GhiChu;
                 }
 
-                lichLamViec.TrangThai = request.TrangThaiCapNhap;
-                _db.Update(lichLamViec);
+                schedule.TrangThai = request.TrangThaiCapNhap;
+                _db.Update(schedule);
                 await _db.SaveChangesAsync();
 
                 response.SetSuccessResponse($"Đã cập nhật trạng thái {request.TrangThaiCapNhap} cho nhân viên {request.MaNv}.");

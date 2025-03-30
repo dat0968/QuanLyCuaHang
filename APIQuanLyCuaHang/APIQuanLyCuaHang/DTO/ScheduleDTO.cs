@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace APIQuanLyCuaHang.DTO
 {
-    public class LichLamViecDTO
+    public class ScheduleDTO
     {
         public int Id { get; set; }
 

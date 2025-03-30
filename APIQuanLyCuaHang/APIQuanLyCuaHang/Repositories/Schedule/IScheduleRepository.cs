@@ -7,9 +7,9 @@ using APIQuanLyCuaHang.DTO.Requests;
 using APIQuanLyCuaHang.Models;
 using APIQuanLyCuaHang.Repositories.Repository;
 
-namespace APIQuanLyCuaHang.Repositories.LichLamViec
+namespace APIQuanLyCuaHang.Repositories.Schedule
 {
-    public interface ILichLamViecRepository : IRepository<Lichsulamviec>
+    public interface IScheduleRepository : IRepository<Lichsulamviec>
     {
         Task<ResponseAPI<dynamic>> GetAllAsync();
         Task<ResponseAPI<dynamic>> DangKyCaLamViecAsync(int? maNv, int maCaKip, DateOnly? ngayLam);

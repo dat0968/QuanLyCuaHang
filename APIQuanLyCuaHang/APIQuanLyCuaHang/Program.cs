@@ -3,7 +3,7 @@ using APIQuanLyCuaHang.DbInitializer;
 using APIQuanLyCuaHang.Models;
 using APIQuanLyCuaHang.Repositories.CaKip;
 using APIQuanLyCuaHang.Repositories.Dashboard;
-using APIQuanLyCuaHang.Repositories.LichLamViec;
+using APIQuanLyCuaHang.Repositories.Schedule;
 using APIQuanLyCuaHang.Repositories.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;

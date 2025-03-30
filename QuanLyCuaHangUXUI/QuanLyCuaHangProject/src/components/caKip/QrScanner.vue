@@ -73,7 +73,7 @@ export default {
 
       try {
         const response = await axiosConfig.postToApi(
-          `/LichLamViec/ChamCong?maNv=${this.employeeId}&qrCodeData=${encodeURIComponent(qrCodeData)}`,
+          `/Schedule/ChamCong?maNv=${this.employeeId}&qrCodeData=${encodeURIComponent(qrCodeData)}`,
           ConfigsRequest.getSkipAuthConfig(),
         )
         toastr.success(response.message)
@@ -151,8 +151,8 @@ export default {
       const currentShift = this.listShifts.find((shift) => shift.maCaKip === maCaKip)
 
       if (currentShift) {
-        // Lọc `lichLamViecs` chỉ lấy nhân viên có `trangThai === "Đi làm"`
-        this.employeeList = (currentShift.lichLamViecs || []).filter(
+        // Lọc `schedules` chỉ lấy nhân viên có `trangThai === "Đi làm"`
+        this.employeeList = (currentShift.schedules || []).filter(
           (employee) => employee.trangThai === 'Đi làm',
         )
 

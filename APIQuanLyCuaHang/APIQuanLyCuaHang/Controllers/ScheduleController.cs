@@ -1,6 +1,5 @@
 using APIQuanLyCuaHang.DTO;
 using APIQuanLyCuaHang.DTO.Requests;
-using APIQuanLyCuaHang.Repositories.LichLamViec;
 using APIQuanLyCuaHang.Repositories.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,23 +10,23 @@ namespace APIQuanLyCuaHang.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class LichLamViecController : ControllerBase
+    public class ScheduleController : ControllerBase
     {
         private readonly IUnitOfWork _unit;
 
-        public LichLamViecController(IUnitOfWork unit)
+        public ScheduleController(IUnitOfWork unit)
         {
             _unit = unit;
         }
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _unit.LichLamViecs.GetAllAsync());
+            return Ok(await _unit.Schedules.GetAllAsync());
         }
         [HttpPost]
         public async Task<IActionResult> DangKyCaLamViec([FromQuery] int maNv, [FromQuery] int maCaKip, [FromQuery] DateOnly ngayLam)
         {
-            var result = await _unit.LichLamViecs.DangKyCaLamViecAsync(maNv, maCaKip, ngayLam);
+            var result = await _unit.Schedules.DangKyCaLamViecAsync(maNv, maCaKip, ngayLam);
             return Ok(result);
         }
         [HttpGet]
@@ -63,21 +62,21 @@ namespace APIQuanLyCuaHang.Controllers
         public async Task<IActionResult> ChamCong([FromQuery] int maNv, [FromQuery] string qrCodeData)
         {
             // ! Change This
-            var result = await _unit.LichLamViecs.TimeKeepingAsync(maNv, qrCodeData);
+            var result = await _unit.Schedules.TimeKeepingAsync(maNv, qrCodeData);
             return Ok(result);
         }
         [HttpPost]
         public async Task<IActionResult> SetStatusList([FromBody] SetStatusListRequest request)
         {
             int? userManagerId = 120; // ! Change This: Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            var result = await _unit.LichLamViecs.SetStatusList(request, userManagerId);
+            var result = await _unit.Schedules.SetStatusList(request, userManagerId);
             return Ok(result);
         }
         [HttpPost]
         public async Task<IActionResult> SetStatusOne([FromBody] SetStatusOneRequest request)
         {
             int? userManagerId = 120; // Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            var result = await _unit.LichLamViecs.SetStatusOne(request, userManagerId);
+            var result = await _unit.Schedules.SetStatusOne(request, userManagerId);
             return Ok(result);
         }
 
