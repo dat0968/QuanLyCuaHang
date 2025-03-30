@@ -185,8 +185,8 @@ namespace APIQuanLyCuaHang.Repositories.Product
                     MaCtsp = details.MaCtsp,
                     MaSp = details.MaSp,
                     TenSanPham = details.MaSpNavigation.TenSanPham,
-                    KichThuoc = details.KichThuoc ?? "NO",
-                    HuongVi = details.HuongVi ?? "NO",
+                    KichThuoc = details.KichThuoc ?? null,
+                    HuongVi = details.HuongVi ?? null,
                     SoLuongTon = details.SoLuongTon,
                     DonGia = details.DonGia,
                     Hinhanhs = details.Hinhanhs

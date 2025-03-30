@@ -88,7 +88,6 @@ const handleRegister = async () => {
                   <div class="p-3">
                     <form @submit.prevent="handleRegister">
                       <div class="text-center mb-3">
-
                         <h4 class="text-black">Tạo tài khoản</h4>
                         <p class="text-muted">
                           Bạn đã có tài khoản ? 
@@ -105,7 +104,6 @@ const handleRegister = async () => {
                       </div>
                       <div class="form-group">
                         <input
-
                           v-model="hoTen"
                           type="text"
                           class="form-control"
@@ -146,7 +144,6 @@ const handleRegister = async () => {
                       </div>
                       <div class="form-group">
                         <div class="custom-control custom-checkbox">
-
                           <input
                             v-model="termsAccepted"
                             type="checkbox"

@@ -19,6 +19,26 @@ import '../../assets/admin/plugins/datepicker/datepicker.min.js'
 import '../../assets/admin/plugins/datepicker/i18n/datepicker.en.js'
 //import '../../assets/admin/js/init/dashborad.js'
 import '../../assets/admin/js/main.js'
+import '../../assets/admin/images/favicon.ico'
+import '../../assets/admin/plugins/chartist-js/chartist.min.css'
+import '../../assets/admin/plugins/datepicker/datepicker.min.css'
+import '../../assets/admin/css/bootstrap.min.css'
+import '../../assets/admin/css/icons.css'
+import '../../assets/admin/css/style.css'
+import '../../assets/admin/js/jquery.min.js'
+import '@popperjs/core'
+import '../../assets/admin/js/bootstrap.min.js'
+//import '../../assets/admin/js/modernizr.min.js'
+import '../../assets/admin/js/detect.js'
+import '../../assets/admin/js/jquery.slimscroll.js'
+import '../../assets/admin/js/sidebar-menu.js'
+//import '../../assets/admin/plugins/chartist-js/chartist.min.js'
+//import '../../assets/admin/plugins/chartist-js/chartist-plugin-tooltip.min.js'
+import '../../assets/admin/js/init/to-do-list-init.js'
+import '../../assets/admin/plugins/datepicker/datepicker.min.js'
+import '../../assets/admin/plugins/datepicker/i18n/datepicker.en.js'
+//import '../../assets/admin/js/init/dashborad.js'
+import '../../assets/admin/js/main.js'
 import QrScanAndShiftManagerModal from '@/components/caKip/QrScanAndShiftManagerModal.vue'
 
 components: {
@@ -36,7 +56,7 @@ components: {
           <!-- Start XP Logobar -->
           <div class="xp-logobar text-center">
             <a href="index.html" class="xp-logo"
-              ><img src="../../assets/admin/images/logo.svg" class="img-fluid" alt="logo"
+              ><img style="height: 100px;" src="../../assets/admin/images/Red and Yellow Illustrative Fried Chicken Logo.png" class="img-fluid" alt="logo"
             /></a>
           </div>
           <!-- End XP Logobar -->

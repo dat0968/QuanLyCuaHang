@@ -46,6 +46,8 @@ public partial class QuanLyCuaHangContext : DbContext
     public virtual DbSet<Sanpham> Sanphams { get; set; }
     public virtual DbSet<Sanpham> Bans { get; set; }
 
+    public virtual DbSet<MaCoupon> MaCoupons { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Ban>(entity =>
@@ -174,13 +176,17 @@ public partial class QuanLyCuaHangContext : DbContext
 
             entity.HasOne(d => d.MaCtspNavigation).WithMany(p => p.Giohangs)
                 .HasForeignKey(d => d.MaCtsp)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK__GIOHANG__MaCTSP__6B24EA82");
 
             entity.HasOne(d => d.MaKhNavigation).WithMany(p => p.Giohangs)
                 .HasForeignKey(d => d.MaKh)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__GIOHANG__MaKH__6A30C649");
+            entity.HasOne(d => d.MaComboNavigation).WithMany(p => p.Giohangs)
+               .HasForeignKey(d => d.MaCombo)
+               .OnDelete(DeleteBehavior.ClientSetNull)
+               .HasConstraintName("FK_GIOHANG_COMBO_MaComboNavigationMaCombo");
         });
 
         modelBuilder.Entity<Hinhanh>(entity =>
@@ -360,7 +366,8 @@ public partial class QuanLyCuaHangContext : DbContext
 
             entity.ToTable("REFRESHTOKEN");
 
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Id)
+                .HasColumnName("ID");
             entity.Property(e => e.ExpiredAt).HasColumnType("datetime");
             entity.Property(e => e.IssuedAt).HasColumnType("datetime");
             entity.Property(e => e.Token).HasMaxLength(500);
@@ -372,7 +379,8 @@ public partial class QuanLyCuaHangContext : DbContext
 
             entity.ToTable("SANPHAM");
 
-            entity.Property(e => e.MaSp).HasColumnName("MaSP");
+            entity.Property(e => e.MaSp)
+                .HasColumnName("MaSP");
             entity.Property(e => e.IsDelete).HasDefaultValue(false);
             entity.Property(e => e.MoTa).HasMaxLength(500);
             entity.Property(e => e.TenSanPham).HasMaxLength(100);

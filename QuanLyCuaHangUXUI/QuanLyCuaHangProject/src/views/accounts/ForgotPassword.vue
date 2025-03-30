@@ -130,6 +130,7 @@ const handleForgotPassword = async () => {
 </template>
 
 
+
 <style scoped>
 .alert-success {
   margin-bottom: 15px;

@@ -4,6 +4,7 @@ using APIQuanLyCuaHang.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APIQuanLyCuaHang.Migrations
 {
     [DbContext(typeof(QuanLyCuaHangContext))]
-    partial class QuanLyCuaHangContextModelSnapshot : ModelSnapshot
+    [Migration("20250330063006_createFkGioHang")]
+    partial class createFkGioHang
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,24 +24,6 @@ namespace APIQuanLyCuaHang.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("APIQuanLyCuaHang.Models.Ban", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("TinhTrang")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BAN", (string)null);
-                });
 
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Cakip", b =>
                 {
@@ -48,14 +33,11 @@ namespace APIQuanLyCuaHang.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaCaKip"));
 
-                    b.Property<TimeOnly>("GioBatDau")
-                        .HasColumnType("time(7)");
+                    b.Property<DateTime>("GioBatDau")
+                        .HasColumnType("datetime");
 
-                    b.Property<TimeOnly>("GioKetThuc")
-                        .HasColumnType("time(7)");
-
-                    b.Property<decimal>("HeSoLuong")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<DateTime>("GioKetThuc")
+                        .HasColumnType("datetime");
 
                     b.Property<bool?>("IsDelete")
                         .ValueGeneratedOnAdd()
@@ -67,9 +49,6 @@ namespace APIQuanLyCuaHang.Migrations
 
                     b.Property<int>("SoNguoiToiDa")
                         .HasColumnType("int");
-
-                    b.Property<string>("TenCa")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("MaCaKip")
                         .HasName("PK__CAKIP__68C49E4C467ECFEF");
@@ -264,8 +243,10 @@ namespace APIQuanLyCuaHang.Migrations
                         .HasColumnType("decimal(11, 2)");
 
                     b.Property<int?>("MaCombo")
-                        .HasColumnType("int")
-                        .HasColumnName("MaComboNavigation");
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MaComboNavigationMaCombo")
+                        .HasColumnType("int");
 
                     b.Property<int?>("MaCtsp")
                         .HasColumnType("int")
@@ -278,10 +259,13 @@ namespace APIQuanLyCuaHang.Migrations
                     b.Property<int>("SoLuong")
                         .HasColumnType("int");
 
+                    b.Property<string>("TenCombo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id")
                         .HasName("PK__GIOHANG__3214EC27376B130B");
 
-                    b.HasIndex("MaCombo");
+                    b.HasIndex("MaComboNavigationMaCombo");
 
                     b.HasIndex("MaCtsp");
 
@@ -444,7 +428,7 @@ namespace APIQuanLyCuaHang.Migrations
                     b.Property<string>("MatKhau")
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(255)")
+                        .HasColumnType("char(255)")
                         .IsFixedLength();
 
                     b.Property<DateOnly?>("NgaySinh")
@@ -487,15 +471,6 @@ namespace APIQuanLyCuaHang.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("GhiChu")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<TimeOnly?>("GioRa")
-                        .HasColumnType("time(7)");
-
-                    b.Property<TimeOnly?>("GioVao")
-                        .HasColumnType("time(7)");
-
                     b.Property<bool?>("IsDelete")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -515,21 +490,11 @@ namespace APIQuanLyCuaHang.Migrations
                     b.Property<DateOnly>("NgayThangNam")
                         .HasColumnType("date");
 
-                    b.Property<int?>("NguoiXacNhan")
-                        .HasColumnType("int");
-
                     b.Property<double>("SoGioLam")
                         .HasColumnType("float");
 
                     b.Property<decimal?>("TongLuong")
                         .HasColumnType("decimal(11, 2)");
-
-                    b.Property<string>("TrangThai")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasDefaultValue("Chờ xác nhận");
 
                     b.HasKey("Id")
                         .HasName("PK__LICHSULA__3214EC27C0159D37");
@@ -537,8 +502,6 @@ namespace APIQuanLyCuaHang.Migrations
                     b.HasIndex("MaCaKip");
 
                     b.HasIndex("MaNv");
-
-                    b.HasIndex("NguoiXacNhan");
 
                     b.ToTable("LICHSULAMVIEC", (string)null);
                 });
@@ -745,13 +708,11 @@ namespace APIQuanLyCuaHang.Migrations
                 {
                     b.HasOne("APIQuanLyCuaHang.Models.Combo", "MaComboNavigation")
                         .WithMany("Giohangs")
-                        .HasForeignKey("MaCombo")
-                        .HasConstraintName("FK_GIOHANG_COMBO_MaComboNavigationMaCombo");
+                        .HasForeignKey("MaComboNavigationMaCombo");
 
                     b.HasOne("APIQuanLyCuaHang.Models.Chitietsanpham", "MaCtspNavigation")
                         .WithMany("Giohangs")
                         .HasForeignKey("MaCtsp")
-                        .OnDelete(DeleteBehavior.SetNull)
                         .HasConstraintName("FK__GIOHANG__MaCTSP__6B24EA82");
 
                     b.HasOne("APIQuanLyCuaHang.Models.Khachhang", "MaKhNavigation")
@@ -810,17 +771,9 @@ namespace APIQuanLyCuaHang.Migrations
                         .IsRequired()
                         .HasConstraintName("FK__LICHSULAMV__MaNV__6477ECF3");
 
-                    b.HasOne("APIQuanLyCuaHang.Models.Nhanvien", "NguoiXacNhanLich")
-                        .WithMany()
-                        .HasForeignKey("NguoiXacNhan")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .HasConstraintName("FK__LICHSULAMV__NguoiXacNhan__12345678");
-
                     b.Navigation("MaCaKipNavigation");
 
                     b.Navigation("MaNvNavigation");
-
-                    b.Navigation("NguoiXacNhanLich");
                 });
 
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Nhanvien", b =>

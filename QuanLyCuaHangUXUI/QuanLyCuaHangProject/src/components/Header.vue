@@ -42,7 +42,10 @@
               </ul>
             </div>
             <div class="menu_btn">
-              <a href="#" class="btn_1 d-none d-sm-block">đặt bàn</a>
+              <!-- Nút giỏ hàng -->
+              <cart-button @open-cart="openCartModal" />
+              <!-- Cart modal -->
+              <cart ref="cartComponent" />            
             </div>
           </nav>
         </div>
@@ -51,8 +54,24 @@
   </header>
 </template>
 
-<script>
-import { RouterLink } from 'vue-router'
+<script setup>
+import { ref } from 'vue';
+import CartButton from '@/components/CartButton.vue';
+import Cart from '@/components/Cart.vue';
+
+const cartComponent = ref(null);
+
+const openCartModal = () => {
+  if (cartComponent.value) {
+    cartComponent.value.openCartModal();
+  }
+};
 </script>
 
-<style></style>
+<style scoped>
+.menu_btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+</style>

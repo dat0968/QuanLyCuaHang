@@ -16,5 +16,7 @@ namespace APIQuanLyCuaHang.DTO
 
         public bool? IsDelete { get; set; }
         public List<DetailProductResponseDTO> Chitietsanphams { get; set; } = new List<DetailProductResponseDTO>();
+        public List<ProductResponseDTO> RelatedProducts { get; set; } = new List<ProductResponseDTO>();
     }
+   
 }

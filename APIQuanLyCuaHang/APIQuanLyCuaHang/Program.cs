@@ -1,13 +1,6 @@
 ﻿using System.Reflection;
 using APIQuanLyCuaHang.DbInitializer;
 using APIQuanLyCuaHang.Models;
-using APIQuanLyCuaHang.Repositories.CaKip;
-using APIQuanLyCuaHang.Repositories.Dashboard;
-using APIQuanLyCuaHang.Repositories.Schedule;
-using APIQuanLyCuaHang.Repositories.UnitOfWork;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-
 using APIQuanLyCuaHang.Repositories.Category;
 using APIQuanLyCuaHang.Repositories.DetailProduct;
 using APIQuanLyCuaHang.Repositories.ImageProduct;
@@ -31,6 +24,8 @@ using APIQuanLyCuaHang.Repositories.DetailCombo;
 using APIQuanLyCuaHang.Repositories.Bill;
 using APIQuanLyCuaHang.Repositories.DetailBill;
 using APIQuanLyCuaHang.Repositories.Bill;
+using APIQuanLyCuaHang.Repository.MaCoupon;
+using APIQuanLyCuaHang.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 // Add services to the container.
