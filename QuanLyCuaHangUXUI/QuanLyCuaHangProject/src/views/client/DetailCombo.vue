@@ -1,8 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import 'animate.css'
-import 'bootstrap-icons/font/bootstrap-icons.css'
+// import 'animate.css'
+// import 'bootstrap-icons/font/bootstrap-icons.css'
 
 const route = useRoute()
 const combo = ref(null)
@@ -69,7 +69,7 @@ const addToCart = () => {
   if (!combo.value) return
 
   // TODO: Thêm logic xử lý giỏ hàng ở đây
-  console.log('Add to cart:', cartItem)
+  console.log('Add to cart:', null)
 }
 
 onMounted(() => {

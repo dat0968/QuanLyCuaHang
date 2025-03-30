@@ -26,6 +26,8 @@ using APIQuanLyCuaHang.Repositories.DetailBill;
 using APIQuanLyCuaHang.Repositories.Bill;
 using APIQuanLyCuaHang.Repository.MaCoupon;
 using APIQuanLyCuaHang.Repositories;
+using APIQuanLyCuaHang.Repositories.UnitOfWork;
+using APIQuanLyCuaHang.Repositories.Dashboard;
 var builder = WebApplication.CreateBuilder(args);
 ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 // Add services to the container.
@@ -95,7 +97,6 @@ var SecretKeyBytes = Encoding.UTF8.GetBytes(SecretKey);
 
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<ITokenServices, TokenServices>();
-builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IComboRepository, ComboRepository>();
 builder.Services.AddScoped<IDetailCombo, DetailCombo>();

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import 'animate.css'
+// import 'animate.css'
 
 const route = useRoute()
 const product = ref(null)
@@ -19,15 +19,12 @@ const scrollToTop = () => {
 // Lấy chi tiết sản phẩm
 async function fetchProductDetail() {
   try {
-    const response = await fetch(
-      `https://localhost:7139/api/Home/products/${route.params.id}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    )
+    const response = await fetch(`https://localhost:7139/api/Home/products/${route.params.id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
     if (!response.ok) {
       throw new Error('Error' + response.status)
     }
@@ -143,27 +140,27 @@ onMounted(() => {
                 </button>
               </div>
             </div>
-            </div>
+          </div>
 
-            <!-- Phần giá và số lượng -->
-            <div class="price-quantity">
-              <div class="price">
-                <span class="current-price"
-                  >{{ selectedVariant?.donGia?.toLocaleString('vi-VN') }} đ</span
-                >
-              </div>
-              <div class="quantity">
-                <button @click="decreaseQuantity" :disabled="quantity <= 1">-</button>
-                <span>{{ quantity }}</span>
-                <button
-                  @click="increaseQuantity"
-                  :disabled="!selectedVariant || quantity >= selectedVariant.soLuongTon"
-                >
-                  +
-                </button>
-              </div>
-                <div class="tab-pane fade" id="reviews">
-                  <p class="text-muted">Chưa có đánh giá nào.</p>
+          <!-- Phần giá và số lượng -->
+          <div class="price-quantity">
+            <div class="price">
+              <span class="current-price"
+                >{{ selectedVariant?.donGia?.toLocaleString('vi-VN') }} đ</span
+              >
+            </div>
+            <div class="quantity">
+              <button @click="decreaseQuantity" :disabled="quantity <= 1">-</button>
+              <span>{{ quantity }}</span>
+              <button
+                @click="increaseQuantity"
+                :disabled="!selectedVariant || quantity >= selectedVariant.soLuongTon"
+              >
+                +
+              </button>
+            </div>
+            <div class="tab-pane fade" id="reviews">
+              <p class="text-muted">Chưa có đánh giá nào.</p>
             </div>
 
             <!-- Phần thêm vào giỏ hàng -->
@@ -180,7 +177,6 @@ onMounted(() => {
         </div>
       </div>
     </div>
-    </section>
     <!-- food_menu part end-->
   </div>
 </template>
@@ -191,9 +187,7 @@ onMounted(() => {
   background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
   min-height: 100vh;
 }
-</script>
-
-.product-images {
+.script > .product-images {
   background: #fff;
   border-radius: 15px;
   padding: 20px;
@@ -428,4 +422,4 @@ onMounted(() => {
     font-size: 14px;
   }
 }
-</style> 
+</style>

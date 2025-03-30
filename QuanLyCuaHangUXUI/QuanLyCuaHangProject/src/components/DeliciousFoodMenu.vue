@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
-import 'animate.css'
+// import 'animate.css'
 
 const selectedCategory = ref(-1)
 const products = ref([])
@@ -96,7 +96,7 @@ async function fetchProductsByCategory(categoryId) {
         headers: {
           'Content-Type': 'application/json',
         },
-      }
+      },
     )
     if (!response.ok) {
       throw new Error('Error' + response.status)
@@ -487,7 +487,9 @@ onMounted(() => {
 
 .category-item {
   flex: 0 0 auto;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .category-item:hover {
@@ -507,7 +509,9 @@ onMounted(() => {
   font-weight: 600;
   color: #333;
   text-transform: uppercase;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .category-item button:hover {
