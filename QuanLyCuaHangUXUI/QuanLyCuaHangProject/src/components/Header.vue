@@ -23,6 +23,11 @@
                     <RouterLink class="nav-link" to="/" >Home</RouterLink>
                   </li>
                   <li class="nav-item">
+                    <RouterLink class="nav-link" to="/profile">
+                    <span>Hồ sơ cá nhân</span>
+                  </RouterLink>
+                  </li>
+                  <li class="nav-item">
                     <RouterLink class="nav-link" to="/about" >About</RouterLink>
                   </li>
                   <li class="nav-item">

@@ -58,14 +58,16 @@ builder.Services.AddDbContext<QuanLyCuaHangContext>(options =>
 });
 builder.Services.AddCors(options =>
 {
-
-    options.AddPolicy("MyPolicy", ops =>
-    {
-        ops.AllowAnyHeader();
-        ops.AllowAnyMethod();
-        ops.AllowAnyOrigin();
-    });
+    options.AddPolicy("AllowAll",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
 });
+
+
 builder.Services.AddScoped<IProduct, Product>();
 builder.Services.AddScoped<IDetailProduct, DetailProduct>();
 builder.Services.AddScoped<IimageProduct, imageProduct>();
@@ -90,8 +92,8 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuer = false,
         ValidateAudience = false,
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(SecretKeyBytes),
-        ClockSkew = TimeSpan.Zero,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:SecretKey"])),
+        ClockSkew = TimeSpan.Zero
     };
 }).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
 .AddGoogle(options =>
@@ -111,7 +113,9 @@ if (app.Environment.IsDevelopment())
 }
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseStaticFiles();
 app.UseCors("MyPolicy");
+app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization(); ;
 

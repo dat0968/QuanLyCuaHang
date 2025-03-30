@@ -54,7 +54,9 @@ import '../../assets/admin/js/main.js'
                   ><i class="icon-arrow-right pull-right"></i>
                 </a>
                 <ul class="xp-vertical-submenu">
-                  <li><a href="d">Mục 1</a></li>
+                  <RouterLink to="/Admin/customer">
+                  <i class="fas fa-box"></i><span>Nhan Vien</span>
+                </RouterLink>
                   <li><a href="d">Mục 2</a></li>
                   <li><a href="d">Muc 3</a></li>
                 </ul>

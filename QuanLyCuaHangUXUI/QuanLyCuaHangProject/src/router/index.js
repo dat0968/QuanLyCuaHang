@@ -15,6 +15,7 @@ import ProductIndex from '../views/admin/Product/Index.vue'
 import ForgotPasswordStaff from '../views/accounts/ForgotPasswordStaff.vue'
 import GoogleLoginSuccess from '../views/accounts/GoogleLoginSuccess.vue'
 import CustomerIndex from '../views/Customer/Index.vue'
+import Profile from '../views/Profile/Profile.vue';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -24,9 +25,10 @@ const router = createRouter({
       children:
         [
           { path: '', name: 'Home', component: Home },
+          { path: '/profile', name: 'Profile', component: Profile },
           { path: '/about', name: 'About', component: About },
           { path: '/menu', name: 'Menu', component: Menu },
-          { path: '/chefs', name: 'Chefs', component: Chef },
+          { path: '/chefs', name: 'Chefs', component: Chef }
         ]
     },
     {
