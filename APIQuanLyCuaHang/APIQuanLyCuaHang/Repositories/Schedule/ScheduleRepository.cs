@@ -4,7 +4,9 @@ using APIQuanLyCuaHang.DTO.Requests;
 using APIQuanLyCuaHang.Models;
 using APIQuanLyCuaHang.Repositories.Repository;
 using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml.Drawing.Chart;
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -315,5 +317,68 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
 
             return response;
         }
+
+        public async Task<ResponseAPI<List<ScheduleDTO>>> GetScheduleOfUser(int? userId)
+        {
+            ResponseAPI<List<ScheduleDTO>> response = new();
+            try
+            {
+                userId ??= userId ?? throw new Exception("Không nhận được thông tin người dùng.");
+
+                var scheduleUserInNow = await base.GetAsync(x => x.MaNv == userId && x.TrangThai == TrangThaiLichLamViec.DiLam) ?? throw new Exception("Không tìm thấy dữ liệu tìm kiếm.");
+
+                List<ScheduleDTO> scheduleData = await GetSchedulesActiveOfShift(scheduleUserInNow.MaCaKip);
+
+                response.SetSuccessResponse("Đã nhận được danh sách.");
+                response.SetData(scheduleData);
+            }
+            catch (Exception ex)
+            {
+                response.SetMessageResponseWithException(500, ex);
+            }
+            return response;
+        }
+        public async Task<ResponseAPI<List<ScheduleDTO>>> GetScheduleActiveOfShift(int? shiftId)
+        {
+            ResponseAPI<List<ScheduleDTO>> response = new();
+            try
+            {
+                shiftId ??= shiftId ?? throw new Exception("Không nhận được thông tin ca làm việc.");
+
+                var scheduleData = await GetSchedulesActiveOfShift(shiftId.Value);
+
+                response.SetSuccessResponse("Đã nhận được danh sách.");
+                response.SetData(scheduleData);
+            }
+            catch (Exception ex)
+            {
+                response.SetMessageResponseWithException(500, ex);
+            }
+            return response;
+        }
+        #region [PRIVATE METHOD]
+        private async Task<List<ScheduleDTO>> GetSchedulesActiveOfShift(int shiftId)
+        {
+            var dataOrigin = await base.GetAllAsync(x => x.MaCaKip == shiftId && x.TrangThai == TrangThaiLichLamViec.DiLam, "MaNvNavigation");
+
+            List<ScheduleDTO> scheduleData = dataOrigin.Select(d => new ScheduleDTO
+            {
+                Id = d.Id,
+                MaNv = d.MaNv,
+                TenNhanVien = d.MaNvNavigation.HoTen,
+                MaCaKip = d.MaCaKip,
+                NgayThangNam = d.NgayThangNam,
+                SoGioLam = d.SoGioLam,
+                LyDoNghi = d.LyDoNghi,
+                TongLuong = d.TongLuong,
+                GioVao = d.GioVao,
+                GioRa = d.GioRa,
+                TrangThai = d.TrangThai,
+                GhiChu = d.GhiChu,
+                IsDelete = d.IsDelete,
+            }).ToList();
+            return scheduleData;
+        }
+        #endregion
     }
 }

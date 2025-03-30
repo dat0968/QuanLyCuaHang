@@ -2,6 +2,7 @@ using APIQuanLyCuaHang.DTO;
 using APIQuanLyCuaHang.DTO.Requests;
 using APIQuanLyCuaHang.Repositories.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Asn1.Iana;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -79,7 +80,11 @@ namespace APIQuanLyCuaHang.Controllers
             var result = await _unit.Schedules.SetStatusOne(request, userManagerId);
             return Ok(result);
         }
-
-
+        [HttpGet("{shiftId}")]
+        public async Task<IActionResult> GetScheduleActiveOfShift(int? shiftId)
+        {
+            var response = await _unit.Schedules.GetScheduleActiveOfShift(shiftId);
+            return Ok(response);
+        }
     }
 }
