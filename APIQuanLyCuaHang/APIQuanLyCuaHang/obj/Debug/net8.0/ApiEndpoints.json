@@ -423,6 +423,95 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.CouponController",
+    "Method": "Cancel",
+    "RelativePath": "api/Coupon/Cancel",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.CouponController",
+    "Method": "Create",
+    "RelativePath": "api/Coupon/Create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "APIQuanLyCuaHang.DTO.CouponDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.CouponController",
+    "Method": "GetAll",
+    "RelativePath": "api/Coupon/GetAll",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.CouponController",
+    "Method": "GetAllByPage",
+    "RelativePath": "api/Coupon/GetAllCouponCodeByPage",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "keywords",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "status",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "sort",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.CouponController",
+    "Method": "Update",
+    "RelativePath": "api/Coupon/Update",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "APIQuanLyCuaHang.DTO.CouponDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "APIQuanLyCuaHang.Controllers.CustomerController",
     "Method": "GetCustomers",
     "RelativePath": "api/Customer",

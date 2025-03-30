@@ -12,11 +12,13 @@ import Register from '../views/accounts/Register.vue'
 import ForgotPassword from '../views/accounts/ForgotPassword.vue'
 import Error from '../views/error/Error.vue'
 import ProductIndex from '../views/admin/Product/Index.vue'
+import Coupon from '../views/admin/Coupon/Index.vue'
 import ForgotPasswordStaff from '../views/accounts/ForgotPasswordStaff.vue'
 import GoogleLoginSuccess from '../views/accounts/GoogleLoginSuccess.vue'
 import CustomerIndex from '../views/Customer/Index.vue'
 import ComboIndex from '../views/admin/Combo/Index.vue'
 import BillIndex from '@/views/admin/Bill/BillIndex.vue'
+import Checkout from '@/views/client/Checkout.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -29,6 +31,7 @@ const router = createRouter({
           { path: '/about', name: 'About', component: About },
           { path: '/menu', name: 'Menu', component: Menu },
           { path: '/chefs', name: 'Chefs', component: Chef },
+          {path: '/Checkout', name: 'Checkout', component: Checkout},
         ]
     },
     {
@@ -41,6 +44,7 @@ const router = createRouter({
           { path: '/admin/Bill', component: BillIndex },
           { path: 'customer', name: 'CustomerIndex', component: CustomerIndex },
           { path: 'combo', component: ComboIndex },
+          { path: '/admin/Coupon', name: 'Coupon', component: Coupon },
         ]
     },
     {

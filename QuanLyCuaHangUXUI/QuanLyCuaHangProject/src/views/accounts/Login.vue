@@ -58,6 +58,7 @@ const handleGoogleLogin = () => {
 </script>
 
 <template>
+  
   <div>
     <div class="xp-authenticate-bg"></div>
     <div id="xp-container" class="xp-container">
@@ -146,5 +147,38 @@ const handleGoogleLogin = () => {
 <style scoped>
 .alert-danger {
   margin-bottom: 15px;
+}
+.btn-googleplus {
+  background-color: rgb(231, 60, 60); 
+  color: white; 
+  border: none; 
+  padding: 8px 16px; 
+  border-radius: 5px; 
+  display: inline-flex; 
+  align-items: center; 
+  font-size: 16px; 
+  font-weight: 500; 
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* Hiệu ứng hover */
+.btn-googleplus:hover {
+  background-color: rgb(200, 50, 50); 
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); 
+  transform: translateY(-2px); 
+}
+
+/* Hiệu ứng active (khi nhấn nút) */
+.btn-googleplus:active {
+  background-color: rgb(180, 40, 40); 
+  transform: translateY(0); 
+  box-shadow: none; 
+}
+
+
+.btn-googleplus .custom-google-icon,
+.btn-googleplus i {
+  margin-right: 5px;  
 }
 </style>

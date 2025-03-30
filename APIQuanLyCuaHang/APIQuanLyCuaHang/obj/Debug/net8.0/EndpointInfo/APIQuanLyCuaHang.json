@@ -655,6 +655,145 @@
         }
       }
     },
+    "/api/Coupon/GetAllCouponCodeByPage": {
+      "get": {
+        "tags": [
+          "Coupon"
+        ],
+        "parameters": [
+          {
+            "name": "keywords",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Coupon/GetAll": {
+      "get": {
+        "tags": [
+          "Coupon"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Coupon/Create": {
+      "post": {
+        "tags": [
+          "Coupon"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CouponDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CouponDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CouponDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Coupon/Update": {
+      "put": {
+        "tags": [
+          "Coupon"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CouponDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CouponDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CouponDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Coupon/Cancel": {
+      "put": {
+        "tags": [
+          "Coupon"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Customer": {
       "get": {
         "tags": [
@@ -1320,6 +1459,54 @@
   },
   "components": {
     "schemas": {
+      "CouponDTO": {
+        "type": "object",
+        "properties": {
+          "maCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "moTa": {
+            "type": "string",
+            "nullable": true
+          },
+          "phanTramGiam": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "soTienGiam": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "donHangToiThieu": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "ngayBatDau": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ngayKetThuc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "soLuong": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "soLuongDaDung": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "trangThai": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "DetailProductCreateRequestDTO": {
         "type": "object",
         "properties": {
