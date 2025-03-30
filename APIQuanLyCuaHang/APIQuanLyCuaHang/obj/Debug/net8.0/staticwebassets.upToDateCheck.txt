@@ -19,11 +19,6 @@ wwwroot\Hinh\AnhKhachHang\cc68216b-e199-4992-a523-087f5337de7f.png
 wwwroot\Hinh\AnhKhachHang\cf3c7cf3-bebd-4dea-9d1a-22bb38c174d9.jpg
 wwwroot\Hinh\AnhKhachHang\e0bfe1f7-3b6c-477c-a525-17b3fcda633a.png
 wwwroot\Hinh\AnhKhachHang\edc59c27-c659-4018-acb1-44429474d9c3.png
-wwwroot\HinhAnh\Combo\CaNhaNoNe-2Mi-2Uc-1Canh-3Nuoc-1Khoai.png
-wwwroot\HinhAnh\Combo\CapDoiAnY-2Mi-1Dui-1Uc-2Nuoc-1Khoai.png
-wwwroot\HinhAnh\Combo\GaMiNuocKhoai.jpg
-wwwroot\HinhAnh\Combo\MiKhoaiNuoc.jpg
-wwwroot\HinhAnh\Combo\MiNuoc.jpg
 wwwroot\HinhAnh\Food_Drink\2Dui.png
 wwwroot\HinhAnh\Food_Drink\7UpLon - Copy.png
 wwwroot\HinhAnh\Food_Drink\7UpLon.png
@@ -31,9 +26,12 @@ wwwroot\HinhAnh\Food_Drink\7UpNho.png
 wwwroot\HinhAnh\Food_Drink\an-com-trang-dung-cach-56-0.jpg
 wwwroot\HinhAnh\Food_Drink\anh-chan-dung-dep-yodyvn1.jpg
 wwwroot\HinhAnh\Food_Drink\aquafina-500ml.jpg
+wwwroot\HinhAnh\Food_Drink\CaNhaNoNe-2Mi-2Uc-1Canh-3Nuoc-1Khoai.png
+wwwroot\HinhAnh\Food_Drink\CapDoiAnY-2Mi-1Dui-1Uc-2Nuoc-1Khoai.png
 wwwroot\HinhAnh\Food_Drink\chickenjoy_spicy_2piece_2.jpg
 wwwroot\HinhAnh\Food_Drink\Dui.png
 wwwroot\HinhAnh\Food_Drink\g_s_t_cay_-_7-compressed.jpg
+wwwroot\HinhAnh\Food_Drink\GaMiNuocKhoai.jpg
 wwwroot\HinhAnh\Food_Drink\images (1).jfif
 wwwroot\HinhAnh\Food_Drink\images (SoCoLa).jfif
 wwwroot\HinhAnh\Food_Drink\images.jfif
@@ -42,8 +40,10 @@ wwwroot\HinhAnh\Food_Drink\imagesTropicalSundae.jfif
 wwwroot\HinhAnh\Food_Drink\jm_n_tr_ng_mi_ng_-_3-removebg-preview.png
 wwwroot\HinhAnh\Food_Drink\kem-socola-5-lit-kem-new-zealand-natural-1637956225.jpg
 wwwroot\HinhAnh\Food_Drink\m_n_tr_ng_mi_ng_-_3-removebg-preview.png
+wwwroot\HinhAnh\Food_Drink\MiKhoaiNuoc.jpg
 wwwroot\HinhAnh\Food_Drink\MiLon.jpg
 wwwroot\HinhAnh\Food_Drink\MiNho.jpg
+wwwroot\HinhAnh\Food_Drink\MiNuoc.jpg
 wwwroot\HinhAnh\Food_Drink\MirindaLon - Copy.png
 wwwroot\HinhAnh\Food_Drink\MirindaLon.png
 wwwroot\HinhAnh\Food_Drink\MirindaNho.png

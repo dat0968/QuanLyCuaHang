@@ -1,57 +1,74 @@
 <template>
   <header class="main_menu home_menu">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg-12">
-            <nav class="navbar navbar-expand-lg navbar-light">
-              <a class="navbar-brand" href="index.html"> <img src="../assets/client/img/logo.png" alt="logo" /> </a>
-              <button
-                class="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-              >
-                <span class="navbar-toggler-icon"></span>
-              </button>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-12">
+          <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="/">
+              <img style="height: 100px;" src="../assets/client/img/Red and Yellow Illustrative Fried Chicken Logo.png" alt="logo" />
+            </a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
 
-              <div class="collapse navbar-collapse main-menu-item justify-content-end" id="navbarSupportedContent">
-                <ul class="navbar-nav">
-                  <li class="nav-item">
-                    <RouterLink class="nav-link" to="/" >Home</RouterLink>
-                  </li>
-                  <li class="nav-item">
-                    <RouterLink class="nav-link" to="/about" >About</RouterLink>
-                  </li>
-                  <li class="nav-item">
-                    <RouterLink class="nav-link" to="/menu">Menu</RouterLink>
-                  </li>
-                  <li class="nav-item">
-                    <RouterLink class="nav-link" to="/chefs">Chefs</RouterLink>
-                  </li>                
-                  <li class="nav-item">
-                    <a class="nav-link" href="">Contact</a>
-                  </li>
-                </ul>
-              </div>
-              <div class="menu_btn">
-                <a href="#" class="btn_1 d-none d-sm-block">book a tabel</a>
-              </div>
-            </nav>
-          </div>
+            <div class="collapse navbar-collapse main-menu-item justify-content-end" id="navbarSupportedContent">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <RouterLink class="nav-link" to="/">Home</RouterLink>
+                </li>
+                <li class="nav-item">
+                  <RouterLink class="nav-link" to="/about">About</RouterLink>
+                </li>
+                <li class="nav-item">
+                  <RouterLink class="nav-link" to="/menu">Menu</RouterLink>
+                </li>
+                <li class="nav-item">
+                  <RouterLink class="nav-link" to="/chefs">Chefs</RouterLink>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Contact</a>
+                </li>
+              </ul>
+            </div>
+            <div class="menu_btn">
+              <!-- Nút giỏ hàng -->
+              <cart-button @open-cart="openCartModal" />
+              <!-- Cart modal -->
+              <cart ref="cartComponent" />
+            </div>
+          </nav>
         </div>
       </div>
-    </header>
+    </div>
+  </header>
 </template>
 
-<script>
-import { RouterLink } from 'vue-router';
+<script setup>
+import { ref } from 'vue';
+import CartButton from '@/components/CartButton.vue';
+import Cart from '@/components/Cart.vue';
 
+const cartComponent = ref(null);
 
+const openCartModal = () => {
+  if (cartComponent.value) {
+    cartComponent.value.openCartModal();
+  }
+};
 </script>
 
-<style>
-
+<style scoped>
+.menu_btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 </style>

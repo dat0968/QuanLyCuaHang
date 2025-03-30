@@ -257,7 +257,11 @@ namespace APIQuanLyCuaHang.Migrations
                     b.Property<decimal>("DonGia")
                         .HasColumnType("decimal(11, 2)");
 
-                    b.Property<int>("MaCtsp")
+                    b.Property<int?>("MaCombo")
+                        .HasColumnType("int")
+                        .HasColumnName("MaComboNavigation");
+
+                    b.Property<int?>("MaCtsp")
                         .HasColumnType("int")
                         .HasColumnName("MaCTSP");
 
@@ -270,6 +274,8 @@ namespace APIQuanLyCuaHang.Migrations
 
                     b.HasKey("Id")
                         .HasName("PK__GIOHANG__3214EC27376B130B");
+
+                    b.HasIndex("MaCombo");
 
                     b.HasIndex("MaCtsp");
 
@@ -710,10 +716,15 @@ namespace APIQuanLyCuaHang.Migrations
 
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Giohang", b =>
                 {
+                    b.HasOne("APIQuanLyCuaHang.Models.Combo", "MaComboNavigation")
+                        .WithMany("Giohangs")
+                        .HasForeignKey("MaCombo")
+                        .HasConstraintName("FK_GIOHANG_COMBO_MaComboNavigationMaCombo");
+
                     b.HasOne("APIQuanLyCuaHang.Models.Chitietsanpham", "MaCtspNavigation")
                         .WithMany("Giohangs")
                         .HasForeignKey("MaCtsp")
-                        .IsRequired()
+                        .OnDelete(DeleteBehavior.SetNull)
                         .HasConstraintName("FK__GIOHANG__MaCTSP__6B24EA82");
 
                     b.HasOne("APIQuanLyCuaHang.Models.Khachhang", "MaKhNavigation")
@@ -721,6 +732,8 @@ namespace APIQuanLyCuaHang.Migrations
                         .HasForeignKey("MaKh")
                         .IsRequired()
                         .HasConstraintName("FK__GIOHANG__MaKH__6A30C649");
+
+                    b.Navigation("MaComboNavigation");
 
                     b.Navigation("MaCtspNavigation");
 
@@ -818,6 +831,8 @@ namespace APIQuanLyCuaHang.Migrations
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Combo", b =>
                 {
                     b.Navigation("Chitietcombos");
+
+                    b.Navigation("Giohangs");
                 });
 
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Danhmuc", b =>

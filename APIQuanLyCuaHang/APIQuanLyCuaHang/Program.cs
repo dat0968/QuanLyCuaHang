@@ -24,6 +24,7 @@ using APIQuanLyCuaHang.Repositories.Bill;
 using APIQuanLyCuaHang.Repositories.DetailBill;
 using APIQuanLyCuaHang.Repositories.Bill;
 using APIQuanLyCuaHang.Repository.MaCoupon;
+using APIQuanLyCuaHang.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 // Add services to the container.
@@ -92,6 +93,7 @@ builder.Services.AddScoped<IBillRepository, BillRepository>();
 builder.Services.AddScoped<IDetailBill, DetailBill>();
 builder.Services.AddScoped<IBillRepository, BillRepository>();
 builder.Services.AddScoped<IMaCouponRepository, MaCouponRepository>();
+builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

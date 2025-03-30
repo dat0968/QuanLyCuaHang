@@ -1,26 +1,6 @@
 {
   "Files": [
     {
-      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Combo\\CaNhaNoNe-2Mi-2Uc-1Canh-3Nuoc-1Khoai.png",
-      "PackagePath": "staticwebassets\\HinhAnh\\Combo\\CaNhaNoNe-2Mi-2Uc-1Canh-3Nuoc-1Khoai.png"
-    },
-    {
-      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Combo\\CapDoiAnY-2Mi-1Dui-1Uc-2Nuoc-1Khoai.png",
-      "PackagePath": "staticwebassets\\HinhAnh\\Combo\\CapDoiAnY-2Mi-1Dui-1Uc-2Nuoc-1Khoai.png"
-    },
-    {
-      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Combo\\GaMiNuocKhoai.jpg",
-      "PackagePath": "staticwebassets\\HinhAnh\\Combo\\GaMiNuocKhoai.jpg"
-    },
-    {
-      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Combo\\MiKhoaiNuoc.jpg",
-      "PackagePath": "staticwebassets\\HinhAnh\\Combo\\MiKhoaiNuoc.jpg"
-    },
-    {
-      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Combo\\MiNuoc.jpg",
-      "PackagePath": "staticwebassets\\HinhAnh\\Combo\\MiNuoc.jpg"
-    },
-    {
       "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\2Dui.png",
       "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\2Dui.png"
     },
@@ -37,8 +17,24 @@
       "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\7UpNho.png"
     },
     {
+      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\CaNhaNoNe-2Mi-2Uc-1Canh-3Nuoc-1Khoai.png",
+      "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\CaNhaNoNe-2Mi-2Uc-1Canh-3Nuoc-1Khoai.png"
+    },
+    {
+      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\CapDoiAnY-2Mi-1Dui-1Uc-2Nuoc-1Khoai.png",
+      "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\CapDoiAnY-2Mi-1Dui-1Uc-2Nuoc-1Khoai.png"
+    },
+    {
       "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\Dui.png",
       "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\Dui.png"
+    },
+    {
+      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\GaMiNuocKhoai.jpg",
+      "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\GaMiNuocKhoai.jpg"
+    },
+    {
+      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\MiKhoaiNuoc.jpg",
+      "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\MiKhoaiNuoc.jpg"
     },
     {
       "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\MiLon.jpg",
@@ -47,6 +43,10 @@
     {
       "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\MiNho.jpg",
       "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\MiNho.jpg"
+    },
+    {
+      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\MiNuoc.jpg",
+      "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\MiNuoc.jpg"
     },
     {
       "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\MirindaLon - Copy.png",

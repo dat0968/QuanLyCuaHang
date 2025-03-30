@@ -19,6 +19,9 @@ import CustomerIndex from '../views/Customer/Index.vue'
 import ComboIndex from '../views/admin/Combo/Index.vue'
 import BillIndex from '@/views/admin/Bill/BillIndex.vue'
 import Checkout from '@/views/client/Checkout.vue'
+import DetailProduct from '@/views/client/DetailProduct.vue';
+import DetailCombo from '@/views/client/DetailCombo.vue';
+import Cart from '@/components/Cart.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -31,7 +34,25 @@ const router = createRouter({
           { path: '/about', name: 'About', component: About },
           { path: '/menu', name: 'Menu', component: Menu },
           { path: '/chefs', name: 'Chefs', component: Chef },
-          {path: '/Checkout', name: 'Checkout', component: Checkout},
+          { path: '/Checkout', name: 'Checkout', component: Checkout },
+          {
+            path: '/detail/:id',
+            name: 'DetailProduct',
+            component: DetailProduct,
+            props: true,
+          },
+          {
+            path: '/detailCombo/:id',
+            name: 'DetailCombo',
+            component: DetailCombo,
+            props: true,
+          },
+          {
+            path: '/cart',
+            name: 'cart',
+            component: Cart,
+            props: true,
+          },
         ]
     },
     {

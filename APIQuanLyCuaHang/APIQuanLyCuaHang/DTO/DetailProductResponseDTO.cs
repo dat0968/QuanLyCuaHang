@@ -12,9 +12,9 @@ namespace APIQuanLyCuaHang.DTO
         public string? HuongVi { get; set; }
 
         public int? SoLuongTon { get; set; }
+        public string? AnhDaiDien { get; set; }
 
         public decimal? DonGia { get; set; }
-
         public List<ImageProductResponseDTO> Hinhanhs { get; set; } = new List<ImageProductResponseDTO>();
     }
 }

@@ -31,7 +31,7 @@ import '../../assets/admin/js/main.js'
           <!-- Start XP Logobar -->
           <div class="xp-logobar text-center">
             <a href="index.html" class="xp-logo"
-              ><img src="../../assets/admin/images/logo.svg" class="img-fluid" alt="logo"
+              ><img style="height: 100px;" src="../../assets/admin/images/Red and Yellow Illustrative Fried Chicken Logo.png" class="img-fluid" alt="logo"
             /></a>
           </div>
           <!-- End XP Logobar -->
@@ -39,7 +39,6 @@ import '../../assets/admin/js/main.js'
           <!-- Start XP Navigationbar -->
           <div class="xp-navigationbar">
             <ul class="xp-vertical-menu">
-              <li class="xp-vertical-header">Main</li>
               <li>
                 <a href="d"> <i class="icon-speedometer"></i><span>Dashboard</span> </a>
               </li>
@@ -54,6 +53,11 @@ import '../../assets/admin/js/main.js'
                 </RouterLink>
                 <RouterLink to="/Admin/Bill">
                   <i class="fas fa-box"></i><span>QUẢN LÝ ĐƠN HÀNG</span>
+                </RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/admin/customer">
+                  <i class="fas fa-user"></i><span>KHÁCH HÀNG</span>
                 </RouterLink>
               </li>
               <li>
