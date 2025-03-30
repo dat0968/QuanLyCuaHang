@@ -8,7 +8,7 @@ import 'toastr/build/toastr.min.css'
 
 // Base Axios Client
 const axiosClient = axios.create({
-  baseURL: 'http://localhost:5136/api', // Thay bằng base URL của API bạn
+  baseURL: 'https://localhost:7139/api', // Thay bằng base URL của API bạn
   timeout: 500000, // Giới hạn timeout (ms)
   headers: {
     'Content-Type': 'application/json',
@@ -74,6 +74,7 @@ axiosClient.interceptors.request.use(
           config.headers.Authorization = `Bearer ${newToken}`
         } catch (error) {
           console.error('Lỗi khi refresh token:', error.message)
+          toastr.info("Phiên truy cập đã kết thúc.\nVui lòng truy cập lại.");
           throw error
         }
       } else {
@@ -96,6 +97,7 @@ axiosClient.interceptors.response.use(
         toastr.warning(
           'Có 1 số chức năng không hoạt động khi bạn chưa truy cập, vui lòng đăng nhập để sử dụng đầy đủ chức năng của hệ thống.',
         )
+        this.$router.push('/')
       }
       throw new Error(error.response?.data?.message ?? 'Lỗi không xác định')
     }
