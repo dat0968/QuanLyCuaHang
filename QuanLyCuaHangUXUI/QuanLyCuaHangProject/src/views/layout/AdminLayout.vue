@@ -44,9 +44,9 @@ components: {
           <!-- Start XP Navigationbar -->
           <div class="xp-navigationbar">
             <ul class="xp-vertical-menu">
-<li class="xp-vertical-header">Chức năng quản lý</li>
+              <li class="xp-vertical-header">Chức năng quản lý</li>
               <li>
-                <a href=""> <i class="icon-speedometer"></i><span>Bảng điều khiển</span> </a>
+                <RouterLink to="/Admin"> <i class="icon-speedometer"></i><span>Bảng điều khiển</span> </RouterLink>
               </li>
               <li>
                 <RouterLink to="/Admin/Product">
