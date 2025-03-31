@@ -27,6 +27,12 @@ namespace APIQuanLyCuaHang.Controllers
         [HttpPost]
         public async Task<IActionResult> SignUpScheduleWork([FromQuery] int maNv, [FromQuery] int maCaKip, [FromQuery] DateOnly ngayLam)
         {
+            // TODO: Remove the maNv request to this API
+            string? userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (!string.IsNullOrEmpty(userIdString))
+            {
+                maNv = Convert.ToInt32(userIdString);
+            }
             var result = await _unit.Schedules.SignUpScheduleWorkAsync(maNv, maCaKip, ngayLam);
             return Ok(result);
         }
@@ -62,6 +68,12 @@ namespace APIQuanLyCuaHang.Controllers
         [HttpPost]
         public async Task<IActionResult> ChamCong([FromQuery] int maNv, [FromQuery] string qrCodeData)
         {
+            // TODO: Remove the maNv request to this API
+            string? userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (!string.IsNullOrEmpty(userIdString))
+            {
+                maNv = Convert.ToInt32(userIdString);
+            }
             // ! Change This
             var result = await _unit.Schedules.TimeKeepingAsync(maNv, qrCodeData);
             return Ok(result);
@@ -83,6 +95,12 @@ namespace APIQuanLyCuaHang.Controllers
         [HttpGet("{userId}")]
         public async Task<IActionResult> GetScheduleActiveOfUser(int? userId)
         {
+            // TODO: Remove the userId request to this API
+            string? userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (!string.IsNullOrEmpty(userIdString))
+            {
+                userId = Convert.ToInt32(userIdString);
+            }
             var response = await _unit.Schedules.GetScheduleOfUser(userId);
             return Ok(response);
         }

@@ -234,6 +234,7 @@ import '@/assets/default/fonts/Roboto-Italic-italic'
 import { formatDate } from '@/constants/formatDatetime'
 import toastr from 'toastr'
 import Swal from 'sweetalert2'
+import ConfigsRequest from '@/models/ConfigsRequest'
 
 export default {
   name: 'OrderClient',
@@ -475,7 +476,7 @@ export default {
 
     loadOrders() {
       axiosClient
-        .getFromApi(`/HoaDonKhach/Get/${this.userId}`)
+        .getFromApi(`/HoaDonKhach/Get/${this.userId}`, ConfigsRequest.takeAuth())
         .then((response) => {
           if (response.success) {
             this.orders = response.data

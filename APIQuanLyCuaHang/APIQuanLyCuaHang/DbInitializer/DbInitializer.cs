@@ -21,6 +21,29 @@ namespace APIQuanLyCuaHang.DbInitializer
             {
                 _db.Database.Migrate();
             }
+            if (!_db.Khachhangs.Any(kh => kh.Email == "admin@default.com"))
+            {
+                CreateTestAccount();
+            }
+        }
+        private void CreateTestAccount()
+        {
+
+            // Tạo tài khoản mặc định
+            var defaultUser = new Khachhang
+            {
+                HoTen = "Admin Default",
+                TenTaiKhoan = "admin",
+                Email = "admin@default.com",
+                MatKhau = BCrypt.Net.BCrypt.HashPassword("Admin@123"), // Mã hóa mật khẩu
+                NgayTao = DateTime.Now,
+                IsDelete = false,
+                TinhTrang = "Đang hoạt động",
+            };
+
+            // Lưu vào cơ sở dữ liệu
+            _db.Khachhangs.Add(defaultUser);
+            _db.SaveChanges();
         }
         private void CreateOrderForCharts()
         {
