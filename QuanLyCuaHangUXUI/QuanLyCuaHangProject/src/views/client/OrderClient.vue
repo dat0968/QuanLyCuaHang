@@ -231,7 +231,9 @@ import formatCurrency from '@/constants/formatCurrency'
 import '@/assets/default/fonts/Roboto-Regular-normal'
 import '@/assets/default/fonts/Roboto-Bold-bold'
 import '@/assets/default/fonts/Roboto-Italic-italic'
-import formatDate from '@/constants/formatDate'
+import { formatDate } from '@/constants/formatDatetime'
+import toastr from 'toastr'
+import Swal from 'sweetalert2'
 
 export default {
   name: 'OrderClient',
@@ -271,6 +273,8 @@ export default {
 
       // Vòng lặp qua các hóa đơn để tạo nội dung chi tiết
       let finalY = 25 // Điểm bắt đầu sau tiêu đề chính
+
+      // eslint-disable-next-line no-unused-vars
       this.filteredOrders.forEach((order, index) => {
         // Tiêu đề hóa đơn nhỏ
         doc.setFont('Roboto-Bold', 'bold')

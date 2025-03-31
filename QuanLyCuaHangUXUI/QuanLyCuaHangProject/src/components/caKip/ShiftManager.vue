@@ -52,6 +52,9 @@ import toastr from 'toastr'
 import QRCode from 'qrcode' // Đảm bảo đã import QRCode
 import $ from 'jquery'
 import Swal from 'sweetalert2'
+import ConfigsRequest from '@/models/ConfigsRequest'
+import ResponseAPI from '@/models/ResponseAPI'
+import * as formatDatetime from '@/constants/formatDatetime'
 
 export default {
   name: 'ShiftManager',
@@ -116,19 +119,22 @@ export default {
             data: 'maCaKip',
             title: 'Thao tác',
             className: 'text-center',
-            render: (data, type, row) => `
+            render: (data, type, row) => {
+              const isActive = row.isDelete
+              return `
                   <div class="d-flex gap-1 justify-content-between">
                     <span class="text-danger edit-shift" data-id="${data}" title="Sửa" style="cursor: pointer;">
                       <i class="bi icon-pencil"></i>
                     </span>
                     <span class="text-info change-status" data-id="${row.maCaKip}" title="Kích hoạt" style="cursor: pointer;">
-                      <i class="bi icon-check"></i>
+                      <i class="bi ${isActive ? 'icon-close' : 'icon-check'}"></i>
                     </span>
                     <span class="text-primary generate-qr" data-id="${data}" title="Tải QR" style="cursor: pointer;">
                       <i class="bi icon-pin"></i>
                     </span>
                   </div>
-                `,
+                `
+            },
           },
         ],
         order: [[1, 'asc']],
@@ -172,59 +178,63 @@ export default {
 
       if (currentShift && currentShift.schedules && currentShift.schedules.length > 0) {
         const detailsHtml = `
-        <div class="container">
-            <div class="row mb-3">
-                <div class="col-6">
-                <label>Lọc theo trạng thái:</label>
-                <select class="status-filter form-control">
-                    <option value="">Tất cả</option>
-                    ${validStatuses.map((status) => `<option value="${status}">${status}</option>`).join('')}
-                </select>
-                </div>
-                <div class="col-3 d-flex align-items-end">
-                <button class="btn-update-status btn btn-primary w-100" title="Cập nhật trạng thái đã chọn!" disabled>
-                    Cập nhật
-                </button>
-                </div>
-                <div class="col-3 d-flex justify-content-end align-items-end">
-                <button class="toggle-view-btn btn btn-secondary">Chi tiết</button>
-                </div>
-            </div>
+          <div class="container">
+              <div class="row mb-3">
+                  <div class="col-6">
+                      <label>Lọc theo trạng thái:</label>
+                      <select class="status-filter form-control">
+                          <option value="">Tất cả</option>
+                          ${validStatuses.map((status) => `<option value="${status}">${status}</option>`).join('')}
+                      </select>
+                  </div>
+                  <div class="col-3 d-flex align-items-end">
+                      <button class="btn-update-status btn btn-primary w-100" title="Cập nhật trạng thái đã chọn!" disabled>
+                          Cập nhật
+                      </button>
+                  </div>
+                  <div class="col-3 d-flex justify-content-end align-items-end">
+                      <button class="toggle-view-btn btn btn-secondary">Chi tiết</button>
+                  </div>
+              </div>
 
-            <div class="row border-left border-right justify-content-center" style="max-height: 400px; overflow-y: auto">
-                ${currentShift.schedules
-                  .map(
-                    (employee) => `
-                    <div class="employee-item col-6 mb-3 border rounded d-flex align-items-start p-1">
-                        <input type="checkbox" class="employee-checkbox" data-ma-nv="${employee.maNv}" />
-                        <div class="ml-2">
-                        <p><strong>${employee.tenNhanVien} <span class="text-secondary">[${employee.maNv}]</span></strong></p>
-                        <p class="text-muted">Trạng thái: <span class="status-screw">${employee.trangThai}</span></p>
-                        <div class="additional-info d-none">
-                            <div class="row mb-2">
-                            <div class="col-4">
-                                <p><strong>Giờ vào:</strong> ${employee.gioVao || 'Không có'}</p>
-                            </div>
-                            <div class="col-4">
-                                <p><strong>Giờ ra:</strong> ${employee.gioRa || 'Không có'}</p>
-                            </div>
-                            <div class="col-4">
-                                <p><strong>Số giờ làm:</strong> ${employee.soGioLam || 0}</p>
-                            </div>
-                            </div>
-                            <div class="row">
-                            <div class="col-12">
-                                <p><strong>Lý do nghỉ:</strong> ${employee.lyDoNghi || 'Không có'}</p>
-                            </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    `,
-                  )
-                  .join('')}
-            </div>
-        </div>`
+              <div class="row border-left border-right justify-content-center" style="max-height: 400px; overflow-y: auto">
+                  <div class="col-12 mb-3 border rounded d-flex align-items-start p-1">
+                      <input type="checkbox" class="select-all-checkbox" />
+                      <label class="ml-2">Chọn tất cả</label>
+                  </div>
+                  ${currentShift.schedules
+                    .map(
+                      (employee) => `
+                      <div class="employee-item col-6 mb-3 border rounded d-flex align-items-start p-1">
+                          <input type="checkbox" class="employee-checkbox" data-ma-nv="${employee.maNv}" />
+                          <div class="ml-2">
+                              <p><strong>${employee.tenNhanVien} <span class="text-secondary">[${employee.maNv}]</span></strong></p>
+                              <p class="text-muted">Trạng thái: <span class="status-screw">${employee.trangThai}</span></p>
+                              <div class="additional-info d-none">
+                                  <div class="row mb-2">
+                                      <div class="col-4">
+                                          <p><strong>Giờ vào:</strong> ${formatDatetime.formatTime(employee.gioVao) || 'Không có'}</p>
+                                      </div>
+                                      <div class="col-4">
+                                          <p><strong>Giờ ra:</strong> ${formatDatetime.formatTime(employee.gioRa) || 'Không có'}</p>
+                                      </div>
+                                      <div class="col-4">
+                                          <p><strong>Số giờ làm:</strong> ${employee.soGioLam || 0}</p>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col-12">
+                                          <p><strong>Lý do nghỉ:</strong> ${employee.lyDoNghi || 'Không có'}</p>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      `,
+                    )
+                    .join('')}
+              </div>
+          </div>`
 
         const container = $(detailsHtml)
 
@@ -233,6 +243,7 @@ export default {
           const employees = container.find('.employee-item')
           const statusFilter = container.find('.status-filter')
           const btnUpdateStatus = container.find('.btn-update-status')
+          const selectAllCheckbox = container.find('.select-all-checkbox')
 
           // Toggle chế độ hiển thị
           toggleViewBtn.on('click', () => {
@@ -250,20 +261,20 @@ export default {
 
           // Lọc trạng thái
           statusFilter.off('change').on('change', (e) => {
-            const selectedStatus = e.target.value.trim().toLowerCase() // Lấy trạng thái đang chọn
-            let hasVisibleEmployees = false // Theo dõi nếu có nhân viên nào hiển thị
+            const selectedStatus = e.target.value.trim().toLowerCase()
+            let hasVisibleEmployees = false
 
             // Clear danh sách nhân viên trước khi lọc
             employees.each(function () {
               const employee = $(this)
-              const employeeStatus = employee.find('.status-screw').text().toLowerCase() // Lấy trạng thái của nhân viên
+              const employeeStatus = employee.find('.status-screw').text().toLowerCase()
 
               // Kiểm tra trạng thái
               if (!selectedStatus || employeeStatus.includes(selectedStatus)) {
-                employee.removeClass('d-none').addClass('d-flex') // Hiển thị nếu trạng thái khớp
+                employee.removeClass('d-none').addClass('d-flex')
                 hasVisibleEmployees = true
               } else {
-                employee.removeClass('d-flex').addClass('d-none') // Ẩn nếu trạng thái không khớp
+                employee.removeClass('d-flex').addClass('d-none')
               }
             })
 
@@ -275,10 +286,10 @@ export default {
               if (employees.parent().find('.no-info-message').length === 0) {
                 // Thêm thông báo nếu chưa có
                 employees.parent().append(`
-                    <p class="no-info-message text-center line-through w-100">
-                        Không có thông tin thuộc tình trạng được chọn
-                    </p>
-                    `)
+                <p class="no-info-message text-center line-through w-100">
+                    Không có thông tin thuộc tình trạng được chọn
+                </p>
+                `)
               }
             } else {
               // Xóa thông báo nếu có nhân viên hiển thị
@@ -318,13 +329,18 @@ export default {
                   if (selectedEmployees.length > 0) {
                     await this.updateEmployeeStatus(selectedEmployees, newStatus, rowData)
                   }
-                  Swal.fire('Thành công', 'Trạng thái đã được cập nhật.', 'success')
                 } catch (error) {
                   console.error('Cập nhật trạng thái lỗi:', error)
                   Swal.fire('Thất bại', 'Không thể cập nhật trạng thái.', 'error')
                 }
               }
             })
+          })
+
+          // Chọn tất cả checkbox
+          selectAllCheckbox.on('change', function () {
+            const isChecked = $(this).is(':checked')
+            container.find('.employee-checkbox').prop('checked', isChecked)
           })
         }, 0)
 
@@ -372,10 +388,13 @@ export default {
           requestBody,
           ConfigsRequest.getSkipAuthConfig(),
         )
-
+        if (ResponseAPI.handleNotification(response)) {
+          return
+        }
         // Nếu cập nhật thành công, gọi API để lấy lại thông tin CaKip
         if (response && response.success) {
           await this.fetchAndUpdateShift(rowData.maCaKip)
+          Swal.fire('Thành công', 'Trạng thái đã được cập nhật.', 'success')
         }
       } catch (error) {
         console.error('Lỗi khi cập nhật trạng thái:', error)
@@ -452,6 +471,7 @@ export default {
           }
         } catch (error) {
           toastr.error('Lỗi khi thay đổi trạng thái')
+          console.error(`Lỗi: ${error}`)
         }
       } else if (action === false) {
         console.log('You delete')
@@ -477,6 +497,7 @@ export default {
             }
           } catch (error) {
             toastr.error('Lỗi khi xóa')
+            console.error(`Lỗi: ${error}`)
           }
         }
       }
