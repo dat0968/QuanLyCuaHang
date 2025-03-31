@@ -1,4 +1,5 @@
-﻿using APIQuanLyCuaHang.Models;
+﻿using APIQuanLyCuaHang.Constants;
+using APIQuanLyCuaHang.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -23,12 +24,12 @@ namespace APIQuanLyCuaHang.DbInitializer
             }
             if (!_db.Khachhangs.Any(kh => kh.Email == "admin@default.com"))
             {
-                CreateTestAccount();
+                CreateATestAccount();
             }
+            //CreateOrderForTestUser("admin@default.com");
         }
-        private void CreateTestAccount()
+        private void CreateATestAccount()
         {
-
             // Tạo tài khoản mặc định
             var defaultUser = new Khachhang
             {
@@ -45,159 +46,137 @@ namespace APIQuanLyCuaHang.DbInitializer
             _db.Khachhangs.Add(defaultUser);
             _db.SaveChanges();
         }
-        private void CreateOrderForCharts()
+        // Sửa đổi GenerateOrders để nhận kiểu dữ liệu cụ thể thay vì dynamic và bổ sung các trường còn thiếu
+        private List<Hoadon> GenerateOrders(int numberOfOrders, Random rand, List<Khachhang> customers, List<int> employeeIds, List<Chitietsanpham> products)
+        {
+            var hoaDons = new List<Hoadon>();
+
+            for (int i = 0; i < numberOfOrders; i++)
+            {
+                // Chọn ngẫu nhiên khách hàng và nhân viên
+                var customer = customers[rand.Next(customers.Count)];
+                int? employeeId = employeeIds.Count > 0 ? employeeIds[rand.Next(employeeIds.Count)] : (int?)null;
+
+                // Chọn trạng thái đơn hàng và tạo thời gian ngẫu nhiên
+                string orderStatus = TrangThaiDonHang.TatCaTrangThai[rand.Next(TrangThaiDonHang.TatCaTrangThai.Count)];
+                DateTime creationDate = GenerateOrderDate(rand);
+                DateTime startShippingDate = creationDate.AddDays(3);
+                DateTime receivedDate = startShippingDate.AddDays(7);
+
+                // Xử lý ngày thanh toán
+                DateTime? paymentDate = null;
+                if (orderStatus == TrangThaiDonHang.DaXacNhan || orderStatus == TrangThaiDonHang.HoanTra_HoanTien)
+                {
+                    paymentDate = creationDate.AddDays(rand.Next(1, 3)); // Ngày thanh toán sau 1-3 ngày từ ngày tạo đơn
+                }
+
+                // Tính toán tiền gốc ngẫu nhiên (giả lập)
+                decimal basePrice = products.Count > 0
+                    ? rand.Next(100000, 1000000) / 1000 * 1000 // Tạo giá trị ngẫu nhiên từ 100,000 - 1,000,000 (làm tròn nghìn đồng)
+                    : 0;
+
+                var order = new Hoadon
+                {
+                    MaKh = customer.MaKh,
+                    MaNv = employeeId,
+                    DiaChiNhanHang = RandomData_DB.Instance.rdAddress(), // Sinh địa chỉ ngẫu nhiên
+                    NgayTao = creationDate,
+                    BatDauGiao = startShippingDate,
+                    NgayNhan = receivedDate,
+                    HinhThucTt = rand.Next(0, 2) == 0 ? "COD" : "VNPAY", // Xác định hình thức thanh toán
+                    TinhTrang = orderStatus, // Trạng thái đơn hàng
+                    HoTen = customer.HoTen,
+                    Sdt = customer.Sdt ?? "N/A",
+                    NgayThanhToan = paymentDate, // Gán ngày thanh toán nếu có áp dụng
+                    TienGoc = basePrice, // Gán số tiền gốc tạm tính
+                    MoTa = RandomData_DB.Instance._Descript(), // Mô tả ngẫu nhiên
+                    PhiVanChuyen = rand.NextDouble() > 0.5 ? 40000 : 50000 // Tính phí vận chuyển ngẫu nhiên (40k hoặc 50k)
+                };
+
+                // Xử lý khi trạng thái là "Đã hủy" hoặc "Hoàn trả/Hoàn tiền"
+                if (orderStatus == TrangThaiDonHang.DaHuy || orderStatus == TrangThaiDonHang.HoanTra_HoanTien)
+                {
+                    order.LyDoHuy = "Đơn hàng bị hủy vì được lựa chọn.";
+                }
+
+                // Thêm hóa đơn vào danh sách
+                hoaDons.Add(order);
+            }
+
+            return hoaDons;
+        }
+
+        // Cập nhật GenerateOrderDetails đảm bảo không có trùng lặp trong một hóa đơn
+        private void GenerateOrderDetails(List<Hoadon> orders, Random rand, List<Chitietsanpham> products, List<Cthoadon> orderDetails)
+        {
+            foreach (var order in orders)
+            {
+                int numOfProducts = rand.Next(1, 5); // Random number of products (1-5)
+                var selectedProducts = new HashSet<int>(); // Tránh trùng lặp MaCtsp trong cùng hóa đơn
+
+                for (int j = 0; j < numOfProducts; j++)
+                {
+                    // Lấy sản phẩm ngẫu nhiên
+                    var product = products[rand.Next(products.Count)];
+
+                    // Kiểm tra nếu sản phẩm có tồn tại
+                    if (product != null && product.SoLuongTon > 0 && !selectedProducts.Contains(product.MaCtsp))
+                    {
+                        int quantity = rand.Next(1, Math.Min(5, product.SoLuongTon.Value + 1));
+
+                        var detail = new Cthoadon
+                        {
+                            MaCtsp = product.MaCtsp, // Khóa chính với bảng CHITIETSANPHAM
+                            MaHd = order.MaHd,       // Khóa chính với Hoadon
+                            SoLuong = quantity
+                        };
+
+                        // Xác minh tồn tại trong bảng CHITIETSANPHAM thông qua _db context hoặc danh sách `products`
+                        if (_db.Chitietsanphams.Any(p => p.MaCtsp == detail.MaCtsp))
+                        {
+                            orderDetails.Add(detail);
+                            selectedProducts.Add(product.MaCtsp); // Đánh dấu sản phẩm đã chọn
+                        }
+
+                    }
+                }
+            }
+        }
+
+
+
+        // Phương thức tạo ngày ngẫu nhiên
+        private DateTime GenerateOrderDate(Random rand)
+        {
+            int randomRange = rand.Next(1, 101); // Random percentage
+            if (randomRange <= 10)
+                return DateTime.Now; // 10% orders created today
+            else if (randomRange <= 30)
+                return DateTime.Now.AddDays(-rand.Next(0, 7)); // 20% orders created within the last week
+            else if (randomRange <= 60)
+                return DateTime.Now.AddDays(-rand.Next(0, 30)); // 30% orders created within the last month
+            else
+                return DateTime.Now.AddDays(-rand.Next(0, 365 * 4)); // 40% orders created within the last year
+        }
+
+        // Phương thức dành cho tạo ngẫu nhiên hóa đơn cho charts
+        public void CreateOrderForCharts()
         {
             try
             {
-                // Lấy danh sách khách hàng và nhân viên
-                var maKhachHangs = _db.Khachhangs.Select(x => new { x.MaKh, x.HoTen, x.Sdt }).ToList();
-                var maNhanViens = _db.Nhanviens.Select(x => x.MaNv).ToList();
-
-                // Lấy danh sách sản phẩm
-                var sanPhams = _db.Chitietsanphams.ToList();
-
-                // Random generator
+                var customers = _db.Khachhangs.ToList();
+                var employeeIds = _db.Nhanviens.Select(x => x.MaNv).ToList();
+                var products = _db.Chitietsanphams.ToList();
                 Random rand = new Random();
 
-                // Danh sách tình trạng đơn hàng
-                var tinhTrangs = new List<string>
-                {
-                    "Chờ xác nhận",
-                    "Đã xác nhận",
-                    "Đã giao cho đơn vị vận chuyển",
-                    "Đang giao hàng",
-                    "Chờ thanh toán",
-                    "Đã thanh toán",
-                    "Hoàn trả/Hoàn tiền",
-                    "Đã hủy"
-                };
-
-                // Danh sách lưu hóa đơn và chi tiết hóa đơn để thêm vào DbContext
-                var hoaDons = new List<Hoadon>();
-                var Cthoadons = new List<Cthoadon>();
-
-                for (int i = 0; i < 500; i++) // Tạo 500 hóa đơn
-                {
-                    // Lấy ngẫu nhiên khách hàng và nhân viên
-                    var khachHang = maKhachHangs[rand.Next(maKhachHangs.Count)];
-                    int? maNhanVien = maNhanViens.Count > 0 ? maNhanViens[rand.Next(maNhanViens.Count)] : (int?)null;
-
-                    // Lấy ngẫu nhiên tình trạng đơn hàng
-                    string tinhTrang = tinhTrangs[rand.Next(tinhTrangs.Count)];
-                    // Phân bổ khoảng thời gian theo tỷ lệ
-                    var randomRange = rand.Next(1, 101); // Tạo số ngẫu nhiên từ 1 đến 100 để xác định phân bổ thời gian
-                    DateTime ngayTao;
-
-                    // Phân phối tỷ lệ:
-                    if (randomRange <= 10) // 10% số đơn (trong ngày)
-                    {
-                        ngayTao = DateTime.Now; // Lấy ngày hiện tại
-                    }
-                    else if (randomRange <= 30) // 20% số đơn (trong tuần)
-                    {
-                        ngayTao = DateTime.Now.AddDays(-rand.Next(0, 7)); // Ngẫu nhiên trong vòng 1 tuần qua
-                    }
-                    else if (randomRange <= 60) // 30% số đơn (trong tháng)
-                    {
-                        ngayTao = DateTime.Now.AddDays(-rand.Next(0, 30)); // Ngẫu nhiên trong vòng 1 tháng qua
-                    }
-                    else // 40% số đơn (trong năm)
-                    {
-                        ngayTao = DateTime.Now.AddDays(-rand.Next(0, 365 * 4)); // Ngẫu nhiên trong vòng 1 năm qua
-                    }
-
-                    // Tạo thời gian giao hàng (cộng thêm 3 ngày so với ngày tạo)
-                    DateTime thoiGianTao = ngayTao.AddDays(3);
-                    DateTime ngayNhan = thoiGianTao.AddDays(7);
-
-                    // Tạo hóa đơn (lưu ý không gán ID thủ công - ID sẽ được auto-generate)
-                    var hoaDon = new Hoadon
-                    {
-                        MaKh = khachHang.MaKh,
-                        MaNv = maNhanVien,
-                        DiaChiNhanHang = $"Địa chỉ {i + 1}",
-                        NgayTao = ngayTao,
-                        BatDauGiao = thoiGianTao,
-                        NgayNhan = ngayNhan,
-                        HinhThucTt = rand.Next(0, 2) == 0 ? "COD" : "VNPAY", // Thanh Toán
-                        TinhTrang = tinhTrang,
-                        HoTen = khachHang.HoTen,
-                        Sdt = khachHang.Sdt ?? "N/A",
-                        MoTa = "Tạo tự động hóa đơn cho mục đích test",
-                        //GiamGiaMaCoupon = rand.Next(2, 6) * 4000,
-                        PhiVanChuyen = rand.NextDouble() > 0.5 ? 40000 : 50000
-                    };
-
-                    if (tinhTrang == "Đã hủy" || tinhTrang == "Hoàn trả/Hoàn tiền")
-                    {
-                        hoaDon.LyDoHuy = "Đơn hàng bị hủy vì được lựa chọn.";
-                    }
-
-                    // Thêm hóa đơn vào danh sách (chưa lưu vào DbContext)
-                    hoaDons.Add(hoaDon);
-                }
-
-                // Lưu toàn bộ danh sách hóa đơn vào DbContext trước để ID được generate
-                _db.Hoadons.AddRange(hoaDons);
-
-                // Lưu tất cả thay đổi
+                var orders = GenerateOrders(500, rand, customers, employeeIds, products);
+                _db.Hoadons.AddRange(orders);
                 _db.SaveChanges();
 
-                foreach (var hoaDon in hoaDons)
-                {
-                    // Tạo ngẫu nhiên số sản phẩm trong giỏ hàng (1-5 sản phẩm)
-                    int soLuongSanPham = rand.Next(1, 5);
-                    var chiTietSanPhamOfHoaDon = new List<Cthoadon>();
+                var orderDetails = new List<Cthoadon>();
+                GenerateOrderDetails(orders, rand, products, orderDetails);
 
-                    // Đảm bảo danh sách sản phẩm không bị trùng lặp trong một hóa đơn
-                    var sanPhamsDuocChon = new HashSet<(int MaSp, int? MaMau)>();
-
-                    for (int j = 0; j < soLuongSanPham; j++)
-                    {
-                        var sanPham = sanPhams[rand.Next(sanPhams.Count)];
-                        var key = (sanPham.MaSp, sanPham.MaCtsp);
-
-                        // Kiểm tra sản phẩm đã được thêm vào hóa đơn hay chưa
-                        if (sanPhamsDuocChon.Contains(key))
-                        {
-                            j--; // Thử chọn sản phẩm khác
-                            continue;
-                        }
-
-                        // Kiểm tra số lượng tồn kho của sản phẩm
-                        if (sanPham.SoLuongTon > 0)
-                        {
-                            int soLuongMua = rand.Next(1, Math.Min(5, sanPham.SoLuongTon.Value + 1)); // Đặt giới hạn mua
-                            var chiTiet = new Cthoadon
-                            {
-                                MaCtsp = sanPham.MaSp,
-                                MaHd = hoaDon.MaHd, // Đây là ID đã được auto-generate
-                                SoLuong = soLuongMua,
-                                //Gia = (decimal)sanPham.DonGia,
-                                //ThanhTien = soLuongMua * (decimal)sanPham.DonGia
-                            };
-
-                            // Thêm vào danh sách
-                            Cthoadons.Add(chiTiet);
-                            chiTietSanPhamOfHoaDon.Add(chiTiet);
-
-                            // Đánh dấu sản phẩm đã thêm
-                            sanPhamsDuocChon.Add(key);
-                        }
-                    }
-
-                    // Tính các tổng giá trị hóa đơn
-                    //var tienGoc = chiTietSanPhamOfHoaDon.Sum(ct => ct.ThanhTien);
-                    //hoaDon.TienGoc = (float)tienGoc;
-                    //hoaDon.TongTien = (float)tienGoc + hoaDon.PhiVanChuyen - hoaDon.GiamGiaMaCoupon;
-                }
-
-
-                // Lưu danh sách chi tiết hóa đơn và cập nhật hóa đơn
-                _db.Cthoadons.AddRange(Cthoadons);
-                _db.Hoadons.UpdateRange(hoaDons);
-
-                // Lưu tất cả thay đổi
+                _db.Cthoadons.AddRange(orderDetails);
                 _db.SaveChanges();
 
                 Console.WriteLine("Tạo hóa đơn và chi tiết hóa đơn thành công!");
@@ -207,5 +186,47 @@ namespace APIQuanLyCuaHang.DbInitializer
                 Console.WriteLine($"Đã xảy ra lỗi khi tạo hóa đơn: {ex.Message}");
             }
         }
+
+        // Phương thức dành cho khách hàng test
+        private void CreateOrderForTestUser(string emailUser)
+        {
+            try
+            {
+                // Lấy thông tin khách hàng
+                var customer = _db.Khachhangs.FirstOrDefault(kh => kh.Email == emailUser);
+                if (customer == null) throw new Exception($"Không tìm thấy khách hàng với email: {emailUser}");
+
+                // Lấy sản phẩm với kiểm tra tồn kho
+                var products = _db.Chitietsanphams.Where(p => p.SoLuongTon > 0).ToList();
+                if (!products.Any())
+                {
+                    throw new Exception("Không có sản phẩm nào tồn tại trong kho (CHITIETSANPHAM) để tạo hóa đơn!");
+                }
+
+                Random rand = new Random();
+
+                // Tạo đơn hàng cho khách hàng
+                var orders = GenerateOrders(10, rand, new List<Khachhang> { customer }, new List<int>(), products);
+
+                // Lưu danh sách hóa đơn
+                _db.Hoadons.AddRange(orders);
+                _db.SaveChanges(); // Lưu hóa đơn để có MaHd (ID tự tăng)
+
+                // Tạo danh sách chi tiết hóa đơn
+                var orderDetails = new List<Cthoadon>();
+                GenerateOrderDetails(orders, rand, products, orderDetails);
+
+                // Lưu chi tiết hóa đơn
+                _db.Cthoadons.AddRange(orderDetails);
+                _db.SaveChanges(); // Lưu chi tiết  
+
+                Console.WriteLine($"Tạo đơn hàng thành công cho khách hàng: {customer.HoTen}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Đã xảy ra lỗi khi tạo đơn hàng cho khách hàng test: {ex.Message}");
+            }
+        }
+
     }
 }

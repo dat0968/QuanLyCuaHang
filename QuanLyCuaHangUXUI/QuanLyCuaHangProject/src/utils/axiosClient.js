@@ -5,6 +5,7 @@ import ConfigsRequest from '@/models/ConfigsRequest'
 
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
+import router from '@/router/index'
 
 // Base Axios Client
 const axiosClient = axios.create({
@@ -41,21 +42,27 @@ async function refreshAccessToken() {
     if (response.status === 200 && response.data) {
       const { accessToken, refreshToken: newRefreshToken } = response.data
 
-      // Lưu lại token mới
-      localStorage.setItem('accessToken', accessToken)
-      localStorage.setItem('refreshToken', newRefreshToken)
+      if (accessToken && newRefreshToken) {
+        // Lưu lại token mới
+        localStorage.setItem('accessToken', accessToken)
+        localStorage.setItem('refreshToken', newRefreshToken)
 
-      return accessToken
+        return accessToken
+      } else {
+        throw new Error('Token API trả về không hợp lệ.')
+      }
     }
   } catch (error) {
-    console.error('Không thể refresh access token:', error)
-    toastr.warning('Phiên truy cập đã hết, vui lòng truy cập lại.')
+    console.error('Không thể refresh access token:', error.message || error)
+    toastr.warning('Phiên truy cập đã hết, vui lòng đăng nhập lại.')
 
-    // Lưu lại token mới
+    // Xóa tokens và chuyển hướng về trang đăng nhập
     localStorage.removeItem('accessToken')
     localStorage.removeItem('refreshToken')
 
-    throw new Error('Refresh Token đã hết hạn')
+    router.push('/login')
+
+    throw new Error('Refresh Token đã hết hạn hoặc không khả dụng.')
   }
 }
 
@@ -73,8 +80,9 @@ axiosClient.interceptors.request.use(
           const newToken = await refreshAccessToken()
           config.headers.Authorization = `Bearer ${newToken}`
         } catch (error) {
-          console.error('Lỗi khi refresh token:', error.message)
-          toastr.info("Phiên truy cập đã kết thúc.\nVui lòng truy cập lại.");
+          console.error('Lỗi khi refresh token:', error.message || error)
+          toastr.info('Phiên truy cập đã kết thúc.\nVui lòng truy cập lại.')
+          router.push('/login')
           throw error
         }
       } else {
@@ -87,19 +95,19 @@ axiosClient.interceptors.request.use(
   (error) => Promise.reject(error),
 )
 
-// Xử lý lỗi trong phản hồi API
+// Xử lý phản hồi với các lỗi
 axiosClient.interceptors.response.use(
   (response) => response.data,
   (error) => {
     if (error.response) {
       console.error(`API Error: ${error.response.status}`, error.response.data)
-      if (error.response.status == 401) {
+      if (error.response.status === 401) {
         toastr.warning(
-          'Có 1 số chức năng không hoạt động khi bạn chưa truy cập, vui lòng đăng nhập để sử dụng đầy đủ chức năng của hệ thống.',
+          'Có 1 số chức năng không hoạt động khi bạn chưa đăng nhập, vui lòng đăng nhập để tiếp tục.',
         )
-        this.$router.push('/')
+        router.push('/login')
       }
-      throw new Error(error.response?.data?.message ?? 'Lỗi không xác định')
+      throw new Error(error.response?.data?.message ?? 'Lỗi không xác định từ API.')
     }
     throw error
   },

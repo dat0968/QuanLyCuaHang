@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- banner part start-->
-    <section class="vh-100" style="margin-top: 5%">
+    <section class="" style="margin-top: 5%; min-height: 100vh">
       <!-- breadcrumb start-->
       <section style="margin-top: 60px; width: 100%" class="breadcrumb breadcrumb_bg">
         <div class="container">
@@ -161,18 +161,20 @@
                     <!-- Tiêu đề cùng nút in hóa đơn-->
                     <div class="d-flex justify-content-between">
                       <h5>Chi tiết hóa đơn</h5>
-                      <i
-                        class="icon-printer"
-                        type="button"
-                        title="Tải Hóa đơn (PDF)"
-                        @click="downloadInvoice(selectedOrder)"
-                      ></i>
-                      <i
-                        class="icon-printer"
-                        type="button"
-                        title="Tải Hóa đơn (HTML)"
-                        @click="downloadInvoiceAsHTML(selectedOrder)"
-                      ></i>
+                      <div class="d-flex gap-4">
+                        <i
+                          class="icon-printer text-primary"
+                          type="button"
+                          title="Tải Hóa đơn (PDF)"
+                          @click="downloadInvoice(selectedOrder)"
+                        ></i>
+                        <i
+                          class="icon-printer"
+                          type="button"
+                          title="Tải Hóa đơn (HTML)"
+                          @click="downloadInvoiceAsHTML(selectedOrder)"
+                        ></i>
+                      </div>
                     </div>
                     <div class="col-12 table-responsive">
                       <table class="table">
@@ -539,10 +541,10 @@ export default {
             className: 'text-center',
             render: (data, type, row) => {
               const status = row.tinhTrang
-              let buttonHtml = `<button class="btn btn-primary btn-sm btn-view" data-id="${row.maHd}">Xem chi tiết</button>`
+              let buttonHtml = `<button class="btn btn-primary btn-sm btn-view mx-2" data-id="${row.maHd}"> <i class="icon-doc"></i> Chi tiết</button>`
 
               // Chỉ hiển thị một nút "Hủy đơn"
-              buttonHtml += `<button class="btn btn-danger btn-sm btn-change-status" data-id="${row.maHd}" data-status="${status}">Hủy đơn</button>`
+              buttonHtml += `<button class="btn btn-danger btn-sm btn-change-status" data-id="${row.maHd}" data-status="${status}"> <i class="icon-close"></i> Hủy đơn</button>`
 
               return buttonHtml
             },
