@@ -12,8 +12,8 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
     public interface IScheduleRepository : IRepository<Lichsulamviec>
     {
         Task<ResponseAPI<dynamic>> GetAllAsync();
-        Task<ResponseAPI<dynamic>> DangKyCaLamViecAsync(int? maNv, int maCaKip, DateOnly? ngayLam);
-        Task<ResponseAPI<dynamic>> TimeKeepingAsync(int maNv, string qrCodeData);
+        Task<ResponseAPI<List<ScheduleDTO>>> SignUpScheduleWorkAsync(int? maNv, int maCaKip, DateOnly? ngayLam);
+        Task<ResponseAPI<List<ScheduleDTO>>> TimeKeepingAsync(int maNv, string qrCodeData);
         Task<ResponseAPI<dynamic>> SetStatusOne(SetStatusOneRequest request, int? managerUserId);
         Task<ResponseAPI<dynamic>> SetStatusList(SetStatusListRequest request, int? managerUserId);
         Task<ResponseAPI<List<ScheduleDTO>>> GetScheduleOfUser(int? userId);

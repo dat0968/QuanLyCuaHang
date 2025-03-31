@@ -15,9 +15,9 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
     public class ScheduleRepository(QuanLyCuaHangContext db) : Repository<Lichsulamviec>(db), IScheduleRepository
     {
         private readonly QuanLyCuaHangContext _db = db;
-        public async Task<ResponseAPI<dynamic>> DangKyCaLamViecAsync(int? maNv, int maCaKip, DateOnly? ngayLam)
+        public async Task<ResponseAPI<List<ScheduleDTO>>> SignUpScheduleWorkAsync(int? maNv, int maCaKip, DateOnly? ngayLam)
         {
-            ResponseAPI<dynamic> response = new();
+            ResponseAPI<List<ScheduleDTO>> response = new();
 
             try
             {
@@ -57,7 +57,7 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
                     MaNv = maNv.Value,
                     MaCaKip = maCaKip,
                     NgayThangNam = ngayLam ?? DateOnly.FromDateTime(DateTime.Today),
-                    SoGioLam = (caKip.GioKetThuc - caKip.GioBatDau).TotalHours,
+                    SoGioLam = 0,
                     TongLuong = null,
                     IsDelete = false,
                     TrangThai = TrangThaiLichLamViec.ChoXacNhan
@@ -67,7 +67,10 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
                 caKip.SoNguoiHienTai++;
 
                 await _db.SaveChangesAsync();
+
+                var scheduleData = await GetSchedulesActiveOfShift(caKip.MaCaKip);
                 response.SetSuccessResponse("Đăng ký thành công!");
+                response.SetData(scheduleData);
             }
             catch (Exception ex)
             {
@@ -77,9 +80,9 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
             return response;
         }
 
-        public async Task<ResponseAPI<dynamic>> TimeKeepingAsync(int maNv, string qrCodeData)
+        public async Task<ResponseAPI<List<ScheduleDTO>>> TimeKeepingAsync(int maNv, string qrCodeData)
         {
-            ResponseAPI<dynamic> response = new();
+            ResponseAPI<List<ScheduleDTO>> response = new();
 
             try
             {
@@ -100,7 +103,7 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
                 var lichLam = await _db.Lichsulamviecs
                     .FirstOrDefaultAsync(l => l.MaNv == maNv && l.MaCaKip == maCaKip && l.NgayThangNam == ngayLam);
 
-                if (lichLam == null)
+                if (lichLam == null) // Tạo mới
                 {
                     lichLam = new Lichsulamviec
                     {
@@ -114,7 +117,7 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
                     await _db.Lichsulamviecs.AddAsync(lichLam);
                     response.SetSuccessResponse("Check-in không hợp lệ.");
                 }
-                else
+                else //Sửa lại
                 {
                     if (lichLam.TrangThai == TrangThaiLichLamViec.ChoXacNhan)
                     {
@@ -134,7 +137,12 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
                     response.SetSuccessResponse(soGioLam >= 0.5 ? "Check-out thành công." : "Bạn đã trễ.");
                 }
 
+                var scheduleData = await GetSchedulesActiveOfShift(caKip.MaCaKip);
+
                 await _db.SaveChangesAsync();
+
+                response.SetSuccessResponse("Fine");
+                response.SetData(scheduleData);
             }
             catch (Exception ex)
             {
@@ -325,7 +333,7 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
             {
                 userId ??= userId ?? throw new Exception("Không nhận được thông tin người dùng.");
 
-                var scheduleUserInNow = await base.GetAsync(x => x.MaNv == userId && x.TrangThai == TrangThaiLichLamViec.DiLam) ?? throw new Exception("Không tìm thấy dữ liệu tìm kiếm.");
+                var scheduleUserInNow = await base.GetAsync(x => x.MaNv == userId && (x.TrangThai == TrangThaiLichLamViec.DiLam || x.TrangThai == TrangThaiLichLamViec.ChoXacNhan)) ?? throw new Exception("Không tìm thấy dữ liệu tìm kiếm.");
 
                 List<ScheduleDTO> scheduleData = await GetSchedulesActiveOfShift(scheduleUserInNow.MaCaKip);
 
@@ -359,7 +367,7 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
         #region [PRIVATE METHOD]
         private async Task<List<ScheduleDTO>> GetSchedulesActiveOfShift(int shiftId)
         {
-            var dataOrigin = await base.GetAllAsync(x => x.MaCaKip == shiftId && x.TrangThai == TrangThaiLichLamViec.DiLam, "MaNvNavigation");
+            var dataOrigin = await base.GetAllAsync(x => x.MaCaKip == shiftId && (x.TrangThai == TrangThaiLichLamViec.DiLam || x.TrangThai == TrangThaiLichLamViec.ChoXacNhan), "MaNvNavigation");
 
             List<ScheduleDTO> scheduleData = dataOrigin.Select(d => new ScheduleDTO
             {

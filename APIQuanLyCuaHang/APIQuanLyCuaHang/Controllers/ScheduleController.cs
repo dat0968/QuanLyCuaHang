@@ -25,9 +25,9 @@ namespace APIQuanLyCuaHang.Controllers
             return Ok(await _unit.Schedules.GetAllAsync());
         }
         [HttpPost]
-        public async Task<IActionResult> DangKyCaLamViec([FromQuery] int maNv, [FromQuery] int maCaKip, [FromQuery] DateOnly ngayLam)
+        public async Task<IActionResult> SignUpScheduleWork([FromQuery] int maNv, [FromQuery] int maCaKip, [FromQuery] DateOnly ngayLam)
         {
-            var result = await _unit.Schedules.DangKyCaLamViecAsync(maNv, maCaKip, ngayLam);
+            var result = await _unit.Schedules.SignUpScheduleWorkAsync(maNv, maCaKip, ngayLam);
             return Ok(result);
         }
         [HttpGet]
@@ -69,16 +69,22 @@ namespace APIQuanLyCuaHang.Controllers
         [HttpPost]
         public async Task<IActionResult> SetStatusList([FromBody] SetStatusListRequest request)
         {
-            int? userManagerId = 120; // ! Change This: Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            int? userManagerId = 112; // ! Change This: Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
             var result = await _unit.Schedules.SetStatusList(request, userManagerId);
             return Ok(result);
         }
         [HttpPost]
         public async Task<IActionResult> SetStatusOne([FromBody] SetStatusOneRequest request)
         {
-            int? userManagerId = 120; // Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            int? userManagerId = 112; // ! Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
             var result = await _unit.Schedules.SetStatusOne(request, userManagerId);
             return Ok(result);
+        }
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetScheduleActiveOfUser(int? userId)
+        {
+            var response = await _unit.Schedules.GetScheduleOfUser(userId);
+            return Ok(response);
         }
         [HttpGet("{shiftId}")]
         public async Task<IActionResult> GetScheduleActiveOfShift(int? shiftId)
