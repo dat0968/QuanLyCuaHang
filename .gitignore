@@ -26,3 +26,7 @@ APIQuanLyCuaHang/.vs
 APIQuanLyCuaHang/.vs
 .vscode/settings.json
 QuanLyCuaHangUXUI/.vscode/launch.json
+APIQuanLyCuaHang/APIQuanLyCuaHang/DTO/DetailOrderManagerDTO.cs
+APIQuanLyCuaHang/APIQuanLyCuaHang/DTO/OrderManagerDTO.cs
+APIQuanLyCuaHang/APIQuanLyCuaHang/Repositories/OrderManager/IOrderManagerRepository.cs
+APIQuanLyCuaHang/APIQuanLyCuaHang/Repositories/OrderManager/OrderManagerRepository.cs
