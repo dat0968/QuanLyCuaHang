@@ -237,6 +237,7 @@ import { formatDate } from '@/constants/formatDatetime'
 import toastr from 'toastr'
 import Swal from 'sweetalert2'
 import ConfigsRequest from '@/models/ConfigsRequest'
+import TrangThaiDonHang from '@/constants/trangThaiDonHang'
 
 export default {
   name: 'OrderClient',
@@ -544,8 +545,9 @@ export default {
               let buttonHtml = `<button class="btn btn-primary btn-sm btn-view mx-2" data-id="${row.maHd}"> <i class="icon-doc"></i> Chi tiết</button>`
 
               // Chỉ hiển thị một nút "Hủy đơn"
-              buttonHtml += `<button class="btn btn-danger btn-sm btn-change-status" data-id="${row.maHd}" data-status="${status}"> <i class="icon-close"></i> Hủy đơn</button>`
-
+              if (TrangThaiDonHang.TrangThaiCoTheDoi.includes(status)) {
+                buttonHtml += `<button class="btn btn-danger btn-sm btn-change-status" data-id="${row.maHd}" data-status="${status}"> <i class="icon-close"></i> Hủy đơn</button>`
+              }
               return buttonHtml
             },
           },

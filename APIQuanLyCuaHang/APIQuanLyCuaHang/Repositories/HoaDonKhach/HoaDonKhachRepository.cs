@@ -94,7 +94,7 @@ namespace APIQuanLyCuaHang.Repositories.HoaDonKhach
                         }
                         else
                         {
-                            throw new Exception("Không thể chuyển từ 'Chờ thanh toán' sang trạng thái khác.");
+                            throw new Exception($"Không thể chuyển từ 'Chờ thanh toán' sang trạng thái [{statusChange}].");
                         }
                         break;
 
@@ -115,7 +115,7 @@ namespace APIQuanLyCuaHang.Repositories.HoaDonKhach
                         }
                         else
                         {
-                            throw new Exception("Không thể chuyển từ 'Đã xác nhận' sang trạng thái khác.");
+                            throw new Exception($"Không thể chuyển từ 'Đã xác nhận' sang trạng thái [{statusChange}].");
                         }
                         break;
 
@@ -130,7 +130,7 @@ namespace APIQuanLyCuaHang.Repositories.HoaDonKhach
                         }
                         else
                         {
-                            throw new Exception("Không thể chuyển từ 'Đã giao cho đơn vị vận chuyển' sang trạng thái khác.");
+                            throw new Exception($"Không thể chuyển từ 'Đã giao cho đơn vị vận chuyển' sang trạng thái [{statusChange}].");
                         }
                         break;
 
@@ -145,7 +145,7 @@ namespace APIQuanLyCuaHang.Repositories.HoaDonKhach
                         }
                         else
                         {
-                            throw new Exception("Không thể chuyển từ 'Đang giao hàng' sang trạng thái khác.");
+                            throw new Exception($"Không thể chuyển từ 'Đang giao hàng' sang trạng thái [{statusChange}].");
                         }
                         break;
 

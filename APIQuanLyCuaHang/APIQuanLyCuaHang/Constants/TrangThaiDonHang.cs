@@ -15,17 +15,6 @@ namespace APIQuanLyCuaHang.Constants
         public const string DaHuy = "Đã hủy";
         public const string ChoXacNhan = "Chờ xác nhận";
 
-        public static readonly string ValidateRegex = String.Join("|", (new[]
-        {
-            DaXacNhan,
-            DaGiaoChoDonViVanChuyen,
-            DangGiaoHang,
-            ChoThanhToan,
-            HoanTra_HoanTien,
-            DaHuy,
-            ChoXacNhan
-        }));
-
         public static readonly List<string> TatCaTrangThai = new List<string>
         {
             DaXacNhan,
