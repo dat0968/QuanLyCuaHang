@@ -607,10 +607,31 @@ export default {
 
         if (!selectedStatus) return // Nếu người dùng không chọn trạng thái
 
+        // Nếu người dùng chọn trạng thái "Đã hủy"
+        let cancellationReason = ''
+        if (selectedStatus === 'Đã hủy') {
+          const { value: reason } = await Swal.fire({
+            title: 'Nhập lý do hủy đơn',
+            input: 'textarea',
+            inputPlaceholder: 'Nhập lý do tại đây...',
+            showCancelButton: true,
+            cancelButtonText: 'Hủy bỏ',
+            confirmButtonText: 'Xác nhận',
+            inputValidator: (value) => {
+              if (!value) {
+                return 'Bạn cần nhập lý do!'
+              }
+              return null
+            },
+          })
+
+          if (!reason) return // Nếu người dùng không nhập lý do hủy
+          cancellationReason = reason // Lưu lý do hủy
+        }
         // Gửi yêu cầu API hủy đơn
         axiosClient
           .postToApi(
-            `/HoaDonKhach/ChangeStatusOrder?userId=${this.userId}&orderId=${orderId}&statusChange=${selectedStatus}`,
+            `/HoaDonKhach/ChangeStatusOrder?userId=${this.userId}&orderId=${orderId}&statusChange=${selectedStatus}${'&reasonCancel=' + cancellationReason}`,
           )
           .then((response) => {
             if (response.success) {

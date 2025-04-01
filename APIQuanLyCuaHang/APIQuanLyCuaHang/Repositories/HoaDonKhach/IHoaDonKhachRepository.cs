@@ -11,6 +11,6 @@ namespace APIQuanLyCuaHang.Repositories.HoaDonKhach
     public interface IHoaDonKhachRepository : IRepository<Hoadon>
     {
         Task<ResponseAPI<List<HoaDonKhachDTO>>> GetAllInvoiceByUserId(int? userId);
-        Task<ResponseAPI<dynamic>> UpdateStatusOrderOfUser(int? userId, int? orderId, string? statusChange);
+        Task<ResponseAPI<dynamic>> UpdateStatusOrderOfUser(int? userId, int? orderId, string? statusChange, string? reasonCancel);
     }
 }

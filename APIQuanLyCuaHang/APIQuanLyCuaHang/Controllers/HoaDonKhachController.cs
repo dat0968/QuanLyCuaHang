@@ -32,9 +32,9 @@ namespace APIQuanLyCuaHang.Controllers
             return Ok(response);
         }
         [HttpPost]
-        public async Task<IActionResult> ChangeStatusOrder(int? userId, int? orderId, string? statusChange)
+        public async Task<IActionResult> ChangeStatusOrder(int? userId, int? orderId, string? statusChange, string? reasonCancel)
         {
-            var response = await _unit.HoaDonKhachs.UpdateStatusOrderOfUser(userId, orderId, statusChange);
+            var response = await _unit.HoaDonKhachs.UpdateStatusOrderOfUser(userId, orderId, statusChange, reasonCancel);
             return Ok(response);
         }
     }

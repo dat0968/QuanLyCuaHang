@@ -67,7 +67,7 @@ namespace APIQuanLyCuaHang.Repositories.HoaDonKhach
             }
             return response;
         }
-        public async Task<ResponseAPI<dynamic>> UpdateStatusOrderOfUser(int? userId, int? orderId, string? statusChange)
+        public async Task<ResponseAPI<dynamic>> UpdateStatusOrderOfUser(int? userId, int? orderId, string? statusChange, string? reasonCancel)
         {
             ResponseAPI<dynamic> response = new();
             try
@@ -112,6 +112,7 @@ namespace APIQuanLyCuaHang.Repositories.HoaDonKhach
                                 throw new Exception("Bạn không thể hủy đơn hàng đã quá 1h từ lần cuối bạn nhận đơn.");
                             }
                             originData.TinhTrang = statusChange; // Hủy đơn hàng
+                            originData.LyDoHuy = reasonCancel ?? "Auto: Không có lý do hủy.";
                         }
                         else
                         {
@@ -127,6 +128,7 @@ namespace APIQuanLyCuaHang.Repositories.HoaDonKhach
                         else if (statusChange == TrangThaiDonHang.DaHuy)
                         {
                             originData.TinhTrang = statusChange; // Hủy đơn hàng
+                            originData.LyDoHuy = reasonCancel ?? "Auto: Không có lý do hủy.";
                         }
                         else
                         {
@@ -142,6 +144,7 @@ namespace APIQuanLyCuaHang.Repositories.HoaDonKhach
                         else if (statusChange == TrangThaiDonHang.DaHuy)
                         {
                             originData.TinhTrang = statusChange; // Hủy đơn hàng
+                            originData.LyDoHuy = reasonCancel ?? "Auto: Không có lý do hủy.";
                         }
                         else
                         {
