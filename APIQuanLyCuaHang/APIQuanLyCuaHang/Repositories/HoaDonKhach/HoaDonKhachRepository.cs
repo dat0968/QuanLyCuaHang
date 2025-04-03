@@ -88,9 +88,10 @@ namespace APIQuanLyCuaHang.Repositories.HoaDonKhach
                 switch (originData.TinhTrang)
                 {
                     case TrangThaiDonHang.ChoThanhToan:
-                        if (statusChange == TrangThaiDonHang.DaXacNhan)
+                        if (statusChange == TrangThaiDonHang.DaHuy)
                         {
-                            originData.TinhTrang = statusChange;
+                            TrangThaiDonHang.ValidateAndChangeStatus(originData, statusChange, reasonCancel);
+                            await ReturnProductWhenCancel(orderId.Value!);
                         }
                         else
                         {
@@ -99,20 +100,15 @@ namespace APIQuanLyCuaHang.Repositories.HoaDonKhach
                         break;
 
                     case TrangThaiDonHang.DaXacNhan:
-                        if (statusChange == TrangThaiDonHang.DaGiaoChoDonViVanChuyen)
+                        if (statusChange == TrangThaiDonHang.HoanTra_HoanTien)
                         {
-                            originData.TinhTrang = statusChange;
+                            TrangThaiDonHang.ValidateAndChangeStatus(originData, statusChange, reasonCancel);
+                            await ReturnProductWhenCancel(orderId.Value!);
                         }
                         else if (statusChange == TrangThaiDonHang.DaHuy)
                         {
-                            DateTime timeNow = DateTime.Now;
-                            TimeSpan timeReceivedOrder = (originData.NgayNhan!.Value - timeNow!);
-                            if (timeReceivedOrder.Days > 0 && timeReceivedOrder.Hours > 1)
-                            {
-                                throw new Exception("Bạn không thể hủy đơn hàng đã quá 1h từ lần cuối bạn nhận đơn.");
-                            }
-                            originData.TinhTrang = statusChange; // Hủy đơn hàng
-                            originData.LyDoHuy = reasonCancel ?? "Auto: Không có lý do hủy.";
+                            TrangThaiDonHang.ValidateAndChangeStatus(originData, statusChange, reasonCancel);
+                            await ReturnProductWhenCancel(orderId.Value!);
                         }
                         else
                         {
@@ -121,14 +117,16 @@ namespace APIQuanLyCuaHang.Repositories.HoaDonKhach
                         break;
 
                     case TrangThaiDonHang.DaGiaoChoDonViVanChuyen:
-                        if (statusChange == TrangThaiDonHang.DangGiaoHang)
+                        if (statusChange == TrangThaiDonHang.HoanTra_HoanTien)
                         {
                             originData.TinhTrang = statusChange;
+                            originData.LyDoHuy = reasonCancel;
+                            await ReturnProductWhenCancel(orderId.Value!);
                         }
                         else if (statusChange == TrangThaiDonHang.DaHuy)
                         {
-                            originData.TinhTrang = statusChange; // Hủy đơn hàng
-                            originData.LyDoHuy = reasonCancel ?? "Auto: Không có lý do hủy.";
+                            TrangThaiDonHang.ValidateAndChangeStatus(originData, statusChange, reasonCancel);
+                            await ReturnProductWhenCancel(orderId.Value!);
                         }
                         else
                         {
@@ -139,12 +137,13 @@ namespace APIQuanLyCuaHang.Repositories.HoaDonKhach
                     case TrangThaiDonHang.DangGiaoHang:
                         if (statusChange == TrangThaiDonHang.HoanTra_HoanTien)
                         {
-                            originData.TinhTrang = statusChange; // Hoàn trả/Hoàn tiền
+                            TrangThaiDonHang.ValidateAndChangeStatus(originData, statusChange, reasonCancel);
+                            await ReturnProductWhenCancel(orderId.Value!);
                         }
                         else if (statusChange == TrangThaiDonHang.DaHuy)
                         {
-                            originData.TinhTrang = statusChange; // Hủy đơn hàng
-                            originData.LyDoHuy = reasonCancel ?? "Auto: Không có lý do hủy.";
+                            TrangThaiDonHang.ValidateAndChangeStatus(originData, statusChange, reasonCancel);
+                            await ReturnProductWhenCancel(orderId.Value!);
                         }
                         else
                         {
@@ -174,5 +173,21 @@ namespace APIQuanLyCuaHang.Repositories.HoaDonKhach
 
             return response;
         }
+
+        #region [Private Method]
+        // ? Trả về lại sản phẩm về kho khi bị hủy, bruh
+        private async Task ReturnProductWhenCancel(int orderId)
+        {
+            var listDetailOrder = await _db.Cthoadons.Where(x => x.MaHd == orderId).ToListAsync();
+            var listDetailsProducts = await _db.Chitietsanphams.ToListAsync();
+            foreach (var aDetail in listDetailOrder)
+            {
+                var increaseDtProduct = listDetailsProducts.FirstOrDefault(x => x.MaCtsp == aDetail.MaCtsp);
+                if (increaseDtProduct == null) continue;
+                increaseDtProduct.SoLuongTon += aDetail.SoLuong;
+            }
+            await _db.SaveChangesAsync();
+        }
+        #endregion
     }
 }
