@@ -121,12 +121,10 @@ namespace APIQuanLyCuaHang.Repositories.HoaDonKhach
                         {
                             originData.TinhTrang = statusChange;
                             originData.LyDoHuy = reasonCancel;
-                            await ReturnProductWhenCancel(orderId.Value!);
                         }
                         else if (statusChange == TrangThaiDonHang.DaHuy)
                         {
                             TrangThaiDonHang.ValidateAndChangeStatus(originData, statusChange, reasonCancel);
-                            await ReturnProductWhenCancel(orderId.Value!);
                         }
                         else
                         {
@@ -138,12 +136,10 @@ namespace APIQuanLyCuaHang.Repositories.HoaDonKhach
                         if (statusChange == TrangThaiDonHang.HoanTra_HoanTien)
                         {
                             TrangThaiDonHang.ValidateAndChangeStatus(originData, statusChange, reasonCancel);
-                            await ReturnProductWhenCancel(orderId.Value!);
                         }
                         else if (statusChange == TrangThaiDonHang.DaHuy)
                         {
                             TrangThaiDonHang.ValidateAndChangeStatus(originData, statusChange, reasonCancel);
-                            await ReturnProductWhenCancel(orderId.Value!);
                         }
                         else
                         {
