@@ -157,6 +157,17 @@
                       </div>
                     </div>
                   </div>
+                  <div v-if="selectedOrder.lyDoHuy" class="row mb-3">
+                    <div class="col-12">
+                      <label><strong>Lý do hủy đơn:</strong></label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        :value="selectedOrder.lyDoHuy"
+                        readonly
+                      />
+                    </div>
+                  </div>
                   <div class="row mb-3">
                     <!-- Tiêu đề cùng nút in hóa đơn-->
                     <div class="d-flex justify-content-between">
@@ -572,16 +583,8 @@ export default {
         const orderId = target.data('id')
         const currentStatus = target.data('status')
 
-        // Các trạng thái có thể hủy dựa trên trạng thái hiện tại
-        const cancelableStatuses = {
-          'Chờ thanh toán': ['Đã hủy'],
-          'Đã xác nhận': ['Đã hủy'],
-          'Đã giao cho đơn vị vận chuyển': ['Hoàn trả/Hoàn tiền', 'Đã hủy'],
-          'Đang giao hàng': ['Hoàn trả/Hoàn tiền', 'Đã hủy'],
-        }
-
         // Lấy các trạng thái hủy được từ cấu hình
-        const availableCancelStatuses = cancelableStatuses[currentStatus] || []
+        const availableCancelStatuses = TrangThaiDonHang.isCancelable(currentStatus) || []
         if (availableCancelStatuses.length === 0) {
           Swal.fire({
             icon: 'info',
@@ -609,7 +612,7 @@ export default {
 
         // Nếu người dùng chọn trạng thái "Đã hủy"
         let cancellationReason = ''
-        if (selectedStatus === 'Đã hủy') {
+        if (TrangThaiDonHang.TrangThaiKhongBinhThuong.includes(selectedStatus)) {
           const { value: reason } = await Swal.fire({
             title: 'Nhập lý do hủy đơn',
             input: 'textarea',

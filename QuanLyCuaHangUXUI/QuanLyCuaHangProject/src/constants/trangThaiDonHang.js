@@ -30,4 +30,24 @@ export default class TrangThaiDonHang {
     TrangThaiDonHang.DaGiaoChoDonViVanChuyen,
     TrangThaiDonHang.DangGiaoHang,
   ]
+
+  // Các trạng thái có thể hủy dựa trên trạng thái hiện tại
+  static TrangThaiCoTheHuy = {
+    [TrangThaiDonHang.ChoThanhToan]: [TrangThaiDonHang.DaHuy],
+    [TrangThaiDonHang.DaXacNhan]: [TrangThaiDonHang.HoanTra_HoanTien, TrangThaiDonHang.DaHuy],
+    [TrangThaiDonHang.DaGiaoChoDonViVanChuyen]: [
+      TrangThaiDonHang.DangGiaoHang,
+      TrangThaiDonHang.HoanTra_HoanTien,
+      TrangThaiDonHang.DaHuy,
+    ],
+    [TrangThaiDonHang.DangGiaoHang]: [TrangThaiDonHang.HoanTra_HoanTien, TrangThaiDonHang.DaHuy],
+  }
+
+  // Hàm kiểm tra xem trạng thái có thể hủy không
+  static isCancelable(currentStatus, newStatus) {
+    if (!TrangThaiDonHang.TrangThaiCoTheHuy[currentStatus]) {
+      return []
+    }
+    return TrangThaiDonHang.TrangThaiCoTheHuy[currentStatus]
+  }
 }
