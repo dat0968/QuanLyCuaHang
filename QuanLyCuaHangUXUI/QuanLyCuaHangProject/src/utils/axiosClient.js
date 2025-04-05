@@ -60,7 +60,13 @@ async function refreshAccessToken() {
     localStorage.removeItem('accessToken')
     localStorage.removeItem('refreshToken')
 
-    router.push('/login')
+    // ? Lưu lịch sử trang web không có quyền truy cập.
+    router.push({
+      path: '/login',
+      state: {
+        from: router.currentRoute.fullPath,
+      },
+    })
 
     throw new Error('Refresh Token đã hết hạn hoặc không khả dụng.')
   }
@@ -82,7 +88,14 @@ axiosClient.interceptors.request.use(
         } catch (error) {
           console.error('Lỗi khi refresh token:', error.message || error)
           toastr.info('Phiên truy cập đã kết thúc.\nVui lòng truy cập lại.')
-          router.push('/login')
+
+          // ? Lưu lịch sử trang web không có quyền truy cập.
+          router.push({
+            path: '/login',
+            state: {
+              from: router.currentRoute.fullPath,
+            },
+          })
           throw error
         }
       } else {

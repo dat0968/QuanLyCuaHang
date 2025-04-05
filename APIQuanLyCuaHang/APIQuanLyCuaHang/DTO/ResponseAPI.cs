@@ -35,5 +35,12 @@ namespace APIQuanLyCuaHang.DTO
             this.Success = false;
             this.Message = ex?.Message ?? "Lỗi không xác định";
         }
+
+        public void SetUnauthorizedResponse()
+        {
+            this.Status = 401;
+            this.Success = false;
+            this.Message = "Vui lòng truy cập để sử dụng tính năng.";
+        }
     }
 }
