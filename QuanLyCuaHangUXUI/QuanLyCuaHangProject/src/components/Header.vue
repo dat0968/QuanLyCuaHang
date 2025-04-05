@@ -45,7 +45,9 @@
               <!-- Nút giỏ hàng -->
               <cart-button @open-cart="openCartModal" />
               <!-- Cart modal -->
-              <cart ref="cartComponent" />            
+              <cart ref="cartComponent" />
+              <!-- Nút đơn hàng -->
+              <OrderClientButton />
             </div>
           </nav>
         </div>
@@ -55,17 +57,18 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import CartButton from '@/components/CartButton.vue';
-import Cart from '@/components/Cart.vue';
+import { ref } from 'vue'
+import CartButton from '@/components/CartButton.vue'
+import Cart from '@/components/Cart.vue'
 
-const cartComponent = ref(null);
+import OrderClientButton from './ui/OrderClientButton.vue'
+const cartComponent = ref(null)
 
 const openCartModal = () => {
   if (cartComponent.value) {
-    cartComponent.value.openCartModal();
+    cartComponent.value.openCartModal()
   }
-};
+}
 </script>
 
 <style scoped>

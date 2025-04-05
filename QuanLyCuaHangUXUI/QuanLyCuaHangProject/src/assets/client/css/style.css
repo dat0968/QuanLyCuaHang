@@ -2229,6 +2229,13 @@ ul {
   color: #fff !important;
 }
 
+.home_menu .menu_btn:hover a.text-link-format {
+  color: #2c3033 !important;
+}
+.home_menu .menu_btn:hover a.text-link-format:hover {
+  color: #ff6426 !important;
+}
+
 /* line 13, E:/169 Dingo Restaurant/169 Dingo Restaurant/169_Dingo_Restautent_html/sass/_menu.scss */
 .main_menu .navbar-brand {
   padding-top: 0rem;

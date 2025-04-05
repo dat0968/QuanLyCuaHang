@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- banner part start-->
-    <section class="" style="margin-top: 5%; min-height: 100vh">
+    <section class="" style="margin-top: 100px; min-height: 100vh">
       <!-- breadcrumb start-->
       <section style="margin-top: 60px; width: 100%" class="breadcrumb breadcrumb_bg">
         <div class="container">
