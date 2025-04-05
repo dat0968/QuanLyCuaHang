@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace APIQuanLyCuaHang.Repositories.CaKip
 {
-    public class CaKipRepository(QuanLyCuaHangContext db) : Repository<Cakip>(db), ICaKipRepository
+    public class ShiftRepository(QuanLyCuaHangContext db) : Repository<Cakip>(db), IShiftRepository
     {
         private readonly QuanLyCuaHangContext _db = db;
 

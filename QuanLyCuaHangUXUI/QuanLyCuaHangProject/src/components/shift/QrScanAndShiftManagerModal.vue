@@ -31,8 +31,8 @@
 </template>
 
 <script>
-import QrScanner from '@/components/caKip/QrScanner.vue'
-import ShiftManager from '@/components/caKip/ShiftManager.vue'
+import QrScanner from '@/components/shift/QrScanner.vue'
+import ShiftManager from '@/components/shift/ShiftManager.vue'
 
 export default {
   name: 'QrScanAndShiftManagerModal',

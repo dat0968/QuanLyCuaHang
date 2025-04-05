@@ -12,7 +12,7 @@ namespace APIQuanLyCuaHang.Repositories.UnitOfWork
     public interface IUnitOfWork
     {
         IScheduleRepository Schedules { get; }
-        ICaKipRepository CaKips { get; }
+        IShiftRepository CaKips { get; }
         IOrderClientRepository HoaDonKhachs { get; }
     }
 }

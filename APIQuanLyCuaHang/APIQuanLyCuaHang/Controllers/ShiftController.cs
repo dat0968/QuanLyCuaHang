@@ -7,12 +7,13 @@ namespace APIQuanLyCuaHang.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class CaKipController : ControllerBase
+    // ? Quản lý cakip
+    public class ShiftController : ControllerBase
     {
         private readonly IUnitOfWork _unit;
         private readonly IConfiguration _configuration;
 
-        public CaKipController(IUnitOfWork unit, IConfiguration configuration)
+        public ShiftController(IUnitOfWork unit, IConfiguration configuration)
         {
             _unit = unit;
             _configuration = configuration;

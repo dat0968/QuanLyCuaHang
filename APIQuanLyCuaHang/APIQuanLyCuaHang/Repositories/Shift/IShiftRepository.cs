@@ -8,7 +8,7 @@ using APIQuanLyCuaHang.Repositories.Repository;
 
 namespace APIQuanLyCuaHang.Repositories.CaKip
 {
-    public interface ICaKipRepository : IRepository<Cakip>
+    public interface IShiftRepository : IRepository<Cakip>
     {
         Task<ResponseAPI<List<CaKipDTO>>> UpsertCrewAsync(CaKipDTO? caKip);
         Task<ResponseAPI<List<CaKipDTO>>> GetAllAsync();

@@ -39,7 +39,7 @@ import '../../assets/admin/plugins/datepicker/datepicker.min.js'
 import '../../assets/admin/plugins/datepicker/i18n/datepicker.en.js'
 //import '../../assets/admin/js/init/dashborad.js'
 import '../../assets/admin/js/main.js'
-import QrScanAndShiftManagerModal from '@/components/caKip/QrScanAndShiftManagerModal.vue'
+import QrScanAndShiftManagerModal from '@/components/shift/QrScanAndShiftManagerModal.vue'
 
 components: {
   QrScanAndShiftManagerModal
@@ -56,7 +56,11 @@ components: {
           <!-- Start XP Logobar -->
           <div class="xp-logobar text-center">
             <a href="index.html" class="xp-logo"
-              ><img style="height: 100px;" src="../../assets/admin/images/Red and Yellow Illustrative Fried Chicken Logo.png" class="img-fluid" alt="logo"
+              ><img
+                style="height: 100px"
+                src="../../assets/admin/images/Red and Yellow Illustrative Fried Chicken Logo.png"
+                class="img-fluid"
+                alt="logo"
             /></a>
           </div>
           <!-- End XP Logobar -->
@@ -66,7 +70,9 @@ components: {
             <ul class="xp-vertical-menu">
               <li class="xp-vertical-header">Chức năng quản lý</li>
               <li>
-                <RouterLink to="/Admin"> <i class="icon-speedometer"></i><span>Bảng điều khiển</span> </RouterLink>
+                <RouterLink to="/Admin">
+                  <i class="icon-speedometer"></i><span>Bảng điều khiển</span>
+                </RouterLink>
               </li>
               <li>
                 <RouterLink to="/Admin/Product">

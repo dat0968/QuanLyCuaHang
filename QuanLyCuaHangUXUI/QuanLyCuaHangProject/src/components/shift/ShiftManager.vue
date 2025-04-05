@@ -68,7 +68,7 @@ export default {
   methods: {
     loadShifts() {
       axiosConfig
-        .getFromApi('/CaKip/GetAll')
+        .getFromApi('/Shift/GetAll')
         .then((response) => {
           if (response.success) {
             this.listShifts = response.data
@@ -405,7 +405,7 @@ export default {
       try {
         // Gọi API lấy thông tin cập nhật của CaKip
         const updatedShiftResponse = await axiosConfig.getFromApi(
-          `/CaKip/Employees/${maCaKip}`,
+          `/Shift/Employees/${maCaKip}`,
           ConfigsRequest.getSkipAuthConfig(),
         )
 
@@ -432,7 +432,7 @@ export default {
       }
 
       axiosConfig
-        .postToApi('/CaKip/UpsertCrew', formattedShift)
+        .postToApi('/Shift/UpsertCrew', formattedShift)
         .then((response) => {
           if (response.success) {
             toastr.success('Lưu thành công')
@@ -462,7 +462,7 @@ export default {
         console.log('You fix')
         // Nếu chọn "Sửa trạng thái"
         try {
-          const response = await axiosConfig.patchToApi(`/CaKip/ChangeStatusShift?id=${maCaKip}`)
+          const response = await axiosConfig.patchToApi(`/Shift/ChangeStatusShift?id=${maCaKip}`)
           if (response.success) {
             toastr.success(response.message)
             this.loadShifts()
@@ -488,7 +488,7 @@ export default {
         if (confirmDelete) {
           // Gọi API xóa
           try {
-            const response = await axiosConfig.deleteFromApi(`/CaKip/Remove/${maCaKip}`)
+            const response = await axiosConfig.deleteFromApi(`/Shift/Remove/${maCaKip}`)
             if (response.success) {
               toastr.success(response.message)
               this.loadShifts()
