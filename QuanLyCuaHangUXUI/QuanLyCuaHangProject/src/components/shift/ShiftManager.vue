@@ -391,9 +391,16 @@ export default {
         if (ResponseAPI.handleNotification(response)) {
           return
         }
-        // Nếu cập nhật thành công, gọi API để lấy lại thông tin CaKip
+        // Nếu cập nhật thành công, cập nhật danh sách nhân viên trong ca
         if (response && response.success) {
-          await this.fetchAndUpdateShift(rowData.maCaKip)
+          const updatedShift = response.data
+          const existingShiftIndex = this.listShifts.findIndex(
+            (shift) => shift.maCaKip === updatedShift.maCaKip,
+          )
+          if (existingShiftIndex !== -1) {
+            this.listShifts[existingShiftIndex] = updatedShift
+          }
+          this.listShifts = [...this.listShifts] // Đảm bảo reactivity
           Swal.fire('Thành công', 'Trạng thái đã được cập nhật.', 'success')
         }
       } catch (error) {
@@ -436,9 +443,26 @@ export default {
         .then((response) => {
           if (response.success) {
             toastr.success('Lưu thành công')
-            this.loadShifts()
+            // Thêm logic để cập nhật danh sách nhân viên trong ca
+            const updatedShift = response.data
+            const existingShiftIndex = this.listShifts.findIndex(
+              (shift) => shift.maCaKip === updatedShift.maCaKip,
+            )
+            if (existingShiftIndex !== -1) {
+              this.listShifts[existingShiftIndex] = updatedShift
+            } else {
+              this.listShifts.push(updatedShift)
+            }
+            this.listShifts = [...this.listShifts] // Đảm bảo reactivity
+            this.shift = {
+              maCaKip: null,
+              tenCa: '',
+              soNguoiToiDa: 0,
+              gioBatDau: '',
+              gioKetThuc: '',
+            }
           } else {
-            toastr.error('Lỗi khi lưu: ' + response.message)
+            toastr.error('Lỗi khi lưu:' + response.message)
           }
         })
         .catch((error) => {

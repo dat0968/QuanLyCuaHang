@@ -105,6 +105,7 @@ export default {
         const userId = 111 // Thay đổi thành userID thực tế
         const response = await axiosConfig.getFromApi(`/Schedule/GetScheduleActiveOfUser/${userId}`)
 
+        console.log(response)
         if (response.success && response.data.length > 0) {
           this.employeeList = response.data // Lưu danh sách nhân viên
           this.isDisabled = true // Disable các chức năng quét QR và tải ảnh
@@ -195,7 +196,7 @@ export default {
         else reject(new Error('Không tìm thấy mã QR trong ảnh.'))
       })
     },
-    filterEmployeesByShift(maCaKip) {
+    async filterEmployeesByShift(maCaKip) {
       // Tìm ca làm việc dựa trên `maCaKip`
       const currentShift = this.listShifts.find((shift) => shift.maCaKip === maCaKip)
 

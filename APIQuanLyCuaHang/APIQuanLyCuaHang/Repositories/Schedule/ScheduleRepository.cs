@@ -1,6 +1,7 @@
 using APIQuanLyCuaHang.Constants;
 using APIQuanLyCuaHang.DTO;
 using APIQuanLyCuaHang.DTO.Requests;
+using APIQuanLyCuaHang.Helpers.Utils;
 using APIQuanLyCuaHang.Models;
 using APIQuanLyCuaHang.Repositories.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -86,22 +87,14 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
 
             try
             {
-                string[] parts = qrCodeData.Split('-');
-                if (parts.Length != 4) throw new Exception("QR Code không hợp lệ.");
-
-                if (!int.TryParse(parts[0], out int maCaKip))
-                    throw new Exception("Mã ca kíp không hợp lệ.");
-
-                string ngayLamStr = $"20{parts[1]}-{parts[2]}-{parts[3]}";
-                if (!DateOnly.TryParseExact(ngayLamStr, "yyyy-MM-dd", out DateOnly ngayLam))
-                    throw new Exception("Ngày làm không hợp lệ.");
+                var (maCaKip, ngayLam) = QrCodeUtils.ParseQrCodeData(qrCodeData);
 
                 var caKip = await _db.Cakips.FindAsync(maCaKip);
                 if (caKip == null) throw new Exception("Ca kíp không hợp lệ.");
                 if (caKip.IsDelete!.Value) throw new Exception("Ca này đã bị vô hiệu hóa.");
 
                 var lichLam = await _db.Lichsulamviecs
-                    .FirstOrDefaultAsync(l => l.MaNv == maNv && l.MaCaKip == maCaKip && l.NgayThangNam == ngayLam);
+                    .FirstOrDefaultAsync(l => l.MaNv == maNv && l.MaCaKip == maCaKip && l.NgayThangNam == ngayLam && l.TrangThai == TrangThaiLichLamViec.ChoXacNhan);
 
                 if (lichLam == null) // Tạo mới
                 {
@@ -112,7 +105,7 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
                         NgayThangNam = ngayLam,
                         SoGioLam = 0,
                         IsDelete = false,
-                        TrangThai = "Không được xác nhận"
+                        TrangThai = TrangThaiLichLamViec.ChoXacNhan
                     };
                     await _db.Lichsulamviecs.AddAsync(lichLam);
                     response.SetSuccessResponse("Check-in không hợp lệ.");
@@ -132,7 +125,7 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
 
                     double soGioLam = (DateTime.Now - gioBatDau).TotalHours;
                     lichLam.SoGioLam = Math.Max(soGioLam, 0);
-                    lichLam.TrangThai = soGioLam >= 0.5 ? TrangThaiLichLamViec.KetThucCa : TrangThaiLichLamViec.Tre;
+                    lichLam.TrangThai = soGioLam != 0 ? TrangThaiLichLamViec.KetThucCa : TrangThaiLichLamViec.Tre;
 
                     response.SetSuccessResponse(soGioLam >= 0.5 ? "Check-out thành công." : "Bạn đã trễ.");
                 }

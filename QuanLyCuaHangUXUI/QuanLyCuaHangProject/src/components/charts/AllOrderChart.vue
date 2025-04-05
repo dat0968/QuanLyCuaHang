@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="d-flex justify-content-between align-items-begin">
+    <div class="d-flex justify-content-between align-items-center">
       <div class="col-6">
         <p><strong>Biểu đồ tình trạng đơn hàng</strong></p>
       </div>
       <div class="col-6">
         <div class="row justify-content-between align-items-center">
-          <div class="col-5">
+          <div class="col-6">
             <div v-if="!isSummaryChart" class="mb-2">
               <select
                 v-model="selectedRange"
@@ -20,7 +20,7 @@
               </select>
             </div>
           </div>
-          <div class="col-5">
+          <div class="col-6">
             <button @click="toggleChart" class="btn-outline-info btn">Đổi biểu đồ</button>
           </div>
         </div>

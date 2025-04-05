@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using APIQuanLyCuaHang.Constants;
 using APIQuanLyCuaHang.DTO;
+using APIQuanLyCuaHang.Helpers.Utils;
 using APIQuanLyCuaHang.Models;
 using APIQuanLyCuaHang.Repositories.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -395,7 +396,7 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
                 GioBatDau = caKip.GioBatDau,
                 GioKetThuc = caKip.GioKetThuc,
                 IsDelete = caKip.IsDelete,
-                QrCodeData = $"{caKip.MaCaKip}-{today}",
+                QrCodeData = QrCodeUtils.GenerateQrCodeData(caKip.MaCaKip, today),
                 Schedules = schedules
                     .Where(ls => ls.MaCaKip == caKip.MaCaKip)
                     .Select(ls => new ScheduleDTO
