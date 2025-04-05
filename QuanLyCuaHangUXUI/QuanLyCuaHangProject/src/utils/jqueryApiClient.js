@@ -1,4 +1,8 @@
-const apiBaseUrl = 'http://localhost:5136/api'
+import { jwtDecode } from 'jwt-decode'
+import $ from 'jquery'
+import toastr from 'toastr'
+
+const apiBaseUrl = 'https://localhost:7139/api'
 
 // Kiểm tra token hết hạn
 function isTokenExpired(token) {
