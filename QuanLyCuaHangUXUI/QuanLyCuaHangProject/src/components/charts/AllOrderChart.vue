@@ -1,16 +1,31 @@
 <template>
   <div>
-    <div class="d-flex justify-content-between align-items-end">
-      <p><strong>Biểu đồ tình trạng đơn hàng</strong></p>
-      <button @click="toggleChart" class="btn-outline-info btn">Đổi biểu đồ</button>
-    </div>
-    <div v-if="!isSummaryChart" class="mb-2">
-      <select v-model="selectedRange" @change="updateChartData" class="form-select form-control">
-        <option value="day">Ngày</option>
-        <option value="week">Tuần</option>
-        <option value="month">Tháng</option>
-        <option value="year">Năm</option>
-      </select>
+    <div class="d-flex justify-content-between align-items-begin">
+      <div class="col-6">
+        <p><strong>Biểu đồ tình trạng đơn hàng</strong></p>
+      </div>
+      <div class="col-6">
+        <div class="row justify-content-between align-items-center">
+          <div class="col-5">
+            <div v-if="!isSummaryChart" class="mb-2">
+              <select
+                v-model="selectedRange"
+                @change="updateChartData"
+                class="form-select form-control"
+              >
+                <option value="day">Ngày</option>
+                <option value="week">Tuần</option>
+                <option value="month">Tháng</option>
+                <option value="year">Năm</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-5">
+            <button @click="toggleChart" class="btn-outline-info btn">Đổi biểu đồ</button>
+          </div>
+        </div>
+        v>
+      </div>
     </div>
     <canvas ref="orderChart"></canvas>
   </div>
@@ -134,56 +149,90 @@ export default {
     renderChart() {
       if (this.chart) this.chart.destroy()
       const ctx = this.$refs.orderChart.getContext('2d')
-      this.chart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-          labels: this.chartLabels,
-          datasets: [
-            {
-              data: this.chartData,
-              backgroundColor: [
-                '#008FFB',
-                '#00E396',
-                '#FF4560',
-                '#775DD0',
-                '#FEB019',
-                '#FF4560',
-                '#546E7A',
-              ],
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: 'right',
-              labels: {
-                color: '#333',
+
+      // Tính tổng dữ liệu của biểu đồ
+      let totalData = this.chartData.reduce((acc, val) => acc + val, 0)
+
+      // Nếu tổng dữ liệu bằng 0 thì vẽ biểu đồ trống
+      if (totalData === 0) {
+        this.chart = new Chart(ctx, {
+          type: 'pie',
+          data: {
+            labels: this.chartLabels,
+            datasets: [
+              {
+                data: [0], // Dữ liệu trống
+                backgroundColor: ['transparent'], // Màu nền cho phần dữ liệu trống
+                borderColor: ['#ddd'], // Màu viền cho phần trống (nếu muốn)
+                borderWidth: 1,
               },
-            },
-            tooltip: {
-              callbacks: {
-                label: (tooltipItem) => {
-                  let total = tooltipItem.dataset.data.reduce((acc, val) => acc + val, 0)
-                  let value = tooltipItem.raw
-                  let percentage = ((value / total) * 100).toFixed(2) + '%'
-                  return `${tooltipItem.label}: ${value} (${percentage})`
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'right',
+                labels: {
+                  color: '#333',
                 },
               },
             },
           },
-          animation: {
-            duration: 2000,
+        })
+      } else {
+        this.chart = new Chart(ctx, {
+          type: 'pie',
+          data: {
+            labels: this.chartLabels,
+            datasets: [
+              {
+                data: this.chartData,
+                backgroundColor: [
+                  '#008FFB',
+                  '#00E396',
+                  '#FF4560',
+                  '#775DD0',
+                  '#FEB019',
+                  '#FF4560',
+                  '#546E7A',
+                ],
+              },
+            ],
           },
-          hover: {
-            mode: 'nearest',
-            intersect: true,
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'right',
+                labels: {
+                  color: '#333',
+                },
+              },
+              tooltip: {
+                callbacks: {
+                  label: (tooltipItem) => {
+                    let total = tooltipItem.dataset.data.reduce((acc, val) => acc + val, 0)
+                    let value = tooltipItem.raw
+                    let percentage = ((value / total) * 100).toFixed(2) + '%'
+                    return `${tooltipItem.label}: ${value} (${percentage})`
+                  },
+                },
+              },
+            },
+            animation: {
+              duration: 2000,
+            },
+            hover: {
+              mode: 'nearest',
+              intersect: true,
+            },
+            backgroundColor: '#f9f9f9',
           },
-          backgroundColor: '#f9f9f9', // Thêm màu nền cho biểu đồ
-        },
-      })
+        })
+      }
     },
     toggleChart() {
       this.isSummaryChart = !this.isSummaryChart

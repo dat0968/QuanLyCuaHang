@@ -490,7 +490,7 @@ export default {
 
     loadOrders() {
       axiosClient
-        .getFromApi(`/HoaDonKhach/Get/${this.userId}`, ConfigsRequest.takeAuth())
+        .getFromApi(`/OrderClient/Get/${this.userId}`, ConfigsRequest.takeAuth())
         .then((response) => {
           if (response.success) {
             this.orders = response.data
@@ -634,7 +634,7 @@ export default {
         // Gửi yêu cầu API hủy đơn
         axiosClient
           .postToApi(
-            `/HoaDonKhach/ChangeStatusOrder?userId=${this.userId}&orderId=${orderId}&statusChange=${selectedStatus}${'&reasonCancel=' + cancellationReason}`,
+            `/OrderClient/ChangeStatusOrder?userId=${this.userId}&orderId=${orderId}&statusChange=${selectedStatus}${'&reasonCancel=' + cancellationReason}`,
           )
           .then((response) => {
             if (response.success) {

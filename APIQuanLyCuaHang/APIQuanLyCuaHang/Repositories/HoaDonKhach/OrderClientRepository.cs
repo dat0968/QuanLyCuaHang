@@ -8,9 +8,9 @@ using APIQuanLyCuaHang.Models;
 using APIQuanLyCuaHang.Repositories.Repository;
 using Microsoft.EntityFrameworkCore;
 
-namespace APIQuanLyCuaHang.Repositories.HoaDonKhach
+namespace APIQuanLyCuaHang.Repositories.OrderClient
 {
-    public class HoaDonKhachRepository(QuanLyCuaHangContext db) : Repository<Hoadon>(db), IHoaDonKhachRepository
+    public class OrderClientRepository(QuanLyCuaHangContext db) : Repository<Hoadon>(db), IOrderClientRepository
     {
         private readonly QuanLyCuaHangContext _db = db;
 

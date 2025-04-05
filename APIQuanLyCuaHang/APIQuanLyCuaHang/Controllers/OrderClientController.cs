@@ -10,11 +10,11 @@ namespace APIQuanLyCuaHang.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class HoaDonKhachController : ControllerBase
+    public class OrderClientController : ControllerBase
     {
         private readonly IUnitOfWork _unit;
 
-        public HoaDonKhachController(IUnitOfWork unit)
+        public OrderClientController(IUnitOfWork unit)
         {
             _unit = unit;
         }

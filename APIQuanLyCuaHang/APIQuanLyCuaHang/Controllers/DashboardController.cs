@@ -53,10 +53,10 @@ namespace APIQuanLyCuaHang.Controllers
         /// Dữ liệu thống kê đơn hàng theo trạng thái
         /// </summary>
         /// <returns></returns>
-        [HttpGet()]
-        public async Task<IActionResult> GetOrderStatusData()
+        [HttpGet("{timeRange}")]
+        public async Task<IActionResult> GetOrderStatusData(string timeRange)
         {
-            var response = await _dash.GetOrderStatusDataAsync();
+            var response = await _dash.GetOrderStatusDataAsync(timeRange);
             if (!response.Success)
             {
                 return BadRequest(response);

@@ -6,9 +6,9 @@ using APIQuanLyCuaHang.DTO;
 using APIQuanLyCuaHang.Models;
 using APIQuanLyCuaHang.Repositories.Repository;
 
-namespace APIQuanLyCuaHang.Repositories.HoaDonKhach
+namespace APIQuanLyCuaHang.Repositories.OrderClient
 {
-    public interface IHoaDonKhachRepository : IRepository<Hoadon>
+    public interface IOrderClientRepository : IRepository<Hoadon>
     {
         Task<ResponseAPI<List<HoaDonKhachDTO>>> GetAllInvoiceByUserId(int? userId);
         Task<ResponseAPI<dynamic>> UpdateStatusOrderOfUser(int? userId, int? orderId, string? statusChange, string? reasonCancel);

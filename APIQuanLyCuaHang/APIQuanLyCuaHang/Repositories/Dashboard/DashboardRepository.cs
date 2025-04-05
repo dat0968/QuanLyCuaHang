@@ -7,6 +7,8 @@ using APIQuanLyCuaHang.DTO;
 using APIQuanLyCuaHang.DTO.DataChart;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using APIQuanLyCuaHang.Helpers.Utils;
+using APIQuanLyCuaHang.Helpers.Constants;
 
 namespace APIQuanLyCuaHang.Repositories.Dashboard
 {
@@ -50,11 +52,11 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
             }
         }
 
-        public async Task<ResponseAPI<OrderStatusData>> GetOrderStatusDataAsync()
+        public async Task<ResponseAPI<OrderStatusData>> GetOrderStatusDataAsync(string timeRange)
         {
             try
             {
-                var invoices = await GetAllInvoiceStatisticsAsync();
+                var invoices = await GetAllInvoiceStatisticsAsync(timeRange);
                 var orderStatusData = CalculateOrderStatusData(invoices);
                 return new ResponseAPI<OrderStatusData> { Data = orderStatusData, Success = true };
             }
@@ -274,9 +276,33 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
             return result;
         }
 
-        private async Task<List<InvoiceDC>> GetAllInvoiceStatisticsAsync()
+        private async Task<List<InvoiceDC>> GetAllInvoiceStatisticsAsync(string? timeRange = "all")
         {
             var hoadonList = await _db.Hoadons.ToListAsync();
+            DateTime now = DateTime.Now;
+
+            Func<DateTime, bool> filterTimeRange;
+            switch (timeRange)
+            {
+                case TimeRangeConstants.Day:
+                    filterTimeRange = x => x.Date == now.Date;
+                    break;
+                case TimeRangeConstants.Week:
+                    filterTimeRange = FormatDate.GetDateFilter(TimeRangeConstants.Week, now);
+                    break;
+                case TimeRangeConstants.Month:
+                    filterTimeRange = FormatDate.GetDateFilter(TimeRangeConstants.Month, now);
+                    break;
+                case TimeRangeConstants.Year:
+                    filterTimeRange = FormatDate.GetDateFilter(TimeRangeConstants.Year, now);
+                    break;
+                default:
+                    filterTimeRange = x => true;
+                    break;
+            }
+
+            hoadonList = hoadonList.Where(hd => hd.NgayNhan.HasValue && filterTimeRange(hd.NgayNhan.Value)).ToList();
+
             return hoadonList.Select(hoadon => new InvoiceDC
             {
                 MaHd = hoadon.MaHd,
@@ -357,13 +383,12 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
             switch (timeRange)
             {
                 case "day":
-                    var daysOfWeek = new[] { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
-                    earningData.Data = daysOfWeek.Select(day =>
+                    earningData.Data = TimeRangeConstants.DaysOfWeek.Select(day =>
                         invoices
                             .Where(x => x.NgayTao.DayOfWeek.ToString().StartsWith(day.Substring(0, 3)))
                             .Sum(x => x.TongTien)
                     ).ToList();
-                    earningData.Categories = daysOfWeek.ToList();
+                    earningData.Categories = TimeRangeConstants.DaysOfWeek.ToList();
                     break;
 
                 case "week":
