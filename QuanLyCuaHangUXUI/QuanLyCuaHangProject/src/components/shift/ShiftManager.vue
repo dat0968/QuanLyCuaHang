@@ -12,19 +12,29 @@
           <div class="mb-2">
             <label>Tên Ca:</label>
             <input v-model="shift.tenCa" type="text" class="form-control" required />
+            <div v-if="errors && errors.tenCa" class="text-danger">{{ errors.tenCa }}</div>
           </div>
           <div class="mb-2">
             <label>Số Người Tối Đa:</label>
             <input v-model="shift.soNguoiToiDa" type="number" class="form-control" required />
+            <div v-if="errors && errors.soNguoiToiDa" class="text-danger">
+              {{ errors.soNguoiToiDa }}
+            </div>
           </div>
           <div class="row mb-2">
             <div class="col-6">
               <label>Bắt Đầu:</label>
               <input v-model="shift.gioBatDau" type="time" class="form-control" required />
+              <div v-if="errors && errors.gioBatDau" class="text-danger">
+                {{ errors.gioBatDau }}
+              </div>
             </div>
             <div class="col-6">
               <label>Kết Thúc:</label>
               <input v-model="shift.gioKetThuc" type="time" class="form-control" required />
+              <div v-if="errors && errors.gioKetThuc" class="text-danger">
+                {{ errors.gioKetThuc }}
+              </div>
             </div>
           </div>
           <button type="submit" class="btn btn-primary w-100">
@@ -46,15 +56,41 @@
 </template>
 
 <script>
-import * as configsDt from '@/utils/configsDatatable.js'
-import * as axiosConfig from '@/utils/axiosClient'
+// import package
 import toastr from 'toastr'
 import QRCode from 'qrcode' // Đảm bảo đã import QRCode
 import $ from 'jquery'
 import Swal from 'sweetalert2'
+// import thủ công
+import * as configsDt from '@/utils/configsDatatable.js'
+import * as axiosConfig from '@/utils/axiosClient'
 import ConfigsRequest from '@/models/ConfigsRequest'
 import ResponseAPI from '@/models/ResponseAPI'
 import * as formatDatetime from '@/constants/formatDatetime'
+// import validate from '@/utils/validateYup'
+import * as validate from 'yup'
+
+// #region [Method js]
+// Định nghĩa schema validate
+const shiftSchema = validate.object().shape({
+  tenCa: validate.string().required('Tên ca là bắt buộc'),
+  soNguoiToiDa: validate
+    .number()
+    .required('Số người tối đa là bắt buộc')
+    .min(1, 'Số người tối đa phải lớn hơn 0'),
+  gioBatDau: validate.string().required('Giờ bắt đầu là bắt buộc'),
+  gioKetThuc: validate.string().required('Giờ kết thúc là bắt buộc'),
+})
+// Hàm validate dữ liệu
+const validateShift = (shift) => {
+  try {
+    shiftSchema.validateSync(shift, { abortEarly: false })
+    return null // Không có lỗi
+  } catch (error) {
+    return error.inner // Trả về mảng lỗi
+  }
+}
+// #endregion
 
 export default {
   name: 'ShiftManager',
@@ -63,6 +99,7 @@ export default {
       shift: { maCaKip: null, tenCa: '', soNguoiToiDa: 0, gioBatDau: '', gioKetThuc: '' },
       listShifts: [],
       datatable: null, // Thêm biến để lưu trữ DataTable
+      errors: null,
     }
   },
   methods: {
@@ -432,6 +469,15 @@ export default {
       }
     },
     saveShift() {
+      // Thêm đoạn mã validate tại đây
+      const errors = validateShift(this.shift)
+      if (errors) {
+        this.errors = {}
+        errors.forEach((error) => {
+          this.errors[error.path] = error.message
+        })
+        return
+      }
       const formattedShift = {
         ...this.shift,
         gioBatDau: this.shift.gioBatDau ? `${this.shift.gioBatDau}:00`.slice(0, 8) : '',
