@@ -181,6 +181,10 @@
       "PackagePath": "staticwebassets\\Hinh\\AnhKhachHang\\37c07d19-f23c-44dd-a13e-83b91a3cffda.png"
     },
     {
+      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\Hinh\\AnhKhachHang\\383620b4-009e-439e-be1d-dd18bf1d6d27.jpg",
+      "PackagePath": "staticwebassets\\Hinh\\AnhKhachHang\\383620b4-009e-439e-be1d-dd18bf1d6d27.jpg"
+    },
+    {
       "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\Hinh\\AnhKhachHang\\6e6af1f3-e1a7-4104-a09e-f478daacf325.png",
       "PackagePath": "staticwebassets\\Hinh\\AnhKhachHang\\6e6af1f3-e1a7-4104-a09e-f478daacf325.png"
     },
@@ -239,6 +243,10 @@
     {
       "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\Hinh\\AnhKhachHang\\edc59c27-c659-4018-acb1-44429474d9c3.png",
       "PackagePath": "staticwebassets\\Hinh\\AnhKhachHang\\edc59c27-c659-4018-acb1-44429474d9c3.png"
+    },
+    {
+      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\5672ffcd-b23b-4749-815d-6a2051b89a3d_natra-3.jpg",
+      "PackagePath": "staticwebassets\\uploads\\5672ffcd-b23b-4749-815d-6a2051b89a3d_natra-3.jpg"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.APIQuanLyCuaHang.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",

@@ -23,6 +23,7 @@ import DetailProduct from '@/views/client/DetailProduct.vue'
 import DetailCombo from '@/views/client/DetailCombo.vue'
 import Cart from '@/views/client/Cart.vue'
 import TableIndex from '@/views/admin/Table/TableIndex.vue'
+import Profile from '../views/Profile/Profile.vue';
 const routes = [
   {
     path: '/',
@@ -68,6 +69,7 @@ const routes = [
         name: 'Checkout',
         component: Checkout,
       },
+      { path: '/profile', name: 'Profile', component: Profile },
     ],
   },
   {
@@ -112,6 +114,7 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+
 })
 
 export default router
