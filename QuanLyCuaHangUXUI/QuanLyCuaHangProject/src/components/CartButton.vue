@@ -9,6 +9,7 @@
   import { ref, computed, onMounted } from 'vue';
   import { jwtDecode } from 'jwt-decode';
   import axios from 'axios';
+  import Cookies from 'js-cookie';
   
   const emit = defineEmits(['open-cart']);
   const cartItems = ref([]);
@@ -16,7 +17,7 @@
   const apiBaseUrl = 'https://localhost:7139/api/Cart';
   
   const checkLoginAndFetchUserInfo = async () => {
-    const token = localStorage.getItem('accessToken');
+    const token = ref(Cookies.get('accessToken'));
     if (!token) return false;
     try {
       const decodedToken = jwtDecode(token);
@@ -30,7 +31,7 @@
   
   const fetchCartItems = async () => {
     try {
-      const token = localStorage.getItem('accessToken');
+      const token = ref(Cookies.get('accessToken'));
       if (!token || !maKh.value) return;
       const response = await axios.get(`${apiBaseUrl}/${maKh.value}`, {
         headers: {

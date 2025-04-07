@@ -1,6 +1,54 @@
 [
   {
     "ContainingType": "APIQuanLyCuaHang.Controllers.AccountController",
+    "Method": "checkCCCD",
+    "RelativePath": "api/Account/checkCCCD",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cccd",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.AccountController",
+    "Method": "checkEmail",
+    "RelativePath": "api/Account/checkEmail",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.AccountController",
+    "Method": "checkUsername",
+    "RelativePath": "api/Account/checkUsername",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "username",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.AccountController",
     "Method": "ForgotPasswordCustomer",
     "RelativePath": "api/Account/ForgotPasswordCustomer",
     "HttpMethod": "GET",
