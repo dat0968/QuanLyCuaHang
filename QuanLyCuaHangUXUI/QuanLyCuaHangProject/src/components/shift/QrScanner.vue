@@ -4,14 +4,6 @@
       v-if="!showShiftTable"
       class="col d-flex justify-content-center flex-column align-items-center"
     >
-      <input
-        v-model="employeeId"
-        type="text"
-        placeholder="Nhập ID Người làm việc"
-        class="form-control mb-2 w-75"
-        required
-        :disabled="isDisabled"
-      />
       <qrcode-stream
         @decode="onScanSuccess"
         style="width: 200px; height: 200px"
@@ -85,7 +77,6 @@ export default {
   components: { QrcodeStream },
   data() {
     return {
-      employeeId: '',
       uploadedFile: null,
       showShiftTable: false,
       employeeList: [],
@@ -102,8 +93,10 @@ export default {
       this.loading = true
 
       try {
-        const userId = 111 // Thay đổi thành userID thực tế
-        const response = await axiosConfig.getFromApi(`/Schedule/GetScheduleActiveOfUser/${userId}`)
+        const response = await axiosConfig.getFromApi(
+          `/Schedule/GetScheduleActiveOfUser/`,
+          ConfigsRequest.takeAuth(),
+        )
 
         console.log(response)
         if (response.success && response.data.length > 0) {
@@ -118,15 +111,10 @@ export default {
       }
     },
     async onScanSuccess(qrCodeData) {
-      if (!this.employeeId) {
-        toastr.info('Vui lòng nhập ID Người làm việc trước khi quét mã QR.')
-        return
-      }
-
       try {
         const response = await axiosConfig.postToApi(
-          `/Schedule/ChamCong?maNv=${this.employeeId}&qrCodeData=${encodeURIComponent(qrCodeData)}`,
-          ConfigsRequest.getSkipAuthConfig(),
+          `/Schedule/TimeKeeping?&qrCodeData=${encodeURIComponent(qrCodeData)}`,
+          ConfigsRequest.takeAuth(),
         )
 
         if (ResponseAPI.handleNotification(response)) {
