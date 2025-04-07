@@ -24,4 +24,5 @@ public partial class Giohang
 
     public virtual Khachhang MaKhNavigation { get; set; } = null!;
     public virtual Combo? MaComboNavigation { get; set; }
+    public virtual ICollection<GioHangCTCombo> GioHangCTCombos { get; set; } = new List<GioHangCTCombo>();
 }

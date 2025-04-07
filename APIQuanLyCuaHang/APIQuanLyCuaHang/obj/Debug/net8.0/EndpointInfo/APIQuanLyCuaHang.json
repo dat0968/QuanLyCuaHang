@@ -369,7 +369,7 @@
         }
       }
     },
-    "/api/Cart/add": {
+    "/api/Cart": {
       "post": {
         "tags": [
           "Cart"
@@ -378,17 +378,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CartItemDTO"
+                "$ref": "#/components/schemas/CartItemResquestDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CartItemDTO"
+                "$ref": "#/components/schemas/CartItemResquestDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CartItemDTO"
+                "$ref": "#/components/schemas/CartItemResquestDTO"
               }
             }
           }
@@ -423,26 +423,37 @@
         }
       }
     },
-    "/api/Cart/update": {
+    "/api/Cart/{id}": {
       "put": {
         "tags": [
           "Cart"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CartItemDTO"
+                "$ref": "#/components/schemas/CartItemResquestDTO"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CartItemDTO"
+                "$ref": "#/components/schemas/CartItemResquestDTO"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CartItemDTO"
+                "$ref": "#/components/schemas/CartItemResquestDTO"
               }
             }
           }
@@ -1733,7 +1744,25 @@
   },
   "components": {
     "schemas": {
-      "CartItemDTO": {
+      "CartDetailRequestCombo": {
+        "type": "object",
+        "properties": {
+          "maCTSp": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "donGia": {
+            "type": "number",
+            "format": "double"
+          },
+          "soLuong": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CartItemResquestDTO": {
         "type": "object",
         "properties": {
           "maKh": {
@@ -1741,6 +1770,11 @@
             "format": "int32"
           },
           "maCtsp": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "maCombo": {
             "type": "integer",
             "format": "int32",
             "nullable": true
@@ -1753,41 +1787,11 @@
             "type": "number",
             "format": "double"
           },
-          "tenSanPham": {
-            "type": "string",
-            "nullable": true
-          },
-          "hoTenKhachHang": {
-            "type": "string",
-            "nullable": true
-          },
-          "soLuongTon": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "hinhAnhUrls": {
+          "cartDetailRequestCombos": {
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/CartDetailRequestCombo"
             },
-            "nullable": true
-          },
-          "kichThuoc": {
-            "type": "string",
-            "nullable": true
-          },
-          "huongVi": {
-            "type": "string",
-            "nullable": true
-          },
-          "maCombo": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "tenCombo": {
-            "type": "string",
             "nullable": true
           }
         },

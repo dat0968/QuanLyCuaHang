@@ -12,9 +12,6 @@ namespace APIQuanLyCuaHang.DTO
         public int SoLuong { get; set; }
         public string? MoTa { get; set; }
         public bool? IsDelete { get; set; }
-        public int SoLuongMiengGa { get; set; }
-        public decimal? TotalPrice { get; set; }
-        public decimal? DiscountedPrice { get; set; }
         public List<DetaisComboResponseDTO> Chitietcombos { get; set; } = new List<DetaisComboResponseDTO>();
     }
     public class DetaisComboResponseDTO

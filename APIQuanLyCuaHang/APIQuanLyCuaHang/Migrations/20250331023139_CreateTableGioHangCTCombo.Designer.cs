@@ -4,6 +4,7 @@ using APIQuanLyCuaHang.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APIQuanLyCuaHang.Migrations
 {
     [DbContext(typeof(QuanLyCuaHangContext))]
-    partial class QuanLyCuaHangContextModelSnapshot : ModelSnapshot
+    [Migration("20250331023139_CreateTableGioHangCTCombo")]
+    partial class CreateTableGioHangCTCombo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -253,8 +256,14 @@ namespace APIQuanLyCuaHang.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("ChiTietSanPhamMaCtsp")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("DonGia")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("GioHangId")
+                        .HasColumnType("int");
 
                     b.Property<int>("MaCTSp")
                         .HasColumnType("int");
@@ -267,9 +276,9 @@ namespace APIQuanLyCuaHang.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MaCTSp");
+                    b.HasIndex("ChiTietSanPhamMaCtsp");
 
-                    b.HasIndex("MaGioHang");
+                    b.HasIndex("GioHangId");
 
                     b.ToTable("GioHangCTCombos");
                 });
@@ -782,21 +791,21 @@ namespace APIQuanLyCuaHang.Migrations
 
             modelBuilder.Entity("APIQuanLyCuaHang.Models.GioHangCTCombo", b =>
                 {
-                    b.HasOne("APIQuanLyCuaHang.Models.Chitietsanpham", "MaCTSpNavigation")
+                    b.HasOne("APIQuanLyCuaHang.Models.Chitietsanpham", "ChiTietSanPham")
                         .WithMany("GioHangCTCombos")
-                        .HasForeignKey("MaCTSp")
+                        .HasForeignKey("ChiTietSanPhamMaCtsp")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("APIQuanLyCuaHang.Models.Giohang", "MaGioHangNavigation")
+                    b.HasOne("APIQuanLyCuaHang.Models.Giohang", "GioHang")
                         .WithMany("GioHangCTCombos")
-                        .HasForeignKey("MaGioHang")
+                        .HasForeignKey("GioHangId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("MaCTSpNavigation");
+                    b.Navigation("ChiTietSanPham");
 
-                    b.Navigation("MaGioHangNavigation");
+                    b.Navigation("GioHang");
                 });
 
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Giohang", b =>

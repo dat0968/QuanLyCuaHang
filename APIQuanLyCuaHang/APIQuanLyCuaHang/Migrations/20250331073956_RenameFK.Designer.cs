@@ -4,6 +4,7 @@ using APIQuanLyCuaHang.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace APIQuanLyCuaHang.Migrations
 {
     [DbContext(typeof(QuanLyCuaHangContext))]
-    partial class QuanLyCuaHangContextModelSnapshot : ModelSnapshot
+    [Migration("20250331073956_RenameFK")]
+    partial class RenameFK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -259,7 +262,13 @@ namespace APIQuanLyCuaHang.Migrations
                     b.Property<int>("MaCTSp")
                         .HasColumnType("int");
 
+                    b.Property<int>("MaCTSpNavigationMaCtsp")
+                        .HasColumnType("int");
+
                     b.Property<int>("MaGioHang")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaGioHangNavigationId")
                         .HasColumnType("int");
 
                     b.Property<int>("SoLuong")
@@ -267,9 +276,9 @@ namespace APIQuanLyCuaHang.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MaCTSp");
+                    b.HasIndex("MaCTSpNavigationMaCtsp");
 
-                    b.HasIndex("MaGioHang");
+                    b.HasIndex("MaGioHangNavigationId");
 
                     b.ToTable("GioHangCTCombos");
                 });
@@ -784,13 +793,13 @@ namespace APIQuanLyCuaHang.Migrations
                 {
                     b.HasOne("APIQuanLyCuaHang.Models.Chitietsanpham", "MaCTSpNavigation")
                         .WithMany("GioHangCTCombos")
-                        .HasForeignKey("MaCTSp")
+                        .HasForeignKey("MaCTSpNavigationMaCtsp")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("APIQuanLyCuaHang.Models.Giohang", "MaGioHangNavigation")
                         .WithMany("GioHangCTCombos")
-                        .HasForeignKey("MaGioHang")
+                        .HasForeignKey("MaGioHangNavigationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

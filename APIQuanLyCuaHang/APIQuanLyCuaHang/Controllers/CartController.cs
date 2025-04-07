@@ -18,9 +18,9 @@ namespace APIQuanLyCuaHang.Controllers
             this.cartRepository = cartRepository;
         }
 
-        [HttpPost("add")]
-        [Authorize]
-        public async Task<IActionResult> AddToCart([FromBody] CartItemDTO cartItem)
+        [HttpPost]
+        //[Authorize]
+        public async Task<IActionResult> AddToCart([FromBody] CartItemResquestDTO cartItem)
         {
             try
             {
@@ -34,13 +34,15 @@ namespace APIQuanLyCuaHang.Controllers
         }
 
         [HttpGet("{maKh}")]
-        [Authorize]
+        //[Authorize] 
         public async Task<IActionResult> GetCart(int maKh)
         {
             try
             {
                 var cartItems = await cartRepository.GetCart(maKh);
-                return Ok(cartItems);
+                var Total = cartItems.Sum(p => p.DonGia * p.SoLuong);
+                var TotalQuantity = cartItems.Sum(p => p.SoLuong);
+                return Ok(new { cartItems, TotalQuantity, Total});
             }
             catch (Exception ex)
             {
@@ -48,9 +50,9 @@ namespace APIQuanLyCuaHang.Controllers
             }
         }
 
-        [HttpPut("update")]
-        [Authorize]
-        public async Task<IActionResult> UpdateCartItem([FromBody] CartItemDTO cartItem)
+        [HttpPut("{id}")]
+        //[Authorize]
+        public async Task<IActionResult> UpdateCartItem([FromRoute] int id, [FromBody] CartItemResquestDTO cartItem)
         {
             try
             {
@@ -58,8 +60,8 @@ namespace APIQuanLyCuaHang.Controllers
                 {
                     return BadRequest(new { Success = false, Message = "Cart item cannot be null." });
                 }
-
-                await cartRepository.UpdateCartItem(cartItem);
+                
+                await cartRepository.UpdateCartItem(id, cartItem);
                 return Ok(new { Success = true, Message = "Cập nhật giỏ hàng thành công" });
             }
             catch (Exception ex)

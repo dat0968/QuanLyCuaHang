@@ -129,7 +129,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseCors("MyPolicy");
 app.UseAuthentication();
-app.UseAuthorization(); ;
+app.UseAuthorization(); 
 
 app.MapControllers();
 app.UseStaticFiles();

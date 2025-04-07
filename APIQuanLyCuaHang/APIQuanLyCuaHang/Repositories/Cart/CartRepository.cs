@@ -16,195 +16,233 @@ namespace APIQuanLyCuaHang.Repositories
             this.db = db;
         }
 
-        public async Task AddToCart(CartItemDTO cartItem)
+        public async Task AddToCart(CartItemResquestDTO cartItem)
         {
-            if (cartItem.MaCombo.HasValue)
+            try
             {
-                var combo = await db.Combos
-                    .Where(c => c.MaCombo == cartItem.MaCombo && (c.IsDelete == false || c.IsDelete == null))
-                    .FirstOrDefaultAsync();
-
-                if (combo == null)
+                await db.Database.BeginTransactionAsync();
+                if (cartItem.MaCombo == null)
                 {
-                    throw new Exception($"Combo với MaCombo {cartItem.MaCombo} không tồn tại hoặc đã bị xóa.");
-                }
-
-                // Kiểm tra số lượng tồn của combo
-                if (combo.SoLuong < cartItem.SoLuong)
-                {
-                    throw new Exception($"Số lượng combo trong kho không đủ! Chỉ còn {combo.SoLuong} combo.");
-                }
-
-                // Kiểm tra xem combo đã có trong giỏ hàng chưa
-                var existingCartItem = await db.Giohangs
-                    .FirstOrDefaultAsync(c => c.MaKh == cartItem.MaKh && c.MaCombo.HasValue && c.MaCombo == cartItem.MaCombo.Value);
-
-                if (existingCartItem != null)
-                {
-                    // Cập nhật số lượng nếu combo đã có trong giỏ hàng
-                    existingCartItem.SoLuong += cartItem.SoLuong;
-                    existingCartItem.DonGia = cartItem.DonGia;
+                    var CheckCart = await db.Giohangs
+                        .FirstOrDefaultAsync(gh => gh.MaKh == cartItem.MaKh
+                        && gh.MaCtsp == cartItem.MaCtsp);
+                    var Findproduct = await db.Chitietsanphams.FirstOrDefaultAsync(p => p.MaCtsp == cartItem.MaCtsp);
+                    var QuantityProduct = Findproduct?.SoLuongTon;
+                    if (CheckCart != null)
+                    {
+                        CheckCart.SoLuong += cartItem.SoLuong;                        
+                        await db.SaveChangesAsync();
+                        if (CheckCart.SoLuong > QuantityProduct)
+                        {
+                            throw new Exception($"Số lượng trong giỏ hàng vượt quá số lượng tồn kho tối đa là {QuantityProduct} sản phẩm");
+                        }
+                    }
+                    else
+                    {
+                        var NewCart = new Giohang
+                        {
+                            MaKh = cartItem.MaKh,
+                            MaCtsp = cartItem.MaCtsp,
+                            MaCombo = null,
+                            SoLuong = cartItem.SoLuong,
+                            DonGia = cartItem.DonGia,
+                        };
+                        db.Giohangs.Add(NewCart);
+                        await db.SaveChangesAsync();
+                    }
                 }
                 else
                 {
-                    // Thêm mới combo vào giỏ hàng
-                    var newCartItem = new Giohang
+                    var selectedVariants = cartItem.CartDetailRequestCombos.Select(ct => ct.MaCTSp).ToList();
+                    var CheckComboCart = await db.Giohangs.Include(gh => gh.GioHangCTCombos)
+                                        .FirstOrDefaultAsync(gh =>
+                                        gh.MaKh == cartItem.MaKh && gh.MaCombo == cartItem.MaCombo
+                                        && gh.GioHangCTCombos.All(ghct => selectedVariants.Contains(ghct.MaCTSp)));
+                    if (CheckComboCart != null)
                     {
-                        MaKh = cartItem.MaKh,
-                        MaCombo = cartItem.MaCombo,
-                        MaCtsp = cartItem.MaCtsp,
-                        SoLuong = cartItem.SoLuong,
-                        DonGia = cartItem.DonGia
-                    };
-                    db.Giohangs.Add(newCartItem);
+                        var findCombo = await db.Combos.FirstOrDefaultAsync(p => p.MaCombo == cartItem.MaCombo);
+                        var QuantityCombo = findCombo?.SoLuong;
+                        CheckComboCart.SoLuong += cartItem.SoLuong;
+                        db.Giohangs.Update(CheckComboCart);
+                        await db.SaveChangesAsync();
+                        if(CheckComboCart.SoLuong > QuantityCombo)
+                        {
+                            throw new Exception($"Số lượng trong giỏ hàng vượt quá số lượng tồn kho tối đa là {QuantityCombo} combo");
+                        }
+                        foreach (var details in CheckComboCart.GioHangCTCombos)
+                        {
+                            var GetMaSp = await db.Chitietsanphams.AsNoTracking().FirstOrDefaultAsync(p => p.MaCtsp == details.MaCTSp);
+                            var GetDetailProduct = await db.Chitietcombos.AsNoTracking().FirstOrDefaultAsync(p => p.MaSp == GetMaSp.MaSp);
+                            var QuantityProduct = GetDetailProduct.SoLuongSp;
+                            details.SoLuong = QuantityProduct.Value * CheckComboCart.SoLuong;
+                        }
+                        await db.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        var NewCart = new Giohang
+                        {
+                            MaKh = cartItem.MaKh,
+                            MaCtsp = null,
+                            MaCombo = cartItem.MaCombo,
+                            SoLuong = cartItem.SoLuong,
+                            DonGia = cartItem.DonGia,
+                        };
+                        db.Giohangs.Add(NewCart);
+                        await db.SaveChangesAsync();
+                        foreach(var detail in cartItem.CartDetailRequestCombos)
+                        {
+                            var NewCartDetail = new GioHangCTCombo
+                            {
+                                MaGioHang = NewCart.Id,
+                                MaCTSp = detail.MaCTSp,
+                                DonGia = detail.DonGia,
+                                SoLuong = detail.SoLuong,
+                            };
+                            db.GioHangCTCombos.Add(NewCartDetail);
+                            await db.SaveChangesAsync();
+                        }
+                        
+                    }
                 }
+                await db.Database.CommitTransactionAsync();
+
             }
-            else
+            catch (Exception ex)
             {
-                // Xử lý sản phẩm đơn lẻ
-                var product = await db.Chitietsanphams
-                    .Where(p => p.MaCtsp == cartItem.MaCtsp && p.IsDelete == false)
-                    .FirstOrDefaultAsync();
-
-                if (product == null)
-                {
-                    throw new Exception($"Sản phẩm với MaCtsp {cartItem.MaCtsp} không tồn tại hoặc đã bị xóa.");
-                }
-
-                // Kiểm tra số lượng tồn
-                if (product.SoLuongTon < cartItem.SoLuong)
-                {
-                    throw new Exception($"Số lượng trong kho không đủ! Chỉ còn {product.SoLuongTon} sản phẩm.");
-                }
-
-                // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
-                var existingCartItem = await db.Giohangs
-                    .FirstOrDefaultAsync(c => c.MaKh == cartItem.MaKh && c.MaCtsp == cartItem.MaCtsp);
-
-                if (existingCartItem != null)
-                {
-                    // Cập nhật số lượng nếu sản phẩm đã có trong giỏ hàng
-                    existingCartItem.SoLuong += cartItem.SoLuong;
-                    existingCartItem.DonGia = cartItem.DonGia;
-                }
-                else
-                {
-                    // Thêm mới vào giỏ hàng
-                    var newCartItem = new Giohang
-                    {
-                        MaKh = cartItem.MaKh,
-                        MaCtsp = cartItem.MaCtsp,
-                        MaCombo = null,
-                        SoLuong = cartItem.SoLuong,
-                        DonGia = cartItem.DonGia
-                    };
-                    db.Giohangs.Add(newCartItem);
-                }
+                await db.Database.RollbackTransactionAsync();
+                throw;
             }
-
-            await db.SaveChangesAsync();
         }
 
         public async Task<List<CartItemDTO>> GetCart(int maKh)
         {
-            var cartItems = await db.Giohangs
-                .Where(c => c.MaKh == maKh)
-                .Select(c => new CartItemDTO
-                {
-                    MaKh = c.MaKh,
-                    MaCtsp = c.MaCtsp,
-                    MaCombo = c.MaCombo,
-                    SoLuong = c.SoLuong,
-                    DonGia = c.DonGia,
-                    TenSanPham = c.MaCtsp != null
-                        ? c.MaCtspNavigation.MaSpNavigation.TenSanPham
-                        : "",
-                    HinhAnhUrls = c.MaCtsp != null
-                        ? (c.MaCtspNavigation.Hinhanhs != null
-                            ? c.MaCtspNavigation.Hinhanhs.Select(h => h.TenHinhAnh).Where(h => h != null).ToList()
-                            : new List<string>())
-                        : (
-                            db.Combos
-                                .Where(com => com.MaCombo == c.MaCombo)
-                                .Select(com => com.Hinh)
-                                .FirstOrDefault() != null
-                                ? new List<string> { db.Combos.Where(com => com.MaCombo == c.MaCombo).Select(com => com.Hinh).FirstOrDefault() }
-                                : new List<string>()
-                        ),
-                    KichThuoc = c.MaCtsp != null ? c.MaCtspNavigation.KichThuoc : "NO",
-                    HuongVi = c.MaCtsp != null ? c.MaCtspNavigation.HuongVi : "NO",
-                    SoLuongTon = c.MaCtsp != null
-                        ? c.MaCtspNavigation.SoLuongTon
-                        : db.Combos.Where(com => com.MaCombo == c.MaCombo).Select(com => com.SoLuong).FirstOrDefault()
-                })
+            try
+            {
+                var gioHang = await db.Giohangs
+                .Include(gh => gh.MaCtspNavigation)
+                    .ThenInclude(ctsp => ctsp.MaSpNavigation)
+                .Include(gh => gh.MaCtspNavigation)
+                    .ThenInclude(ctsp => ctsp.Hinhanhs)
+                .Include(gh => gh.MaComboNavigation)
+                .Include(gh => gh.GioHangCTCombos)
+                    .ThenInclude(ghct => ghct.MaCTSpNavigation)
+                        .ThenInclude(ctsp => ctsp.MaSpNavigation)
+                .Where(gh => gh.MaKh == maKh)
                 .ToListAsync();
+                if (gioHang != null)
+                {
+                    var gioHangDTO = gioHang.Select(gh => new CartItemDTO
+                    {
+                        Id = gh.Id,
+                        MaKh = gh.MaKh,
+                        MaCtsp = gh.MaCtsp,
+                        MaCombo = gh.MaCombo,
+                        SoLuong = gh.SoLuong,
+                        DonGia = gh.DonGia,
+                        TenSanPham = gh.MaCombo == null ? gh.MaCtspNavigation.MaSpNavigation.TenSanPham : gh.MaComboNavigation.TenCombo,
+                        KichThuoc = gh.MaCombo == null ? gh.MaCtspNavigation.KichThuoc : null,
+                        HuongVi = gh.MaCombo == null ? gh.MaCtspNavigation.HuongVi : null,
+                        HinhAnh = gh.MaCombo == null
+                            ? gh.MaCtspNavigation.Hinhanhs.Select(p => p.TenHinhAnh).FirstOrDefault()
+                            : gh.MaComboNavigation.Hinh,
+                        
+                        TenCombo = gh.MaCombo != null ? gh.MaComboNavigation.TenCombo : null,
+                        CartDetailCombos = gh.MaCombo != null
+                            ? gh.GioHangCTCombos.Select(ghct => new CartDetailCombo 
+                            {
+                                Id = ghct.Id,
+                                MaCTSp = ghct.MaCTSp,
+                                SoLuong = ghct.SoLuong,
+                                DonGia = ghct.DonGia,
+                                MaGioHang = ghct.MaGioHang,
+                                MaSp = ghct.MaCTSpNavigation.MaSp,
+                                TenSanPham = ghct.MaCTSpNavigation.MaSpNavigation.TenSanPham,
+                                HuongVi = ghct.MaCTSpNavigation.HuongVi,
+                                KichThuoc = ghct.MaCTSpNavigation.KichThuoc
+                            }).ToList() : new List<CartDetailCombo>() }).ToList();
+                    return gioHangDTO;
+                }
+                return null;
 
-            return cartItems;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
 
-        public async Task UpdateCartItem(CartItemDTO cartItem)
+        public async Task UpdateCartItem(int id, CartItemResquestDTO cartItem)
         {
-            if (cartItem == null)
+            await db.Database.BeginTransactionAsync(); 
+            try
             {
-                throw new ArgumentNullException(nameof(cartItem), "Cart item cannot be null.");
+                if (cartItem == null)
+                {
+                    throw new ArgumentNullException(nameof(cartItem), "Cart item cannot be null.");
+                }
+
+                if (cartItem.MaCombo == null)
+                {
+                    var findProductCart = await db.Giohangs.FirstOrDefaultAsync(p => p.MaCtsp == cartItem.MaCtsp && p.MaKh == cartItem.MaKh);
+
+                    if (findProductCart == null)
+                    {
+                        throw new Exception($"Sản phẩm với mã chi tiết {cartItem.MaCtsp} không tồn tại trong giỏ hàng của khách hàng MaKh {cartItem.MaKh}.");
+                    }
+
+                    var FindProduct = await db.Chitietsanphams.AsNoTracking().FirstOrDefaultAsync(p => p.MaCtsp == cartItem.MaCtsp);
+                    var quantityProduct = FindProduct.SoLuongTon;
+                    var quantityCartProduct = findProductCart.SoLuong + cartItem.SoLuong;
+                    if (quantityCartProduct > quantityProduct)
+                    {
+                        throw new Exception($"Số lượng sản phẩm trong kho không đủ! Chỉ còn {quantityProduct} sản phẩm.");
+                    }
+
+                    findProductCart.SoLuong = quantityCartProduct;
+                    db.Giohangs.Update(findProductCart);
+                }
+                else
+                {
+                    var findComboCart = await db.Giohangs.Include(p => p.GioHangCTCombos).FirstOrDefaultAsync(p => p.Id == id && p.MaKh == cartItem.MaKh && p.MaCombo == cartItem.MaCombo);               
+                    if (findComboCart == null)
+                    {
+                        throw new Exception($"Combo này không tồn tại trong giỏ hàng của khách hàng có mã {cartItem.MaKh}.");
+                    }
+
+                    // Kiểm tra số lượng tồn
+                    var FindCombo = await db.Combos
+                        .Where(p => p.MaCombo == cartItem.MaCombo)
+                        .FirstOrDefaultAsync();
+                    var QuantityCombo = FindCombo.SoLuong;
+
+
+                    var QuantityCartCombo = findComboCart.SoLuong + cartItem.SoLuong;
+                    if(QuantityCartCombo > QuantityCombo)
+                    {
+                        throw new Exception($"Số lượng combo trong kho không đủ! Chỉ còn {QuantityCombo} combo.");
+                    }
+                    findComboCart.SoLuong = QuantityCartCombo;
+                    foreach(var details in findComboCart.GioHangCTCombos)
+                    {
+                        var GetMaSp = await db.Chitietsanphams.AsNoTracking().FirstOrDefaultAsync(p => p.MaCtsp == details.MaCTSp);
+                        var GetDetailProduct = await db.Chitietcombos.AsNoTracking().FirstOrDefaultAsync(p => p.MaSp == GetMaSp.MaSp);
+                        var QuantityProduct = GetDetailProduct.SoLuongSp;
+                        details.SoLuong = QuantityCartCombo * QuantityProduct.Value;
+                        db.GioHangCTCombos.Update(details);
+                    }
+                    db.Giohangs.Update(findComboCart);
+                }
+
+                await db.SaveChangesAsync();
+                await db.Database.CommitTransactionAsync();
             }
-
-            if (cartItem.MaCombo.HasValue)
-            {
-                // Cập nhật combo
-                var existingCartItem = await db.Giohangs
-                    .FirstOrDefaultAsync(c => c.MaKh == cartItem.MaKh && c.MaCombo.HasValue && c.MaCombo == cartItem.MaCombo.Value);
-
-                if (existingCartItem == null)
-                {
-                    throw new Exception($"Combo với MaCombo {cartItem.MaCombo} không tồn tại trong giỏ hàng của khách hàng MaKh {cartItem.MaKh}.");
-                }
-
-                // Kiểm tra số lượng tồn của combo
-                var combo = await db.Combos
-                    .Where(c => c.MaCombo == cartItem.MaCombo)
-                    .FirstOrDefaultAsync();
-
-                if (combo == null || combo.SoLuong < cartItem.SoLuong)
-                {
-                    throw new Exception($"Số lượng combo trong kho không đủ! Chỉ còn {combo?.SoLuong ?? 0} combo.");
-                }
-
-                existingCartItem.SoLuong = cartItem.SoLuong;
-                existingCartItem.DonGia = cartItem.DonGia;
+            catch (Exception ex) {
+                await db.Database.RollbackTransactionAsync();
+                throw;
             }
-            else
-            {
-                // Cập nhật sản phẩm đơn lẻ
-                if (!cartItem.MaCtsp.HasValue)
-                {
-                    throw new Exception("MaCtsp là bắt buộc khi không có MaCombo.");
-                }
-
-                var existingCartItem = await db.Giohangs
-                    .FirstOrDefaultAsync(c => c.MaKh == cartItem.MaKh && c.MaCtsp == cartItem.MaCtsp);
-
-                if (existingCartItem == null)
-                {
-                    throw new Exception($"Sản phẩm với MaCtsp {cartItem.MaCtsp} không tồn tại trong giỏ hàng của khách hàng MaKh {cartItem.MaKh}.");
-                }
-
-                // Kiểm tra số lượng tồn
-                var product = await db.Chitietsanphams
-                    .Where(p => p.MaCtsp == cartItem.MaCtsp)
-                    .FirstOrDefaultAsync();
-
-                if (product == null || product.SoLuongTon < cartItem.SoLuong)
-                {
-                    throw new Exception($"Số lượng trong kho không đủ! Chỉ còn {product?.SoLuongTon ?? 0} sản phẩm.");
-                }
-
-                existingCartItem.SoLuong = cartItem.SoLuong;
-                existingCartItem.DonGia = cartItem.DonGia;
-            }
-
-            await db.SaveChangesAsync();
+            
         }
 
         public async Task RemoveFromCart(int maKh, int maCtsp)

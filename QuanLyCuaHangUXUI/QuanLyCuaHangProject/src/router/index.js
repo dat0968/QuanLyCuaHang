@@ -19,79 +19,98 @@ import CustomerIndex from '../views/Customer/Index.vue'
 import ComboIndex from '../views/admin/Combo/Index.vue'
 import BillIndex from '@/views/admin/Bill/BillIndex.vue'
 import Checkout from '@/views/client/Checkout.vue'
-import DetailProduct from '@/views/client/DetailProduct.vue';
-import DetailCombo from '@/views/client/DetailCombo.vue';
-import Cart from '@/components/Cart.vue'
+import DetailProduct from '@/views/client/DetailProduct.vue'
+import DetailCombo from '@/views/client/DetailCombo.vue'
+import Cart from '@/views/client/Cart.vue'
+
+const routes = [
+  {
+    path: '/',
+    component: ClientLayout,
+    children: [
+      {
+        path: '',
+        name: 'Home',
+        component: Home,
+      },
+      {
+        path: 'about',
+        name: 'About',
+        component: About,
+      },
+      {
+        path: 'menu',
+        name: 'Menu',
+        component: Menu,
+      },
+      {
+        path: 'chef',
+        name: 'Chef',
+        component: Chef,
+      },
+      {
+        path: 'product/:id',
+        name: 'DetailProduct',
+        component: DetailProduct,
+      },
+      {
+        path: 'combo/:id',
+        name: 'DetailCombo',
+        component: DetailCombo,
+      },
+      {
+        path: 'cart',
+        name: 'Cart',
+        component: Cart,
+      },
+      {
+        path: 'checkout',
+        name: 'Checkout',
+        component: Checkout,
+      },
+    ],
+  },
+  {
+    path: '/admin',
+    component: AdminLayout,
+    children:
+      [
+        { path: '', component: dashboard },
+        { path: '/admin/Product', component: ProductIndex },
+        { path: '/admin/Bill', component: BillIndex },
+        { path: 'customer', name: 'CustomerIndex', component: CustomerIndex },
+        { path: 'combo', component: ComboIndex },
+        { path: '/admin/Coupon', name: 'Coupon', component: Coupon },
+      ]
+  },
+  {
+    path: '/Login', name: 'Login', component: Login
+  },
+  {
+    path: '/LoginStaff', name: 'LoginStaff', component: LoginStaff
+  },
+  {
+    path: '/Register', name: 'Register', component: Register
+  },
+  {
+    path: '/ForgotPassword', name: 'ForgotPassword', component: ForgotPassword
+  },
+  {
+    path: '/ForgotPasswordStaff', name: 'ForgotPasswordStaff', component: ForgotPasswordStaff
+  },
+  {
+    path: '/Error', name: 'Error', component: Error
+  },
+  {
+    path: '/GoogleLoginSuccess',
+    name: 'GoogleLoginSuccess',
+    component: GoogleLoginSuccess,
+  },
+]
+
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      component: ClientLayout,
-      children:
-        [
-          { path: '', name: 'Home', component: Home },
-          { path: '/about', name: 'About', component: About },
-          { path: '/menu', name: 'Menu', component: Menu },
-          { path: '/chefs', name: 'Chefs', component: Chef },
-          { path: '/Checkout', name: 'Checkout', component: Checkout },
-          {
-            path: '/detail/:id',
-            name: 'DetailProduct',
-            component: DetailProduct,
-            props: true,
-          },
-          {
-            path: '/detailCombo/:id',
-            name: 'DetailCombo',
-            component: DetailCombo,
-            props: true,
-          },
-          {
-            path: '/cart',
-            name: 'cart',
-            component: Cart,
-            props: true,
-          },
-        ]
-    },
-    {
-      path: '/admin',
-      component: AdminLayout,
-      children:
-        [
-          { path: '', component: dashboard },
-          { path: '/admin/Product', component: ProductIndex },
-          { path: '/admin/Bill', component: BillIndex },
-          { path: 'customer', name: 'CustomerIndex', component: CustomerIndex },
-          { path: 'combo', component: ComboIndex },
-          { path: '/admin/Coupon', name: 'Coupon', component: Coupon },
-        ]
-    },
-    {
-      path: '/Login', name: 'Login', component: Login
-    },
-    {
-      path: '/LoginStaff', name: 'LoginStaff', component: LoginStaff
-    },
-    {
-      path: '/Register', name: 'Register', component: Register
-    },
-    {
-      path: '/ForgotPassword', name: 'ForgotPassword', component: ForgotPassword
-    },
-    {
-      path: '/ForgotPasswordStaff', name: 'ForgotPasswordStaff', component: ForgotPasswordStaff
-    },
-    {
-      path: '/Error', name: 'Error', component: Error
-    },
-    {
-      path: '/GoogleLoginSuccess',
-      name: 'GoogleLoginSuccess',
-      component: GoogleLoginSuccess,
-    },
-  ],
+  history: createWebHistory(),
+  routes,
 })
 
 export default router

@@ -238,6 +238,43 @@
   },
   {
     "ContainingType": "APIQuanLyCuaHang.Controllers.CartController",
+    "Method": "AddToCart",
+    "RelativePath": "api/Cart",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cartItem",
+        "Type": "APIQuanLyCuaHang.DTO.CartItemResquestDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.CartController",
+    "Method": "UpdateCartItem",
+    "RelativePath": "api/Cart/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "cartItem",
+        "Type": "APIQuanLyCuaHang.DTO.CartItemResquestDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.CartController",
     "Method": "GetCart",
     "RelativePath": "api/Cart/{maKh}",
     "HttpMethod": "GET",
@@ -247,22 +284,6 @@
       {
         "Name": "maKh",
         "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "APIQuanLyCuaHang.Controllers.CartController",
-    "Method": "AddToCart",
-    "RelativePath": "api/Cart/add",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "cartItem",
-        "Type": "APIQuanLyCuaHang.DTO.CartItemDTO",
         "IsRequired": true
       }
     ],
@@ -305,22 +326,6 @@
       {
         "Name": "maCtsp",
         "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "APIQuanLyCuaHang.Controllers.CartController",
-    "Method": "UpdateCartItem",
-    "RelativePath": "api/Cart/update",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "cartItem",
-        "Type": "APIQuanLyCuaHang.DTO.CartItemDTO",
         "IsRequired": true
       }
     ],
