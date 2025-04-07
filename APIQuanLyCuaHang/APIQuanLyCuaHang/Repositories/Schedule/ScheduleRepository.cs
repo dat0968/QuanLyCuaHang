@@ -87,6 +87,8 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
 
             try
             {
+                if (!await _db.Nhanviens.AnyAsync(nv => nv.MaNv == maNv)) throw new Exception("Không tìm thấy nhân viên trong hệ thống.");
+
                 var (maCaKip, ngayLam) = QrCodeUtils.ParseQrCodeData(qrCodeData);
 
                 var caKip = await _db.Cakips.FindAsync(maCaKip);

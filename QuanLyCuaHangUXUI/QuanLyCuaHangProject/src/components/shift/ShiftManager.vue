@@ -24,14 +24,26 @@
           <div class="row mb-2">
             <div class="col-6">
               <label>Bắt Đầu:</label>
-              <input v-model="shift.gioBatDau" type="time" class="form-control" required />
+              <input
+                v-model="shift.gioBatDau"
+                :max="shift.gioKetThuc"
+                type="time"
+                class="form-control"
+                required
+              />
               <div v-if="errors && errors.gioBatDau" class="text-danger">
                 {{ errors.gioBatDau }}
               </div>
             </div>
             <div class="col-6">
               <label>Kết Thúc:</label>
-              <input v-model="shift.gioKetThuc" type="time" class="form-control" required />
+              <input
+                v-model="shift.gioKetThuc"
+                :min="shift.gioBatDau"
+                type="time"
+                class="form-control"
+                required
+              />
               <div v-if="errors && errors.gioKetThuc" class="text-danger">
                 {{ errors.gioKetThuc }}
               </div>
