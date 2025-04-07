@@ -1,5 +1,8 @@
 <template>
-  <span @click="checkAccessAndOpenModal">Chấm công bằng QR</span>
+  <a class="dropdown-item" href="#"
+    ><i class="icon-user text-primary mr-2"></i>
+    <span @click="checkAccessAndOpenModal">Chấm công bằng QR</span>
+  </a>
   <div>
     <teleport :to="modalTarget" v-if="isModalOpen">
       <div class="modal fade show d-block" tabindex="-1" @click.self="isModalOpen = false">

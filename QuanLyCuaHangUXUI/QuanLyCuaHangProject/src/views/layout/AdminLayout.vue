@@ -345,10 +345,7 @@ components: {
                         <a class="dropdown-item" href="#"
                           ><i class="icon-wallet text-success mr-2"></i> Thanh toán</a
                         >
-                        <a class="dropdown-item" href="#"
-                          ><i class="icon-user text-primary mr-2"></i>
-                          <QrScanAndShiftManagerModal />
-                        </a>
+                        <QrScanAndShiftManagerModal />
                         <a class="dropdown-item" href="#"
                           ><i class="icon-settings text-warning mr-2"></i> Cài đặt</a
                         >
