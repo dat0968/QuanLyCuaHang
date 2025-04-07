@@ -33,11 +33,11 @@ namespace APIQuanLyCuaHang.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaCaKip"));
 
-                    b.Property<DateTime>("GioBatDau")
-                        .HasColumnType("datetime");
+                    b.Property<TimeOnly>("GioBatDau")
+                        .HasColumnType("time(7)");
 
-                    b.Property<DateTime>("GioKetThuc")
-                        .HasColumnType("datetime");
+                    b.Property<TimeOnly>("GioKetThuc")
+                        .HasColumnType("time(7)");
 
                     b.Property<bool?>("IsDelete")
                         .ValueGeneratedOnAdd()
@@ -225,6 +225,7 @@ namespace APIQuanLyCuaHang.Migrations
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Giohang", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("ID");
 
@@ -406,7 +407,7 @@ namespace APIQuanLyCuaHang.Migrations
                     b.Property<string>("MatKhau")
                         .HasMaxLength(30)
                         .IsUnicode(false)
-                        .HasColumnType("char(30)")
+                        .HasColumnType("varchar(255)")
                         .IsFixedLength();
 
                     b.Property<DateOnly?>("NgaySinh")
@@ -573,8 +574,11 @@ namespace APIQuanLyCuaHang.Migrations
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Refreshtoken", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("ID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("ExpiredAt")
                         .HasColumnType("datetime");
@@ -599,8 +603,11 @@ namespace APIQuanLyCuaHang.Migrations
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Sanpham", b =>
                 {
                     b.Property<int>("MaSp")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("MaSP");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaSp"));
 
                     b.Property<bool?>("IsDelete")
                         .ValueGeneratedOnAdd()

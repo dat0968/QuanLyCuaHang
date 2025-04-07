@@ -22,8 +22,8 @@ namespace APIQuanLyCuaHang.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SoNguoiToiDa = table.Column<int>(type: "int", nullable: false),
                     SoNguoiHienTai = table.Column<int>(type: "int", nullable: false),
-                    GioBatDau = table.Column<DateTime>(type: "datetime", nullable: false),
-                    GioKetThuc = table.Column<DateTime>(type: "datetime", nullable: false),
+                    GioBatDau = table.Column<TimeOnly>(type: "time(7)", nullable: false),
+                    GioKetThuc = table.Column<TimeOnly>(type: "time(7)", nullable: false),
                     IsDelete = table.Column<bool>(type: "bit", nullable: true, defaultValue: false)
                 },
                 constraints: table =>
@@ -92,7 +92,7 @@ namespace APIQuanLyCuaHang.Migrations
                     SDT = table.Column<string>(type: "char(11)", unicode: false, fixedLength: true, maxLength: 11, nullable: true),
                     Email = table.Column<string>(type: "char(50)", unicode: false, fixedLength: true, maxLength: 50, nullable: false),
                     TenTaiKhoan = table.Column<string>(type: "char(15)", unicode: false, fixedLength: true, maxLength: 15, nullable: true),
-                    MatKhau = table.Column<string>(type: "char(30)", unicode: false, fixedLength: true, maxLength: 30, nullable: true),
+                    MatKhau = table.Column<string>(type: "varchar(255)", unicode: false, fixedLength: true, maxLength: 30, nullable: true),
                     HinhDaiDien = table.Column<string>(type: "text", nullable: true),
                     NgayTao = table.Column<DateTime>(type: "datetime", nullable: false),
                     TinhTrang = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: true, defaultValue: "Đang hoạt động"),
@@ -107,7 +107,8 @@ namespace APIQuanLyCuaHang.Migrations
                 name: "REFRESHTOKEN",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false),
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     Token = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     IssuedAt = table.Column<DateTime>(type: "datetime", nullable: false),
@@ -152,7 +153,8 @@ namespace APIQuanLyCuaHang.Migrations
                 name: "SANPHAM",
                 columns: table => new
                 {
-                    MaSP = table.Column<int>(type: "int", nullable: false),
+                    MaSP = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     MaDanhMuc = table.Column<int>(type: "int", nullable: false),
                     TenSanPham = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     MoTa = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
@@ -307,7 +309,8 @@ namespace APIQuanLyCuaHang.Migrations
                 name: "GIOHANG",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false),
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     MaKH = table.Column<int>(type: "int", nullable: false),
                     MaCTSP = table.Column<int>(type: "int", nullable: false),
                     SoLuong = table.Column<int>(type: "int", nullable: false),
@@ -315,7 +318,8 @@ namespace APIQuanLyCuaHang.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__GIOHANG__3214EC27376B130B", x => x.ID);
+                    table.PrimaryKey("PK__GIOHANG__3214EC27376B130B", x => x.ID)
+                        .Annotation("SqlServer:Identity", "1, 1");
                     table.ForeignKey(
                         name: "FK__GIOHANG__MaCTSP__6B24EA82",
                         column: x => x.MaCTSP,

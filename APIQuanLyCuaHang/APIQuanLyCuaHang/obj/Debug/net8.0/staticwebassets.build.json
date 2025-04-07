@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "vVD3Exj/+L+rLCxZLztwKCkmuoXYH99gU9bYQmbxWK0=",
+  "Hash": "jL3PBCLCbR4PwbGnBIKa1N54SFKT8mvg6gb72F332To=",
   "Source": "APIQuanLyCuaHang",
   "BasePath": "_content/APIQuanLyCuaHang",
   "Mode": "Default",
@@ -479,6 +479,111 @@
       "OriginalItemSpec": "wwwroot\\Hinh\\AnhKhachHang\\edc59c27-c659-4018-acb1-44429474d9c3.png"
     },
     {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Combo\\CaNhaNoNe-2Mi-2Uc-1Canh-3Nuoc-1Khoai.png",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/Combo/CaNhaNoNe-2Mi-2Uc-1Canh-3Nuoc-1Khoai#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "awct1sbum4",
+      "Integrity": "dljAk735o9DmcEi+i6B9ht9LDraguHBiKFezkASawB4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\Combo\\CaNhaNoNe-2Mi-2Uc-1Canh-3Nuoc-1Khoai.png"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Combo\\CapDoiAnY-2Mi-1Dui-1Uc-2Nuoc-1Khoai.png",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/Combo/CapDoiAnY-2Mi-1Dui-1Uc-2Nuoc-1Khoai#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "2uoon6wlfw",
+      "Integrity": "uiKLOPUaYfB3TVTKxburG23Xip2FRQDnj3dRMKCbOBQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\Combo\\CapDoiAnY-2Mi-1Dui-1Uc-2Nuoc-1Khoai.png"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Combo\\GaMiNuocKhoai.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/Combo/GaMiNuocKhoai#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "5uvhbdbgqj",
+      "Integrity": "k1Uv8PNKbCqQUq9S1VWXTXNG0hTKiEKKBEsD1SHaeB4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\Combo\\GaMiNuocKhoai.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Combo\\MiKhoaiNuoc.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/Combo/MiKhoaiNuoc#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "9k33vgt9tv",
+      "Integrity": "yQP1eciOL301OmG6iYV1Nncd67sVYXe3/Nedi7giXJs=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\Combo\\MiKhoaiNuoc.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Combo\\MiNuoc.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/Combo/MiNuoc#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "3h04hpmsbh",
+      "Integrity": "Z/CZ7Vz4WAlvM/ULhEcpWddoOPHNwPE+nWKO79ovUk0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\Combo\\MiNuoc.jpg"
+    },
+    {
       "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\2Dui.png",
       "SourceId": "APIQuanLyCuaHang",
       "SourceType": "Discovered",
@@ -666,6 +771,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\HinhAnh\\Food_Drink\\CapDoiAnY-2Mi-1Dui-1Uc-2Nuoc-1Khoai.png"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\cd89de36c26780bf33e78a7ce36423ec.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/Food_Drink/cd89de36c26780bf33e78a7ce36423ec#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "bfkhxko9sr",
+      "Integrity": "WS3fH0We2urtWwIIZYYqmg3W/V8CfetJn0zU2j6SNJ0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\Food_Drink\\cd89de36c26780bf33e78a7ce36423ec.jpg"
     },
     {
       "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\chickenjoy_spicy_2piece_2.jpg",
@@ -3839,6 +3965,416 @@
       ]
     },
     {
+      "Route": "HinhAnh/Combo/CaNhaNoNe-2Mi-2Uc-1Canh-3Nuoc-1Khoai.awct1sbum4.png",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Combo\\CaNhaNoNe-2Mi-2Uc-1Canh-3Nuoc-1Khoai.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "169398"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dljAk735o9DmcEi+i6B9ht9LDraguHBiKFezkASawB4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:45:21 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "awct1sbum4"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/Combo/CaNhaNoNe-2Mi-2Uc-1Canh-3Nuoc-1Khoai.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-dljAk735o9DmcEi+i6B9ht9LDraguHBiKFezkASawB4="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/Combo/CaNhaNoNe-2Mi-2Uc-1Canh-3Nuoc-1Khoai.png",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Combo\\CaNhaNoNe-2Mi-2Uc-1Canh-3Nuoc-1Khoai.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "169398"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dljAk735o9DmcEi+i6B9ht9LDraguHBiKFezkASawB4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:45:21 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-dljAk735o9DmcEi+i6B9ht9LDraguHBiKFezkASawB4="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/Combo/CapDoiAnY-2Mi-1Dui-1Uc-2Nuoc-1Khoai.2uoon6wlfw.png",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Combo\\CapDoiAnY-2Mi-1Dui-1Uc-2Nuoc-1Khoai.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "165582"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"uiKLOPUaYfB3TVTKxburG23Xip2FRQDnj3dRMKCbOBQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:45:21 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "2uoon6wlfw"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/Combo/CapDoiAnY-2Mi-1Dui-1Uc-2Nuoc-1Khoai.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-uiKLOPUaYfB3TVTKxburG23Xip2FRQDnj3dRMKCbOBQ="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/Combo/CapDoiAnY-2Mi-1Dui-1Uc-2Nuoc-1Khoai.png",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Combo\\CapDoiAnY-2Mi-1Dui-1Uc-2Nuoc-1Khoai.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "165582"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"uiKLOPUaYfB3TVTKxburG23Xip2FRQDnj3dRMKCbOBQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:45:21 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-uiKLOPUaYfB3TVTKxburG23Xip2FRQDnj3dRMKCbOBQ="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/Combo/GaMiNuocKhoai.5uvhbdbgqj.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Combo\\GaMiNuocKhoai.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "13202"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"k1Uv8PNKbCqQUq9S1VWXTXNG0hTKiEKKBEsD1SHaeB4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:45:21 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5uvhbdbgqj"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/Combo/GaMiNuocKhoai.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-k1Uv8PNKbCqQUq9S1VWXTXNG0hTKiEKKBEsD1SHaeB4="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/Combo/GaMiNuocKhoai.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Combo\\GaMiNuocKhoai.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "13202"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"k1Uv8PNKbCqQUq9S1VWXTXNG0hTKiEKKBEsD1SHaeB4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:45:21 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-k1Uv8PNKbCqQUq9S1VWXTXNG0hTKiEKKBEsD1SHaeB4="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/Combo/MiKhoaiNuoc.9k33vgt9tv.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Combo\\MiKhoaiNuoc.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "11304"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"yQP1eciOL301OmG6iYV1Nncd67sVYXe3/Nedi7giXJs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:45:21 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "9k33vgt9tv"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/Combo/MiKhoaiNuoc.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-yQP1eciOL301OmG6iYV1Nncd67sVYXe3/Nedi7giXJs="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/Combo/MiKhoaiNuoc.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Combo\\MiKhoaiNuoc.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "11304"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"yQP1eciOL301OmG6iYV1Nncd67sVYXe3/Nedi7giXJs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:45:21 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-yQP1eciOL301OmG6iYV1Nncd67sVYXe3/Nedi7giXJs="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/Combo/MiNuoc.3h04hpmsbh.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Combo\\MiNuoc.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9869"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Z/CZ7Vz4WAlvM/ULhEcpWddoOPHNwPE+nWKO79ovUk0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:45:21 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "3h04hpmsbh"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/Combo/MiNuoc.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Z/CZ7Vz4WAlvM/ULhEcpWddoOPHNwPE+nWKO79ovUk0="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/Combo/MiNuoc.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Combo\\MiNuoc.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9869"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Z/CZ7Vz4WAlvM/ULhEcpWddoOPHNwPE+nWKO79ovUk0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:45:21 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Z/CZ7Vz4WAlvM/ULhEcpWddoOPHNwPE+nWKO79ovUk0="
+        }
+      ]
+    },
+    {
       "Route": "HinhAnh/Food_Drink/2Dui.png",
       "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\2Dui.png",
       "Selectors": [],
@@ -4573,6 +5109,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-uiKLOPUaYfB3TVTKxburG23Xip2FRQDnj3dRMKCbOBQ="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/Food_Drink/cd89de36c26780bf33e78a7ce36423ec.bfkhxko9sr.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\cd89de36c26780bf33e78a7ce36423ec.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "81467"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WS3fH0We2urtWwIIZYYqmg3W/V8CfetJn0zU2j6SNJ0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:45:21 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "bfkhxko9sr"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/Food_Drink/cd89de36c26780bf33e78a7ce36423ec.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-WS3fH0We2urtWwIIZYYqmg3W/V8CfetJn0zU2j6SNJ0="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/Food_Drink/cd89de36c26780bf33e78a7ce36423ec.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\cd89de36c26780bf33e78a7ce36423ec.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "81467"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WS3fH0We2urtWwIIZYYqmg3W/V8CfetJn0zU2j6SNJ0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:45:21 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-WS3fH0We2urtWwIIZYYqmg3W/V8CfetJn0zU2j6SNJ0="
         }
       ]
     },

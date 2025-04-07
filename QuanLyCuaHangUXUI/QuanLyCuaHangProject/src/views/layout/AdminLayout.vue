@@ -19,6 +19,31 @@ import '../../assets/admin/plugins/datepicker/datepicker.min.js'
 import '../../assets/admin/plugins/datepicker/i18n/datepicker.en.js'
 //import '../../assets/admin/js/init/dashborad.js'
 import '../../assets/admin/js/main.js'
+import '../../assets/admin/images/favicon.ico'
+import '../../assets/admin/plugins/chartist-js/chartist.min.css'
+import '../../assets/admin/plugins/datepicker/datepicker.min.css'
+import '../../assets/admin/css/bootstrap.min.css'
+import '../../assets/admin/css/icons.css'
+import '../../assets/admin/css/style.css'
+import '../../assets/admin/js/jquery.min.js'
+import '@popperjs/core'
+import '../../assets/admin/js/bootstrap.min.js'
+//import '../../assets/admin/js/modernizr.min.js'
+import '../../assets/admin/js/detect.js'
+import '../../assets/admin/js/jquery.slimscroll.js'
+import '../../assets/admin/js/sidebar-menu.js'
+//import '../../assets/admin/plugins/chartist-js/chartist.min.js'
+//import '../../assets/admin/plugins/chartist-js/chartist-plugin-tooltip.min.js'
+import '../../assets/admin/js/init/to-do-list-init.js'
+import '../../assets/admin/plugins/datepicker/datepicker.min.js'
+import '../../assets/admin/plugins/datepicker/i18n/datepicker.en.js'
+//import '../../assets/admin/js/init/dashborad.js'
+import '../../assets/admin/js/main.js'
+import QrScanAndShiftManagerModal from '@/components/shift/QrScanAndShiftManagerModal.vue'
+
+components: {
+  QrScanAndShiftManagerModal
+}
 </script>
 <template>
   <div class="xp-vertical">
@@ -31,7 +56,11 @@ import '../../assets/admin/js/main.js'
           <!-- Start XP Logobar -->
           <div class="xp-logobar text-center">
             <a href="index.html" class="xp-logo"
-              ><img style="height: 100px;" src="../../assets/admin/images/Red and Yellow Illustrative Fried Chicken Logo.png" class="img-fluid" alt="logo"
+              ><img
+                style="height: 100px"
+                src="../../assets/admin/images/Red and Yellow Illustrative Fried Chicken Logo.png"
+                class="img-fluid"
+                alt="logo"
             /></a>
           </div>
           <!-- End XP Logobar -->
@@ -39,8 +68,11 @@ import '../../assets/admin/js/main.js'
           <!-- Start XP Navigationbar -->
           <div class="xp-navigationbar">
             <ul class="xp-vertical-menu">
+              <li class="xp-vertical-header">Chức năng quản lý</li>
               <li>
-                <a href="/admin/"> <i class="icon-speedometer"></i><span>Dashboard</span> </a>
+                <RouterLink to="/Admin">
+                  <i class="icon-speedometer"></i><span>Bảng điều khiển</span>
+                </RouterLink>
               </li>
               <li>
                 <RouterLink to="/Admin/Product">
@@ -135,7 +167,7 @@ import '../../assets/admin/js/main.js'
                           <li class="media">
                             <div class="media-body">
                               <h5 class="mt-0 mb-0 py-3 text-white text-center font-16">
-                                8 New Messages
+                                8 Tin nhắn mới
                               </h5>
                             </div>
                           </li>
@@ -148,10 +180,12 @@ import '../../assets/admin/js/main.js'
                             <div class="media-body">
                               <a href="#">
                                 <h5 class="mt-0 mb-1 font-14">
-                                  Ariel Blue<span class="font-12 f-w-4 float-right">3 min ago</span>
+                                  Ariel Blue<span class="font-12 f-w-4 float-right"
+                                    >3 phút trước</span
+                                  >
                                 </h5>
                                 <p class="mb-0 font-13">
-                                  Thank you for attending...<span
+                                  Cảm ơn bạn đã tham dự...<span
                                     class="badge badge-pill badge-success float-right"
                                     >2</span
                                   >
@@ -168,10 +202,12 @@ import '../../assets/admin/js/main.js'
                             <div class="media-body">
                               <a href="#">
                                 <h5 class="mt-0 mb-1 font-14">
-                                  Jammy Moon<span class="font-12 f-w-4 float-right">5 min ago</span>
+                                  Jammy Moon<span class="font-12 f-w-4 float-right"
+                                    >5 phút trước</span
+                                  >
                                 </h5>
                                 <p class="mb-0 font-13">
-                                  Hey no worries! Trust me...<span
+                                  Này không phải lo lắng!Tin tôi đi...<span
                                     class="badge badge-pill badge-success float-right"
                                     >3</span
                                   >
@@ -191,7 +227,7 @@ import '../../assets/admin/js/main.js'
                                   Lisa Ross<span class="font-12 f-w-4 float-right">5:25 PM</span>
                                 </h5>
                                 <p class="mb-0 font-13">
-                                  Remedies for colic? i don't...<span
+                                  Biện pháp khắc phục cho đau bụng?Tôi không...<span
                                     class="badge badge-pill badge-success float-right"
                                     >5</span
                                   >
@@ -202,7 +238,7 @@ import '../../assets/admin/js/main.js'
                           <li class="media">
                             <div class="media-body">
                               <h5 class="mt-0 mb-0 py-3 text-black text-center font-14">
-                                <a href="#" class="text-primary">View all</a>
+                                <a href="#" class="text-primary">Xem thêm</a>
                               </h5>
                             </div>
                           </li>
@@ -233,7 +269,7 @@ import '../../assets/admin/js/main.js'
                           <li class="media">
                             <div class="media-body">
                               <h5 class="mt-0 mb-0 py-3 text-white text-center font-16">
-                                3 New Notifications
+                                3 Thông báo mới
                               </h5>
                             </div>
                           </li>
@@ -243,8 +279,8 @@ import '../../assets/admin/js/main.js'
                             </div>
                             <div class="media-body">
                               <a href="#">
-                                <h5 class="mt-0 mb-1 font-14">New user registered</h5>
-                                <p class="mb-0 font-12 f-w-4">2 min ago</p>
+                                <h5 class="mt-0 mb-1 font-14">Người dùng mới đã đăng ký</h5>
+                                <p class="mb-0 font-12 f-w-4">2 phút trước</p>
                               </a>
                             </div>
                           </li>
@@ -265,15 +301,15 @@ import '../../assets/admin/js/main.js'
                             </div>
                             <div class="media-body">
                               <a href="#">
-                                <h5 class="mt-0 mb-1 font-14">John like your photo.</h5>
-                                <p class="mb-0 font-12 f-w-4">Yesterday</p>
+                                <h5 class="mt-0 mb-1 font-14">John thích ảnh của bạn.</h5>
+                                <p class="mb-0 font-12 f-w-4">Hôm qua</p>
                               </a>
                             </div>
                           </li>
                           <li class="media">
                             <div class="media-body">
                               <h5 class="mt-0 mb-0 py-3 text-black text-center font-14">
-                                <a href="#" class="text-primary">View all</a>
+                                <a href="#" class="text-primary">Xem thêm</a>
                               </h5>
                             </div>
                           </li>
@@ -302,22 +338,26 @@ import '../../assets/admin/js/main.js'
                         aria-labelledby="xp-userprofile"
                       >
                         <a class="dropdown-item py-3 text-white text-center font-16" href="#"
-                          >Welcome, John Doe</a
+                          >Chào mừng, John Doe</a
                         >
                         <a class="dropdown-item" href="#"
-                          ><i class="icon-user text-primary mr-2"></i> Profile</a
+                          ><i class="icon-user text-primary mr-2"></i> Hồ sơ</a
                         >
                         <a class="dropdown-item" href="#"
-                          ><i class="icon-wallet text-success mr-2"></i> Billing</a
+                          ><i class="icon-wallet text-success mr-2"></i> Thanh toán</a
                         >
                         <a class="dropdown-item" href="#"
-                          ><i class="icon-settings text-warning mr-2"></i> Setting</a
+                          ><i class="icon-user text-primary mr-2"></i>
+                          <QrScanAndShiftManagerModal />
+                        </a>
+                        <a class="dropdown-item" href="#"
+                          ><i class="icon-settings text-warning mr-2"></i> Cài đặt</a
                         >
                         <a class="dropdown-item" href="#"
-                          ><i class="icon-lock text-info mr-2"></i> Lock Screen</a
+                          ><i class="icon-lock text-info mr-2"></i> Khóa màn hình</a
                         >
                         <a class="dropdown-item" href="#"
-                          ><i class="icon-power text-danger mr-2"></i> Logout</a
+                          ><i class="icon-power text-danger mr-2"></i> Đăng xuất</a
                         >
                       </div>
                     </div>
@@ -339,7 +379,4 @@ import '../../assets/admin/js/main.js'
   </div>
 </template>
 
-
-
-<style>
-</style>
+<style></style>

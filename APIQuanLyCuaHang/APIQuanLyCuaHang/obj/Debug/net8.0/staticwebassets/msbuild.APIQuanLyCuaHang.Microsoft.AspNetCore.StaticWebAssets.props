@@ -396,6 +396,96 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Hinh\AnhKhachHang\edc59c27-c659-4018-acb1-44429474d9c3.png'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Combo\CaNhaNoNe-2Mi-2Uc-1Canh-3Nuoc-1Khoai.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>APIQuanLyCuaHang</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/APIQuanLyCuaHang</BasePath>
+      <RelativePath>HinhAnh/Combo/CaNhaNoNe-2Mi-2Uc-1Canh-3Nuoc-1Khoai.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>awct1sbum4</Fingerprint>
+      <Integrity>dljAk735o9DmcEi+i6B9ht9LDraguHBiKFezkASawB4=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Combo\CaNhaNoNe-2Mi-2Uc-1Canh-3Nuoc-1Khoai.png'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Combo\CapDoiAnY-2Mi-1Dui-1Uc-2Nuoc-1Khoai.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>APIQuanLyCuaHang</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/APIQuanLyCuaHang</BasePath>
+      <RelativePath>HinhAnh/Combo/CapDoiAnY-2Mi-1Dui-1Uc-2Nuoc-1Khoai.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>2uoon6wlfw</Fingerprint>
+      <Integrity>uiKLOPUaYfB3TVTKxburG23Xip2FRQDnj3dRMKCbOBQ=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Combo\CapDoiAnY-2Mi-1Dui-1Uc-2Nuoc-1Khoai.png'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Combo\GaMiNuocKhoai.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>APIQuanLyCuaHang</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/APIQuanLyCuaHang</BasePath>
+      <RelativePath>HinhAnh/Combo/GaMiNuocKhoai.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>5uvhbdbgqj</Fingerprint>
+      <Integrity>k1Uv8PNKbCqQUq9S1VWXTXNG0hTKiEKKBEsD1SHaeB4=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Combo\GaMiNuocKhoai.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Combo\MiKhoaiNuoc.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>APIQuanLyCuaHang</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/APIQuanLyCuaHang</BasePath>
+      <RelativePath>HinhAnh/Combo/MiKhoaiNuoc.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>9k33vgt9tv</Fingerprint>
+      <Integrity>yQP1eciOL301OmG6iYV1Nncd67sVYXe3/Nedi7giXJs=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Combo\MiKhoaiNuoc.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Combo\MiNuoc.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>APIQuanLyCuaHang</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/APIQuanLyCuaHang</BasePath>
+      <RelativePath>HinhAnh/Combo/MiNuoc.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>3h04hpmsbh</Fingerprint>
+      <Integrity>Z/CZ7Vz4WAlvM/ULhEcpWddoOPHNwPE+nWKO79ovUk0=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Combo\MiNuoc.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\2Dui.png'))">
       <SourceType>Package</SourceType>
       <SourceId>APIQuanLyCuaHang</SourceId>
@@ -557,6 +647,24 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\CapDoiAnY-2Mi-1Dui-1Uc-2Nuoc-1Khoai.png'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\cd89de36c26780bf33e78a7ce36423ec.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>APIQuanLyCuaHang</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/APIQuanLyCuaHang</BasePath>
+      <RelativePath>HinhAnh/Food_Drink/cd89de36c26780bf33e78a7ce36423ec.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>bfkhxko9sr</Fingerprint>
+      <Integrity>WS3fH0We2urtWwIIZYYqmg3W/V8CfetJn0zU2j6SNJ0=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\cd89de36c26780bf33e78a7ce36423ec.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\Food_Drink\chickenjoy_spicy_2piece_2.jpg'))">
       <SourceType>Package</SourceType>

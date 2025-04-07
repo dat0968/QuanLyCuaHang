@@ -22,6 +22,7 @@ import BillIndex from '@/views/admin/Bill/BillIndex.vue'
 import Checkout from '@/views/client/Checkout.vue'
 import DetailProduct from '@/views/client/DetailProduct.vue'
 import DetailCombo from '@/views/client/DetailCombo.vue'
+import OrderClient from '@/views/client/OrderClient.vue'
 import Cart from '@/views/client/Cart.vue'
 import TableIndex from '@/views/admin/Table/TableIndex.vue'
 import Profile from '../views/Profile/Profile.vue';
@@ -71,6 +72,7 @@ const routes = [
         component: Checkout,
       },
       { path: '/profile', name: 'Profile', component: Profile },
+      { path: '/client-order', name: 'ClientOrder', component: OrderClient },
     ],
   },
   {

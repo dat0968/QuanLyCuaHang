@@ -1807,6 +1807,416 @@
       ]
     },
     {
+      "Route": "HinhAnh/Combo/CaNhaNoNe-2Mi-2Uc-1Canh-3Nuoc-1Khoai.awct1sbum4.png",
+      "AssetFile": "HinhAnh/Combo/CaNhaNoNe-2Mi-2Uc-1Canh-3Nuoc-1Khoai.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "169398"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dljAk735o9DmcEi+i6B9ht9LDraguHBiKFezkASawB4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:45:21 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "awct1sbum4"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-dljAk735o9DmcEi+i6B9ht9LDraguHBiKFezkASawB4="
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/Combo/CaNhaNoNe-2Mi-2Uc-1Canh-3Nuoc-1Khoai.png"
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/Combo/CaNhaNoNe-2Mi-2Uc-1Canh-3Nuoc-1Khoai.png",
+      "AssetFile": "HinhAnh/Combo/CaNhaNoNe-2Mi-2Uc-1Canh-3Nuoc-1Khoai.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "169398"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dljAk735o9DmcEi+i6B9ht9LDraguHBiKFezkASawB4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:45:21 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-dljAk735o9DmcEi+i6B9ht9LDraguHBiKFezkASawB4="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/Combo/CapDoiAnY-2Mi-1Dui-1Uc-2Nuoc-1Khoai.2uoon6wlfw.png",
+      "AssetFile": "HinhAnh/Combo/CapDoiAnY-2Mi-1Dui-1Uc-2Nuoc-1Khoai.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "165582"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"uiKLOPUaYfB3TVTKxburG23Xip2FRQDnj3dRMKCbOBQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:45:21 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "2uoon6wlfw"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-uiKLOPUaYfB3TVTKxburG23Xip2FRQDnj3dRMKCbOBQ="
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/Combo/CapDoiAnY-2Mi-1Dui-1Uc-2Nuoc-1Khoai.png"
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/Combo/CapDoiAnY-2Mi-1Dui-1Uc-2Nuoc-1Khoai.png",
+      "AssetFile": "HinhAnh/Combo/CapDoiAnY-2Mi-1Dui-1Uc-2Nuoc-1Khoai.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "165582"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"uiKLOPUaYfB3TVTKxburG23Xip2FRQDnj3dRMKCbOBQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:45:21 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-uiKLOPUaYfB3TVTKxburG23Xip2FRQDnj3dRMKCbOBQ="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/Combo/GaMiNuocKhoai.5uvhbdbgqj.jpg",
+      "AssetFile": "HinhAnh/Combo/GaMiNuocKhoai.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "13202"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"k1Uv8PNKbCqQUq9S1VWXTXNG0hTKiEKKBEsD1SHaeB4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:45:21 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5uvhbdbgqj"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-k1Uv8PNKbCqQUq9S1VWXTXNG0hTKiEKKBEsD1SHaeB4="
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/Combo/GaMiNuocKhoai.jpg"
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/Combo/GaMiNuocKhoai.jpg",
+      "AssetFile": "HinhAnh/Combo/GaMiNuocKhoai.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "13202"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"k1Uv8PNKbCqQUq9S1VWXTXNG0hTKiEKKBEsD1SHaeB4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:45:21 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-k1Uv8PNKbCqQUq9S1VWXTXNG0hTKiEKKBEsD1SHaeB4="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/Combo/MiKhoaiNuoc.9k33vgt9tv.jpg",
+      "AssetFile": "HinhAnh/Combo/MiKhoaiNuoc.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "11304"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"yQP1eciOL301OmG6iYV1Nncd67sVYXe3/Nedi7giXJs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:45:21 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "9k33vgt9tv"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-yQP1eciOL301OmG6iYV1Nncd67sVYXe3/Nedi7giXJs="
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/Combo/MiKhoaiNuoc.jpg"
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/Combo/MiKhoaiNuoc.jpg",
+      "AssetFile": "HinhAnh/Combo/MiKhoaiNuoc.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "11304"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"yQP1eciOL301OmG6iYV1Nncd67sVYXe3/Nedi7giXJs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:45:21 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-yQP1eciOL301OmG6iYV1Nncd67sVYXe3/Nedi7giXJs="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/Combo/MiNuoc.3h04hpmsbh.jpg",
+      "AssetFile": "HinhAnh/Combo/MiNuoc.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9869"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Z/CZ7Vz4WAlvM/ULhEcpWddoOPHNwPE+nWKO79ovUk0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:45:21 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "3h04hpmsbh"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Z/CZ7Vz4WAlvM/ULhEcpWddoOPHNwPE+nWKO79ovUk0="
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/Combo/MiNuoc.jpg"
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/Combo/MiNuoc.jpg",
+      "AssetFile": "HinhAnh/Combo/MiNuoc.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9869"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Z/CZ7Vz4WAlvM/ULhEcpWddoOPHNwPE+nWKO79ovUk0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:45:21 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Z/CZ7Vz4WAlvM/ULhEcpWddoOPHNwPE+nWKO79ovUk0="
+        }
+      ]
+    },
+    {
       "Route": "HinhAnh/Food_Drink/2Dui.png",
       "AssetFile": "HinhAnh/Food_Drink/2Dui.png",
       "Selectors": [],
@@ -3443,6 +3853,88 @@
         {
           "Name": "label",
           "Value": "HinhAnh/Food_Drink/aquafina-500ml.jpg"
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/Food_Drink/cd89de36c26780bf33e78a7ce36423ec.bfkhxko9sr.jpg",
+      "AssetFile": "HinhAnh/Food_Drink/cd89de36c26780bf33e78a7ce36423ec.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "81467"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WS3fH0We2urtWwIIZYYqmg3W/V8CfetJn0zU2j6SNJ0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:45:21 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "bfkhxko9sr"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-WS3fH0We2urtWwIIZYYqmg3W/V8CfetJn0zU2j6SNJ0="
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/Food_Drink/cd89de36c26780bf33e78a7ce36423ec.jpg"
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/Food_Drink/cd89de36c26780bf33e78a7ce36423ec.jpg",
+      "AssetFile": "HinhAnh/Food_Drink/cd89de36c26780bf33e78a7ce36423ec.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "81467"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WS3fH0We2urtWwIIZYYqmg3W/V8CfetJn0zU2j6SNJ0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:45:21 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-WS3fH0We2urtWwIIZYYqmg3W/V8CfetJn0zU2j6SNJ0="
         }
       ]
     },

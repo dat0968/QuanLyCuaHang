@@ -216,49 +216,50 @@ onMounted(() => {
                 </button>
               </div>
             </div>
+          </div>
 
-            <!-- Phần giá và số lượng -->
-            <div class="price-quantity">
-              <div class="price">
-                <span class="current-price"
-                  >{{ selectedVariant?.donGia?.toLocaleString('vi-VN') }} đ</span
-                >
-              </div>
-              <div class="quantity">
-                <button @click="decreaseQuantity" :disabled="quantity <= 1">-</button>
-                <input
-                  type="number"
-                  v-model="quantity"
-                  @input="handleQuantityChange"
-                  :min="1"
-                  :max="selectedVariant?.soLuongTon || 10"
-                  class="quantity-input"
-                  :class="{ error: quantityError }"
-                />
-                <button
-                  @click="increaseQuantity"
-                  :disabled="!selectedVariant || quantity >= selectedVariant.soLuongTon"
-                >
-                  +
-                </button>
-              </div>
-            </div>
-            <div v-if="quantityError" class="error-message">{{ quantityError }}</div>
-
-            <!-- Phần thêm vào giỏ hàng -->
-            <div class="add-to-cart">
-              <button
-                class="btn-order"
-                @click="addToCart"
-                :disabled="!selectedVariant || selectedVariant.soLuongTon === 0"
+          <!-- Phần giá và số lượng -->
+          <div class="price-quantity">
+            <div class="price">
+              <span class="current-price"
+                >{{ selectedVariant?.donGia?.toLocaleString('vi-VN') }} đ</span
               >
-                <i class="bi bi-cart"></i> Đặt hàng
+            </div>
+            <div class="quantity">
+              <button @click="decreaseQuantity" :disabled="quantity <= 1">-</button>
+              <input
+                type="number"
+                v-model="quantity"
+                @input="handleQuantityChange"
+                :min="1"
+                :max="selectedVariant?.soLuongTon || 10"
+                class="quantity-input"
+                :class="{ error: quantityError }"
+              />
+              <button
+                @click="increaseQuantity"
+                :disabled="!selectedVariant || quantity >= selectedVariant.soLuongTon"
+              >
+                +
               </button>
             </div>
+          </div>
+          <div v-if="quantityError" class="error-message">{{ quantityError }}</div>
+
+          <!-- Phần thêm vào giỏ hàng -->
+          <div class="add-to-cart">
+            <button
+              class="btn-order"
+              @click="addToCart"
+              :disabled="!selectedVariant || selectedVariant.soLuongTon === 0"
+            >
+              <i class="bi bi-cart"></i> Đặt hàng
+            </button>
           </div>
         </div>
       </div>
     </div>
+    <!-- food_menu part end-->
   </div>
 </template>
 
@@ -268,8 +269,7 @@ onMounted(() => {
   background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
   min-height: 100vh;
 }
-
-.product-images {
+.script > .product-images {
   background: #fff;
   border-radius: 15px;
   padding: 20px;
@@ -528,4 +528,4 @@ onMounted(() => {
     font-size: 14px;
   }
 }
-</style> 
+</style>

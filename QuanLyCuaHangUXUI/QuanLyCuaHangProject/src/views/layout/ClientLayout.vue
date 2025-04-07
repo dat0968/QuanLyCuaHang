@@ -1,5 +1,5 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 import '../../assets/client/css/bootstrap.min.css'
 import '../../assets/client/css/animate.css'
 import '../../assets/client/css/owl.carousel.min.css'
@@ -214,7 +214,6 @@ onUnmounted(() => {
     <!-- Header part end-->
 
     <RouterView />
-
     <!-- Modal giỏ hàng -->
     <div v-if="showCartModal" class="modal-overlay" @click="closeCartModal">
       <div class="modal-content" @click.stop>

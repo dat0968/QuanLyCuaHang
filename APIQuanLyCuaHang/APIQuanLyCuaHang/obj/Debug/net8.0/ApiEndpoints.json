@@ -916,6 +916,130 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.DashboardController",
+    "Method": "GetAllOrderData",
+    "RelativePath": "api/Dashboard/GetAllOrderData",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.DashboardController",
+    "Method": "GetDetailProduct",
+    "RelativePath": "api/Dashboard/GetDetailProduct/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.DashboardController",
+    "Method": "GetEarningData",
+    "RelativePath": "api/Dashboard/GetEarningData/{timeRange}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "timeRange",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.DashboardController",
+    "Method": "GetEmployeeOrderStats",
+    "RelativePath": "api/Dashboard/GetEmployeeOrderStats",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.DashboardController",
+    "Method": "GetListStatObject",
+    "RelativePath": "api/Dashboard/GetListStatObject",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.DashboardController",
+    "Method": "GetOrderOverViewData",
+    "RelativePath": "api/Dashboard/GetOrderOverViewData/{timeRange}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "timeRange",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.DashboardController",
+    "Method": "GetOrderStatusData",
+    "RelativePath": "api/Dashboard/GetOrderStatusData/{timeRange}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "timeRange",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.DashboardController",
+    "Method": "GetTopSellingProducts",
+    "RelativePath": "api/Dashboard/GetTopSellingProducts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.DashboardController",
+    "Method": "GetUserStatisticsAsync",
+    "RelativePath": "api/Dashboard/GetUserStatistics",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.DashboardController",
+    "Method": "JustGetOneListSellingProducts",
+    "RelativePath": "api/Dashboard/JustGetOneListSellingProducts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "APIQuanLyCuaHang.Controllers.HomeController",
     "Method": "GetAllProducts",
     "RelativePath": "api/Home/all-products",
@@ -1003,6 +1127,53 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.OrderClientController",
+    "Method": "ChangeStatusOrder",
+    "RelativePath": "api/OrderClient/ChangeStatusOrder",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "orderId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "statusChange",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "reasonCancel",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.OrderClientController",
+    "Method": "Get",
+    "RelativePath": "api/OrderClient/Get/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": true
       }
     ],
@@ -1241,6 +1412,211 @@
         "Name": "IsDelete",
         "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.ScheduleController",
+    "Method": "GenerateQRCode",
+    "RelativePath": "api/Schedule/GenerateQRCode",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "maCaKip",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "ngayLam",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.ScheduleController",
+    "Method": "GetAll",
+    "RelativePath": "api/Schedule/GetAll",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.ScheduleController",
+    "Method": "GetScheduleActiveOfShift",
+    "RelativePath": "api/Schedule/GetScheduleActiveOfShift/{shiftId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "shiftId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.ScheduleController",
+    "Method": "GetScheduleActiveOfUser",
+    "RelativePath": "api/Schedule/GetScheduleActiveOfUser",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.ScheduleController",
+    "Method": "SetStatusList",
+    "RelativePath": "api/Schedule/SetStatusList",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "APIQuanLyCuaHang.DTO.Requests.SetStatusListRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.ScheduleController",
+    "Method": "SetStatusOne",
+    "RelativePath": "api/Schedule/SetStatusOne",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "APIQuanLyCuaHang.DTO.Requests.SetStatusOneRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.ScheduleController",
+    "Method": "SignUpScheduleWork",
+    "RelativePath": "api/Schedule/SignUpScheduleWork",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "maNv",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "maCaKip",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "ngayLam",
+        "Type": "System.DateOnly",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.ScheduleController",
+    "Method": "TimeKeeping",
+    "RelativePath": "api/Schedule/TimeKeeping",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "qrCodeData",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.ShiftController",
+    "Method": "ChangeStatusShift",
+    "RelativePath": "api/Shift/ChangeStatusShift",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.ShiftController",
+    "Method": "Employees",
+    "RelativePath": "api/Shift/Employees/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.ShiftController",
+    "Method": "GetAllAsync",
+    "RelativePath": "api/Shift/GetAll",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.ShiftController",
+    "Method": "Remove",
+    "RelativePath": "api/Shift/Remove/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.ShiftController",
+    "Method": "UpsertCrew",
+    "RelativePath": "api/Shift/UpsertCrew",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "caKip",
+        "Type": "APIQuanLyCuaHang.DTO.CaKipDTO",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

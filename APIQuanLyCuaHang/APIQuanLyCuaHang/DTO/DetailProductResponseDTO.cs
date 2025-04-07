@@ -15,6 +15,7 @@ namespace APIQuanLyCuaHang.DTO
         public string? AnhDaiDien { get; set; }
 
         public decimal? DonGia { get; set; }
+
         public List<ImageProductResponseDTO> Hinhanhs { get; set; } = new List<ImageProductResponseDTO>();
     }
 }

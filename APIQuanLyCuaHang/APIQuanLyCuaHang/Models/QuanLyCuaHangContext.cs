@@ -65,9 +65,10 @@ public partial class QuanLyCuaHangContext : DbContext
 
             entity.ToTable("CAKIP");
 
-            entity.Property(e => e.GioBatDau).HasColumnType("datetime");
-            entity.Property(e => e.GioKetThuc).HasColumnType("datetime");
+            entity.Property(e => e.GioBatDau).HasColumnType("time(7)");
+            entity.Property(e => e.GioKetThuc).HasColumnType("time(7)");
             entity.Property(e => e.IsDelete).HasDefaultValue(false);
+            entity.Property(e => e.HeSoLuong).HasColumnType("decimal(18,2)");
         });
 
         modelBuilder.Entity<Chitietcombo>(entity =>
@@ -296,6 +297,11 @@ public partial class QuanLyCuaHangContext : DbContext
             entity.Property(e => e.MaNv).HasColumnName("MaNV");
             entity.Property(e => e.TongLuong).HasColumnType("decimal(11, 2)");
 
+            entity.Property(e => e.TrangThai)
+                .HasMaxLength(50)
+                .IsRequired()
+                .HasDefaultValue("Chờ xác nhận");
+
             entity.HasOne(d => d.MaCaKipNavigation).WithMany(p => p.Lichsulamviecs)
                 .HasForeignKey(d => d.MaCaKip)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -305,6 +311,12 @@ public partial class QuanLyCuaHangContext : DbContext
                 .HasForeignKey(d => d.MaNv)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__LICHSULAMV__MaNV__6477ECF3");
+
+            // Liên kết với bảng Nhanvien cho NguoiXacNhan
+            entity.HasOne(d => d.NguoiXacNhanLich).WithMany()
+                .HasForeignKey(d => d.NguoiXacNhan)
+                .OnDelete(DeleteBehavior.SetNull) // Nếu người xác nhận bị xóa thì giữ nguyên lịch làm việc
+                .HasConstraintName("FK__LICHSULAMV__NguoiXacNhan__12345678");
         });
 
         modelBuilder.Entity<Nhanvien>(entity =>

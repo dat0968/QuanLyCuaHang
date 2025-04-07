@@ -19,3 +19,16 @@
 # git rm -rf APIQuanLyCuaHang\APIQuanLyCuaHang\obj
 # git rm -rf APIQuanLyCuaHang\APIQuanLyCuaHang\bin
 # git rm -rf .vs
+
+.qodo
+APIQuanLyCuaHang/.vs
+APIQuanLyCuaHang/.vs
+APIQuanLyCuaHang/.vs
+.vscode/settings.json
+QuanLyCuaHangUXUI/.vscode/launch.json
+APIQuanLyCuaHang/APIQuanLyCuaHang/DTO/DetailOrderManagerDTO.cs
+APIQuanLyCuaHang/APIQuanLyCuaHang/DTO/OrderManagerDTO.cs
+APIQuanLyCuaHang/APIQuanLyCuaHang/Repositories/OrderManager/IOrderManagerRepository.cs
+APIQuanLyCuaHang/APIQuanLyCuaHang/Repositories/OrderManager/OrderManagerRepository.cs
+APIQuanLyCuaHang/APIQuanLyCuaHang/Controllers/OrderManagerController.cs
+QuanLyCuaHangUXUI/QuanLyCuaHangProject/src/views/admin/OrderManager.vue

@@ -1,5 +1,4 @@
 <template>
-  <br>
   <div class="staff-page" style="width: 1600px;">
     <h1>Quản Lý Nhân Viên</h1>
     <div class="filter-section">
@@ -54,16 +53,16 @@
           <td>{{ staff.ngayVaoLam }}</td>
           <td>{{ staff.tinhTrang }}</td>
           <td>{{ staff.maChucVu || 'Chưa có' }}</td>
-          <td>
+          <!-- <td>
             <img
               v-if="staff.hinhAnhDuongDan"
-              :src="getImageUrl(staff.hinhAnhDuongDan)"
+              :src="getImageUrl(staff.S)"
               alt="Hình ảnh nhân viên"
               class="staff-image"
               @error="handleImageError"
             />
             <span v-else class="no-image">Không có ảnh</span>
-          </td>
+          </td> -->
           <td class="action-buttons">
             <button @click="openDetailModal(staff)" class="detail-btn">Chi Tiết</button>
             <button @click="openEditModal(staff)" class="edit-btn">Sửa</button>

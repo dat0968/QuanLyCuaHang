@@ -1,3 +1,4 @@
+
 <script setup>
 import { ref } from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
@@ -39,7 +40,12 @@ const handleLogin = async () => {
         text: 'Chào mừng bạn trở lại.',
         confirmButtonText: 'OK',
       });
-      router.push('/');
+      // ? Kiểm tra có link web không có đăng nhập trước đó để dùng thì điều hướng lại
+      if (router.currentRoute.query && router.currentRoute.query.redirect) {
+        router.push(router.currentRoute.query.redirect)
+      } else {
+        router.push('/')
+      }
     } else {
       errorMessage.value = data.Message || 'Đăng nhập thất bại';
     }
