@@ -22,7 +22,7 @@ import Checkout from '@/views/client/Checkout.vue'
 import DetailProduct from '@/views/client/DetailProduct.vue'
 import DetailCombo from '@/views/client/DetailCombo.vue'
 import Cart from '@/views/client/Cart.vue'
-
+import TableIndex from '@/views/admin/Table/TableIndex.vue'
 const routes = [
   {
     path: '/',
@@ -81,6 +81,7 @@ const routes = [
         { path: 'customer', name: 'CustomerIndex', component: CustomerIndex },
         { path: 'combo', component: ComboIndex },
         { path: '/admin/Coupon', name: 'Coupon', component: Coupon },
+        { path: '/admin/Table', component: TableIndex },
       ]
   },
   {

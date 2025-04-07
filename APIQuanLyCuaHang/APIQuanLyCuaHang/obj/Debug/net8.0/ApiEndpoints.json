@@ -1150,6 +1150,111 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.TableController",
+    "Method": "GetAllTables",
+    "RelativePath": "api/Table",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.TableController",
+    "Method": "AddTable",
+    "RelativePath": "api/Table",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "banDTO",
+        "Type": "APIQuanLyCuaHang.DTO.BanDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.TableController",
+    "Method": "GetTableById",
+    "RelativePath": "api/Table/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.TableController",
+    "Method": "UpdateTableStatus",
+    "RelativePath": "api/Table/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "banDTO",
+        "Type": "APIQuanLyCuaHang.DTO.BanDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.TableController",
+    "Method": "DeleteTable",
+    "RelativePath": "api/Table/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.TableController",
+    "Method": "FilterTablesByStatus",
+    "RelativePath": "api/Table/filter",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tinhTrang",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "APIQuanLyCuaHang.Controllers.UploadImageController",
     "Method": "UploadImage",
     "RelativePath": "api/UploadImage",

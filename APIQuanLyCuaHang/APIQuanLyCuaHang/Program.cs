@@ -1,22 +1,26 @@
 ﻿using APIQuanLyCuaHang.DbInitializer;
 using APIQuanLyCuaHang.Models;
+using APIQuanLyCuaHang.Repositories.Bill;
+using APIQuanLyCuaHang.Repositories.Bill;
 using APIQuanLyCuaHang.Repositories.Category;
+using APIQuanLyCuaHang.Repositories.Combo;
+using APIQuanLyCuaHang.Repositories.Customer;
+using APIQuanLyCuaHang.Repositories.DetailBill;
+using APIQuanLyCuaHang.Repositories.DetailCombo;
 using APIQuanLyCuaHang.Repositories.DetailProduct;
 using APIQuanLyCuaHang.Repositories.ImageProduct;
 using APIQuanLyCuaHang.Repositories.Product;
-using APIQuanLyCuaHang.Services;
+using APIQuanLyCuaHang.Repositories.Table;
 using APIQuanLyCuaHang.Respositoies.HashPassword;
 using APIQuanLyCuaHang.Respositoies.Token;
+using APIQuanLyCuaHang.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Text;
-using APIQuanLyCuaHang.Repositories.Customer;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel;
 using OfficeOpenXml;
 using APIQuanLyCuaHang.Repositories.Combo;
 using APIQuanLyCuaHang.Repositories.DetailCombo;
@@ -25,6 +29,8 @@ using APIQuanLyCuaHang.Repositories.DetailBill;
 using APIQuanLyCuaHang.Repositories.Bill;
 using APIQuanLyCuaHang.Repository.MaCoupon;
 using APIQuanLyCuaHang.Repositories;
+using System.ComponentModel;
+using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 // Add services to the container.
@@ -94,6 +100,7 @@ builder.Services.AddScoped<IDetailBill, DetailBill>();
 builder.Services.AddScoped<IBillRepository, BillRepository>();
 builder.Services.AddScoped<IMaCouponRepository, MaCouponRepository>();
 builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<ITableRepository, TableRepository>();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

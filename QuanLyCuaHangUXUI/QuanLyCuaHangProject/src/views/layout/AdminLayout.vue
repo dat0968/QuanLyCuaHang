@@ -54,17 +54,20 @@ import '../../assets/admin/js/main.js'
               </li>
               <li>
                 <RouterLink to="/Admin/Bill">
-                  <i class="fas fa-box"></i><span>QUẢN LÝ ĐƠN HÀNG</span>
+                  <i class="fas fa-box"></i><span> ĐƠN HÀNG</span>
                 </RouterLink>
               </li>
               <li>
                 <RouterLink to="/Admin/Coupon">
-                  <i class="fas fa-box"></i><span>QUẢN LÝ COUPON</span>
+                  <i class="fas fa-box"></i><span> COUPON</span>
                 </RouterLink>
               </li>
               <li>
                 <RouterLink to="/admin/customer">
                   <i class="fas fa-user"></i><span>KHÁCH HÀNG</span>
+                </RouterLink> 
+                <RouterLink to="/Admin/Table">
+                  <i class="fas fa-box"></i><span> BÀN</span>
                 </RouterLink>
               </li>
               <li>
