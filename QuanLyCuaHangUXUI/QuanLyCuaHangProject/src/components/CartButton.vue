@@ -10,7 +10,9 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
-
+import { jwtDecode } from 'jwt-decode';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 const router = useRouter()
 const cartItems = ref([])
 
@@ -37,6 +39,7 @@ const FetchCart = async () => {
     cartItems.value = result.cartItems
   } catch (error) {
     console.log(error)
+
   }
 }
 

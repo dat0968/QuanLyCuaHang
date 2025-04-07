@@ -40,7 +40,7 @@ import '../../assets/admin/js/main.js'
           <div class="xp-navigationbar">
             <ul class="xp-vertical-menu">
               <li>
-                <a href="d"> <i class="icon-speedometer"></i><span>Dashboard</span> </a>
+                <a href="/admin/"> <i class="icon-speedometer"></i><span>Dashboard</span> </a>
               </li>
               <li>
                 <RouterLink to="/Admin/Product">
@@ -49,10 +49,17 @@ import '../../assets/admin/js/main.js'
               </li>
               <li>
                 <RouterLink to="/Admin/Combo">
-                  <i class="fas fa-boxes"></i><span>COMBO</span>
+                  <i class="fas fa-box"></i><span>COMBO</span>
                 </RouterLink>
+              </li>
+              <li>
                 <RouterLink to="/Admin/Bill">
                   <i class="fas fa-box"></i><span>QUẢN LÝ ĐƠN HÀNG</span>
+                </RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/Admin/Coupon">
+                  <i class="fas fa-box"></i><span>QUẢN LÝ COUPON</span>
                 </RouterLink>
               </li>
               <li>

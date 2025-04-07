@@ -30,8 +30,8 @@ const handleLogin = async () => {
     const data = await response.json();
 
     if (data.success) {
-      localStorage.setItem('accessToken', data.data.accessToken);
-      localStorage.setItem('refreshToken', data.data.refreshToken);
+      Cookies.set('accessToken', data.data.accessToken, { expires: 2 / 24 }); // set 2 giờ nha 
+      Cookies.set('refreshToken', data.data.refreshToken, { expires: 2 / 24 });
       await Swal.fire({
         icon: 'success',
         title: 'Đăng nhập thành công!',

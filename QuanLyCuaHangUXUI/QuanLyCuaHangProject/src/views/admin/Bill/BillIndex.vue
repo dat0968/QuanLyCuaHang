@@ -2,6 +2,7 @@
 import { ref, onMounted, watch } from 'vue';
 import Swal from 'sweetalert2';
 import {jwtDecode} from "jwt-decode";
+import Cookies from 'js-cookie';
 const immutableStatuses = ["Đã hủy", "Hoàn trả/Hoàn tiền"];
 
 const orders = ref([]);
@@ -16,7 +17,7 @@ const isLoading = ref(false);
 const userInfo = ref(null);
 const statusOptions = ["Chờ xác nhận", "Đã xác nhận", "Đã giao cho đơn vị vận chuyển", "Đã Nhận", "Đã thanh toán", "Đã hủy", "Hoàn trả/Hoàn tiền"];
 const paymentOptions = ["COD", "VNPAY"];
-const token = localStorage.getItem("accessToken");
+const token = ref(Cookies.get('accessToken'));
 try {
     if (token == null){
       throw new Error("Error")

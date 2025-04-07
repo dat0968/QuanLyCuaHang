@@ -147,7 +147,7 @@ const FetchCart = async () => {
     }
     const result = await response.json()
     cartItems.value = result.cartItems
-    result.forEach((item) => {
+    result.cartItems.forEach((item) => {
       oldQuantities.value[item.maCtsp] = item.soLuong
     })
   } catch (error) {

@@ -95,6 +95,8 @@ namespace APIQuanLyCuaHang.Controllers
                         Message = "Sai mật khẩu"
                     });
                 }
+                string verificationCode = new Random().Next(100000, 999999).ToString();
+
                 var Khachhang = new PersonalInformationDTO
                 {
                     Id = findUser.MaKh,
@@ -413,6 +415,60 @@ namespace APIQuanLyCuaHang.Controllers
             //        RefreshToken = RefreshToken,
             //    },
             //});
+        }
+        [HttpGet("checkCCCD")]
+        public async Task<IActionResult> checkCCCD(string cccd)
+        {
+            var findCCCD = await db.Khachhangs.AsNoTracking().FirstOrDefaultAsync(p => p.Cccd == cccd);
+            if (findCCCD != null)
+            {
+                return Ok(new
+                {
+                    Success = false,
+                    Message = "CCCD này đã tồn tại"
+                });
+            }
+            return Ok(new
+            {
+                Success = true,
+                Message = "CCCD này hợp lệ"
+            });
+        }
+        [HttpGet("checkUsername")]
+        public async Task<IActionResult> checkUsername(string username)
+        {
+            var findusername = await db.Khachhangs.AsNoTracking().FirstOrDefaultAsync(p => p.TenTaiKhoan == username);
+            if (findusername != null)
+            {
+                return Ok(new
+                {
+                    Success = false,
+                    Message = "Tên tài khoản này đã tồn tại"
+                });
+            }
+            return Ok(new
+            {
+                Success = true,
+                Message = "Tên tài khoản này hợp lệ"
+            });
+        }
+        [HttpGet("checkEmail")]
+        public async Task<IActionResult> checkEmail(string email)
+        {
+            var findemail = await db.Khachhangs.AsNoTracking().FirstOrDefaultAsync(p => p.Email == email);
+            if (findemail != null)
+            {
+                return Ok(new
+                {
+                    Success = false,
+                    Message = "Email này đã tồn tại"
+                });
+            }
+            return Ok(new
+            {
+                Success = true,
+                Message = "Email này hợp lệ"
+            });
         }
     }
 }
