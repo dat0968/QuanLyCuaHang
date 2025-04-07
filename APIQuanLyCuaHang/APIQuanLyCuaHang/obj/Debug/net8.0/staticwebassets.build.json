@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "i/wq09KldKxh8DdQJAspf4iREMe9/yCZGFRUUvm5+R8=",
+  "Hash": "vVD3Exj/+L+rLCxZLztwKCkmuoXYH99gU9bYQmbxWK0=",
   "Source": "APIQuanLyCuaHang",
   "BasePath": "_content/APIQuanLyCuaHang",
   "Mode": "Default",
@@ -1298,6 +1298,531 @@
       "OriginalItemSpec": "wwwroot\\HinhAnh\\Food_Drink\\zKjsTDOzp9rE9DLblRxRkQJP7jZMH6RwQ45qrxkd.webp"
     },
     {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien1.png",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/NhanVien/NhanVien1#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "nfguqeab3k",
+      "Integrity": "TZ+03HWiN5iGH7LRfeyJ5yrf+SYAQMVYKsPFdesd6Xc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\NhanVien\\NhanVien1.png"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien10.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/NhanVien/NhanVien10#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "e1cryh9mab",
+      "Integrity": "sst2N/ikatoj2ztdu/ufOHmuzKJvG1aaHRCv3aJgqBQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\NhanVien\\NhanVien10.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien11.png",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/NhanVien/NhanVien11#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "nfguqeab3k",
+      "Integrity": "TZ+03HWiN5iGH7LRfeyJ5yrf+SYAQMVYKsPFdesd6Xc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\NhanVien\\NhanVien11.png"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien12.png",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/NhanVien/NhanVien12#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "xrfwf1n6ta",
+      "Integrity": "3RqnrDoje58+haZg5v79Rga/aOIvuVnGE8iU7wpRGOI=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\NhanVien\\NhanVien12.png"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien13.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/NhanVien/NhanVien13#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "to6gc7klu6",
+      "Integrity": "3Q1YBnK5LZNWIvB9akrwxXFzlTIKjPK51LsKRElqKGE=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\NhanVien\\NhanVien13.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien14.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/NhanVien/NhanVien14#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "awg3c973qd",
+      "Integrity": "SvgHDJHGlAYMnZIEMH0apVgk7MIXqMygZq4fTc5GFmA=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\NhanVien\\NhanVien14.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien15.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/NhanVien/NhanVien15#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "23v4q90q9z",
+      "Integrity": "XhT1cAVzZIlQCdPyEhNeTFOCZ+5i2qan8GCBMYdRzgw=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\NhanVien\\NhanVien15.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien16.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/NhanVien/NhanVien16#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "877op4lym4",
+      "Integrity": "dFPTPSPuiw8HIKIK/O+5rxi0O3grbuWJNMo6INPdZjI=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\NhanVien\\NhanVien16.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien17.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/NhanVien/NhanVien17#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "nm0rf574uh",
+      "Integrity": "704dsV0QMjtKoyJQ6tK+7bOkH4EGjZur40zrxieOk6s=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\NhanVien\\NhanVien17.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien18.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/NhanVien/NhanVien18#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "w0bkatnnc2",
+      "Integrity": "MH1maMUDoDuesZlTyWdz2pxjRLlQeCffkQncDCn42xU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\NhanVien\\NhanVien18.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien19.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/NhanVien/NhanVien19#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "qvds3or6tq",
+      "Integrity": "RqjhMiYI3m599Kuf67bcBg2PXTw6rmELs1QD05/GMvs=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\NhanVien\\NhanVien19.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien2.png",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/NhanVien/NhanVien2#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "xrfwf1n6ta",
+      "Integrity": "3RqnrDoje58+haZg5v79Rga/aOIvuVnGE8iU7wpRGOI=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\NhanVien\\NhanVien2.png"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien20.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/NhanVien/NhanVien20#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "e1cryh9mab",
+      "Integrity": "sst2N/ikatoj2ztdu/ufOHmuzKJvG1aaHRCv3aJgqBQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\NhanVien\\NhanVien20.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien3.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/NhanVien/NhanVien3#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "to6gc7klu6",
+      "Integrity": "3Q1YBnK5LZNWIvB9akrwxXFzlTIKjPK51LsKRElqKGE=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\NhanVien\\NhanVien3.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien4.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/NhanVien/NhanVien4#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "awg3c973qd",
+      "Integrity": "SvgHDJHGlAYMnZIEMH0apVgk7MIXqMygZq4fTc5GFmA=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\NhanVien\\NhanVien4.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien5.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/NhanVien/NhanVien5#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "23v4q90q9z",
+      "Integrity": "XhT1cAVzZIlQCdPyEhNeTFOCZ+5i2qan8GCBMYdRzgw=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\NhanVien\\NhanVien5.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien6.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/NhanVien/NhanVien6#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "877op4lym4",
+      "Integrity": "dFPTPSPuiw8HIKIK/O+5rxi0O3grbuWJNMo6INPdZjI=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\NhanVien\\NhanVien6.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien7.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/NhanVien/NhanVien7#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "nm0rf574uh",
+      "Integrity": "704dsV0QMjtKoyJQ6tK+7bOkH4EGjZur40zrxieOk6s=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\NhanVien\\NhanVien7.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien8.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/NhanVien/NhanVien8#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "w0bkatnnc2",
+      "Integrity": "MH1maMUDoDuesZlTyWdz2pxjRLlQeCffkQncDCn42xU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\NhanVien\\NhanVien8.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien9.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/NhanVien/NhanVien9#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "qvds3or6tq",
+      "Integrity": "RqjhMiYI3m599Kuf67bcBg2PXTw6rmELs1QD05/GMvs=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\NhanVien\\NhanVien9.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\258a308d-26af-4b85-8620-6f59d301542a_natra-3.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "uploads/258a308d-26af-4b85-8620-6f59d301542a_natra-3#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "hh1ow1ovod",
+      "Integrity": "e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\258a308d-26af-4b85-8620-6f59d301542a_natra-3.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\30ad4ac4-64ad-40ac-b351-feda02a7bc95_natra-3.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "uploads/30ad4ac4-64ad-40ac-b351-feda02a7bc95_natra-3#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "hh1ow1ovod",
+      "Integrity": "e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\30ad4ac4-64ad-40ac-b351-feda02a7bc95_natra-3.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\3431613f-e6d8-42aa-83c6-d7a69c4cefca_natra-3.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "uploads/3431613f-e6d8-42aa-83c6-d7a69c4cefca_natra-3#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "hh1ow1ovod",
+      "Integrity": "e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\3431613f-e6d8-42aa-83c6-d7a69c4cefca_natra-3.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\39446c7e-9b7c-4f0f-bf2a-ef7a3766e795_natra-3.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "uploads/39446c7e-9b7c-4f0f-bf2a-ef7a3766e795_natra-3#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "hh1ow1ovod",
+      "Integrity": "e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\39446c7e-9b7c-4f0f-bf2a-ef7a3766e795_natra-3.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\4320c8d3-90d2-4376-9cb7-fe844f15b672_natra-3.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "uploads/4320c8d3-90d2-4376-9cb7-fe844f15b672_natra-3#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "hh1ow1ovod",
+      "Integrity": "e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\4320c8d3-90d2-4376-9cb7-fe844f15b672_natra-3.jpg"
+    },
+    {
       "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\5672ffcd-b23b-4749-815d-6a2051b89a3d_natra-3.jpg",
       "SourceId": "APIQuanLyCuaHang",
       "SourceType": "Discovered",
@@ -1317,6 +1842,195 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\5672ffcd-b23b-4749-815d-6a2051b89a3d_natra-3.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\8ca560a4-0d44-40cb-be2b-8b935ff0e668_natra-3.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "uploads/8ca560a4-0d44-40cb-be2b-8b935ff0e668_natra-3#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "hh1ow1ovod",
+      "Integrity": "e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\8ca560a4-0d44-40cb-be2b-8b935ff0e668_natra-3.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\8e6ba019-3683-4d23-ab44-9131186029b9_One-Piece-Gear-5.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "uploads/8e6ba019-3683-4d23-ab44-9131186029b9_One-Piece-Gear-5#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "qt7cvm3wgc",
+      "Integrity": "Yoa9vKavTGjAJMw6MYP/WMHqsnHLmaWw4j2CvvfPuAk=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\8e6ba019-3683-4d23-ab44-9131186029b9_One-Piece-Gear-5.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\a3619e00-f9f7-43c0-bf3e-e9968428a722_natra-3.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "uploads/a3619e00-f9f7-43c0-bf3e-e9968428a722_natra-3#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "hh1ow1ovod",
+      "Integrity": "e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\a3619e00-f9f7-43c0-bf3e-e9968428a722_natra-3.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\bf50dee4-8dfa-4a46-8c98-fd6bd4f4f96a_One-Piece-Gear-5.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "uploads/bf50dee4-8dfa-4a46-8c98-fd6bd4f4f96a_One-Piece-Gear-5#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "qt7cvm3wgc",
+      "Integrity": "Yoa9vKavTGjAJMw6MYP/WMHqsnHLmaWw4j2CvvfPuAk=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\bf50dee4-8dfa-4a46-8c98-fd6bd4f4f96a_One-Piece-Gear-5.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\c5c7a14b-d9f2-41b5-b30f-5302019339fa_natra-3.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "uploads/c5c7a14b-d9f2-41b5-b30f-5302019339fa_natra-3#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "hh1ow1ovod",
+      "Integrity": "e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\c5c7a14b-d9f2-41b5-b30f-5302019339fa_natra-3.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\cbe9ba78-55fb-42af-82ec-312499d471a3_natra-3.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "uploads/cbe9ba78-55fb-42af-82ec-312499d471a3_natra-3#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "hh1ow1ovod",
+      "Integrity": "e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\cbe9ba78-55fb-42af-82ec-312499d471a3_natra-3.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\ce7fee62-de91-4d25-911b-d3cd90dafacc_One-Piece-Gear-5.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "uploads/ce7fee62-de91-4d25-911b-d3cd90dafacc_One-Piece-Gear-5#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "qt7cvm3wgc",
+      "Integrity": "Yoa9vKavTGjAJMw6MYP/WMHqsnHLmaWw4j2CvvfPuAk=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\ce7fee62-de91-4d25-911b-d3cd90dafacc_One-Piece-Gear-5.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\d37a20c5-c0b5-44b7-aa39-fc83d4f38f98_natra-3.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "uploads/d37a20c5-c0b5-44b7-aa39-fc83d4f38f98_natra-3#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "hh1ow1ovod",
+      "Integrity": "e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\d37a20c5-c0b5-44b7-aa39-fc83d4f38f98_natra-3.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\e8f90caa-84b3-4dca-adb6-16d5b0be1e59_natra-3.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "uploads/e8f90caa-84b3-4dca-adb6-16d5b0be1e59_natra-3#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "hh1ow1ovod",
+      "Integrity": "e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\e8f90caa-84b3-4dca-adb6-16d5b0be1e59_natra-3.jpg"
     }
   ],
   "Endpoints": [
@@ -6323,6 +7037,2056 @@
       ]
     },
     {
+      "Route": "HinhAnh/NhanVien/NhanVien1.nfguqeab3k.png",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien1.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "831606"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"TZ+03HWiN5iGH7LRfeyJ5yrf+SYAQMVYKsPFdesd6Xc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "nfguqeab3k"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/NhanVien/NhanVien1.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-TZ+03HWiN5iGH7LRfeyJ5yrf+SYAQMVYKsPFdesd6Xc="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien1.png",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien1.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "831606"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"TZ+03HWiN5iGH7LRfeyJ5yrf+SYAQMVYKsPFdesd6Xc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-TZ+03HWiN5iGH7LRfeyJ5yrf+SYAQMVYKsPFdesd6Xc="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien10.e1cryh9mab.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien10.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5085"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"sst2N/ikatoj2ztdu/ufOHmuzKJvG1aaHRCv3aJgqBQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "e1cryh9mab"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/NhanVien/NhanVien10.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-sst2N/ikatoj2ztdu/ufOHmuzKJvG1aaHRCv3aJgqBQ="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien10.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien10.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5085"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"sst2N/ikatoj2ztdu/ufOHmuzKJvG1aaHRCv3aJgqBQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-sst2N/ikatoj2ztdu/ufOHmuzKJvG1aaHRCv3aJgqBQ="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien11.nfguqeab3k.png",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien11.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "831606"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"TZ+03HWiN5iGH7LRfeyJ5yrf+SYAQMVYKsPFdesd6Xc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "nfguqeab3k"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/NhanVien/NhanVien11.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-TZ+03HWiN5iGH7LRfeyJ5yrf+SYAQMVYKsPFdesd6Xc="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien11.png",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien11.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "831606"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"TZ+03HWiN5iGH7LRfeyJ5yrf+SYAQMVYKsPFdesd6Xc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-TZ+03HWiN5iGH7LRfeyJ5yrf+SYAQMVYKsPFdesd6Xc="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien12.png",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien12.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "873943"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"3RqnrDoje58+haZg5v79Rga/aOIvuVnGE8iU7wpRGOI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-3RqnrDoje58+haZg5v79Rga/aOIvuVnGE8iU7wpRGOI="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien12.xrfwf1n6ta.png",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien12.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "873943"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"3RqnrDoje58+haZg5v79Rga/aOIvuVnGE8iU7wpRGOI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "xrfwf1n6ta"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/NhanVien/NhanVien12.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-3RqnrDoje58+haZg5v79Rga/aOIvuVnGE8iU7wpRGOI="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien13.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien13.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "15199"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"3Q1YBnK5LZNWIvB9akrwxXFzlTIKjPK51LsKRElqKGE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-3Q1YBnK5LZNWIvB9akrwxXFzlTIKjPK51LsKRElqKGE="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien13.to6gc7klu6.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien13.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "15199"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"3Q1YBnK5LZNWIvB9akrwxXFzlTIKjPK51LsKRElqKGE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "to6gc7klu6"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/NhanVien/NhanVien13.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-3Q1YBnK5LZNWIvB9akrwxXFzlTIKjPK51LsKRElqKGE="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien14.awg3c973qd.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien14.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "357398"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SvgHDJHGlAYMnZIEMH0apVgk7MIXqMygZq4fTc5GFmA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "awg3c973qd"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/NhanVien/NhanVien14.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-SvgHDJHGlAYMnZIEMH0apVgk7MIXqMygZq4fTc5GFmA="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien14.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien14.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "357398"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SvgHDJHGlAYMnZIEMH0apVgk7MIXqMygZq4fTc5GFmA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-SvgHDJHGlAYMnZIEMH0apVgk7MIXqMygZq4fTc5GFmA="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien15.23v4q90q9z.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien15.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3490"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"XhT1cAVzZIlQCdPyEhNeTFOCZ+5i2qan8GCBMYdRzgw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "23v4q90q9z"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/NhanVien/NhanVien15.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-XhT1cAVzZIlQCdPyEhNeTFOCZ+5i2qan8GCBMYdRzgw="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien15.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien15.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3490"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"XhT1cAVzZIlQCdPyEhNeTFOCZ+5i2qan8GCBMYdRzgw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-XhT1cAVzZIlQCdPyEhNeTFOCZ+5i2qan8GCBMYdRzgw="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien16.877op4lym4.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien16.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4522"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dFPTPSPuiw8HIKIK/O+5rxi0O3grbuWJNMo6INPdZjI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "877op4lym4"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/NhanVien/NhanVien16.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-dFPTPSPuiw8HIKIK/O+5rxi0O3grbuWJNMo6INPdZjI="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien16.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien16.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4522"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dFPTPSPuiw8HIKIK/O+5rxi0O3grbuWJNMo6INPdZjI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-dFPTPSPuiw8HIKIK/O+5rxi0O3grbuWJNMo6INPdZjI="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien17.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien17.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4672"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"704dsV0QMjtKoyJQ6tK+7bOkH4EGjZur40zrxieOk6s=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-704dsV0QMjtKoyJQ6tK+7bOkH4EGjZur40zrxieOk6s="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien17.nm0rf574uh.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien17.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4672"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"704dsV0QMjtKoyJQ6tK+7bOkH4EGjZur40zrxieOk6s=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "nm0rf574uh"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/NhanVien/NhanVien17.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-704dsV0QMjtKoyJQ6tK+7bOkH4EGjZur40zrxieOk6s="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien18.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien18.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3601"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"MH1maMUDoDuesZlTyWdz2pxjRLlQeCffkQncDCn42xU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-MH1maMUDoDuesZlTyWdz2pxjRLlQeCffkQncDCn42xU="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien18.w0bkatnnc2.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien18.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3601"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"MH1maMUDoDuesZlTyWdz2pxjRLlQeCffkQncDCn42xU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "w0bkatnnc2"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/NhanVien/NhanVien18.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-MH1maMUDoDuesZlTyWdz2pxjRLlQeCffkQncDCn42xU="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien19.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien19.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4103"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"RqjhMiYI3m599Kuf67bcBg2PXTw6rmELs1QD05/GMvs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-RqjhMiYI3m599Kuf67bcBg2PXTw6rmELs1QD05/GMvs="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien19.qvds3or6tq.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien19.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4103"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"RqjhMiYI3m599Kuf67bcBg2PXTw6rmELs1QD05/GMvs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "qvds3or6tq"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/NhanVien/NhanVien19.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-RqjhMiYI3m599Kuf67bcBg2PXTw6rmELs1QD05/GMvs="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien2.png",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien2.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "873943"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"3RqnrDoje58+haZg5v79Rga/aOIvuVnGE8iU7wpRGOI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-3RqnrDoje58+haZg5v79Rga/aOIvuVnGE8iU7wpRGOI="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien2.xrfwf1n6ta.png",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien2.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "873943"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"3RqnrDoje58+haZg5v79Rga/aOIvuVnGE8iU7wpRGOI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "xrfwf1n6ta"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/NhanVien/NhanVien2.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-3RqnrDoje58+haZg5v79Rga/aOIvuVnGE8iU7wpRGOI="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien20.e1cryh9mab.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien20.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5085"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"sst2N/ikatoj2ztdu/ufOHmuzKJvG1aaHRCv3aJgqBQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "e1cryh9mab"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/NhanVien/NhanVien20.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-sst2N/ikatoj2ztdu/ufOHmuzKJvG1aaHRCv3aJgqBQ="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien20.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien20.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5085"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"sst2N/ikatoj2ztdu/ufOHmuzKJvG1aaHRCv3aJgqBQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-sst2N/ikatoj2ztdu/ufOHmuzKJvG1aaHRCv3aJgqBQ="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien3.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "15199"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"3Q1YBnK5LZNWIvB9akrwxXFzlTIKjPK51LsKRElqKGE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-3Q1YBnK5LZNWIvB9akrwxXFzlTIKjPK51LsKRElqKGE="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien3.to6gc7klu6.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "15199"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"3Q1YBnK5LZNWIvB9akrwxXFzlTIKjPK51LsKRElqKGE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "to6gc7klu6"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/NhanVien/NhanVien3.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-3Q1YBnK5LZNWIvB9akrwxXFzlTIKjPK51LsKRElqKGE="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien4.awg3c973qd.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien4.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "357398"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SvgHDJHGlAYMnZIEMH0apVgk7MIXqMygZq4fTc5GFmA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "awg3c973qd"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/NhanVien/NhanVien4.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-SvgHDJHGlAYMnZIEMH0apVgk7MIXqMygZq4fTc5GFmA="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien4.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien4.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "357398"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SvgHDJHGlAYMnZIEMH0apVgk7MIXqMygZq4fTc5GFmA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-SvgHDJHGlAYMnZIEMH0apVgk7MIXqMygZq4fTc5GFmA="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien5.23v4q90q9z.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien5.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3490"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"XhT1cAVzZIlQCdPyEhNeTFOCZ+5i2qan8GCBMYdRzgw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "23v4q90q9z"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/NhanVien/NhanVien5.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-XhT1cAVzZIlQCdPyEhNeTFOCZ+5i2qan8GCBMYdRzgw="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien5.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien5.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3490"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"XhT1cAVzZIlQCdPyEhNeTFOCZ+5i2qan8GCBMYdRzgw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-XhT1cAVzZIlQCdPyEhNeTFOCZ+5i2qan8GCBMYdRzgw="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien6.877op4lym4.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien6.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4522"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dFPTPSPuiw8HIKIK/O+5rxi0O3grbuWJNMo6INPdZjI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "877op4lym4"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/NhanVien/NhanVien6.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-dFPTPSPuiw8HIKIK/O+5rxi0O3grbuWJNMo6INPdZjI="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien6.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien6.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4522"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dFPTPSPuiw8HIKIK/O+5rxi0O3grbuWJNMo6INPdZjI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-dFPTPSPuiw8HIKIK/O+5rxi0O3grbuWJNMo6INPdZjI="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien7.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien7.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4672"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"704dsV0QMjtKoyJQ6tK+7bOkH4EGjZur40zrxieOk6s=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-704dsV0QMjtKoyJQ6tK+7bOkH4EGjZur40zrxieOk6s="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien7.nm0rf574uh.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien7.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4672"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"704dsV0QMjtKoyJQ6tK+7bOkH4EGjZur40zrxieOk6s=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "nm0rf574uh"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/NhanVien/NhanVien7.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-704dsV0QMjtKoyJQ6tK+7bOkH4EGjZur40zrxieOk6s="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien8.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien8.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3601"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"MH1maMUDoDuesZlTyWdz2pxjRLlQeCffkQncDCn42xU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-MH1maMUDoDuesZlTyWdz2pxjRLlQeCffkQncDCn42xU="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien8.w0bkatnnc2.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien8.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3601"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"MH1maMUDoDuesZlTyWdz2pxjRLlQeCffkQncDCn42xU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "w0bkatnnc2"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/NhanVien/NhanVien8.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-MH1maMUDoDuesZlTyWdz2pxjRLlQeCffkQncDCn42xU="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien9.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien9.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4103"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"RqjhMiYI3m599Kuf67bcBg2PXTw6rmELs1QD05/GMvs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-RqjhMiYI3m599Kuf67bcBg2PXTw6rmELs1QD05/GMvs="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/NhanVien/NhanVien9.qvds3or6tq.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\NhanVien\\NhanVien9.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4103"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"RqjhMiYI3m599Kuf67bcBg2PXTw6rmELs1QD05/GMvs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "qvds3or6tq"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/NhanVien/NhanVien9.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-RqjhMiYI3m599Kuf67bcBg2PXTw6rmELs1QD05/GMvs="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/258a308d-26af-4b85-8620-6f59d301542a_natra-3.hh1ow1ovod.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\258a308d-26af-4b85-8620-6f59d301542a_natra-3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "149269"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hh1ow1ovod"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/258a308d-26af-4b85-8620-6f59d301542a_natra-3.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/258a308d-26af-4b85-8620-6f59d301542a_natra-3.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\258a308d-26af-4b85-8620-6f59d301542a_natra-3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "149269"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/30ad4ac4-64ad-40ac-b351-feda02a7bc95_natra-3.hh1ow1ovod.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\30ad4ac4-64ad-40ac-b351-feda02a7bc95_natra-3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "149269"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hh1ow1ovod"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/30ad4ac4-64ad-40ac-b351-feda02a7bc95_natra-3.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/30ad4ac4-64ad-40ac-b351-feda02a7bc95_natra-3.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\30ad4ac4-64ad-40ac-b351-feda02a7bc95_natra-3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "149269"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/3431613f-e6d8-42aa-83c6-d7a69c4cefca_natra-3.hh1ow1ovod.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\3431613f-e6d8-42aa-83c6-d7a69c4cefca_natra-3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "149269"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hh1ow1ovod"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/3431613f-e6d8-42aa-83c6-d7a69c4cefca_natra-3.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/3431613f-e6d8-42aa-83c6-d7a69c4cefca_natra-3.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\3431613f-e6d8-42aa-83c6-d7a69c4cefca_natra-3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "149269"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/39446c7e-9b7c-4f0f-bf2a-ef7a3766e795_natra-3.hh1ow1ovod.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\39446c7e-9b7c-4f0f-bf2a-ef7a3766e795_natra-3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "149269"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hh1ow1ovod"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/39446c7e-9b7c-4f0f-bf2a-ef7a3766e795_natra-3.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/39446c7e-9b7c-4f0f-bf2a-ef7a3766e795_natra-3.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\39446c7e-9b7c-4f0f-bf2a-ef7a3766e795_natra-3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "149269"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/4320c8d3-90d2-4376-9cb7-fe844f15b672_natra-3.hh1ow1ovod.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\4320c8d3-90d2-4376-9cb7-fe844f15b672_natra-3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "149269"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hh1ow1ovod"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/4320c8d3-90d2-4376-9cb7-fe844f15b672_natra-3.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/4320c8d3-90d2-4376-9cb7-fe844f15b672_natra-3.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\4320c8d3-90d2-4376-9cb7-fe844f15b672_natra-3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "149269"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I="
+        }
+      ]
+    },
+    {
       "Route": "uploads/5672ffcd-b23b-4749-815d-6a2051b89a3d_natra-3.hh1ow1ovod.jpg",
       "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\5672ffcd-b23b-4749-815d-6a2051b89a3d_natra-3.jpg",
       "Selectors": [],
@@ -6391,6 +9155,744 @@
         {
           "Name": "Last-Modified",
           "Value": "Mon, 07 Apr 2025 15:20:28 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/8ca560a4-0d44-40cb-be2b-8b935ff0e668_natra-3.hh1ow1ovod.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\8ca560a4-0d44-40cb-be2b-8b935ff0e668_natra-3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "149269"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hh1ow1ovod"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/8ca560a4-0d44-40cb-be2b-8b935ff0e668_natra-3.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/8ca560a4-0d44-40cb-be2b-8b935ff0e668_natra-3.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\8ca560a4-0d44-40cb-be2b-8b935ff0e668_natra-3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "149269"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/8e6ba019-3683-4d23-ab44-9131186029b9_One-Piece-Gear-5.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\8e6ba019-3683-4d23-ab44-9131186029b9_One-Piece-Gear-5.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "155252"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Yoa9vKavTGjAJMw6MYP/WMHqsnHLmaWw4j2CvvfPuAk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Yoa9vKavTGjAJMw6MYP/WMHqsnHLmaWw4j2CvvfPuAk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/8e6ba019-3683-4d23-ab44-9131186029b9_One-Piece-Gear-5.qt7cvm3wgc.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\8e6ba019-3683-4d23-ab44-9131186029b9_One-Piece-Gear-5.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "155252"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Yoa9vKavTGjAJMw6MYP/WMHqsnHLmaWw4j2CvvfPuAk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "qt7cvm3wgc"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/8e6ba019-3683-4d23-ab44-9131186029b9_One-Piece-Gear-5.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Yoa9vKavTGjAJMw6MYP/WMHqsnHLmaWw4j2CvvfPuAk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/a3619e00-f9f7-43c0-bf3e-e9968428a722_natra-3.hh1ow1ovod.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\a3619e00-f9f7-43c0-bf3e-e9968428a722_natra-3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "149269"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hh1ow1ovod"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/a3619e00-f9f7-43c0-bf3e-e9968428a722_natra-3.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/a3619e00-f9f7-43c0-bf3e-e9968428a722_natra-3.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\a3619e00-f9f7-43c0-bf3e-e9968428a722_natra-3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "149269"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/bf50dee4-8dfa-4a46-8c98-fd6bd4f4f96a_One-Piece-Gear-5.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\bf50dee4-8dfa-4a46-8c98-fd6bd4f4f96a_One-Piece-Gear-5.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "155252"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Yoa9vKavTGjAJMw6MYP/WMHqsnHLmaWw4j2CvvfPuAk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Yoa9vKavTGjAJMw6MYP/WMHqsnHLmaWw4j2CvvfPuAk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/bf50dee4-8dfa-4a46-8c98-fd6bd4f4f96a_One-Piece-Gear-5.qt7cvm3wgc.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\bf50dee4-8dfa-4a46-8c98-fd6bd4f4f96a_One-Piece-Gear-5.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "155252"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Yoa9vKavTGjAJMw6MYP/WMHqsnHLmaWw4j2CvvfPuAk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "qt7cvm3wgc"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/bf50dee4-8dfa-4a46-8c98-fd6bd4f4f96a_One-Piece-Gear-5.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Yoa9vKavTGjAJMw6MYP/WMHqsnHLmaWw4j2CvvfPuAk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/c5c7a14b-d9f2-41b5-b30f-5302019339fa_natra-3.hh1ow1ovod.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\c5c7a14b-d9f2-41b5-b30f-5302019339fa_natra-3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "149269"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hh1ow1ovod"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/c5c7a14b-d9f2-41b5-b30f-5302019339fa_natra-3.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/c5c7a14b-d9f2-41b5-b30f-5302019339fa_natra-3.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\c5c7a14b-d9f2-41b5-b30f-5302019339fa_natra-3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "149269"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/cbe9ba78-55fb-42af-82ec-312499d471a3_natra-3.hh1ow1ovod.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\cbe9ba78-55fb-42af-82ec-312499d471a3_natra-3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "149269"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hh1ow1ovod"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/cbe9ba78-55fb-42af-82ec-312499d471a3_natra-3.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/cbe9ba78-55fb-42af-82ec-312499d471a3_natra-3.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\cbe9ba78-55fb-42af-82ec-312499d471a3_natra-3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "149269"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/ce7fee62-de91-4d25-911b-d3cd90dafacc_One-Piece-Gear-5.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\ce7fee62-de91-4d25-911b-d3cd90dafacc_One-Piece-Gear-5.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "155252"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Yoa9vKavTGjAJMw6MYP/WMHqsnHLmaWw4j2CvvfPuAk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Yoa9vKavTGjAJMw6MYP/WMHqsnHLmaWw4j2CvvfPuAk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/ce7fee62-de91-4d25-911b-d3cd90dafacc_One-Piece-Gear-5.qt7cvm3wgc.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\ce7fee62-de91-4d25-911b-d3cd90dafacc_One-Piece-Gear-5.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "155252"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Yoa9vKavTGjAJMw6MYP/WMHqsnHLmaWw4j2CvvfPuAk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "qt7cvm3wgc"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/ce7fee62-de91-4d25-911b-d3cd90dafacc_One-Piece-Gear-5.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Yoa9vKavTGjAJMw6MYP/WMHqsnHLmaWw4j2CvvfPuAk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/d37a20c5-c0b5-44b7-aa39-fc83d4f38f98_natra-3.hh1ow1ovod.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\d37a20c5-c0b5-44b7-aa39-fc83d4f38f98_natra-3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "149269"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hh1ow1ovod"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/d37a20c5-c0b5-44b7-aa39-fc83d4f38f98_natra-3.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/d37a20c5-c0b5-44b7-aa39-fc83d4f38f98_natra-3.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\d37a20c5-c0b5-44b7-aa39-fc83d4f38f98_natra-3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "149269"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/e8f90caa-84b3-4dca-adb6-16d5b0be1e59_natra-3.hh1ow1ovod.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\e8f90caa-84b3-4dca-adb6-16d5b0be1e59_natra-3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "149269"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hh1ow1ovod"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/e8f90caa-84b3-4dca-adb6-16d5b0be1e59_natra-3.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/e8f90caa-84b3-4dca-adb6-16d5b0be1e59_natra-3.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\e8f90caa-84b3-4dca-adb6-16d5b0be1e59_natra-3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "149269"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 15:26:41 GMT"
         },
         {
           "Name": "Cache-Control",

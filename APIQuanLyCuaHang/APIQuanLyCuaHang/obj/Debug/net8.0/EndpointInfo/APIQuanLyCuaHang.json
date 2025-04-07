@@ -1864,6 +1864,346 @@
         }
       }
     },
+    "/api/Staff": {
+      "get": {
+        "tags": [
+          "Staff"
+        ],
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "gioiTinh",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tinhTrang",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Staff"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "MaNv": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "HoTen": {
+                    "type": "string"
+                  },
+                  "GioiTinh": {
+                    "type": "string"
+                  },
+                  "NgaySinh": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "DiaChi": {
+                    "type": "string"
+                  },
+                  "Cccd": {
+                    "type": "string"
+                  },
+                  "Sdt": {
+                    "type": "string"
+                  },
+                  "Email": {
+                    "type": "string"
+                  },
+                  "NgayVaoLam": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "TenTaiKhoan": {
+                    "type": "string"
+                  },
+                  "MatKhau": {
+                    "type": "string"
+                  },
+                  "TinhTrang": {
+                    "type": "string"
+                  },
+                  "IsDelete": {
+                    "type": "boolean"
+                  },
+                  "MaChucVu": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "HinhAnh": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "HinhAnhDuongDan": {
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "MaNv": {
+                  "style": "form"
+                },
+                "HoTen": {
+                  "style": "form"
+                },
+                "GioiTinh": {
+                  "style": "form"
+                },
+                "NgaySinh": {
+                  "style": "form"
+                },
+                "DiaChi": {
+                  "style": "form"
+                },
+                "Cccd": {
+                  "style": "form"
+                },
+                "Sdt": {
+                  "style": "form"
+                },
+                "Email": {
+                  "style": "form"
+                },
+                "NgayVaoLam": {
+                  "style": "form"
+                },
+                "TenTaiKhoan": {
+                  "style": "form"
+                },
+                "MatKhau": {
+                  "style": "form"
+                },
+                "TinhTrang": {
+                  "style": "form"
+                },
+                "IsDelete": {
+                  "style": "form"
+                },
+                "MaChucVu": {
+                  "style": "form"
+                },
+                "HinhAnh": {
+                  "style": "form"
+                },
+                "HinhAnhDuongDan": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Staff/{id}": {
+      "get": {
+        "tags": [
+          "Staff"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Staff"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "MaNv": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "HoTen": {
+                    "type": "string"
+                  },
+                  "GioiTinh": {
+                    "type": "string"
+                  },
+                  "NgaySinh": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "DiaChi": {
+                    "type": "string"
+                  },
+                  "Cccd": {
+                    "type": "string"
+                  },
+                  "Sdt": {
+                    "type": "string"
+                  },
+                  "Email": {
+                    "type": "string"
+                  },
+                  "NgayVaoLam": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "TenTaiKhoan": {
+                    "type": "string"
+                  },
+                  "MatKhau": {
+                    "type": "string"
+                  },
+                  "TinhTrang": {
+                    "type": "string"
+                  },
+                  "IsDelete": {
+                    "type": "boolean"
+                  },
+                  "MaChucVu": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "HinhAnh": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "HinhAnhDuongDan": {
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "MaNv": {
+                  "style": "form"
+                },
+                "HoTen": {
+                  "style": "form"
+                },
+                "GioiTinh": {
+                  "style": "form"
+                },
+                "NgaySinh": {
+                  "style": "form"
+                },
+                "DiaChi": {
+                  "style": "form"
+                },
+                "Cccd": {
+                  "style": "form"
+                },
+                "Sdt": {
+                  "style": "form"
+                },
+                "Email": {
+                  "style": "form"
+                },
+                "NgayVaoLam": {
+                  "style": "form"
+                },
+                "TenTaiKhoan": {
+                  "style": "form"
+                },
+                "MatKhau": {
+                  "style": "form"
+                },
+                "TinhTrang": {
+                  "style": "form"
+                },
+                "IsDelete": {
+                  "style": "form"
+                },
+                "MaChucVu": {
+                  "style": "form"
+                },
+                "HinhAnh": {
+                  "style": "form"
+                },
+                "HinhAnhDuongDan": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Staff/{id}/toggle-delete": {
+      "patch": {
+        "tags": [
+          "Staff"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Table": {
       "get": {
         "tags": [

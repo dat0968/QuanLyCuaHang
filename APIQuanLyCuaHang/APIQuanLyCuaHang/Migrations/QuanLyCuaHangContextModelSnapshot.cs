@@ -614,6 +614,9 @@ namespace APIQuanLyCuaHang.Migrations
                         .HasMaxLength(5)
                         .HasColumnType("nvarchar(5)");
 
+                    b.Property<string>("HinhAnh")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("HoTen")
                         .IsRequired()
                         .HasMaxLength(40)

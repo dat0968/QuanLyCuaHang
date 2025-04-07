@@ -66,22 +66,16 @@ import '../../assets/admin/js/main.js'
                 <RouterLink to="/admin/customer">
                   <i class="fas fa-user"></i><span>KHÁCH HÀNG</span>
                 </RouterLink> 
+              </li>
+              <li>
                 <RouterLink to="/Admin/Table">
                   <i class="fas fa-box"></i><span> BÀN</span>
                 </RouterLink>
               </li>
               <li>
-                <a href="javaScript:void();">
-                  <i class="icon-layers"></i><span>Danh sách mục</span
-                  ><i class="icon-arrow-right pull-right"></i>
-                </a>
-                <ul class="xp-vertical-submenu">
-                  <RouterLink to="/Admin/customer">
-                  <i class="fas fa-box"></i><span>Nhan Vien</span>
-                </RouterLink>
-                  <li><a href="d">Mục 2</a></li>
-                  <li><a href="d">Muc 3</a></li>
-                </ul>
+                <router-link to="/admin/staff">
+                  <i class="fas fa-user"></i><span>NHÂN VIÊN</span>
+                </router-link>
               </li>
               <li>
                 <a href="javaScript:void();">
@@ -94,16 +88,6 @@ import '../../assets/admin/js/main.js'
                   <li><a href="d">Mục 3</a></li>
                 </ul>
               </li>
-              <!-- <li>
-                            <a href="javaScript:void();">
-                                <i class="icon-drop"></i><span>Danh sách mục</span><i class="icon-arrow-right pull-right"></i>
-                            </a>
-                            <ul class="xp-vertical-submenu">
-                                <li><a href="">Mục 1</a></li>                                
-                                <li><a href="">Mục 2</a></li>
-                                <li><a href="">Mục 3</a></li>
-                            </ul>
-                        </li> -->
             </ul>
           </div>
           <!-- End XP Navigationbar -->

@@ -1,7 +1,6 @@
 ﻿using APIQuanLyCuaHang.DbInitializer;
 using APIQuanLyCuaHang.Models;
 using APIQuanLyCuaHang.Repositories.Bill;
-using APIQuanLyCuaHang.Repositories.Bill;
 using APIQuanLyCuaHang.Repositories.Category;
 using APIQuanLyCuaHang.Repositories.Combo;
 using APIQuanLyCuaHang.Repositories.Customer;
@@ -18,18 +17,11 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using OfficeOpenXml;
-using APIQuanLyCuaHang.Repositories.Combo;
-using APIQuanLyCuaHang.Repositories.DetailCombo;
-using APIQuanLyCuaHang.Repositories.Bill;
-using APIQuanLyCuaHang.Repositories.DetailBill;
-using APIQuanLyCuaHang.Repositories.Bill;
 using APIQuanLyCuaHang.Repository.MaCoupon;
 using APIQuanLyCuaHang.Repositories;
-using System.ComponentModel;
 using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
@@ -71,7 +63,7 @@ builder.Services.AddDbContext<QuanLyCuaHangContext>(options =>
 });
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll",
+    options.AddPolicy("MyPolicy",
         builder =>
         {
             builder.AllowAnyOrigin()
@@ -79,8 +71,6 @@ builder.Services.AddCors(options =>
                    .AllowAnyHeader();
         });
 });
-
-
 builder.Services.AddScoped<IProduct, Product>();
 builder.Services.AddScoped<IDetailProduct, DetailProduct>();
 builder.Services.AddScoped<IimageProduct, imageProduct>();
@@ -88,6 +78,7 @@ builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<ComboService>();
 builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<ICategory, Category>();
+builder.Services.AddScoped<IStaffRepository, StaffRepository>();
 var SecretKey = builder.Configuration["JWT:SecretKey"];
 var SecretKeyBytes = Encoding.UTF8.GetBytes(SecretKey);
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
@@ -136,14 +127,10 @@ if (app.Environment.IsDevelopment())
 }
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseStaticFiles();
 app.UseCors("MyPolicy");
-app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization(); 
-
 app.MapControllers();
-app.UseStaticFiles();
 
 SeedDb();
 

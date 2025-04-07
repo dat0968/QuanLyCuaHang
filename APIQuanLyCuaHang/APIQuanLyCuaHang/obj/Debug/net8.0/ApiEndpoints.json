@@ -1246,6 +1246,251 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.StaffController",
+    "Method": "GetStaff",
+    "RelativePath": "api/Staff",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "search",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "gioiTinh",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "tinhTrang",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.StaffController",
+    "Method": "AddStaff",
+    "RelativePath": "api/Staff",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "MaNv",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "HoTen",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "GioiTinh",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "NgaySinh",
+        "Type": "System.Nullable\u00601[[System.DateOnly, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "DiaChi",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Cccd",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Sdt",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Email",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "NgayVaoLam",
+        "Type": "System.DateOnly",
+        "IsRequired": false
+      },
+      {
+        "Name": "TenTaiKhoan",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "MatKhau",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "TinhTrang",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "IsDelete",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "MaChucVu",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "HinhAnh",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "HinhAnhDuongDan",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.StaffController",
+    "Method": "GetStaffById",
+    "RelativePath": "api/Staff/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.StaffController",
+    "Method": "UpdateStaff",
+    "RelativePath": "api/Staff/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "MaNv",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "HoTen",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "GioiTinh",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "NgaySinh",
+        "Type": "System.Nullable\u00601[[System.DateOnly, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "DiaChi",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Cccd",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Sdt",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Email",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "NgayVaoLam",
+        "Type": "System.DateOnly",
+        "IsRequired": false
+      },
+      {
+        "Name": "TenTaiKhoan",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "MatKhau",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "TinhTrang",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "IsDelete",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "MaChucVu",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "HinhAnh",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "HinhAnhDuongDan",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.StaffController",
+    "Method": "ToggleDeleteStaff",
+    "RelativePath": "api/Staff/{id}/toggle-delete",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "APIQuanLyCuaHang.Controllers.TableController",
     "Method": "GetAllTables",
     "RelativePath": "api/Table",

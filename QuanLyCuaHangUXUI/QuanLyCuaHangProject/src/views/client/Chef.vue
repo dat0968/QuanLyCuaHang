@@ -12,7 +12,7 @@ import OurExperienceChefs from '../../components/OurExperienceChefs.vue'
             <div class="col-lg-12">
               <div class="breadcrumb_iner text-center">
                 <div class="breadcrumb_iner_item">
-                  <h2>Experienced Chefs</h2>
+                  <h2>Đầu bếp giàu kinh nghiệm</h2>
                 </div>
               </div>
             </div>
