@@ -1,5 +1,5 @@
 <template>
-  <span @click="isModalOpen = true">Chấm công bằng QR</span>
+  <span @click="checkAccessAndOpenModal">Chấm công bằng QR</span>
   <div>
     <teleport :to="modalTarget" v-if="isModalOpen">
       <div class="modal fade show d-block" tabindex="-1" @click.self="isModalOpen = false">
@@ -33,6 +33,8 @@
 <script>
 import QrScanner from '@/components/shift/QrScanner.vue'
 import ShiftManager from '@/components/shift/ShiftManager.vue'
+import authService from '@/services/authService'
+import toastr from 'toastr'
 
 export default {
   name: 'QrScanAndShiftManagerModal',
@@ -45,6 +47,19 @@ export default {
     }
   },
   methods: {
+    checkAccessAndOpenModal() {
+      const roleUser = authService.getRole()
+      console.log(`Vai trò đang truy cập ${roleUser}`)
+      if (authService.isUserHaveRole(['Admin', 'Cửa hàng trưởng'])) {
+        this.isScanning = false // Mở quản lý ca làm việc
+        this.isModalOpen = true
+      } else if (authService.isUserHaveRole(['Nhân viên'])) {
+        this.isScanning = true // Mở quét QR
+        this.isModalOpen = true
+      } else {
+        toastr.error('Bạn không có quyền truy cập.') // Hiển thị thông báo không có quyền
+      }
+    },
     toggleMode() {
       this.isScanning = !this.isScanning
     },

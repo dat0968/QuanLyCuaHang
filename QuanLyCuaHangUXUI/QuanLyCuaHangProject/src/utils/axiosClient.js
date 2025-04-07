@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { jwtDecode } from 'jwt-decode' // Thư viện cần: npm install jwt-decode
+import { jwtDecode } from 'jwt-decode'
 import ResponseAPI from '@/models/ResponseAPI'
 import ConfigsRequest from '@/models/ConfigsRequest'
 
@@ -35,7 +35,7 @@ async function refreshAccessToken() {
   }
 
   try {
-    const response = await axios.post(axiosClient.baseURL + '/TruyCap/RefreshToken', {
+    const response = await axios.post(axiosClient.baseURL + '/Account/RenewAccessToken', {
       RefreshToken: refreshToken,
     })
 
