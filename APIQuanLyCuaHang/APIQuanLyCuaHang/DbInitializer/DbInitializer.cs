@@ -26,11 +26,15 @@ namespace APIQuanLyCuaHang.DbInitializer
             {
                 CreateATestAccount();
             }
+            if (!_db.Nhanviens.Any(nv => nv.Email == "staff666@gmail.com"))
+            {
+                CreateTestStaffAccount();
+            }
             //CreateOrderForTestUser("admin@default.com");
         }
         private void CreateATestAccount()
         {
-            // Tạo tài khoản mặc định
+            // ? Tạo tài khoản mặc định
             var defaultUser = new Khachhang
             {
                 HoTen = "Admin Default",
@@ -45,6 +49,26 @@ namespace APIQuanLyCuaHang.DbInitializer
             // Lưu vào cơ sở dữ liệu
             _db.Khachhangs.Add(defaultUser);
             _db.SaveChanges();
+        }
+        private void CreateTestStaffAccount()
+        {
+            // ? Tài khoản mặc định
+            // @param MaChucVu 1=Admin, 2==Cửa hàng trưởng, 3=Nhân viên bếp,4=Thu ngân,5=Phục vụ
+            var defaultStaff = new Nhanvien
+            {
+                HoTen = RandomData_DB.Instance.rdName(),
+                NgaySinh = DateOnly.FromDateTime(DateTime.Now.AddYears(-20)),
+                DiaChi = RandomData_DB.Instance.rdAddress(),
+                Cccd = "",
+                Sdt = RandomData_DB.Instance.RandomPhone(),
+                Email = "staff666@gmail.com",
+                NgayVaoLam = DateOnly.FromDateTime(DateTime.Now.AddYears(-1)),
+                TenTaiKhoan = "staff666",
+                MatKhau = BCrypt.Net.BCrypt.HashPassword("Admin@123"),
+                TinhTrang = "Ổn",
+                IsDelete = false,
+                MaChucVu = 1,
+            };
         }
         // Sửa đổi GenerateOrders để nhận kiểu dữ liệu cụ thể thay vì dynamic và bổ sung các trường còn thiếu
         private List<Hoadon> GenerateOrders(int numberOfOrders, Random rand, List<Khachhang> customers, List<int> employeeIds, List<Chitietsanpham> products)
