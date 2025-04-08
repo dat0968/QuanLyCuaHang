@@ -106,7 +106,7 @@ const routes = [
     path: '/ForgotPasswordStaff', name: 'ForgotPasswordStaff', component: ForgotPasswordStaff
   },
   {
-    path: '/Error', name: 'Error', component: Error
+    path: '/Error/:status', name: 'Error', component: Error
   },
   {
     path: '/GoogleLoginSuccess',

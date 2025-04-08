@@ -15,7 +15,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 const router = useRouter()
 const cartItems = ref([])
-
+let IdUser = ''
 const cartItemCount = computed(() => {
   return cartItems.value.reduce((total, item) => total + item.soLuong, 0)
 })
@@ -23,22 +23,29 @@ const cartItemCount = computed(() => {
 const goToCart = () => {
   router.push('/cart')
 }
-
+const token = Cookies.get('accessToken')
+if(token){
+  const decoded = jwtDecode(token)
+  IdUser = decoded.sub;
+}
+console.log(IdUser)
 const FetchCart = async () => {
   try {
-    const response = await fetch(`https://localhost:7139/api/Cart/120`, {
+    const response = await fetch(`https://localhost:7139/api/Cart/${IdUser}`, {
       method: 'GET',
-      Headers: {
+      headers: {
+        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
     })
     if (!response.ok) {
-      throw new Error('ERROR', response.status)
+      const errorMessage = await response.text(); 
+      throw new Error(`HTTP ${response.status} - ${response.statusText}\n${errorMessage}`)
     }
     const result = await response.json()
     cartItems.value = result.cartItems
   } catch (error) {
-    console.log(error)
+    console.log(error.message)
 
   }
 }

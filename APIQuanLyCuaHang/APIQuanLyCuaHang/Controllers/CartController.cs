@@ -19,7 +19,7 @@ namespace APIQuanLyCuaHang.Controllers
         }
 
         [HttpPost]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> AddToCart([FromBody] CartItemResquestDTO cartItem)
         {
             try
@@ -34,7 +34,7 @@ namespace APIQuanLyCuaHang.Controllers
         }
 
         [HttpGet("{maKh}")]
-        //[Authorize] 
+        [Authorize] 
         public async Task<IActionResult> GetCart(int maKh)
         {
             try
@@ -51,7 +51,7 @@ namespace APIQuanLyCuaHang.Controllers
         }
 
         [HttpPut("{id}")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> UpdateCartItem([FromRoute] int id, [FromBody] CartItemResquestDTO cartItem)
         {
             try

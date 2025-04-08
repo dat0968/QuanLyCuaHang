@@ -149,7 +149,6 @@ app.UseCors(options =>
     options.AllowAnyOrigin();
 });
 
-app.UseAuthorization();
 app.UseStaticFiles();
 app.UseCors("MyPolicy");
 app.UseAuthentication();

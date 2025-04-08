@@ -129,6 +129,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
 import Swal from 'sweetalert2'
+import Cookies from 'js-cookie'
 const router = useRouter()
 const toast = useToast()
 const cartItems = ref([])
@@ -166,8 +167,8 @@ const comboProducts = computed(() => {
 
 // Update giỏ hàng
 const UpdateCart = async (data, quantity) => {
-  console.log(data)
-  console.log(quantity)
+  const token = Cookies.get('accessToken')
+  console.log(token)
   try {
     const content = {
       maKh: '120',
