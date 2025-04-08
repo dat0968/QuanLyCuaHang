@@ -6,15 +6,15 @@ const coupons = ref([]);
 const showModal = ref(false);
 const isEdit = ref(false);
 const couponForm = ref({
-  maCode: '', // Để hiển thị khi chỉnh sửa, nhưng không cần nhập khi thêm mới
+  maCode: '',
   soTienGiam: null,
   phanTramGiam: null,
   ngayBatDau: '',
   ngayKetThuc: '',
-  trangThai: true,
+  trangThai: true, // Mặc định là true (Hoạt động)
   donHangToiThieu: null,
   soLuong: null,
-  soLuongDaDung: 0 // Thêm mặc định để đồng bộ với backend
+  soLuongDaDung: 0
 });
 
 const baseUrl = 'https://localhost:7139/api/Coupon';
@@ -25,7 +25,6 @@ const fetchCoupons = async () => {
     const response = await fetch(`${baseUrl}/GetAll`);
     const data = await response.json();
     if (data.success) {
-      console.log('Raw coupon data:', data.data);
       coupons.value = data.data.map(coupon => ({
         ...coupon,
         ngayBatDau: coupon.ngayBatDau ? new Date(coupon.ngayBatDau).toISOString().split('T')[0] : '',
@@ -55,12 +54,12 @@ const formatDateForInput = (dateString) => {
 const showAddModal = () => {
   isEdit.value = false;
   couponForm.value = {
-    maCode: '', // Không cần nhập, API sẽ tự tạo
+    maCode: '',
     soTienGiam: null,
     phanTramGiam: null,
     ngayBatDau: '',
     ngayKetThuc: '',
-    trangThai: true,
+    trangThai: true, // Mặc định là Hoạt động khi thêm mới
     donHangToiThieu: null,
     soLuong: null,
     soLuongDaDung: 0
@@ -72,7 +71,7 @@ const showAddModal = () => {
 const showEditModal = (coupon) => {
   isEdit.value = true;
   couponForm.value = {
-    maCode: coupon.maCode, // Hiển thị mã code khi chỉnh sửa
+    maCode: coupon.maCode,
     soTienGiam: coupon.soTienGiam,
     phanTramGiam: coupon.phanTramGiam,
     ngayBatDau: coupon.ngayBatDau ? formatDateForInput(coupon.ngayBatDau) : '',
@@ -90,13 +89,17 @@ const hideModal = () => {
   showModal.value = false;
 };
 
-// Validate discount fields
+// Validate discount fields: Chỉ cho phép nhập một trong hai
 const validateDiscount = () => {
   const hasSoTienGiam = couponForm.value.soTienGiam !== null && couponForm.value.soTienGiam > 0;
   const hasPhanTramGiam = couponForm.value.phanTramGiam !== null && couponForm.value.phanTramGiam > 0;
-  
+
+  if (hasSoTienGiam && hasPhanTramGiam) {
+    Swal.fire('Lỗi', 'Chỉ được nhập một trong hai: Số tiền giảm hoặc Phần trăm giảm', 'error');
+    return false;
+  }
   if (!hasSoTienGiam && !hasPhanTramGiam) {
-    Swal.fire('Lỗi', 'Phải có ít nhất một trong hai: Số tiền giảm hoặc Phần trăm giảm', 'error');
+    Swal.fire('Lỗi', 'Phải nhập ít nhất một trong hai: Số tiền giảm hoặc Phần trăm giảm', 'error');
     return false;
   }
   return true;
@@ -111,18 +114,18 @@ const createCoupon = async () => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        soTienGiam: couponForm.value.soTienGiam,
-        phanTramGiam: couponForm.value.phanTramGiam,
+        soTienGiam: couponForm.value.soTienGiam || 0, // Gửi 0 nếu không nhập
+        phanTramGiam: couponForm.value.phanTramGiam || 0, // Gửi 0 nếu không nhập
         ngayBatDau: couponForm.value.ngayBatDau ? new Date(couponForm.value.ngayBatDau).toISOString() : null,
         ngayKetThuc: couponForm.value.ngayKetThuc ? new Date(couponForm.value.ngayKetThuc).toISOString() : null,
         trangThai: couponForm.value.trangThai,
         donHangToiThieu: couponForm.value.donHangToiThieu || 0,
         soLuong: couponForm.value.soLuong,
-        soLuongDaDung: 0 // Gửi mặc định vì không chỉnh sửa trong form
+        soLuongDaDung: 0
       })
     });
     const data = await response.json();
-    
+
     if (data.success) {
       Swal.fire('Thành công', data.message, 'success');
       hideModal();
@@ -145,9 +148,9 @@ const updateCoupon = async () => {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        maCode: couponForm.value.maCode, // Gửi mã code để xác định bản ghi cần cập nhật
-        soTienGiam: couponForm.value.soTienGiam,
-        phanTramGiam: couponForm.value.phanTramGiam,
+        maCode: couponForm.value.maCode,
+        soTienGiam: couponForm.value.soTienGiam || 0,
+        phanTramGiam: couponForm.value.phanTramGiam || 0,
         ngayBatDau: couponForm.value.ngayBatDau ? new Date(couponForm.value.ngayBatDau).toISOString() : null,
         ngayKetThuc: couponForm.value.ngayKetThuc ? new Date(couponForm.value.ngayKetThuc).toISOString() : null,
         trangThai: couponForm.value.trangThai,
@@ -157,7 +160,7 @@ const updateCoupon = async () => {
       })
     });
     const data = await response.json();
-    
+
     if (data.success) {
       Swal.fire('Thành công', data.message, 'success');
       hideModal();
@@ -188,7 +191,7 @@ const deleteCoupon = async (id) => {
         method: 'PUT'
       });
       const data = await response.json();
-      
+
       if (data.success) {
         Swal.fire('Thành công', data.message, 'success');
         fetchCoupons();
@@ -208,8 +211,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <br>
-  <br>
+  
   <div class="container mt-4">
     <h1>Quản lý mã Coupon</h1>
     
@@ -266,14 +268,27 @@ onMounted(() => {
                 </div>
                 <div class="col-md-6 mb-3">
                   <label class="form-label">Số tiền giảm</label>
-                  <input v-model="couponForm.soTienGiam" type="number" class="form-control" min="0">
+                  <input 
+                    v-model="couponForm.soTienGiam" 
+                    type="number" 
+                    class="form-control" 
+                    min="0"
+                    :disabled="couponForm.phanTramGiam > 0" 
+                  >
                 </div>
                 <div class="col-md-6 mb-3">
                   <label class="form-label">Phần trăm giảm</label>
-                  <input v-model="couponForm.phanTramGiam" type="number" class="form-control" min="0" max="100">
+                  <input 
+                    v-model="couponForm.phanTramGiam" 
+                    type="number" 
+                    class="form-control" 
+                    min="0" 
+                    max="100"
+                    :disabled="couponForm.soTienGiam > 0" 
+                  >
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label class="form-label">Đơn hàng tối thiểu</label>
+                  <label class="form-label">Giá trị đơn hàng tối thiểu</label>
                   <input v-model="couponForm.donHangToiThieu" type="number" class="form-control" min="0">
                 </div>
                 <div class="col-md-6 mb-3">
@@ -288,7 +303,7 @@ onMounted(() => {
                   <label class="form-label">Số lượng</label>
                   <input v-model="couponForm.soLuong" type="number" class="form-control" min="1" required>
                 </div>
-                <div class="col-md-6 mb-3">
+                <div v-if="isEdit" class="col-md-6 mb-3">
                   <label class="form-label">Trạng thái</label>
                   <select v-model="couponForm.trangThai" class="form-control">
                     <option :value="true">Hoạt động</option>

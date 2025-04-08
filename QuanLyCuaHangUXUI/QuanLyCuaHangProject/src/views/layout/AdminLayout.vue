@@ -81,22 +81,33 @@ components: {
               </li>
               <li>
                 <RouterLink to="/Admin/Combo">
-                  <i class="fas fa-boxes"></i><span>COMBO</span>
-                </RouterLink>
-                <RouterLink to="/Admin/Bill">
-                  <i class="fas fa-box"></i><span>QUẢN LÝ ĐƠN HÀNG</span>
+                  <i class="fas fa-box"></i><span>COMBO</span>
                 </RouterLink>
               </li>
               <li>
-                <a href="javaScript:void();">
-                  <i class="icon-layers"></i><span>Danh sách mục</span
-                  ><i class="icon-arrow-right pull-right"></i>
-                </a>
-                <ul class="xp-vertical-submenu">
-                  <li><a href="d">Mục 1</a></li>
-                  <li><a href="d">Mục 2</a></li>
-                  <li><a href="d">Muc 3</a></li>
-                </ul>
+                <RouterLink to="/Admin/Bill">
+                  <i class="fas fa-box"></i><span> ĐƠN HÀNG</span>
+                </RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/Admin/Coupon">
+                  <i class="fas fa-box"></i><span> COUPON</span>
+                </RouterLink>
+              </li>
+              <li>
+                <RouterLink to="/admin/customer">
+                  <i class="fas fa-user"></i><span>KHÁCH HÀNG</span>
+                </RouterLink> 
+              </li>
+              <li>
+                <RouterLink to="/Admin/Table">
+                  <i class="fas fa-box"></i><span> BÀN</span>
+                </RouterLink>
+              </li>
+              <li>
+                <router-link to="/admin/staff">
+                  <i class="fas fa-user"></i><span>NHÂN VIÊN</span>
+                </router-link>
               </li>
               <li>
                 <a href="javaScript:void();">
@@ -109,16 +120,6 @@ components: {
                   <li><a href="d">Mục 3</a></li>
                 </ul>
               </li>
-              <!-- <li>
-                            <a href="javaScript:void();">
-                                <i class="icon-drop"></i><span>Danh sách mục</span><i class="icon-arrow-right pull-right"></i>
-                            </a>
-                            <ul class="xp-vertical-submenu">
-                                <li><a href="">Mục 1</a></li>                                
-                                <li><a href="">Mục 2</a></li>
-                                <li><a href="">Mục 3</a></li>
-                            </ul>
-                        </li> -->
             </ul>
           </div>
           <!-- End XP Navigationbar -->

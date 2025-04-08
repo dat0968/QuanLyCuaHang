@@ -23,6 +23,7 @@ public partial class Chitietsanpham
     public virtual ICollection<Giohang> Giohangs { get; set; } = new List<Giohang>();
 
     public virtual ICollection<Hinhanh> Hinhanhs { get; set; } = new List<Hinhanh>();
+    public virtual ICollection<GioHangCTCombo> GioHangCTCombos { get; set; } = new List<GioHangCTCombo>();
 
     public virtual Sanpham MaSpNavigation { get; set; } = null!;
 }

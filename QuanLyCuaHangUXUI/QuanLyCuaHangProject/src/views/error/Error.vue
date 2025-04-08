@@ -1,3 +1,11 @@
+<script setup>
+import { RouterLink } from 'vue-router';
+import { useRoute } from 'vue-router';
+import {ref} from 'vue'
+const route = useRoute();
+const status = ref('')
+status.value = route.params.status
+</script>
 <template>
   <div>
     <div class="xp-authenticate-bg"></div>
@@ -15,8 +23,7 @@
                 <div class="card-body">
                   <div class="xp-error-box text-center">
                     <h1 class="xp-error-title mb-3">
-                      <span class="text-black">4</span><span class="text-black">0</span
-                      ><span class="text-black">4</span>
+                      <span class="text-black">{{ status }}</span>
                     </h1>
                     <h4 class="xp-error-subtitle text-black m-b-30">
                       <i class="mdi mdi-emoticon-sad text-danger font-32"></i>pps! Không tìm thấy
@@ -41,9 +48,5 @@
     <!-- End XP Container -->
   </div>
 </template>
-
-<script>
-import { RouterLink } from 'vue-router'
-</script>
 
 <style></style>

@@ -42,7 +42,6 @@ async function fetchProducts() {
     }
     const data = await response.json()
     products.value = data.data
-    console.log(products.value)
   } catch (error) {
     console.error('Error fetching products:', error)
   }
@@ -340,7 +339,7 @@ onMounted(() => {
                     <h5>{{ product.khoangGia }}</h5>
                   </div>
                 </router-link>
-                <button class="btn-order"><i class="bi bi-cart"></i> ĐẶT HÀNG</button>
+                <router-link style="text-decoration: none;" :to="`/product/` + product.maSp" class="btn-order"><i class="fas fa-eye"></i> Xem chi tiết</router-link>
               </div>
             </div>
           </div>
@@ -378,7 +377,7 @@ onMounted(() => {
                     <h5>{{ combo.khoangGia }}</h5>
                   </div>
                 </router-link>
-                <button class="btn-order"><i class="bi bi-cart"></i> ĐẶT HÀNG</button>
+                <router-link style="text-decoration: none;" :to="`/combo/` + combo.maCombo" class="btn-order"><i class="fas fa-eye"></i> Xem chi tiết</router-link>
               </div>
             </div>
           </div>
@@ -416,7 +415,7 @@ onMounted(() => {
                     <h5>{{ product.khoangGia }}</h5>
                   </div>
                 </router-link>
-                <button class="btn-order"><i class="bi bi-cart"></i> ĐẶT HÀNG</button>
+                <router-link style="text-decoration: none;" :to="`/product/` + product.maSp" class="btn-order"><i class="fas fa-eye"></i> Xem chi tiết</router-link>
               </div>
             </div>
           </div>

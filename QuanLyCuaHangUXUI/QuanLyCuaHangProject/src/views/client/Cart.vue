@@ -71,7 +71,13 @@
               <h4>{{ combo.tenCombo }}</h4>
               <p class="price">{{ combo.donGia.toLocaleString('vi-VN') }}đ</p>
               <div class="quantity-controls">
-                <button class="btn-quantity" :disabled="combo.soLuong <= 1" @click="UpdateCart(combo, -1)" >-</button>
+                <button
+                  class="btn-quantity"
+                  :disabled="combo.soLuong <= 1"
+                  @click="UpdateCart(combo, -1)"
+                >
+                  -
+                </button>
                 <input
                   type="number"
                   v-model="combo.soLuong"
@@ -81,7 +87,11 @@
                   :class="{ error: quantityError[combo.maCtsp] }"
                   @change="handleQuantityChange(combo, $event)"
                 />
-                <button class="btn-quantity" :disabled="combo.soLuong >= combo.soLuongTon" @click="UpdateCart(combo, 1)" >
+                <button
+                  class="btn-quantity"
+                  :disabled="combo.soLuong >= combo.soLuongTon"
+                  @click="UpdateCart(combo, 1)"
+                >
                   +
                 </button>
               </div>
@@ -129,6 +139,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
 import Swal from 'sweetalert2'
+import Cookies from 'js-cookie'
 const router = useRouter()
 const toast = useToast()
 const cartItems = ref([])
@@ -166,8 +177,8 @@ const comboProducts = computed(() => {
 
 // Update giỏ hàng
 const UpdateCart = async (data, quantity) => {
-  console.log(data)
-  console.log(quantity)
+  const token = Cookies.get('accessToken')
+  console.log(token)
   try {
     const content = {
       maKh: '120',
@@ -517,4 +528,4 @@ onMounted(() => {
     margin-top: 12px;
   }
 }
-</style> 
+</style>

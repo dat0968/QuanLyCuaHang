@@ -1,29 +1,29 @@
 ﻿using System.Reflection;
 using APIQuanLyCuaHang.DbInitializer;
 using APIQuanLyCuaHang.Models;
+using APIQuanLyCuaHang.Repositories.Bill;
 using APIQuanLyCuaHang.Repositories.Category;
+using APIQuanLyCuaHang.Repositories.Combo;
+using APIQuanLyCuaHang.Repositories.Customer;
+using APIQuanLyCuaHang.Repositories.DetailBill;
+using APIQuanLyCuaHang.Repositories.DetailCombo;
 using APIQuanLyCuaHang.Repositories.DetailProduct;
 using APIQuanLyCuaHang.Repositories.ImageProduct;
 using APIQuanLyCuaHang.Repositories.Product;
-using APIQuanLyCuaHang.Services;
+using APIQuanLyCuaHang.Repositories.Table;
 using APIQuanLyCuaHang.Respositoies.HashPassword;
 using APIQuanLyCuaHang.Respositoies.Token;
+using APIQuanLyCuaHang.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Text;
-using APIQuanLyCuaHang.Repositories.Customer;
-using System.ComponentModel;
 using OfficeOpenXml;
-using APIQuanLyCuaHang.Repositories.Combo;
-using APIQuanLyCuaHang.Repositories.DetailCombo;
-using APIQuanLyCuaHang.Repositories.Bill;
-using APIQuanLyCuaHang.Repositories.DetailBill;
 using APIQuanLyCuaHang.Repository.MaCoupon;
 using APIQuanLyCuaHang.Repositories;
+using System.Text;
 using APIQuanLyCuaHang.Repositories.UnitOfWork;
 using APIQuanLyCuaHang.Repositories.Dashboard;
 var builder = WebApplication.CreateBuilder(args);
@@ -89,7 +89,7 @@ builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<ComboService>();
 builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<ICategory, Category>();
-
+builder.Services.AddScoped<IStaffRepository, StaffRepository>();
 var SecretKey = builder.Configuration["JWT:SecretKey"];
 var SecretKeyBytes = Encoding.UTF8.GetBytes(SecretKey);
 
@@ -101,14 +101,14 @@ builder.Services.AddScoped<IDetailCombo, DetailCombo>();
 builder.Services.AddScoped<IBillRepository, BillRepository>();
 builder.Services.AddScoped<IDetailBill, DetailBill>();
 builder.Services.AddScoped<IBillRepository, BillRepository>();
-
-
+builder.Services.AddScoped<IMaCouponRepository, MaCouponRepository>();
+builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<ITableRepository, TableRepository>();
 builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
 
 
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -121,8 +121,8 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuer = false,
         ValidateAudience = false,
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(SecretKeyBytes),
-        ClockSkew = TimeSpan.Zero,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:SecretKey"])),
+        ClockSkew = TimeSpan.Zero
     };
 }).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
 .AddGoogle(options =>
@@ -149,13 +149,11 @@ app.UseCors(options =>
     options.AllowAnyOrigin();
 });
 
-app.UseAuthorization();
 app.UseStaticFiles();
 app.UseCors("MyPolicy");
 app.UseAuthentication();
-app.UseAuthorization();
+app.UseAuthorization(); 
 app.MapControllers();
-app.UseStaticFiles();
 
 SeedDb();
 

@@ -1,13 +1,70 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
-// import 'animate.css'
-// import 'bootstrap-icons/font/bootstrap-icons.css'
+import 'animate.css'
+import 'bootstrap-icons/font/bootstrap-icons.css'
+import Swal from 'sweetalert2'
 
 const route = useRoute()
 const combo = ref(null)
+const selectedVariant = ref(null)
 const quantity = ref(1)
+const quantityError = ref('')
 const selectedVariants = ref({}) // Lưu biến thể được chọn cho mỗi sản phẩm
+
+// Tính toán giá gốc của combo
+const originalPrice = computed(() => {
+  if (!combo.value?.chitietcombos) return 0
+  return combo.value.chitietcombos.reduce((total, item) => {
+    // Lấy biến thể đã chọn hoặc biến thể đầu tiên nếu chưa chọn
+    const selectedVariant = selectedVariants.value[item.maSp] || item.chitietsanphams[0]
+    return total + selectedVariant.donGia * item.soLuongSp
+  }, 0)
+})
+
+// Tính toán giá sau khi giảm
+const discountedPrice = computed(() => {
+  if (!combo.value) return 0
+  if (combo.value.phanTramGiam) {
+    return originalPrice.value * (1 - combo.value.phanTramGiam / 100)
+  }
+  if (combo.value.soTienGiam) {
+    return originalPrice.value - combo.value.soTienGiam
+  }
+  return originalPrice.value
+})
+
+// Tính toán số lượng tồn tối thiểu của combo
+const maxQuantity = computed(() => {
+  if (!combo.value?.chitietcombos) return 0
+  return Math.min(
+    ...combo.value.chitietcombos.map((item) => {
+      const selectedVariant = selectedVariants.value[item.maSp] || item.chitietsanphams[0]
+      return Math.floor(selectedVariant.soLuongTon / item.soLuongSp)
+    })
+  )
+})
+
+// Validate số lượng
+const validateQuantity = (value) => {
+  if (!value) {
+    quantityError.value = 'Vui lòng nhập số lượng'
+    return false
+  }
+
+  if (isNaN(value) || value < 1) {
+    quantityError.value = 'Số lượng phải là số lớn hơn 0'
+    return false
+  }
+
+  if (value > combo.value.soLuong) {
+    quantityError.value = `Số lượng tối đa là ${combo.value.soLuong}`
+    return false
+  }
+
+  quantityError.value = ''
+  return true
+}
 
 // Thêm hàm scrollToTop
 const scrollToTop = () => {
@@ -46,13 +103,38 @@ async function fetchComboDetail() {
 
 // Xử lý tăng/giảm số lượng
 const increaseQuantity = () => {
-  // Tăng số lượng không giới hạn
-  quantity.value++
+  if (quantity.value < combo.value.soLuong) {
+    quantity.value++
+    quantityError.value = ''
+  }
 }
 
 const decreaseQuantity = () => {
   if (quantity.value > 1) {
     quantity.value--
+    quantityError.value = ''
+  }
+}
+
+const handleQuantityChange = (event) => {
+  // Chỉ cho phép nhập số
+  const value = event.target.value.replace(/[^0-9]/g, '')
+  if (!value) {
+    quantity.value = 1
+    return
+  }
+
+  const numValue = parseInt(value)
+  if (validateQuantity(numValue)) {
+    // Nếu giá trị hợp lệ, cập nhật số lượng
+    quantity.value = numValue
+  } else {
+    // Nếu giá trị không hợp lệ, reset về giá trị hợp lệ gần nhất
+    if (numValue > combo.value.soLuong) {
+      quantity.value = combo.value.soLuong
+    } else if (numValue < 1) {
+      quantity.value = 1
+    }
   }
 }
 
@@ -60,16 +142,71 @@ const decreaseQuantity = () => {
 const selectVariant = (maSp, variant) => {
   selectedVariants.value[maSp] = variant
   // Kiểm tra xem đã chọn đủ biến thể cho tất cả sản phẩm chưa
-  const allSelected = selectedVariants.value[maSp]
+  const allSelected =
+    Object.keys(selectedVariants.value).length === combo.value.chitietcombos.length
   console.log('All variants selected:', allSelected)
 }
 
 // Xử lý thêm vào giỏ hàng
-const addToCart = () => {
-  if (!combo.value) return
+const addToCart = async () => {
+  if (!validateQuantity(quantity.value)) {
+    return
+  }
 
-  // TODO: Thêm logic xử lý giỏ hàng ở đây
-  console.log('Add to cart:', null)
+  // Kiểm tra xem đã chọn đủ biến thể cho tất cả sản phẩm chưa
+  const allSelected =
+    Object.keys(selectedVariants.value).length === combo.value.chitietcombos.length
+  if (!allSelected) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Thông báo',
+      text: 'Vui lòng chọn đầy đủ biến thể cho tất cả sản phẩm trong combo',
+      confirmButtonColor: '#ff8c00',
+    })
+    return
+  }
+
+  try {
+    // Tạo danh sách chi tiết combo với biến thể đã chọn
+    const chiTietCombo = combo.value.chitietcombos.map((item) => ({
+      maSp: item.maSp,
+      maCtsp: selectedVariants.value[item.maSp].maCtsp,
+      soLuong: item.soLuongSp * quantity.value,
+      donGia: selectedVariants.value[item.maSp].donGia,
+    }))
+
+    const cartItem = {
+      maKh: '120', // Thay thế bằng ID khách hàng thực tế
+      maCombo: combo.value.maCombo,
+      soLuong: quantity.value,
+      donGia: originalPrice.value,
+      cartDetailRequestCombos: chiTietCombo,
+    }
+
+    const response = await fetch('https://localhost:7139/api/Cart', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(cartItem),
+    })
+    var result = await response.json()
+    if (result.success) {
+      Swal.fire('Đã thêm combo vào giỏ hàng', '', 'success')
+      // Emit event để cập nhật giỏ hàng
+      window.dispatchEvent(new CustomEvent('updateCart'))
+    } else {
+      Swal.fire(`${result.message}`, '', 'error')
+    }
+  } catch (error) {
+    console.error('Error adding to cart:', error)
+    Swal.fire({
+      icon: 'error',
+      title: 'Lỗi',
+      text: error.message || 'Có lỗi xảy ra khi thêm vào giỏ hàng',
+      confirmButtonColor: '#ff8c00',
+    })
+  }
 }
 
 onMounted(() => {
@@ -168,12 +305,15 @@ onMounted(() => {
             </div>
 
             <!-- Giá và giảm giá -->
-            <div class="combo-pricing">
-              <div v-if="combo.phanTramGiam" class="discount-badge">
-                Giảm {{ combo.phanTramGiam }}%
-              </div>
-              <div v-if="combo.soTienGiam" class="discount-badge">
-                Giảm {{ combo.soTienGiam.toLocaleString('vi-VN') }}đ
+            <div class="price-quantity">
+              <div class="price">
+                <div class="original-price" v-if="combo?.phanTramGiam || combo?.soTienGiam">
+                  {{ originalPrice.toLocaleString('vi-VN') }} đ
+                </div>
+                <span class="current-price">{{ discountedPrice.toLocaleString('vi-VN') }} đ</span>
+                <div class="discount-badge" v-if="combo?.phanTramGiam">
+                  -{{ combo.phanTramGiam }}%
+                </div>
               </div>
             </div>
 
@@ -188,11 +328,24 @@ onMounted(() => {
                 >
                   <i class="bi bi-dash"></i>
                 </button>
-                <span class="quantity-display">{{ quantity }}</span>
-                <button class="btn btn-outline-primary" @click="increaseQuantity">
+                <input
+                  type="number"
+                  v-model="quantity"
+                  @input="handleQuantityChange"
+                  :min="1"
+                  :max="combo?.soLuong"
+                  class="quantity-input"
+                  :class="{ error: quantityError }"
+                />
+                <button
+                  class="btn btn-outline-primary"
+                  @click="increaseQuantity"
+                  :disabled="quantity >= combo?.soLuong"
+                >
                   <i class="bi bi-plus"></i>
                 </button>
               </div>
+              <div v-if="quantityError" class="error-message">{{ quantityError }}</div>
             </div>
 
             <!-- Nút thêm vào giỏ hàng -->
@@ -346,18 +499,35 @@ onMounted(() => {
   object-fit: cover;
 }
 
-.combo-pricing {
+.price-quantity {
   margin: 20px 0;
 }
 
+.price {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.original-price {
+  font-size: 18px;
+  color: #999;
+  text-decoration: line-through;
+}
+
+.current-price {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ff8c00;
+}
+
 .discount-badge {
-  display: inline-block;
-  background: #ff4757;
+  background: #ff4444;
   color: white;
-  padding: 5px 15px;
-  border-radius: 20px;
-  font-weight: bold;
-  margin-right: 10px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .quantity-selector {
@@ -371,11 +541,29 @@ onMounted(() => {
   margin-top: 10px;
 }
 
-.quantity-display {
-  font-size: 1.2rem;
-  font-weight: bold;
-  min-width: 40px;
+.quantity-input {
+  width: 60px;
   text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 4px;
+  font-size: 1rem;
+}
+
+.quantity-input.error {
+  border-color: #dc3545;
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
+
+.quantity-input::-webkit-inner-spin-button,
+.quantity-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .btn-primary {

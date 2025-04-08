@@ -28,6 +28,11 @@
                   <RouterLink class="nav-link" to="/"> Trang chủ </RouterLink>
                 </li>
                 <li class="nav-item">
+                    <RouterLink class="nav-link" to="/profile">
+                    <span>Hồ sơ cá nhân</span>
+                  </RouterLink>
+                </li>
+                <li class="nav-item">
                   <RouterLink class="nav-link" to="/about"> Về chúng tôi</RouterLink>
                 </li>
                 <li class="nav-item">
@@ -57,18 +62,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import CartButton from '@/components/CartButton.vue'
-import Cart from '@/components/Cart.vue'
+import { ref } from 'vue';
+import CartButton from '@/components/CartButton.vue';
 
 import OrderClientButton from './ui/OrderClientButton.vue'
 const cartComponent = ref(null)
-
-const openCartModal = () => {
-  if (cartComponent.value) {
-    cartComponent.value.openCartModal()
-  }
-}
 </script>
 
 <style scoped>

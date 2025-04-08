@@ -29,7 +29,7 @@ namespace APIQuanLyCuaHang.Services
                     BatDauGiao = null,
                     NgayNhan = null,
                     DiaChiNhanHang = NewOrder.DiaChiNhanHang,
-                    NgayThanhToan = NewOrder.NgayThanhToan,
+                    NgayThanhToan = NewOrder.HinhThucTt.ToLower() == "cod" ? null : DateTime.Now,
                     HinhThucTt = NewOrder.HinhThucTt,
                     TinhTrang = "Chờ xác nhận",
                     MoTa = NewOrder.MoTa,

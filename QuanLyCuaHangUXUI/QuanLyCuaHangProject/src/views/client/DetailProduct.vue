@@ -1,12 +1,14 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
-// import 'animate.css'
-
+import { useRoute, useRouter } from 'vue-router'
+import 'animate.css'
+import Swal from 'sweetalert2'
 const route = useRoute()
+const router = useRouter()
 const product = ref(null)
 const selectedVariant = ref(null)
 const quantity = ref(1)
+const quantityError = ref('')
 
 // Thêm hàm scrollToTop
 const scrollToTop = () => {
@@ -14,6 +16,55 @@ const scrollToTop = () => {
     top: 0,
     behavior: 'smooth',
   })
+}
+
+const validateQuantity = (value) => {
+  // Kiểm tra giá trị rỗng
+  if (!value) {
+    quantityError.value = 'Vui lòng nhập số lượng'
+    return false
+  }
+
+  // Kiểm tra giá trị là số
+  if (isNaN(value) || value < 1) {
+    quantityError.value = 'Số lượng phải là số lớn hơn 0'
+    return false
+  }
+
+  // Kiểm tra giá trị tối đa dựa trên số lượng tồn
+  if (selectedVariant.value && value > selectedVariant.value.soLuongTon) {
+    quantityError.value = `Số lượng tối đa là ${selectedVariant.value.soLuongTon}`
+    return false
+  }
+
+  quantityError.value = ''
+  return true
+}
+
+const handleQuantityChange = (event) => {
+  // Chỉ cho phép nhập số
+  const value = event.target.value.replace(/[^0-9]/g, '')
+  if (!value) {
+    quantity.value = 1
+    return
+  }
+
+  const numValue = parseInt(value)
+  if (validateQuantity(numValue)) {
+    // Nếu giá trị hợp lệ, cập nhật số lượng
+    quantity.value = numValue
+  } else {
+    // Nếu giá trị không hợp lệ, reset về giá trị hợp lệ gần nhất
+    if (selectedVariant.value) {
+      if (numValue > selectedVariant.value.soLuongTon) {
+        quantity.value = selectedVariant.value.soLuongTon
+      } else if (numValue < 1) {
+        quantity.value = 1
+      }
+    } else {
+      quantity.value = 1
+    }
+  }
 }
 
 // Lấy chi tiết sản phẩm
@@ -48,31 +99,56 @@ const selectVariant = (variant) => {
 const increaseQuantity = () => {
   if (selectedVariant.value && quantity.value < selectedVariant.value.soLuongTon) {
     quantity.value++
+    quantityError.value = ''
   }
 }
 
 const decreaseQuantity = () => {
   if (quantity.value > 1) {
     quantity.value--
+    quantityError.value = ''
   }
 }
 
 // Xử lý thêm vào giỏ hàng
-const addToCart = () => {
+const addToCart = async () => {
+  if (!validateQuantity(quantity.value)) {
+    return
+  }
   if (!selectedVariant.value) return
 
   const cartItem = {
+    maKh: '120',
     maCtsp: selectedVariant.value.maCtsp,
-    tenSanPham: selectedVariant.value.tenSanPham,
+    maCombo: null,
     donGia: selectedVariant.value.donGia,
     soLuong: quantity.value,
-    hinhAnh: selectedVariant.value.hinhanhs?.[0]?.tenHinhAnh,
-    kichThuoc: selectedVariant.value.kichThuoc,
-    huongVi: selectedVariant.value.huongVi,
   }
+  try {
+    const response = await fetch(`https://localhost:7139/api/Cart`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(cartItem),
+    })
 
-  // TODO: Thêm logic xử lý giỏ hàng ở đây
-  console.log('Add to cart:', cartItem)
+    const result = await response.json()
+    if (result.success) {
+      Swal.fire('Đã thêm sản phẩm vào giỏ hàng', '', 'success')
+      // Emit event để cập nhật giỏ hàng
+      window.dispatchEvent(new CustomEvent('updateCart'))
+    } else {
+      Swal.fire(`${result.message}`, '', 'error')
+    }
+  } catch (error) {
+    console.error('Lỗi khi thêm vào giỏ hàng:', error)
+    Swal.fire({
+      icon: 'error',
+      title: 'Lỗi!',
+      text: 'Không thể thêm sản phẩm vào giỏ hàng. Vui lòng thử lại.',
+    })
+  }
 }
 
 onMounted(() => {
@@ -151,7 +227,15 @@ onMounted(() => {
             </div>
             <div class="quantity">
               <button @click="decreaseQuantity" :disabled="quantity <= 1">-</button>
-              <span>{{ quantity }}</span>
+              <input
+                type="number"
+                v-model="quantity"
+                @input="handleQuantityChange"
+                :min="1"
+                :max="selectedVariant?.soLuongTon || 10"
+                class="quantity-input"
+                :class="{ error: quantityError }"
+              />
               <button
                 @click="increaseQuantity"
                 :disabled="!selectedVariant || quantity >= selectedVariant.soLuongTon"
@@ -159,20 +243,18 @@ onMounted(() => {
                 +
               </button>
             </div>
-            <div class="tab-pane fade" id="reviews">
-              <p class="text-muted">Chưa có đánh giá nào.</p>
-            </div>
+          </div>
+          <div v-if="quantityError" class="error-message">{{ quantityError }}</div>
 
-            <!-- Phần thêm vào giỏ hàng -->
-            <div class="add-to-cart">
-              <button
-                class="btn-add-to-cart"
-                @click="addToCart"
-                :disabled="!selectedVariant || selectedVariant.soLuongTon === 0"
-              >
-                <i class="bi bi-cart"></i> Thêm vào giỏ hàng
-              </button>
-            </div>
+          <!-- Phần thêm vào giỏ hàng -->
+          <div class="add-to-cart">
+            <button
+              class="btn-order"
+              @click="addToCart"
+              :disabled="!selectedVariant || selectedVariant.soLuongTon === 0"
+            >
+              <i class="bi bi-cart"></i> Đặt hàng
+            </button>
           </div>
         </div>
       </div>
@@ -338,31 +420,55 @@ onMounted(() => {
   text-align: center;
 }
 
-.btn-add-to-cart {
+.btn-order {
   width: 100%;
-  padding: 15px;
+  padding: 10px;
   background: #ff8c00;
   color: #fff;
   border: none;
-  border-radius: 25px;
-  font-size: 16px;
+  border-radius: 20px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
 }
 
-.btn-add-to-cart:hover:not(:disabled) {
+.btn-order:hover {
   background: #e67e22;
   transform: translateY(-2px);
 }
 
-.btn-add-to-cart:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.btn-order i {
+  font-size: 16px;
+}
+
+.quantity-input {
+  width: 50px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 4px;
+  font-size: 1rem;
+}
+
+.quantity-input.error {
+  border-color: #dc3545;
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
+
+.quantity-input::-webkit-inner-spin-button,
+.quantity-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 @media (max-width: 768px) {
@@ -417,7 +523,7 @@ onMounted(() => {
     font-size: 16px;
   }
 
-  .btn-add-to-cart {
+  .btn-order {
     padding: 12px;
     font-size: 14px;
   }
