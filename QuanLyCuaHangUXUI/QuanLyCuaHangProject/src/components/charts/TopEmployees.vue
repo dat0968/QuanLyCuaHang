@@ -10,7 +10,7 @@ import * as axiosClient from '@/utils/axiosClient'
 import $ from 'jquery'
 import 'datatables.net'
 import 'datatables.net-dt/css/dataTables.dataTables.css'
-import formatCurrency from '@/constants/formatCurrency'
+import { formatCurrency } from '@/constants/formatCurrency'
 
 export default {
   name: 'TopEmployees',
