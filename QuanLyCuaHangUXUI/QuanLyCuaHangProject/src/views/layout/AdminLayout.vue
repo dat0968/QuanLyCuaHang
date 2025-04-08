@@ -76,37 +76,37 @@ components: {
               </li>
               <li>
                 <RouterLink to="/Admin/Product">
-                  <i class="fas fa-box"></i><span>SẢN PHẨM</span>
+                  <i class="icon-tag"></i><span>SẢN PHẨM</span>
                 </RouterLink>
               </li>
               <li>
                 <RouterLink to="/Admin/Combo">
-                  <i class="fas fa-box"></i><span>COMBO</span>
+                  <i class="icon-trophy"></i><span>COMBO</span>
                 </RouterLink>
               </li>
               <li>
                 <RouterLink to="/Admin/Bill">
-                  <i class="fas fa-box"></i><span> ĐƠN HÀNG</span>
+                  <i class="icon-paypal"></i><span>ĐƠN HÀNG</span>
                 </RouterLink>
               </li>
               <li>
                 <RouterLink to="/Admin/Coupon">
-                  <i class="fas fa-box"></i><span> COUPON</span>
+                  <i class="icon-present"></i><span>COUPON</span>
                 </RouterLink>
               </li>
               <li>
                 <RouterLink to="/admin/customer">
-                  <i class="fas fa-user"></i><span>KHÁCH HÀNG</span>
-                </RouterLink> 
+                  <i class="icon-user"></i><span>KHÁCH HÀNG</span>
+                </RouterLink>
               </li>
               <li>
                 <RouterLink to="/Admin/Table">
-                  <i class="fas fa-box"></i><span> BÀN</span>
+                  <i class="icon-note"></i><span>BÀN</span>
                 </RouterLink>
               </li>
               <li>
                 <router-link to="/admin/staff">
-                  <i class="fas fa-user"></i><span>NHÂN VIÊN</span>
+                  <i class="icon-people"></i><span>NHÂN VIÊN</span>
                 </router-link>
               </li>
               <li>
