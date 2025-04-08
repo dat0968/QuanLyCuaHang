@@ -60,6 +60,7 @@ namespace APIQuanLyCuaHang.DbInitializer
                 NgaySinh = DateOnly.FromDateTime(DateTime.Now.AddYears(-20)),
                 DiaChi = RandomData_DB.Instance.rdAddress(),
                 Cccd = "",
+                GioiTinh = "Nam",
                 Sdt = RandomData_DB.Instance.RandomPhone(),
                 Email = "staff666@gmail.com",
                 NgayVaoLam = DateOnly.FromDateTime(DateTime.Now.AddYears(-1)),
@@ -69,6 +70,9 @@ namespace APIQuanLyCuaHang.DbInitializer
                 IsDelete = false,
                 MaChucVu = 1,
             };
+            // Lưu vào cơ sở dữ liệu
+            _db.Nhanviens.Add(defaultStaff);
+            _db.SaveChanges();
         }
         // Sửa đổi GenerateOrders để nhận kiểu dữ liệu cụ thể thay vì dynamic và bổ sung các trường còn thiếu
         private List<Hoadon> GenerateOrders(int numberOfOrders, Random rand, List<Khachhang> customers, List<int> employeeIds, List<Chitietsanpham> products)

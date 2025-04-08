@@ -326,35 +326,43 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
 
         private async Task<List<StaffDC>> CalculateEmployeeOrderStatisticsAsync()
         {
-            var nhanviens = await _db.Nhanviens.ToListAsync();
-            var staffDCs = nhanviens.Select(nv => new StaffDC
+            try
             {
-                MaNv = nv.MaNv,
-                HoTen = nv.HoTen,
-                GioiTinh = nv.GioiTinh,
-                NgaySinh = nv.NgaySinh,
-                DiaChi = nv.DiaChi,
-                Sdt = nv.Sdt,
-                Email = nv.Email,
-                NgayVaoLam = nv.NgayVaoLam,
-                TenTaiKhoan = nv.TenTaiKhoan,
-                MaChucVu = nv.MaChucVu,
-                TinhTrang = nv.TinhTrang,
-            }).ToList();
-
-            var allOrders = await _db.Hoadons.ToListAsync();
-
-            foreach (var staff in staffDCs)
-            {
-                var allOrderOfStaff = allOrders.Where(od => od.MaNv == staff.MaNv).ToList();
-                if (allOrderOfStaff != null && allOrderOfStaff.Count != 0)
+                var nhanviens = await _db.Nhanviens.ToListAsync();
+                var staffDCs = nhanviens.Select(nv => new StaffDC
                 {
-                    staff.SoDonHangDamNhan = allOrderOfStaff.Count;
-                    staff.DoanhThuMangLai = allOrderOfStaff.Sum(ods => ods.TienGoc - ods.PhiVanChuyen);
-                }
-            }
+                    MaNv = nv.MaNv,
+                    HoTen = nv.HoTen,
+                    GioiTinh = nv.GioiTinh,
+                    NgaySinh = nv.NgaySinh,
+                    DiaChi = nv.DiaChi,
+                    Sdt = nv.Sdt,
+                    Email = nv.Email,
+                    NgayVaoLam = nv.NgayVaoLam,
+                    TenTaiKhoan = nv.TenTaiKhoan,
+                    MaChucVu = nv.MaChucVu,
+                    TinhTrang = nv.TinhTrang,
+                }).ToList();
 
-            return staffDCs;
+                var allOrders = await _db.Hoadons.ToListAsync();
+
+                foreach (var staff in staffDCs)
+                {
+                    var allOrderOfStaff = allOrders.Where(od => od.MaNv == staff.MaNv).ToList();
+                    if (allOrderOfStaff != null && allOrderOfStaff.Count != 0)
+                    {
+                        staff.SoDonHangDamNhan = allOrderOfStaff.Count;
+                        staff.DoanhThuMangLai = allOrderOfStaff.Sum(ods => ods.TienGoc - ods.PhiVanChuyen);
+                    }
+                }
+
+                return staffDCs;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi: " + ex.Message);
+                return null;
+            }
         }
 
         private async Task<List<UserStatistics>> CalculateUserStatisticsAsync()
