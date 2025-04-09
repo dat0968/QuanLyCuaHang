@@ -1,18 +1,17 @@
+import defaultImage from '@/assets/default/default.jpeg' // Import ảnh
+
 const replaceBrokenImages = () => {
-  const defaultImage = './src/assets/default/default.jpeg'
   const checkAndReplace = (img) => {
     if (!img.dataset.checked) {
-      img.dataset.checked = 'true' // Đánh dấu đã kiểm tra
+      img.dataset.checked = 'true'
       img.onerror = () => {
-        img.src = defaultImage
+        img.src = defaultImage // Sử dụng URL đã import
       }
     }
   }
 
-  // Kiểm tra ảnh hiện tại trên trang
   document.querySelectorAll('img').forEach(checkAndReplace)
 
-  // Theo dõi sự thay đổi trên DOM
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
       mutation.addedNodes.forEach((node) => {
