@@ -134,7 +134,18 @@ namespace APIQuanLyCuaHang.Controllers
         [HttpPost("LoginStaff")]
         public async Task<IActionResult> LoginStaff(LoginDTO model)
         {
-            var findUser = db.Nhanviens.AsNoTracking().FirstOrDefault(p => (p.TenTaiKhoan.Trim().ToLower() == model.Email_TenTaiKhoan.Trim().ToLower()) || (p.Email.Trim().ToLower() == model.Email_TenTaiKhoan.Trim().ToLower()));
+            if (model == null || string.IsNullOrEmpty(model.Email_TenTaiKhoan) || string.IsNullOrEmpty(model.MatKhau))
+            {
+                return BadRequest(new
+                {
+                    Success = false,
+                    Message = "Email/Tên tài khoản và mật khẩu là bắt buộc"
+                });
+            }
+            var findUser = db.Nhanviens.AsNoTracking()
+                .FirstOrDefault(p =>
+                    (p.TenTaiKhoan != null && p.TenTaiKhoan.Trim().ToLower() == model.Email_TenTaiKhoan.Trim().ToLower()) ||
+                    (p.Email != null && p.Email.Trim().ToLower() == model.Email_TenTaiKhoan.Trim().ToLower()));
             if (findUser == null)
             {
                 return Ok(new
@@ -200,7 +211,7 @@ namespace APIQuanLyCuaHang.Controllers
             }
         }
         [HttpDelete("Logout")]
-        public async Task<IActionResult> Logout(string RefreshToken)
+        public async Task<IActionResult> Logout([FromBody] string RefreshToken)
         {
             var checkRefreshToken = await db.Refreshtokens.FirstOrDefaultAsync(p => p.Token == RefreshToken);
             if (checkRefreshToken == null)

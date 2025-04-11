@@ -1,5 +1,6 @@
 <script setup>
 import '../../assets/admin/images/favicon.ico'
+import LogoutAdmin from '../../components/LogoutAdmin.vue'
 import '../../assets/admin/plugins/chartist-js/chartist.min.css'
 import '../../assets/admin/plugins/datepicker/datepicker.min.css'
 import '../../assets/admin/css/bootstrap.min.css'
@@ -148,175 +149,7 @@ components: {
             <div class="col-10 col-md-11 col-lg-11 order-1 order-md-2">
               <div class="xp-profilebar text-right">
                 <ul class="list-inline mb-0">
-                  <li class="list-inline-item">
-                    <div class="dropdown xp-message">
-                      <a
-                        class="dropdown-toggle text-white"
-                        href="#"
-                        role="button"
-                        id="xp-message"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <i class="icon-speech font-18 v-a-m"></i>
-                        <span class="badge badge-pill bg-success-gradient xp-badge-up">8</span>
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="xp-message">
-                        <ul class="list-unstyled">
-                          <li class="media">
-                            <div class="media-body">
-                              <h5 class="mt-0 mb-0 py-3 text-white text-center font-16">
-                                8 Tin nhắn mới
-                              </h5>
-                            </div>
-                          </li>
-                          <li class="media xp-msg">
-                            <img
-                              class="mr-3 align-self-center rounded-circle"
-                              src="../../assets/admin/images/topbar/user-message-1.jpg"
-                              alt="Generic placeholder image"
-                            />
-                            <div class="media-body">
-                              <a href="#">
-                                <h5 class="mt-0 mb-1 font-14">
-                                  Ariel Blue<span class="font-12 f-w-4 float-right"
-                                    >3 phút trước</span
-                                  >
-                                </h5>
-                                <p class="mb-0 font-13">
-                                  Cảm ơn bạn đã tham dự...<span
-                                    class="badge badge-pill badge-success float-right"
-                                    >2</span
-                                  >
-                                </p>
-                              </a>
-                            </div>
-                          </li>
-                          <li class="media xp-msg">
-                            <img
-                              class="mr-3 align-self-center rounded-circle"
-                              src="../../assets/admin/images/topbar/user-message-2.jpg"
-                              alt="Generic placeholder image"
-                            />
-                            <div class="media-body">
-                              <a href="#">
-                                <h5 class="mt-0 mb-1 font-14">
-                                  Jammy Moon<span class="font-12 f-w-4 float-right"
-                                    >5 phút trước</span
-                                  >
-                                </h5>
-                                <p class="mb-0 font-13">
-                                  Này không phải lo lắng!Tin tôi đi...<span
-                                    class="badge badge-pill badge-success float-right"
-                                    >3</span
-                                  >
-                                </p>
-                              </a>
-                            </div>
-                          </li>
-                          <li class="media xp-msg">
-                            <img
-                              class="mr-3 align-self-center rounded-circle"
-                              src="../../assets/admin/images/topbar/user-message-3.jpg"
-                              alt="Generic placeholder image"
-                            />
-                            <div class="media-body">
-                              <a href="#">
-                                <h5 class="mt-0 mb-1 font-14">
-                                  Lisa Ross<span class="font-12 f-w-4 float-right">5:25 PM</span>
-                                </h5>
-                                <p class="mb-0 font-13">
-                                  Biện pháp khắc phục cho đau bụng?Tôi không...<span
-                                    class="badge badge-pill badge-success float-right"
-                                    >5</span
-                                  >
-                                </p>
-                              </a>
-                            </div>
-                          </li>
-                          <li class="media">
-                            <div class="media-body">
-                              <h5 class="mt-0 mb-0 py-3 text-black text-center font-14">
-                                <a href="#" class="text-primary">Xem thêm</a>
-                              </h5>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="list-inline-item">
-                    <div class="dropdown xp-notification">
-                      <a
-                        class="dropdown-toggle text-white"
-                        href="#"
-                        role="button"
-                        id="xp-notification"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <i class="icon-bell font-18 v-a-m"></i>
-                        <span class="badge badge-pill bg-danger-gradient xp-badge-up">3</span>
-                      </a>
-
-                      <div
-                        class="dropdown-menu dropdown-menu-right"
-                        aria-labelledby="xp-notification"
-                      >
-                        <ul class="list-unstyled">
-                          <li class="media">
-                            <div class="media-body">
-                              <h5 class="mt-0 mb-0 py-3 text-white text-center font-16">
-                                3 Thông báo mới
-                              </h5>
-                            </div>
-                          </li>
-                          <li class="media xp-noti">
-                            <div class="mr-3 xp-noti-icon primary-rgba">
-                              <i class="icon-user-follow text-primary"></i>
-                            </div>
-                            <div class="media-body">
-                              <a href="#">
-                                <h5 class="mt-0 mb-1 font-14">Người dùng mới đã đăng ký</h5>
-                                <p class="mb-0 font-12 f-w-4">2 phút trước</p>
-                              </a>
-                            </div>
-                          </li>
-                          <li class="media xp-noti">
-                            <div class="mr-3 xp-noti-icon success-rgba">
-                              <i class="icon-basket-loaded text-success"></i>
-                            </div>
-                            <div class="media-body">
-                              <a href="#">
-                                <h5 class="mt-0 mb-1 font-14">New order placed</h5>
-                                <p class="mb-0 font-12 f-w-4">8:45 PM</p>
-                              </a>
-                            </div>
-                          </li>
-                          <li class="media xp-noti">
-                            <div class="mr-3 xp-noti-icon danger-rgba">
-                              <i class="icon-like text-danger"></i>
-                            </div>
-                            <div class="media-body">
-                              <a href="#">
-                                <h5 class="mt-0 mb-1 font-14">John thích ảnh của bạn.</h5>
-                                <p class="mb-0 font-12 f-w-4">Hôm qua</p>
-                              </a>
-                            </div>
-                          </li>
-                          <li class="media">
-                            <div class="media-body">
-                              <h5 class="mt-0 mb-0 py-3 text-black text-center font-14">
-                                <a href="#" class="text-primary">Xem thêm</a>
-                              </h5>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </li>
+                  
                   <li class="list-inline-item mr-0">
                     <div class="dropdown xp-userprofile">
                       <a
@@ -337,28 +170,18 @@ components: {
                         class="dropdown-menu dropdown-menu-right"
                         aria-labelledby="xp-userprofile"
                       >
-                        <a class="dropdown-item py-3 text-white text-center font-16" href="#"
+                        <!-- <a class="dropdown-item py-3 text-white text-center font-16" href="#"
                           >Chào mừng, John Doe</a
                         >
                         <a class="dropdown-item" href="#"
                           ><i class="icon-user text-primary mr-2"></i> Hồ sơ</a
-                        >
-                        <a class="dropdown-item" href="#"
-                          ><i class="icon-wallet text-success mr-2"></i> Thanh toán</a
-                        >
-                        <a class="dropdown-item" href="#"
-                          ><i class="icon-user text-primary mr-2"></i>
-                          <QrScanAndShiftManagerModal />
-                        </a>
-                        <a class="dropdown-item" href="#"
-                          ><i class="icon-settings text-warning mr-2"></i> Cài đặt</a
-                        >
-                        <a class="dropdown-item" href="#"
-                          ><i class="icon-lock text-info mr-2"></i> Khóa màn hình</a
-                        >
-                        <a class="dropdown-item" href="#"
+                        > -->
+                        <!-- <a class="dropdown-item" href="#"
                           ><i class="icon-power text-danger mr-2"></i> Đăng xuất</a
-                        >
+                        > -->
+                        <!-- Đăng xuất -->
+                        <LogoutAdmin/>
+                        
                       </div>
                     </div>
                   </li>
