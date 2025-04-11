@@ -203,10 +203,13 @@
                         <tbody class="overflow-auto-y">
                           <tr
                             v-for="(item, index) in selectedOrder.chiTietHoaDonKhachs"
-                            :key="item.maCtsp"
+                            :key="item.maDoiTuong"
                           >
                             <td>{{ index + 1 }}</td>
-                            <td>{{ item.tenSanPham }}</td>
+                            <td>
+                              {{ item.tenDoiTuong }}<br />
+                              <small>Loại: {{ item.loaiDoiTuong }}</small>
+                            </td>
                             <td>{{ item.moTa }}</td>
                             <td>{{ item.soLuong }}</td>
                             <td>{{ item.kichThuoc || 'N/A' }}</td>
@@ -283,7 +286,7 @@ export default {
       const invoiceContents = this.filteredOrders.map((order) => {
         const tableBody = order.chiTietHoaDonKhachs.map((item, index) => [
           index + 1,
-          item.tenSanPham ?? 'N/A',
+          item.tenDoiTuong + '\nLoại: ' + item.loaiDoiTuong ?? 'N/A',
           item.soLuong ?? 0,
           this.formatCurrency(item.donGia ?? 0),
           this.formatCurrency((item.soLuong ?? 0) * (item.donGia ?? 0)),
@@ -379,7 +382,6 @@ export default {
           { text: ' ', pageBreak: 'after' }, // Thêm ngắt trang sau mỗi hóa đơn
         ]
       })
-
       // Loại bỏ ngắt trang cuối cùng nếu có
       if (invoiceContents.length > 0) {
         invoiceContents[invoiceContents.length - 1].pop() // Xóa phần tử cuối cùng (là ngắt trang)
@@ -424,7 +426,7 @@ export default {
       // Chuẩn bị dữ liệu cho bảng
       const tableBody = order.chiTietHoaDonKhachs.map((item, index) => [
         index + 1,
-        item.tenSanPham ?? 'N/A', // Bổ sung giá trị mặc định nếu không tồn tại
+        item.tenDoiTuong + '\nLoại: ' + item.loaiDoiTuong ?? 'N/A',
         item.soLuong ?? 0, // Dùng 0 nếu không có số lượng
         this.formatCurrency(item.donGia ?? 0), // Đơn giá
         this.formatCurrency((item.soLuong ?? 0) * (item.donGia ?? 0)), // Thành tiền
@@ -440,7 +442,7 @@ export default {
       )
       const vatPercentage = order.vatPercentage || 0 // tỷ lệ VAT nếu có
       const vatAmount = totalAmount * (vatPercentage / 100)
-      const totalPayment = totalAmount + vatAmount
+      const totalPayment = order.tongTien
 
       // Tạo đối tượng pdfmake
       const docDefinition = {
@@ -595,7 +597,9 @@ export default {
                   (item, index) => `
                 <tr>
                   <td>${index + 1}</td>
-                  <td>${item.tenSanPham}</td>
+                  <td>${item.tenDoiTuong}<br>
+                      <small>Loại: ${item.loaiDoiTuong}</small>
+                  </td>
                   <td>${item.soLuong}</td>
                   <td>${item.kichThuoc || 'N/A'}</td>
                   <td>${this.formatCurrency(item.donGia)}</td>

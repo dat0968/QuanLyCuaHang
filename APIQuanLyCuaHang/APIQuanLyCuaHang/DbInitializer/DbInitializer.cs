@@ -30,7 +30,6 @@ namespace APIQuanLyCuaHang.DbInitializer
             {
                 CreateTestStaffAccount();
             }
-            //CreateOrderForTestUser("admin@default.com");
         }
         private void CreateATestAccount()
         {

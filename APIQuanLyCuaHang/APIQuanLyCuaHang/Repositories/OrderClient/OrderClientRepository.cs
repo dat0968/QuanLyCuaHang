@@ -20,46 +20,103 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
 
             try
             {
+                // Kiểm tra xem người dùng có tồn tại trong hệ thống không
+                if (userId == null)
+                {
+                    throw new ArgumentNullException(nameof(userId), "ID người dùng không được để trống.");
+                }
+
                 bool isHaveUser = await _db.Khachhangs.AnyAsync(kh => kh.MaKh == userId);
                 if (!isHaveUser)
                 {
-                    throw new Exception("Không nhận diện được tài khoản của bạn trong hệ thống.");
+                    throw new EntryPointNotFoundException("Không nhận diện được tài khoản của bạn trong hệ thống.");
                 }
-                var listOrigin = await base.GetAllAsync(x => x.MaKh == userId, "Cthoadons,Cthoadons.MaCtspNavigation,Cthoadons.MaCtspNavigation.MaSpNavigation");
-                var listDTO = listOrigin.Select(lo => new HoaDonKhachDTO
-                {
-                    MaHd = lo.MaHd,
-                    MaKh = lo.MaKh,
-                    MaNv = lo.MaNv,
-                    NgayTao = lo.NgayTao,
-                    BatDauGiao = lo.BatDauGiao,
-                    NgayNhan = lo.NgayNhan,
-                    DiaChiNhanHang = lo.DiaChiNhanHang,
-                    NgayThanhToan = lo.NgayThanhToan,
-                    HinhThucTt = lo.HinhThucTt,
-                    TinhTrang = lo.TinhTrang,
-                    MoTa = lo.MoTa,
-                    HoTen = lo.HoTen,
-                    Sdt = lo.Sdt,
-                    LyDoHuy = lo.LyDoHuy,
-                    IsDelete = lo.IsDelete,
-                    PhiVanChuyen = lo.PhiVanChuyen,
-                    TienGoc = lo.TienGoc,
-                    ChiTietHoaDonKhachs = lo.Cthoadons.Select(ct => new ChiTietHoaDonKhachDTO
-                    {
-                        MaHd = ct.MaHd,
-                        MaCtsp = ct.MaCtsp ?? 0,
-                        SoLuong = ct.SoLuong,
-                        KichThuoc = ct.MaCtspNavigation?.KichThuoc ?? "Không có",
-                        HuongVi = ct.MaCtspNavigation?.HuongVi ?? "Không có",
-                        DonGia = ct.DonGia,
-                        TenSanPham = ct.MaCtspNavigation.MaSpNavigation.TenSanPham,
-                        MoTa = ct.MaCtspNavigation.MaSpNavigation.MoTa
-                    }).ToList()
-                }).ToList();
 
+                // Lấy danh sách hóa đơn của người dùng
+                var listOrigin = await base.GetAllAsync(x => x.MaKh == userId, "Cthoadons,Cthoadons.MaCtspNavigation,Cthoadons.MaCtspNavigation.MaSpNavigation,Chitietcombohoadons,Chitietcombohoadons.MaComboNavigation");
+
+                List<HoaDonKhachDTO> listDTO = new();
+
+                if (listOrigin != null)
+                {
+                    foreach (var aOrder in listOrigin)
+                    {
+                        HoaDonKhachDTO configDataDTO = new HoaDonKhachDTO
+                        {
+                            MaHd = aOrder.MaHd,
+                            MaKh = aOrder.MaKh,
+                            MaNv = aOrder.MaNv,
+                            NgayTao = aOrder.NgayTao,
+                            BatDauGiao = aOrder.BatDauGiao,
+                            NgayNhan = aOrder.NgayNhan,
+                            DiaChiNhanHang = aOrder.DiaChiNhanHang,
+                            NgayThanhToan = aOrder.NgayThanhToan,
+                            HinhThucTt = aOrder.HinhThucTt,
+                            TinhTrang = aOrder.TinhTrang,
+                            MoTa = aOrder.MoTa,
+                            HoTen = aOrder.HoTen,
+                            Sdt = aOrder.Sdt,
+                            LyDoHuy = aOrder.LyDoHuy,
+                            IsDelete = aOrder.IsDelete,
+                            PhiVanChuyen = aOrder.PhiVanChuyen,
+                            TienGoc = aOrder.TienGoc,
+                            GiamGiaCoupon = aOrder.GiamGiaCoupon,
+                            ChiTietHoaDonKhachs = new List<ChiTietHoaDonKhachDTO>() // Khởi tạo danh sách chi tiết hóa đơn
+                        };
+
+                        // Thêm chi tiết sản phẩm vào hóa đơn
+                        if (aOrder.Cthoadons.Count != 0)
+                        {
+                            foreach (var aDetailProductOrder in aOrder.Cthoadons)
+                            {
+                                ChiTietHoaDonKhachDTO configDetailDTO = new ChiTietHoaDonKhachDTO()
+                                {
+                                    MaHd = aDetailProductOrder.MaHd,
+                                    MaDoiTuong = aDetailProductOrder.MaCtsp ?? 0,
+                                    LoaiDoiTuong = "Sản phẩm",
+                                    SoLuong = aDetailProductOrder.SoLuong,
+                                    KichThuoc = aDetailProductOrder.MaCtspNavigation?.KichThuoc ?? "Không có",
+                                    HuongVi = aDetailProductOrder.MaCtspNavigation?.HuongVi ?? "Không có",
+                                    DonGia = aDetailProductOrder.DonGia,
+                                    TenDoiTuong = aDetailProductOrder.MaCtspNavigation.MaSpNavigation.TenSanPham,
+                                    MoTa = aDetailProductOrder.MaCtspNavigation.MaSpNavigation.MoTa
+                                };
+                                configDataDTO.ChiTietHoaDonKhachs.Add(configDetailDTO); // Thêm chi tiết vào danh sách
+                            }
+                        }
+
+                        // Thêm chi tiết combo vào hóa đơn
+                        if (aOrder.Chitietcombohoadons.Count != 0)
+                        {
+                            foreach (var aDetailComboOrder in aOrder.Chitietcombohoadons)
+                            {
+                                ChiTietHoaDonKhachDTO configDetailDTO = new ChiTietHoaDonKhachDTO()
+                                {
+                                    MaHd = aDetailComboOrder.MaHd,
+                                    MaDoiTuong = aDetailComboOrder.MaCombo,
+                                    LoaiDoiTuong = "Combo",
+                                    SoLuong = aDetailComboOrder.SoLuong,
+                                    DonGia = aDetailComboOrder.DonGia,
+                                    TenDoiTuong = aDetailComboOrder.MaComboNavigation.TenCombo,
+                                    MoTa = aDetailComboOrder.MaComboNavigation.MoTa
+                                };
+                                configDataDTO.ChiTietHoaDonKhachs.Add(configDetailDTO); // Thêm chi tiết vào danh sách
+                            }
+                        }
+                        configDataDTO.TongTien = configDataDTO.TienGoc - configDataDTO.GiamGiaCoupon - configDataDTO.PhiVanChuyen;
+                        listDTO.Add(configDataDTO); // Thêm hóa đơn vào danh sách kết quả
+                    }
+                }
                 response.SetSuccessResponse("Lấy danh sách thành công.");
                 response.SetData(listDTO);
+            }
+            catch (ArgumentNullException argEx)
+            {
+                response.SetMessageResponseWithException(400, argEx);
+            }
+            catch (EntryPointNotFoundException userEx)
+            {
+                response.SetMessageResponseWithException(404, userEx);
             }
             catch (Exception ex)
             {

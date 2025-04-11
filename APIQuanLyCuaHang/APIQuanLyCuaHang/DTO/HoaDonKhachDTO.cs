@@ -24,6 +24,8 @@ namespace APIQuanLyCuaHang.DTO
         public bool? IsDelete { get; set; }
         public decimal PhiVanChuyen { get; set; }
         public decimal TienGoc { get; set; }
+        public decimal GiamGiaCoupon { get; set; } = 0;
+        public decimal TongTien { get; set; }
         public List<ChiTietHoaDonKhachDTO>? ChiTietHoaDonKhachs { get; set; }
     }
 }

@@ -9,13 +9,14 @@ namespace APIQuanLyCuaHang.DTO
     {
         public int MaHd { get; set; }
 
-        public int MaCtsp { get; set; }
+        public int MaDoiTuong { get; set; }
+        public required string LoaiDoiTuong { get; set; }
 
         public int SoLuong { get; set; }
         public string? KichThuoc { get; set; }
         public string? HuongVi { get; set; }
         public decimal? DonGia { get; set; }
-        public string TenSanPham { get; set; } = null!;
+        public string TenDoiTuong { get; set; } = null!;
         public string? MoTa { get; set; }
     }
 }
