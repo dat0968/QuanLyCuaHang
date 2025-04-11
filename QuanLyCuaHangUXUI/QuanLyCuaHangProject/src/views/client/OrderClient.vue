@@ -621,7 +621,7 @@ export default {
 
     loadOrders() {
       axiosClient
-        .getFromApi(`/OrderClient/Get/`, ConfigsRequest.takeAuth())
+        .getFromApi(`/OrderClient/Get`, ConfigsRequest.takeAuth())
         .then((response) => {
           if (response.success) {
             this.orders = response.data

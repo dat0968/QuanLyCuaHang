@@ -18,7 +18,7 @@ namespace APIQuanLyCuaHang.Controllers
         {
             _unit = unit;
         }
-        [HttpGet("{userId}")]
+        [HttpGet]
         public async Task<IActionResult> Get()
         {
             int? userId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);

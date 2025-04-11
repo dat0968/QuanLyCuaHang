@@ -6,6 +6,7 @@ import ConfigsRequest from '@/models/ConfigsRequest'
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
 import router from '@/router/index'
+import Cookies from 'js-cookie' // Import js-cookie
 
 // Base Axios Client
 const axiosClient = axios.create({
@@ -16,110 +17,193 @@ const axiosClient = axios.create({
   },
 })
 
-// Kiểm tra token hết hạn
-function isTokenExpired(token) {
-  try {
+// Hàm đọc accesstoken (tương tự hàm ReadToken auth.js)
+export function ReadToken(token) {
+  if (token) {
     const decoded = jwtDecode(token)
-    return decoded.exp * 1000 < Date.now() // Thời gian hết hạn (exp) là milli-seconds
-  } catch {
-    return true // Nếu không decode được token, xem như nó đã hết hạn
+    return {
+      IdUser: decoded.sub,
+      Phone: decoded.PhoneNumber,
+      Name: decoded.FullName,
+      Role: decoded.role,
+      Exp: decoded.exp, // Đơn vị giây
+    }
+  } else {
+    return null
   }
 }
 
-// Hàm refresh token
+// Hàm refresh token (dựa trên logic auth.js)
 async function refreshAccessToken() {
-  const refreshToken = localStorage.getItem('refreshToken')
+  const refreshToken = Cookies.get('refreshToken') // Lấy refresh token từ cookie
 
   if (!refreshToken) {
-    throw new Error('Refresh Token không tồn tại!')
+    console.log('Không tìm thấy refresh token trong cookie.')
+    return false // Hoặc ném lỗi nếu cần
   }
 
   try {
-    const response = await axios.post(axiosClient.baseURL + '/Account/RenewAccessToken', {
-      RefreshToken: refreshToken,
-    })
+    const readtoken = ReadToken(Cookies.get('accessToken')) // Đọc thông tin từ access token
+    if (!readtoken) {
+      console.log('Không thể đọc thông tin từ access token.')
+      return false // Hoặc ném lỗi
+    }
 
-    if (response.status === 200 && response.data) {
-      const { accessToken, refreshToken: newRefreshToken } = response.data
+    const content = {
+      id: readtoken.IdUser,
+      hoTen: readtoken.Name,
+      sdt: readtoken.Phone,
+      vaiTro: readtoken.Role,
+      refreshToken: refreshToken,
+    }
 
-      if (accessToken && newRefreshToken) {
-        // Lưu lại token mới
-        localStorage.setItem('accessToken', accessToken)
-        localStorage.setItem('refreshToken', newRefreshToken)
+    const response = await axios.post(`${axiosClient.baseURL}/Account/RenewAccessToken`, content)
 
-        return accessToken
-      } else {
-        throw new Error('Token API trả về không hợp lệ.')
-      }
+    if (response.status === 200 && response.data.success) {
+      const { accessToken } = response.data.data
+      Cookies.set('accessToken', accessToken, { expires: 3 / 24 }) // Lưu vào cookie, thời hạn 3 giờ
+      return accessToken
+    } else {
+      console.error('Lỗi khi làm mới access token:', response.data)
+      return false
     }
   } catch (error) {
-    console.error('Không thể refresh access token:', error.message || error)
-    toastr.warning('Phiên truy cập đã hết, vui lòng đăng nhập lại.')
-
-    // Xóa tokens và chuyển hướng về trang đăng nhập
-    localStorage.removeItem('accessToken')
-    localStorage.removeItem('refreshToken')
-
-    // ? Lưu lịch sử trang web không có quyền truy cập.
-    router.push({
-      path: '/login',
-      state: {
-        from: router.currentRoute.fullPath,
-      },
-    })
-
-    throw new Error('Refresh Token đã hết hạn hoặc không khả dụng.')
+    console.error('Lỗi trong quá trình làm mới access token:', error)
+    return false
   }
 }
 
-// Middleware (interceptors) thêm Authorization header
+// Middleware (interceptors) thêm Authorization header và xử lý refresh token
 axiosClient.interceptors.request.use(
   async (config) => {
     const requiresAuth = !config.headers.skipAuth
-    if (!requiresAuth) return config
 
-    const accessToken = localStorage.getItem('accessToken')
+    if (!requiresAuth) {
+      return config // Không yêu cầu xác thực, bỏ qua
+    }
 
-    if (accessToken) {
-      if (isTokenExpired(accessToken)) {
-        try {
-          const newToken = await refreshAccessToken()
-          config.headers.Authorization = `Bearer ${newToken}`
-        } catch (error) {
-          console.error('Lỗi khi refresh token:', error.message || error)
-          toastr.info('Phiên truy cập đã kết thúc.\nVui lòng truy cập lại.')
+    const accessToken = Cookies.get('accessToken')
 
-          // ? Lưu lịch sử trang web không có quyền truy cập.
-          router.push({
-            path: '/login',
-            state: {
-              from: router.currentRoute.fullPath,
-            },
-          })
-          throw error
-        }
+    if (!accessToken) {
+      // Yêu cầu xác thực nhưng không có token
+      console.warn('Không có access token, chuyển hướng đến trang đăng nhập.')
+      router.push('/login') // Chuyển hướng đến trang đăng nhập
+      return config // Quan trọng: Ngăn chặn request được gửi đi
+    }
+    // Kiểm tra token hết hạn bằng cách sử dụng ReadToken
+    const readtoken = ReadToken(accessToken)
+    if (readtoken && readtoken.Exp * 1000 < Date.now()) {
+      // Token đã hết hạn, thử làm mới
+      const newAccessToken = await refreshAccessToken()
+      if (newAccessToken) {
+        config.headers.Authorization = `Bearer ${newAccessToken}`
       } else {
-        config.headers.Authorization = `Bearer ${accessToken}`
+        // Không thể làm mới token, chuyển hướng đến trang đăng nhập
+        console.log('Không thể làm mới token, chuyển hướng đến trang đăng nhập.')
+        router.push('/login')
+        return config // Hoặc ném lỗi nếu cần
       }
+    } else {
+      // Token còn hiệu lực, thêm vào header
+      config.headers.Authorization = `Bearer ${accessToken}`
     }
 
     return config
   },
-  (error) => Promise.reject(error),
+  (error) => {
+    return Promise.reject(error)
+  },
 )
 
 // Xử lý phản hồi với các lỗi
 axiosClient.interceptors.response.use(
-  (response) => response.data,
+  (response) => {
+    if (response.status >= 200 && response.status < 300) {
+      return response.data
+    }
+    toastr.info('Hiện không thể xử lí yêu cầu của bạn.')
+    router.push('/')
+    return response.data
+  },
   (error) => {
     if (error.response) {
       console.error(`API Error: ${error.response.status}`, error.response.data)
-      if (error.response.status === 401) {
-        toastr.warning(
-          'Có 1 số chức năng không hoạt động khi bạn chưa đăng nhập, vui lòng đăng nhập để tiếp tục.',
-        )
-        router.push('/login')
+
+      let routeParams = {
+        name: 'Error',
+        params: { status: error.response.status.toString() }, // Chuyển status sang string
+        query: { message: error.response?.data?.message ?? 'Lỗi không xác định từ API' },
       }
+
+      switch (error.response.status) {
+        case 401:
+          // Unauthorized
+          toastr.warning(
+            'Phiên đăng nhập đã hết hạn hoặc bạn không có quyền truy cập. Vui lòng đăng nhập lại.',
+          )
+
+          // ? Lưu lịch sử trang web không có quyền truy cập.
+          routeParams.state = {
+            from: router.currentRoute.fullPath,
+          }
+
+          router.push({
+            name: 'Error',
+            params: { status: error.response.status.toString() }, // Chuyển status sang string
+            query: { message: error.response?.data?.message ?? 'Lỗi không xác định từ API' },
+            state: {
+              from: router.currentRoute.fullPath,
+            },
+          })
+          break
+
+        case 403:
+          // Forbidden
+          toastr.error('Bạn không có quyền truy cập vào tài nguyên này.')
+          router.push({
+            name: 'Error',
+            params: { status: error.response.status.toString() }, // Chuyển status sang string
+            query: {
+              message:
+                error.response?.data?.message ?? 'Bạn không có quyền truy cập vào tài nguyên này',
+            },
+          })
+          break
+
+        case 404:
+          // Not Found
+          toastr.error('Không tìm thấy tài nguyên.')
+          router.push({
+            name: 'Error',
+            params: { status: error.response.status.toString() }, // Chuyển status sang string
+            query: { message: error.response?.data?.message ?? 'Không tìm thấy tài nguyên' },
+          })
+          break
+
+        case 500:
+          // Internal Server Error
+          toastr.error('Đã xảy ra lỗi máy chủ. Vui lòng thử lại sau.')
+          router.push({
+            name: 'Error',
+            params: { status: error.response.status.toString() }, // Chuyển status sang string
+            query: {
+              message:
+                error.response?.data?.message ?? 'Đã xảy ra lỗi máy chủ. Vui lòng thử lại sau',
+            },
+          })
+          break
+
+        default:
+          // Các lỗi khác
+          toastr.error('Đã xảy ra lỗi.')
+          router.push({
+            name: 'Error',
+            params: { status: error.response.status.toString() }, // Chuyển status sang string
+            query: { message: error.response?.data?.message ?? 'Đã xảy ra lỗi' },
+          })
+          break
+      }
+      // Ném lỗi để các promise khác có thể bắt được
       throw new Error(error.response?.data?.message ?? 'Lỗi không xác định từ API.')
     }
     throw error
