@@ -510,7 +510,7 @@ namespace APIQuanLyCuaHang.Repositories.Customer
 
         public async Task<Khachhang> GetCustomerByIdAsync(int id)
         {
-            var customer = await _context.Khachhangs
+            var customer = await _context.Khachhangs.AsNoTracking()
                 .FirstOrDefaultAsync(kh => kh.MaKh == id && kh.IsDelete != true);
 
             if (customer == null)
