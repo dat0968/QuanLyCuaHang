@@ -10,6 +10,7 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
         Task<ResponseAPI<OrderStatusData>> GetOrderStatusDataAsync(string timeRange);
         Task<ResponseAPI<OrderOverviewData>> GetOrderOverviewDataAsync(string timeRange);
         Task<ResponseAPI<TopSellingProductsData>> GetTopSellingProductsAsync();
+        Task<ResponseAPI<List<ComboDC>>> GetTopSellingCombosAsync();
         Task<ResponseAPI<List<StaffDC>>> GetEmployeeOrderStatisticsAsync();
         Task<ResponseAPI<UserStatisticsData>> GetUserStatisticsAsync();
         Task<ResponseAPI<ProductDC>> GetProductFullDetails(int id);

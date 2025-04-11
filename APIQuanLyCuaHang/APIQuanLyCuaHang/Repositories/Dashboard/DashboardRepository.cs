@@ -21,6 +21,7 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
             _db = db;
         }
 
+        #region [Lấy dữ liệu Thống kê doanh thu theo thời gian]
         public async Task<ResponseAPI<EarningData>> GetEarningDataAsync(string timeRange)
         {
             ResponseAPI<EarningData> response = new();
@@ -37,7 +38,9 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
             }
             return response;
         }
+        #endregion
 
+        #region [Dữ liệu thống kê đơn hàng trên mọi dòng thời gian] 
         public async Task<ResponseAPI<OrderData>> GetAllOrderDataAsync()
         {
             try
@@ -51,7 +54,9 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
                 return new ResponseAPI<OrderData> { Success = false, Message = ex.Message };
             }
         }
+        #endregion
 
+        #region [Lấy dữ liệu thống kê số lượng đơn hàng theo thời gian] 
         public async Task<ResponseAPI<OrderStatusData>> GetOrderStatusDataAsync(string timeRange)
         {
             try
@@ -65,7 +70,9 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
                 return new ResponseAPI<OrderStatusData> { Success = false, Message = ex.Message };
             }
         }
+        #endregion
 
+        #region [Lấy dữ liệu thống kê đơn hàng theo thời gian (ps: Hình như cái này không có dùng (.___.))] 
         public async Task<ResponseAPI<OrderOverviewData>> GetOrderOverviewDataAsync(string timeRange)
         {
             try
@@ -79,7 +86,9 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
                 return new ResponseAPI<OrderOverviewData> { Success = false, Message = ex.Message };
             }
         }
+        #endregion
 
+        #region [Lấy dữ liệu danh sách sản phẩm được mua nhiều nhất] 
         public async Task<ResponseAPI<TopSellingProductsData>> GetTopSellingProductsAsync()
         {
             try
@@ -93,8 +102,71 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
                 return new ResponseAPI<TopSellingProductsData> { Success = false, Message = ex.Message };
             }
         }
+        #endregion
 
+        #region [Lấy dữ liệu danh sách Combo được mua nhiều nhất] 
+        public async Task<ResponseAPI<List<ComboDC>>> GetTopSellingCombosAsync()
+        {
+            ResponseAPI<List<ComboDC>> response = new();
+            try
+            {
+                // Bước 1: Nhóm các chi tiết combo theo mã combo
+                var groupedCombos = await _db.Chitietcombohoadons
+                    .Include(x => x.MaComboNavigation)
+                        .ThenInclude(x => x.Chitietcombos)
+                            .ThenInclude(x => x.MaSpNavigation)
+                                .ThenInclude(x => x.MaDanhMucNavigation)
+                    .GroupBy(cb => cb.MaCombo)
+                    .ToListAsync();
+
+                Console.WriteLine($"Here!!!!!!!!!!!!!!!!!!!!!!!!!! {await _db.Chitietcombohoadons.CountAsync()}");
+                // Bước 2: Tạo danh sách ComboDC từ các nhóm
+                List<ComboDC> comboDTOs = new List<ComboDC>();
+                foreach (var group in groupedCombos)
+                {
+                    var comboDto = new ComboDC
+                    {
+                        MaCombo = group.Key,
+                        TenCombo = group.First().MaComboNavigation.TenCombo,
+                        Hinh = group.First().MaComboNavigation.Hinh,
+                        SoLuong = group.Sum(x => x.SoLuong),
+                        PhanTramGiam = group.First().MaComboNavigation.PhanTramGiam,
+                        SoTienGiam = group.First().MaComboNavigation.SoTienGiam,
+                        MoTa = group.First().MaComboNavigation.MoTa,
+                        IsDelete = group.First().MaComboNavigation.IsDelete,
+                        ChiTietCombos = group.First().MaComboNavigation.Chitietcombos.Select(ctcb => new DetailComboDC
+                        {
+                            MaCombo = ctcb.MaCombo,
+                            MaSp = ctcb.MaSp,
+                            TenSanPham = ctcb.MaSpNavigation.TenSanPham,
+                            IsProductDelete = ctcb.MaSpNavigation.IsDelete,
+                            SoLuongSp = ctcb.SoLuongSp,
+                            MaDanhMuc = ctcb.MaSpNavigation.MaDanhMuc,
+                            TenDanhMuc = ctcb.MaSpNavigation.MaDanhMucNavigation.TenDanhMuc,
+                            IsCategoryDelete = ctcb.MaSpNavigation.MaDanhMucNavigation.IsDelete,
+                            MoTa = ctcb.MaSpNavigation.MoTa,
+                        }).ToList(),
+                    };
+
+                    comboDTOs.Add(comboDto);
+                }
+
+                // Bước 3: Gán dữ liệu vào phản hồi
+                response.SetSuccessResponse("Dữ liệu thống kê combo đã lấy thành công.");
+                response.Data = comboDTOs;
+            }
+            catch (Exception ex)
+            {
+                response.SetMessageResponseWithException(500, ex);
+            }
+            return response;
+        }
+
+
+        #endregion
         // * Old: EmployeeStatisticsData
+
+        #region [Lấy dữ liệu danh sách nhân viên đáng nể nhất] 
         public async Task<ResponseAPI<List<StaffDC>>> GetEmployeeOrderStatisticsAsync()
         {
             try
@@ -107,7 +179,9 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
                 return new ResponseAPI<List<StaffDC>> { Success = false, Message = ex.Message };
             }
         }
+        #endregion
 
+        #region [Lấy dữ liệu thống kê trạng thái người dùng] 
         public async Task<ResponseAPI<UserStatisticsData>> GetUserStatisticsAsync()
         {
             try
@@ -121,7 +195,9 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
                 return new ResponseAPI<UserStatisticsData> { Success = false, Message = ex.Message };
             }
         }
+        #endregion
 
+        #region [Lấy thông tin chi tiết sản phẩm (ps: hình như cái này cũng không có đụng tới phía controller)] 
         public async Task<ResponseAPI<ProductDC>> GetProductFullDetails(int id)
         {
             ResponseAPI<ProductDC> response = new();
@@ -156,8 +232,10 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
             }
             return response;
         }
+        #endregion
 
 
+        #region [Lấy dữ liệu danh sách lịch sử làm việc (ps: like above)] 
         public async Task<ResponseAPI<WorkHistoryDC>> GetTopEmployeeRegistShift()
         {
             ResponseAPI<WorkHistoryDC> response = new();
@@ -180,7 +258,9 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
             }
             return response;
         }
+        #endregion
 
+        #region [Lấy thống kê tình trạng người dùng] 
         public async Task<ResponseAPI<List<StatObjectDC>>> GetListStatObjectAsync()
         {
             ResponseAPI<List<StatObjectDC>> response = new();
@@ -214,8 +294,9 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
             }
             return response;
         }
-        #region [Private Methods]
+        #endregion
 
+        #region [Private Methods]
         private async Task<List<InvoiceDC>> GetAllInvoiceDataStatisticsAsync()
         {
             var hoadonList = await _db.Hoadons.ToListAsync();
@@ -356,7 +437,7 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
                     }
                 }
 
-                return staffDCs;
+                return staffDCs.OrderByDescending(x => x.DoanhThuMangLai).ToList();
             }
             catch (Exception ex)
             {
@@ -557,7 +638,7 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
                         TotalRevenue = g.Sum(x => x.TongTien ?? 0)
                     })
                     .OrderByDescending(x => x.Quantity)
-                    .Take(5) // Lấy 5 sản phẩm bán chạy nhất
+                    .Take(20) // Lấy 20 sản phẩm bán chạy nhất
                     .ToList()
             };
 

@@ -26,10 +26,11 @@ namespace APIQuanLyCuaHang.DbInitializer
             {
                 CreateATestAccount();
             }
+            /* 
             if (!_db.Nhanviens.Any(nv => nv.Email == "staff666@gmail.com"))
             {
                 CreateTestStaffAccount();
-            }
+            } */
         }
         private void CreateATestAccount()
         {
