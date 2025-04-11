@@ -247,6 +247,7 @@ import Swal from 'sweetalert2'
 import ConfigsRequest from '@/models/ConfigsRequest'
 import TrangThaiDonHang from '@/constants/trangThaiDonHang'
 import StoreInfo from '@/constants/storeInfo'
+import authService from '@/services/authService'
 
 pdfMake.vfs = pdfFonts.vfs // Nhúng font vào pdfmake
 
@@ -266,6 +267,7 @@ export default {
     }
   },
   mounted() {
+    authService.hasAnyRole(['Customer'])
     this.loadOrders()
   },
   methods: {
