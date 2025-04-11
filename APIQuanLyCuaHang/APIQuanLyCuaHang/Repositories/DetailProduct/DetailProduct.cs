@@ -12,6 +12,11 @@ namespace APIQuanLyCuaHang.Repositories.DetailProduct
         {
             this.db = db;
         }
+        public async Task<Chitietsanpham?> GetDetailByMaCTSp(int MaCTSp)
+        {
+            var findDetailProduct = await db.Chitietsanphams.AsNoTracking().FirstOrDefaultAsync(p => p.MaCtsp == MaCTSp);
+            return findDetailProduct;
+        }
         public async Task<Chitietsanpham> AddDetailProduct(Chitietsanpham model)
         {
             try
@@ -30,11 +35,20 @@ namespace APIQuanLyCuaHang.Repositories.DetailProduct
         {
             try
             {
+                // Ngắt theo dõi thực thể cũ nếu có
+                var trackedEntity = db.ChangeTracker
+                    .Entries<Chitietsanpham>()
+                    .FirstOrDefault(e => e.Entity.MaCtsp == model.MaCtsp);
+
+                if (trackedEntity != null)
+                {
+                    db.Entry(trackedEntity.Entity).State = EntityState.Detached;
+                }
                 db.Chitietsanphams.Update(model);
                 await db.SaveChangesAsync();
             }catch(Exception ex)
             {
-                throw;
+                throw new Exception("Lỗi", ex);
             }
         }
 
@@ -46,7 +60,7 @@ namespace APIQuanLyCuaHang.Repositories.DetailProduct
                 return await FindDetailProduct;
             }catch(Exception ex)
             {
-                throw;
+                throw new Exception("Lỗi", ex);
             }
         }
         public async Task DeleteDetailProduct(int MaCtsp)

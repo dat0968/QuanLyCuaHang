@@ -1,3 +1,10 @@
+<script setup>
+import { ref } from 'vue';
+import CartButton from './CartButton.vue';
+import '@fortawesome/fontawesome-free/css/all.min.css'
+import OrderClientButton from './ui/OrderClientButton.vue'
+const cartComponent = ref(null)
+</script>
 <template>
   <header class="main_menu home_menu">
     <div class="container">
@@ -48,7 +55,8 @@
             </div>
             <div class="menu_btn">
               <!-- Nút giỏ hàng -->
-              <cart-button @open-cart="openCartModal" />
+              <CartButton />
+              
               <!-- Cart modal -->
               <cart ref="cartComponent" />
               <!-- Nút đơn hàng -->
@@ -61,13 +69,6 @@
   </header>
 </template>
 
-<script setup>
-import { ref } from 'vue';
-import CartButton from '@/components/CartButton.vue';
-
-import OrderClientButton from './ui/OrderClientButton.vue'
-const cartComponent = ref(null)
-</script>
 
 <style scoped>
 .menu_btn {

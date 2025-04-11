@@ -26,6 +26,9 @@ import OrderClient from '@/views/client/OrderClient.vue'
 import Cart from '@/views/client/Cart.vue'
 import TableIndex from '@/views/admin/Table/TableIndex.vue'
 import Profile from '../views/Profile/Profile.vue';
+import { ReadToken, ValidateToken } from '../Authentication_Authorization/auth.js'
+import Cookies from 'js-cookie'
+import Swal from 'sweetalert2'
 const routes = [
   {
     path: '/',
@@ -119,5 +122,37 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 })
-
+router.beforeEach(async (to, from, next) => {
+  let accessToken = Cookies.get('accessToken')
+  let refreshToken = Cookies.get('refreshToken')
+  const validateToken = await ValidateToken(accessToken, refreshToken)
+  if (validateToken == true) {
+    accessToken = Cookies.get('accessToken')
+    const readtoken = ReadToken(accessToken)
+    const role = readtoken.Role
+    if ((role === 'Admin' || role === 'Nhân viên') && to.path.startsWith('/')) {
+      next('/Error/401')
+    }
+    if ((role === 'Customer') && to.path.startsWith('/admin')) {
+      next('/Error/401')
+    }
+  }
+  else if(validateToken == false) {
+    if (to.path.toLowerCase() === '/cart'.toLowerCase() || to.path.toLowerCase() === '/checkout'.toLowerCase()) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Phiên của bạn đã hết hoặc bạn chưa đăng nhập, vui lòng đăng nhập lại!',
+        timer: 2000,
+        showConfirmButton: false,
+      })
+      next('/Login')
+      return;
+    }
+    if(to.path.startsWith('/admin')){
+      next('/Error/401')
+      return;
+    }
+  }
+  next()
+})
 export default router

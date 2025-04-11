@@ -32,8 +32,8 @@ const handleLogin = async () => {
     const data = await response.json();
 
     if (data.success) {
-      Cookies.set('accessToken', data.data.accessToken, { expires: 2 / 24 }); // set 2 giờ nha các đồng chí
-      Cookies.set('refreshToken', data.data.refreshToken, { expires: 2 / 24 });
+      Cookies.set('accessToken', data.data.accessToken, { expires: 3 / 24 }); 
+      Cookies.set('refreshToken', data.data.refreshToken, { expires: 3 / 24 });
       await Swal.fire({
         icon: 'success',
         title: 'Đăng nhập thành công!',

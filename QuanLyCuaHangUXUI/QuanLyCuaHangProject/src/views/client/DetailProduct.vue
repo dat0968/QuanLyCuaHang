@@ -3,13 +3,16 @@ import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import 'animate.css'
 import Swal from 'sweetalert2'
+import Cookies from 'js-cookie'
+import { ReadToken, ValidateToken } from '../../Authentication_Authorization/auth.js'
 const route = useRoute()
 const router = useRouter()
 const product = ref(null)
 const selectedVariant = ref(null)
 const quantity = ref(1)
 const quantityError = ref('')
-
+let accesstoken = Cookies.get('accessToken')
+const refreshtoken = Cookies.get('refreshToken')
 // Thêm hàm scrollToTop
 const scrollToTop = () => {
   window.scrollTo({
@@ -117,8 +120,26 @@ const addToCart = async () => {
   }
   if (!selectedVariant.value) return
 
+  let IdUser = ''
+  const validateToken = await ValidateToken(accesstoken, refreshtoken)
+  if (validateToken == true) {
+    accesstoken = Cookies.get('accessToken')
+    const readtoken = ReadToken(accesstoken)
+    if(readtoken){
+      IdUser = readtoken.IdUser
+    }
+  } else {
+    Swal.fire({
+        icon: 'error',
+        title: 'Phiên của bạn đã hết hoặc bạn chưa đăng nhập, vui lòng đăng nhập lại!',
+        timer: 2000,
+        showConfirmButton: false,
+      })
+      router.push('/Login')
+      return;
+  }
   const cartItem = {
-    maKh: '120',
+    maKh: IdUser,
     maCtsp: selectedVariant.value.maCtsp,
     maCombo: null,
     donGia: selectedVariant.value.donGia,
@@ -129,10 +150,20 @@ const addToCart = async () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accesstoken}`,
       },
       body: JSON.stringify(cartItem),
     })
-
+    if(response.status === 401){
+      Swal.fire({
+        icon: 'error',
+        title: 'Phiên của bạn đã hết hoặc bạn chưa đăng nhập, vui lòng đăng nhập lại!',
+        timer: 2000,
+        showConfirmButton: false,
+      })
+      router.push('/Login')
+      return;
+    }
     const result = await response.json()
     if (result.success) {
       Swal.fire('Đã thêm sản phẩm vào giỏ hàng', '', 'success')

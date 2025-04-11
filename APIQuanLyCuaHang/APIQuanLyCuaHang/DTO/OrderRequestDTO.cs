@@ -6,21 +6,9 @@ namespace APIQuanLyCuaHang.DTO
     {
         public int MaKh { get; set; }
 
-        public int? MaNv { get; set; }
-
-        public DateTime NgayTao { get; set; }
-
-        public DateTime? BatDauGiao { get; set; }
-
-        public DateTime? NgayNhan { get; set; }
-
         public string? DiaChiNhanHang { get; set; }
 
-        public DateTime? NgayThanhToan { get; set; }
-
         public string? HinhThucTt { get; set; }
-
-        public string? TinhTrang { get; set; }
 
         public string? MoTa { get; set; }
 
@@ -28,20 +16,27 @@ namespace APIQuanLyCuaHang.DTO
 
         public string Sdt { get; set; } 
 
-        public string? LyDoHuy { get; set; }
-
-        public bool? IsDelete { get; set; }
-
         public decimal PhiVanChuyen { get; set; }
 
         public decimal TienGoc { get; set; }
-
+        public string? MaCoupon { get; set; }
+        public decimal GiamGiaCoupon { get; set; } = 0;
+        public virtual List<DetailCombo_OrderResquest> DetailCombo_OrderResquests { get; set; } = new List<DetailCombo_OrderResquest>();
         public List<OrderDetailRequestDTO> Cthoadons { get; set; } = new List<OrderDetailRequestDTO>();
     }
     public class OrderDetailRequestDTO
     {
-        public int MaCtsp { get; set; }
-
+        public int? MaCtsp { get; set; }
         public int SoLuong { get; set; }
+        public decimal DonGia { get; set; }
+        public decimal? GiamGia { get; set; }
+        public int? MaCombo { get; set; }
+    }
+    public class DetailCombo_OrderResquest
+    {
+        public int MaCombo { get; set; }
+        public int MaCTSp { get; set; }
+        public int SoLuong { get; set; }
+        public decimal DonGia { get; set; }
     }
 }

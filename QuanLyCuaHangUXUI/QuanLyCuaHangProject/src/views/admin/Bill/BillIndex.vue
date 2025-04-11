@@ -1,35 +1,43 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue';
-import Swal from 'sweetalert2';
-import {jwtDecode} from "jwt-decode";
-import Cookies from 'js-cookie';
-const immutableStatuses = ["Đã hủy", "Hoàn trả/Hoàn tiền"];
+import { ref, onMounted, watch } from 'vue'
+import Swal from 'sweetalert2'
+import { jwtDecode } from 'jwt-decode'
+import Cookies from 'js-cookie'
+const immutableStatuses = ['Đã hủy', 'Hoàn trả/Hoàn tiền']
 
-const orders = ref([]);
-const totalItems = ref(0);
-const searchQuery = ref('');
-const paymentFilter = ref('');
-const statusFilter = ref('');
-const currentPage = ref(1);
-const pageSize = 10;
-const selectedOrder = ref(null);
-const isLoading = ref(false);
-const userInfo = ref(null);
-const statusOptions = ["Chờ xác nhận", "Đã xác nhận", "Đã giao cho đơn vị vận chuyển", "Đã Nhận", "Đã thanh toán", "Đã hủy", "Hoàn trả/Hoàn tiền"];
-const paymentOptions = ["COD", "VNPAY"];
-const token = ref(Cookies.get('accessToken'));
+const orders = ref([])
+const totalItems = ref(0)
+const searchQuery = ref('')
+const paymentFilter = ref('')
+const statusFilter = ref('')
+const currentPage = ref(1)
+const pageSize = 10
+const selectedOrder = ref(null)
+const isLoading = ref(false)
+const userInfo = ref(null)
+const statusOptions = [
+  'Chờ xác nhận',
+  'Đã xác nhận',
+  'Đã giao cho đơn vị vận chuyển',
+  'Đã Nhận',
+  'Đã thanh toán',
+  'Đã hủy',
+  'Hoàn trả/Hoàn tiền',
+]
+const chitietcombohoadonDTOs = ref([])
+const paymentOptions = ['COD', 'VNPAY']
+const token = ref(Cookies.get('accessToken'))
 try {
-    if (token == null){
-      throw new Error("Error")
-    };
-    userInfo.value = jwtDecode(token) // Giải mã Base64
-    console.log(userInfo.value);
-  } catch (error) {
-    console.error("Lỗi khi giải mã token:", error.message);
+  if (token == null) {
+    throw new Error('Error')
   }
+  userInfo.value = jwtDecode(token) // Giải mã Base64
+  console.log(userInfo.value)
+} catch (error) {
+  console.error('Lỗi khi giải mã token:', error.message)
+}
 const fetchOrders = async () => {
-  
-  isLoading.value = true;
+  isLoading.value = true
   try {
     const params = new URLSearchParams({
       page: currentPage.value,
@@ -37,114 +45,119 @@ const fetchOrders = async () => {
       ...(searchQuery.value && { hoTen: searchQuery.value }),
       ...(paymentFilter.value && { hinhThucTt: paymentFilter.value }),
       ...(statusFilter.value && { tinhTrang: statusFilter.value }),
-    });
+    })
 
-    const response = await fetch(`https://localhost:7139/api/Bill/GetFiltered/search?${params.toString()}`);
-    if (!response.ok) throw new Error("Không thể tải dữ liệu");
-    const data = await response.json();
+    const response = await fetch(
+      `https://localhost:7139/api/Bill/GetFiltered/search?${params.toString()}`
+    )
+    if (!response.ok) throw new Error('Không thể tải dữ liệu')
+    const data = await response.json()
 
-    orders.value = data.orders || [];
-    totalItems.value = data.totalItems || 0;
+    orders.value = data.orders || []
+    totalItems.value = data.totalItems || 0
   } catch (error) {
-    console.error('Lỗi khi lấy danh sách hóa đơn:', error);
+    console.error('Lỗi khi lấy danh sách hóa đơn:', error)
     Swal.fire({
       icon: 'error',
       title: 'Lỗi!',
       text: 'Đã xảy ra lỗi khi tải dữ liệu!',
-    });
+    })
   } finally {
-    isLoading.value = false;
+    isLoading.value = false
   }
-};
+}
 const updateStatus = async (order, newStatus) => {
-  const previousStatus = order.tinhTrang;
+  const previousStatus = order.tinhTrang
   try {
     // Kiểm tra xem userInfo.value có tồn tại và có sub không
     if (!userInfo.value || !userInfo.value.sub) {
-      throw new Error("Không tìm thấy thông tin nhân viên, vui lòng đăng nhập lại");
+      throw new Error('Không tìm thấy thông tin nhân viên, vui lòng đăng nhập lại')
     }
-    const maNv = parseInt(userInfo.value.sub); // Chuyển sub thành số nguyên (100)
+    const maNv = parseInt(userInfo.value.sub) // Chuyển sub thành số nguyên (100)
     const response = await fetch(
       `https://localhost:7139/api/Bill/UpdateStatus/update-status/${order.maHd}`,
       {
-        method: "PUT",
-        headers: { "Content-Type": "application/json"},
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ tinhTrang: newStatus, maNv: maNv }),
       }
-    );
+    )
     if (!response.ok) {
-      let errorMessage = "Cập nhật thất bại";
+      let errorMessage = 'Cập nhật thất bại'
       try {
-        const errorData = await response.json();
-        errorMessage = errorData.message || errorMessage;
+        const errorData = await response.json()
+        errorMessage = errorData.message || errorMessage
       } catch {
-        errorMessage = response.statusText || "Không thể kết nối tới server";
+        errorMessage = response.statusText || 'Không thể kết nối tới server'
       }
-      throw new Error(errorMessage);
+      throw new Error(errorMessage)
     }
 
-    const result = await response.json();
-    order.tinhTrang = newStatus;
-    order.maNv = maNv;
-    
-    // order.maNv = 
+    const result = await response.json()
+    order.tinhTrang = newStatus
+    order.maNv = maNv
+
+    // order.maNv =
     Swal.fire({
       icon: 'success',
       title: 'Thành công!',
       text: result.message,
       showConfirmButton: false,
       timer: 1500,
-    });
+    })
   } catch (error) {
-    console.error("Lỗi khi cập nhật trạng thái:", error);
-    order.tinhTrang = previousStatus;
+    console.error('Lỗi khi cập nhật trạng thái:', error)
+    order.tinhTrang = previousStatus
     Swal.fire({
       icon: 'error',
       title: 'Lỗi!',
       text: error.message,
       confirmButtonText: 'OK',
-    });
+    })
   }
-};
+}
 // const viewDetails = (order) => {
 //   selectedOrder.value = order;
 // };
 const viewDetails = async (order) => {
   try {
-    const response = await fetch(`https://localhost:7139/api/Bill/GetBillDetails/details/${order.maHd}`);
+    const response = await fetch(
+      `https://localhost:7139/api/Bill/GetBillDetails/details/${order.maHd}`
+    )
     if (!response.ok) {
-      throw new Error(`Lỗi: ${response.status}`);
+      throw new Error(`Lỗi: ${response.status}`)
     }
-    const data = await response.json();
-    console.log("Dữ liệu từ API:", data); // 🔍 Kiểm tra dữ liệu trả về
-    selectedOrder.value = data;
+    const data = await response.json()
+    console.log('Dữ liệu từ API:', data) // 🔍 Kiểm tra dữ liệu trả về
+    selectedOrder.value = data
+    chitietcombohoadonDTOs.value = selectedOrder.value.chitietcombohoadonDTOs
+    console.log(chitietcombohoadonDTOs.value)
   } catch (error) {
-    console.error("Lỗi khi lấy chi tiết đơn hàng:", error);
+    console.error('Lỗi khi lấy chi tiết đơn hàng:', error)
   }
-};
+}
 
 const closeDetails = () => {
-  selectedOrder.value = null;
-};
+  selectedOrder.value = null
+}
 
 const nextPage = () => {
-  if (currentPage.value < Math.ceil(totalItems.value / pageSize)) currentPage.value++;
-};
+  if (currentPage.value < Math.ceil(totalItems.value / pageSize)) currentPage.value++
+}
 
 const prevPage = () => {
-  if (currentPage.value > 1) currentPage.value--;
-};
+  if (currentPage.value > 1) currentPage.value--
+}
 
 const changePage = (page) => {
-  currentPage.value = page;
-  fetchOrders();
-};
+  currentPage.value = page
+  fetchOrders()
+}
 
-watch([searchQuery, paymentFilter, statusFilter, currentPage], fetchOrders, { debounce: 300 });
+watch([searchQuery, paymentFilter, statusFilter, currentPage], fetchOrders, { debounce: 300 })
 onMounted(() => {
-  fetchOrders();
-  
-});
+  fetchOrders()
+})
 </script>
 
 <template>
@@ -201,8 +214,12 @@ onMounted(() => {
             <td class="text-center">{{ order.hoTen }}</td>
             <td class="text-center">{{ order.hinhThucTt }}</td>
             <td class="text-center">
-            <select
-              class="form-select status-select" :value="order.tinhTrang" @change="updateStatus(order, $event.target.value)" :disabled="immutableStatuses.includes(order.tinhTrang)">
+              <select
+                class="form-select status-select"
+                :value="order.tinhTrang"
+                @change="updateStatus(order, $event.target.value)"
+                :disabled="immutableStatuses.includes(order.tinhTrang)"
+              >
                 <option v-for="status in statusOptions" :key="status" :value="status">
                   {{ status }}
                 </option>
@@ -211,9 +228,7 @@ onMounted(() => {
 
             <td class="text-center">{{ order.tongtien.toLocaleString('vi-VN') }} VNĐ</td>
             <td class="text-center">
-              <button class="btn btn-info btn-sm" @click="viewDetails(order)">
-                ℹ️ Chi tiết
-              </button>
+              <button class="btn btn-info btn-sm" @click="viewDetails(order)">ℹ️ Chi tiết</button>
             </td>
           </tr>
           <tr v-if="!orders.length">
@@ -238,7 +253,10 @@ onMounted(() => {
           >
             <a class="page-link" @click="changePage(page)">{{ page }}</a>
           </li>
-          <li class="page-item" :class="{ disabled: currentPage >= Math.ceil(totalItems / pageSize) }">
+          <li
+            class="page-item"
+            :class="{ disabled: currentPage >= Math.ceil(totalItems / pageSize) }"
+          >
             <a class="page-link" @click="nextPage" href="#">»</a>
           </li>
         </ul>
@@ -246,126 +264,277 @@ onMounted(() => {
     </div>
 
     <!-- Modal chi tiết -->
-<!-- Modal chi tiết -->
-<!-- Modal chi tiết -->
-<transition name="modal">
-  <div v-if="selectedOrder" class="modal-overlay" @click.self="closeDetails">
-    <div class="modal-content modal-wide"> 
-      <!-- Nút X đóng form -->
-      <button class="close-btn" @click="closeDetails">×</button>
-      
-      <h3>Chi tiết hóa đơn có mã hóa đơn: {{ selectedOrder.maHd }}</h3>
+    <!-- Modal chi tiết -->
+    <!-- Modal chi tiết -->
+    <transition name="modal">
+      <div v-if="selectedOrder" class="modal-overlay" @click.self="closeDetails">
+        <div class="modal-content modal-wide">
+          <!-- Nút X đóng form -->
+          <button class="close-btn" @click="closeDetails">×</button>
 
-      <!-- Grid 3 cột chứa thông tin đơn hàng -->
-      <div class="modal-grid">
-        <!-- Cột 1 -->
-        <div class="modal-column">
-          <div class="modal-item">
-            <label>Tên khách hàng</label>
-            <div class="value">{{ selectedOrder.hoTen }}</div>
-          </div>
-          <div class="modal-item">
-            <label>Số điện thoại</label>
-            <div class="value">{{ selectedOrder.sdt }}</div>
-          </div>
-          <div class="modal-item">
-            <label>Địa chỉ nhận hàng</label>
-            <div class="value">{{ selectedOrder.diaChiNhanHang }}</div>
-          </div>
-          <div class="modal-item">
-            <label>Hình thức thanh toán</label>
-            <div class="value">{{ selectedOrder.hinhThucTt }}</div>
-          </div>
-          <div class="modal-item">
-            <label>Tình trạng</label>
-            <div class="value">{{ selectedOrder.tinhTrang }}</div>
-          </div>
-          <div class="modal-item">
-            <label>Phí vận chuyển</label>
-            <div class="value">{{ selectedOrder.phiVanChuyen?.toLocaleString('vi-VN') || "0" }} VNĐ</div>
-          </div>
-          <div class="modal-item">
-            <label>Tiền gốc</label>
-            <div class="value">{{ selectedOrder.tienGoc?.toLocaleString('vi-VN') || "0" }} VNĐ</div>
-          </div>
-        </div>
+          <h3>Chi tiết hóa đơn có mã hóa đơn: {{ selectedOrder.maHd }}</h3>
 
-        <!-- Cột 3 -->
-        <div class="modal-column">
-          <div class="modal-item">
-            <label>Tên nhân viên</label>
-            <div class="value">{{ selectedOrder.hoTenNv }}</div>
-          </div>
-          <div class="modal-item">
-            <label>Ngày tạo</label>
-            <div class="value">{{ new Date(selectedOrder.ngayTao).toLocaleString('vi-VN') }}</div>
-          </div>
-          <div class="modal-item">
-            <label>Ngày bắt đầu giao</label>
-            <div class="value">{{ new Date(selectedOrder.batDauGiao).toLocaleString('vi-VN') }}</div>
-          </div>
-          <div class="modal-item">
-            <label>Ngày nhận</label>
-            <div class="value">{{ new Date(selectedOrder.ngayNhan).toLocaleString('vi-VN') }}</div>
-          </div>
-          <div class="modal-item">
-            <label>Ngày thanh toán</label>
-            <div class="value">
-              {{ selectedOrder.ngayThanhToan ? new Date(selectedOrder.ngayThanhToan).toLocaleString('vi-VN') : "Chưa thanh toán" }}
+          <!-- Grid 3 cột chứa thông tin đơn hàng -->
+          <div class="modal-grid">
+            <!-- Cột 1 -->
+            <div class="modal-column">
+              <div class="modal-item">
+                <label>Tên khách hàng</label>
+                <div class="value">{{ selectedOrder.hoTen }}</div>
+              </div>
+              <div class="modal-item">
+                <label>Số điện thoại</label>
+                <div class="value">{{ selectedOrder.sdt }}</div>
+              </div>
+              <div class="modal-item">
+                <label>Địa chỉ nhận hàng</label>
+                <div class="value">{{ selectedOrder.diaChiNhanHang }}</div>
+              </div>
+              <div class="modal-item">
+                <label>Hình thức thanh toán</label>
+                <div class="value">{{ selectedOrder.hinhThucTt }}</div>
+              </div>
+              <div class="modal-item">
+                <label>Tình trạng</label>
+                <div class="value">{{ selectedOrder.tinhTrang }}</div>
+              </div>
+              <div class="modal-item">
+                <label>Phí vận chuyển</label>
+                <div class="value">
+                  {{ selectedOrder.phiVanChuyen?.toLocaleString('vi-VN') || '0' }} VNĐ
+                </div>
+              </div>
+              <div class="modal-item">
+                <label>Tiền gốc</label>
+                <div class="value">
+                  {{ selectedOrder.tienGoc?.toLocaleString('vi-VN') || '0' }} VNĐ
+                </div>
+              </div>
+              <div class="modal-item">
+                <label>Giảm giá coupon</label>
+                <div style="color: red" class="value">
+                  - {{ selectedOrder.giamGiaCoupon?.toLocaleString('vi-VN') || '0' }} VNĐ
+                </div>
+              </div>
+            </div>
+
+            <!-- Cột 3 -->
+            <div class="modal-column">
+              <div class="modal-item">
+                <label>Tên nhân viên</label>
+                <div class="value">{{ selectedOrder.hoTenNv }}</div>
+              </div>
+              <div class="modal-item">
+                <label>Ngày tạo</label>
+                <div class="value">
+                  {{ new Date(selectedOrder.ngayTao).toLocaleString('vi-VN') }}
+                </div>
+              </div>
+              <div class="modal-item">
+                <label>Ngày bắt đầu giao</label>
+                <div class="value">
+                  {{ new Date(selectedOrder.batDauGiao).toLocaleString('vi-VN') }}
+                </div>
+              </div>
+              <div class="modal-item">
+                <label>Ngày nhận</label>
+                <div class="value">
+                  {{ new Date(selectedOrder.ngayNhan).toLocaleString('vi-VN') }}
+                </div>
+              </div>
+              <div class="modal-item">
+                <label>Ngày thanh toán</label>
+                <div class="value">
+                  {{
+                    selectedOrder.ngayThanhToan
+                      ? new Date(selectedOrder.ngayThanhToan).toLocaleString('vi-VN')
+                      : 'Chưa thanh toán'
+                  }}
+                </div>
+              </div>
+              <div class="modal-item">
+                <label>Mô tả</label>
+                <div class="value">{{ selectedOrder.moTa || 'Không có' }}</div>
+              </div>
+              <div class="modal-item">
+                <label>Tổng tiền</label>
+                <div class="value">
+                  {{ selectedOrder.tongtien?.toLocaleString('vi-VN') || '0' }} VNĐ
+                </div>
+              </div>
             </div>
           </div>
-          <div class="modal-item">
-            <label>Mô tả</label>
-            <div class="value">{{ selectedOrder.moTa || "Không có" }}</div>
+
+          <!-- Danh sách sản phẩm bên dưới -->
+          <div class="product-list">
+            <h4>Sản phẩm trong đơn hàng</h4>
+            <table class="product-table">
+              <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Hình ảnh</th>
+                  <th>Tên sản phẩm</th>
+                  <th>Kích thước</th>
+                  <th>Hương vị</th>
+                  <th>Đơn giá</th>
+                  <th>Số lượng</th>
+                  <th>Tiền gốc</th>
+                  <th>Giảm giá</th>
+                  <th>Tổng tiền</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="(item, index) in selectedOrder.chiTietHoaDon.filter(
+                    (p) => p.maCombo == null
+                  )"
+                  :key="index"
+                >
+                  <td>{{ index + 1 }}</td>
+                  <td>
+                    <img
+                      v-if="item.hinhAnh"
+                      :src="'https://localhost:7139/HinhAnh/Food_Drink/' + item.hinhAnh"
+                      alt="Ảnh sản phẩm"
+                      width="60"
+                    />
+                    <span v-else>Không có ảnh</span>
+                  </td>
+                  <td>{{ item.tenSanPham || 'Không có tên' }}</td>
+                  <td>{{ item.kichThuoc || 'Không có' }}</td>
+                  <td>{{ item.huongVi || 'Không có' }}</td>
+                  <td>{{ item.donGia?.toLocaleString('vi-VN') }} VNĐ</td>
+                  <td>{{ item.soLuong }}</td>
+                  <td>{{ item.tienGoc }}</td>
+                  <td>
+                    <span style="color: red"
+                      >- {{ item.giamGia != null && item.giamGia > 0 ? item.giamGia : 0 }} VNĐ</span
+                    >
+                  </td>
+                  <td>{{ item.tongTien }}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div class="modal-item">
-            <label>Tổng tiền</label>
-            <div class="value">{{ selectedOrder.tongtien?.toLocaleString('vi-VN') || "0" }} VNĐ</div>
+
+          <!-- Danh sách combo -->
+          <div class="combo-list">
+            <h4>Combo trong đơn hàng</h4>
+            <table class="combo-table">
+              <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Tên combo</th>
+                  <th>Số lượng</th>
+                  <th>Đơn giá</th>
+                  <th>Giá gốc</th>
+                  <th>Giảm giá</th>
+                  <th>Tổng giá</th>
+                  <th>Chi tiết sản phẩm</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Combo 1 -->
+                <tr
+                  v-for="(item, index) in selectedOrder.chiTietHoaDon.filter(
+                    (p) => p.maCombo != null
+                  )"
+                  :key="index"
+                >
+                  <td>{{ index + 1 }}</td>
+                  <td>{{ item.tenCombo }}</td>
+                  <td>{{ item.soLuong }}</td>
+                  <td>{{ item.donGia }} VNĐ</td>
+                  <td>{{ item.tienGoc }} VNĐ</td>
+                  <td style="color: red">- {{ item.giamGia }} VNĐ</td>
+                  <td>{{ item.tienGoc - item.giamGia }} VNĐ</td>
+                  <td>
+                    <ul class="combo-products">
+                      <li v-for="(detail, index) in chitietcombohoadonDTOs" :key="index">
+                        <div><strong>Tên SP:</strong> {{ detail.tenSpCombo }}</div>
+                        <div v-if="detail.kichThuoc || detail.huongVi">
+                          <strong>Biến thể:</strong> <br>
+                          <span v-if="detail.kichThuoc">Kích thước: {{ detail.kichThuoc }}</span>
+                          <span v-if="detail.kichThuoc && detail.huongVi"> | </span>
+                          <span v-if="detail.huongVi">Hương vị: {{ detail.huongVi }}</span>
+                        </div>
+                        <div><strong>Số lượng:</strong> {{ detail.soLuong }}</div>
+                        <div>
+                          <strong>Đơn giá:</strong> {{ detail.donGia.toLocaleString() }} VNĐ
+                        </div>
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-
-
-      <!-- Danh sách sản phẩm bên dưới -->
-      <div class="product-list">
-        <h4>Sản phẩm trong đơn hàng</h4>
-        <table class="product-table">
-          <thead>
-            <tr>
-              <th>STT</th>
-              <th>Hình ảnh</th>
-              <th>Tên sản phẩm</th>
-              <th>Kích thước</th>
-              <th>Hương vị</th>
-              <th>Đơn giá</th>
-              <th>Số lượng</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(item, index) in selectedOrder.chiTietHoaDon" :key="index">
-              <td>{{ index + 1 }}</td>
-              <td>
-                <img v-if="item.hinhAnh" :src="'https://localhost:7139/HinhAnh/Food_Drink/' + item.hinhAnh" alt="Ảnh sản phẩm" width="60">
-                <span v-else>Không có ảnh</span>
-              </td>
-              <td>{{ item.tenSanPham || "Không có tên" }}</td>
-              <td>{{ item.kichThuoc || "Không có" }}</td>
-              <td>{{ item.huongVi || "Không có" }}</td>
-              <td>{{ item.donGia?.toLocaleString('vi-VN') }} VNĐ</td>
-              <td>{{ item.soLuong }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</transition>
-
-
+    </transition>
   </div>
 </template>
 
 <style scoped>
+.combo-list {
+  margin-top: 25px;
+}
+
+.combo-list h4 {
+  color: black;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+}
+
+.combo-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.combo-table th,
+.combo-table td {
+  border: 1px solid #e0e4e8;
+  padding: 12px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.combo-table th {
+  background: #f0f0f0;
+  color: #2c3e50;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.combo-table tr:nth-child(even) {
+  background: #fafafa;
+}
+
+.combo-products {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.combo-products li {
+  padding: 6px 0;
+  font-size: 13px;
+  color: #34495e;
+  border-bottom: 1px dashed #dfe6e9;
+}
+
+.combo-products li:last-child {
+  border-bottom: none;
+}
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -376,7 +545,7 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: auto; /* Cho phép cuộn toàn màn hình */
+  overflow: auto;
   padding: 20px;
 }
 
@@ -412,7 +581,7 @@ onMounted(() => {
 .modal-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px; 
+  gap: 16px;
 }
 
 .modal-column {
@@ -442,7 +611,8 @@ onMounted(() => {
   border-collapse: collapse;
 }
 
-.product-table th, .product-table td {
+.product-table th,
+.product-table td {
   border: 1px solid #ddd;
   padding: 10px;
   text-align: center;

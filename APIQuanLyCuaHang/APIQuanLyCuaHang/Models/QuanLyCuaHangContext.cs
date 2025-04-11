@@ -48,6 +48,8 @@ public partial class QuanLyCuaHangContext : DbContext
 
     public virtual DbSet<MaCoupon> MaCoupons { get; set; }
     public virtual DbSet<GioHangCTCombo> GioHangCTCombos { get; set; }
+    public virtual DbSet<ChitietmaCoupon> ChitietmaCoupons { get; set; }
+    public virtual DbSet<Chitietcombohoadon> Chitietcombohoadons { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -135,24 +137,44 @@ public partial class QuanLyCuaHangContext : DbContext
 
         modelBuilder.Entity<Cthoadon>(entity =>
         {
-            entity.HasKey(e => new { e.MaHd, e.MaCtsp }).HasName("PK__CTHOADON__E6C15A0CD99CD838");
+            entity.HasKey(e => e.Id);
 
             entity.ToTable("CTHOADON");
 
             entity.Property(e => e.MaHd).HasColumnName("MaHD");
             entity.Property(e => e.MaCtsp).HasColumnName("MaCTSP");
 
-            entity.HasOne(d => d.MaCtspNavigation).WithMany(p => p.Cthoadons)
+            entity.HasOne(d => d.MaCtspNavigation)
+                .WithMany(p => p.Cthoadons)
                 .HasForeignKey(d => d.MaCtsp)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__CTHOADON__MaCTSP__5DCAEF64");
 
-            entity.HasOne(d => d.MaHdNavigation).WithMany(p => p.Cthoadons)
+            entity.HasOne(d => d.MaHdNavigation)
+                .WithMany(p => p.Cthoadons)
                 .HasForeignKey(d => d.MaHd)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__CTHOADON__MaHD__5CD6CB2B");
         });
 
+        modelBuilder.Entity<Cthoadon>()
+            .HasOne(ct => ct.Combo)
+            .WithMany(p => p.Cthoadons)
+            .HasForeignKey(ct => ct.MaCombo)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        modelBuilder.Entity<ChitietmaCoupon>(entity =>
+        {
+            entity.HasKey(e => new { e.MaKh, e.MaCode });
+
+            entity.ToTable("CHITIETMACOUPON");       
+        });
+        modelBuilder.Entity<Chitietcombohoadon>(entity =>
+        {
+            entity.HasKey(e => new { e.MaHd, e.MaCombo, e.MaCTSp });
+
+            entity.ToTable("CHITIETCOMBOHOADON");
+        });
         modelBuilder.Entity<Danhmuc>(entity =>
         {
             entity.HasKey(e => e.MaDanhMuc).HasName("PK__DANHMUC__B37508874C124C7E");
@@ -189,7 +211,6 @@ public partial class QuanLyCuaHangContext : DbContext
                .OnDelete(DeleteBehavior.ClientSetNull)
                .HasConstraintName("FK_GIOHANG_COMBO_MaComboNavigationMaCombo");
         });
-
         modelBuilder.Entity<Hinhanh>(entity =>
         {
             entity.HasKey(e => e.MaHinhAnh).HasName("PK__HINHANH__A9C37A9BE6F7EFCA");

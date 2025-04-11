@@ -1,10 +1,11 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import 'animate.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import Swal from 'sweetalert2'
-
+import Cookies from 'js-cookie'
+import { ReadToken, ValidateToken } from '../../Authentication_Authorization/auth.js'
 const route = useRoute()
 const combo = ref(null)
 const selectedVariant = ref(null)
@@ -12,6 +13,9 @@ const quantity = ref(1)
 const quantityError = ref('')
 const selectedVariants = ref({}) // Lưu biến thể được chọn cho mỗi sản phẩm
 
+let accesstoken = Cookies.get('accessToken')
+const refreshtoken = Cookies.get('refreshToken')
+const router = useRouter()
 // Tính toán giá gốc của combo
 const originalPrice = computed(() => {
   if (!combo.value?.chitietcombos) return 0
@@ -167,6 +171,19 @@ const addToCart = async () => {
   }
 
   try {
+    let IdUser = ''
+    const validateToken = await ValidateToken(accesstoken, refreshtoken)
+    if(validateToken == true){
+      accesstoken = Cookies.get('accessToken')
+      const readtoken = ReadToken(accesstoken)
+      if(readtoken){
+        IdUser = readtoken.IdUser
+      }
+    }else{
+      router.push('/Login')
+      return;
+    }
+
     // Tạo danh sách chi tiết combo với biến thể đã chọn
     const chiTietCombo = combo.value.chitietcombos.map((item) => ({
       maSp: item.maSp,
@@ -176,7 +193,7 @@ const addToCart = async () => {
     }))
 
     const cartItem = {
-      maKh: '120', // Thay thế bằng ID khách hàng thực tế
+      maKh: IdUser, 
       maCombo: combo.value.maCombo,
       soLuong: quantity.value,
       donGia: originalPrice.value,
@@ -187,9 +204,20 @@ const addToCart = async () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accesstoken}`,
       },
       body: JSON.stringify(cartItem),
     })
+    if(response.status === 401){
+      Swal.fire({
+        icon: 'error',
+        title: 'Phiên của bạn đã hết hoặc bạn chưa đăng nhập, vui lòng đăng nhập lại!',
+        timer: 2000,
+        showConfirmButton: false,
+      })
+      router.push('/Login')
+      return;
+    }
     var result = await response.json()
     if (result.success) {
       Swal.fire('Đã thêm combo vào giỏ hàng', '', 'success')

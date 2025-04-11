@@ -9,7 +9,7 @@ namespace APIQuanLyCuaHang.Repositories
         Task AddToCart(CartItemResquestDTO cartItem);
         Task<List<CartItemDTO>> GetCart(int maKh);
         Task UpdateCartItem(int id, CartItemResquestDTO cartItem);
-        Task RemoveFromCart(int maKh, int maCtsp);
-        Task RemoveComboFromCart(int maKh, int maCombo); // Thêm phương thức này
+        Task RemoveCart(int maKh, int magiohang);
+        Task RemoveAllCart(int maKh);
     }
 }

@@ -22,7 +22,7 @@ const baseUrl = 'https://localhost:7139/api/Coupon';
 // Fetch all coupons
 const fetchCoupons = async () => {
   try {
-    const response = await fetch(`${baseUrl}/GetAll`);
+    const response = await fetch(`${baseUrl}/GetAllCouponCodeByPage`);
     const data = await response.json();
     if (data.success) {
       coupons.value = data.data.map(coupon => ({

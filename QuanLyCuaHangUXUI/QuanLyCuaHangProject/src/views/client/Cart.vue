@@ -57,7 +57,7 @@
             <div class="item-total">
               {{ (item.donGia * item.soLuong).toLocaleString('vi-VN') }}đ
             </div>
-            <button class="btn-remove">
+            <button @click="RemoveCart(item.id)" class="btn-remove">
               <i class="fas fa-trash"></i>
             </button>
           </div>
@@ -115,7 +115,7 @@
             <div class="item-total">
               {{ (combo.donGia * combo.soLuong).toLocaleString('vi-VN') }}đ
             </div>
-            <button class="btn-remove">
+            <button class="btn-remove" @click="RemoveCart(combo.id)">
               <i class="fas fa-trash"></i>
             </button>
           </div>
@@ -135,26 +135,50 @@
 </template>
 
 <script setup>
+import { ReadToken, ValidateToken } from '../../Authentication_Authorization/auth.js'
 import { ref, computed, onMounted } from 'vue'
-import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
 import Swal from 'sweetalert2'
 import Cookies from 'js-cookie'
 const router = useRouter()
-const toast = useToast()
+let accesstoken = Cookies.get('accessToken')
+let refreshtoken = Cookies.get('refreshToken')
+let IdUser = ''
 const cartItems = ref([])
 const quantityError = ref({})
 const oldQuantities = ref({})
 const FetchCart = async () => {
   try {
-    const response = await fetch(`https://localhost:7139/api/Cart/120`, {
+    const validateToken = await ValidateToken(accesstoken, refreshtoken)
+    if (validateToken == true) {
+      accesstoken = Cookies.get('accessToken')
+      const readtoken = ReadToken(accesstoken)
+      if (readtoken) {
+        IdUser = readtoken.IdUser
+      } else {
+        router.push('/Login')
+        return
+      }
+    }
+    const response = await fetch(`https://localhost:7139/api/Cart/${IdUser}`, {
       method: 'GET',
-      Headers: {
+      headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accesstoken}`,
       },
     })
+    if (response.status == 401) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Phiên của bạn đã hết hoặc bạn chưa đăng nhập, vui lòng đăng nhập lại!',
+        timer: 2000,
+        showConfirmButton: false,
+      })
+      router.push('/Login')
+      return
+    }
     if (!response.ok) {
-      throw new Error('ERROR', response.status)
+      throw new Error('ERROR ' + response.status)
     }
     const result = await response.json()
     cartItems.value = result.cartItems
@@ -174,14 +198,71 @@ const singleProducts = computed(() => {
 const comboProducts = computed(() => {
   return cartItems.value.filter((item) => item.maCombo !== null)
 })
-
+// Xóa giỏ hàng
+const RemoveCart = async (maGioHang) => {
+  try {
+    const validateToken = await ValidateToken(accesstoken, refreshtoken)
+    if (validateToken == true) {
+      accesstoken = Cookies.get('accessToken')
+      const readtoken = ReadToken(accesstoken)
+      if (readtoken) {
+        IdUser = readtoken.IdUser
+      }
+    } else {
+      router.push('/Login')
+      return
+    }
+    Swal.fire({
+      title: 'Bạn có muốn xóa sản phẩm/combo này ra khỏi giỏ hàng ?',
+      showCancelButton: true,
+      confirmButtonText: 'Xác nhận',
+      cancelButtonText: 'Hủy',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        console.log('Dữ liệu hợp lệ, chuẩn bị gửi request')
+        const response = await fetch(`https://localhost:7139/api/Cart/${maGioHang}/${IdUser}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-type': 'application/json',
+            'Authorization': `Bearer ${accesstoken}`,
+          },
+        })
+        if (response.status == 401) {
+          router.push('/Error/401')
+          return;
+        }
+        if (!response.ok) {
+          throw new Error('Lỗi ' + response.status)
+        }
+        const result = await response.json()
+        if (result.success) {
+          FetchCart()
+          Swal.fire(result.message, '', 'success')
+        } else {
+          Swal.fire(result.message, '', 'error')
+        }
+      }
+    })
+  } catch (error) {
+    console.log('Lỗi ' + error)
+  }
+}
 // Update giỏ hàng
 const UpdateCart = async (data, quantity) => {
-  const token = Cookies.get('accessToken')
-  console.log(token)
   try {
+    const validateToken = await ValidateToken(accesstoken, refreshtoken)
+    if (validateToken == true) {
+      accesstoken = Cookies.get('accessToken')
+      const readtoken = ReadToken(accesstoken)
+      if(readtoken){
+        IdUser = readtoken.IdUser
+      }
+    } else {
+      router.push('/Login')
+      return
+    }
     const content = {
-      maKh: '120',
+      maKh: IdUser,
       maCtsp: data.maCtsp,
       maCombo: data.maCombo ?? null,
       soLuong: quantity,
@@ -190,10 +271,15 @@ const UpdateCart = async (data, quantity) => {
     const response = await fetch(`https://localhost:7139/api/Cart/${data.id}`, {
       method: 'PUT',
       headers: {
-        'Content-type': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accesstoken}`,
       },
       body: JSON.stringify(content),
     })
+    if(response.status == 401){
+      router.push('/Error/401')
+      return;
+    }
     const result = await response.json()
     if (result.success) {
       // Cập nhật giá trị cũ sau khi thay đổi thành công

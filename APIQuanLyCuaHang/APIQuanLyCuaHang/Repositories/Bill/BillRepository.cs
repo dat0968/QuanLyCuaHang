@@ -1,5 +1,5 @@
 using APIQuanLyCuaHang.Models;
-﻿using APIQuanLyCuaHang.DTO;
+using APIQuanLyCuaHang.DTO;
 using APIQuanLyCuaHang.Models;
 using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Crypto.Prng.Drbg;
@@ -29,6 +29,9 @@ namespace APIQuanLyCuaHang.Repositories.Bill
         public async Task<IEnumerable<HoaDonDTO>> GetAllBill()
         {
             return await db.Hoadons
+                .Include(p => p.MaNvNavigation)
+                .Include(p => p.Chitietcombohoadons)
+                .ThenInclude(c => c.MaComboNavigation)
                 .Select(hd => new HoaDonDTO
                 {
                     MaHd = hd.MaHd,
@@ -48,7 +51,16 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                     LyDoHuy = hd.LyDoHuy,
                     PhiVanChuyen = hd.PhiVanChuyen,
                     TienGoc = hd.TienGoc,
-                    Tongtien = hd.TienGoc + hd.PhiVanChuyen
+                    GiamGiaCoupon = hd.GiamGiaCoupon,
+                    Tongtien = hd.TienGoc + hd.PhiVanChuyen - hd.GiamGiaCoupon,
+                    ChitietcombohoadonDTOs = hd.Chitietcombohoadons.Select(p => new ChitietcombohoadonDTO
+                    {
+                        MaHd = hd.MaHd,
+                        MaCombo = p.MaCombo,
+                        MaCTSp = p.MaCTSp,
+                        SoLuong = p.SoLuong,
+                        DonGia = p.DonGia,
+                    }).ToList()
                 })
                 .ToListAsync();
         }
@@ -56,7 +68,11 @@ namespace APIQuanLyCuaHang.Repositories.Bill
         // Lấy hóa đơn theo ID
         public async Task<HoaDonDTO?> GetById(int id)
         {
-            var hd = await db.Hoadons.FindAsync(id);
+            var hd = await db.Hoadons.AsNoTracking()
+                .Include(p => p.MaNvNavigation)
+                .Include(p => p.Chitietcombohoadons)
+                .ThenInclude(c => c.MaComboNavigation)
+                .FirstOrDefaultAsync(p => p.MaHd == id);
             if (hd == null) return null;
 
             return new HoaDonDTO
@@ -78,13 +94,26 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                 LyDoHuy = hd.LyDoHuy,
                 PhiVanChuyen = hd.PhiVanChuyen,
                 TienGoc = hd.TienGoc,
-                Tongtien = hd.TienGoc + hd.PhiVanChuyen
+                GiamGiaCoupon = hd.GiamGiaCoupon,
+                Tongtien = hd.TienGoc + hd.PhiVanChuyen - hd.GiamGiaCoupon,
+                ChitietcombohoadonDTOs = hd.Chitietcombohoadons.Select(p => new ChitietcombohoadonDTO
+                {
+                    MaHd = hd.MaHd,
+                    MaCombo = p.MaCombo,
+                    MaCTSp = p.MaCTSp,
+                    SoLuong = p.SoLuong,
+                    DonGia = p.DonGia,
+                }).ToList()
             };
         }
-        //
+        
         public async Task<(IEnumerable<HoaDonDTO>, int)> GetFilteredBill(string? hoTen, string? hinhThucTt, string? tinhTrang, int page, int pageSize)
         {
-            var query = db.Hoadons.AsQueryable();
+            var query = db.Hoadons
+                .Include(p => p.MaNvNavigation)
+                .Include(p => p.Chitietcombohoadons)
+                .ThenInclude(c => c.MaComboNavigation)
+                .AsQueryable();
 
             if (!string.IsNullOrEmpty(hoTen))
             {
@@ -120,8 +149,17 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                     TinhTrang = hd.TinhTrang,
                     TienGoc = hd.TienGoc,
                     PhiVanChuyen = hd.PhiVanChuyen,
-                    Tongtien = hd.TienGoc + hd.PhiVanChuyen,
+                    GiamGiaCoupon = hd.GiamGiaCoupon,
+                    Tongtien = hd.TienGoc + hd.PhiVanChuyen - hd.GiamGiaCoupon,
                     MoTa = hd.MoTa,
+                    ChitietcombohoadonDTOs = hd.Chitietcombohoadons.Select(p => new ChitietcombohoadonDTO
+                    {
+                        MaHd = hd.MaHd,
+                        MaCombo = p.MaCombo,
+                        MaCTSp = p.MaCTSp,
+                        SoLuong = p.SoLuong,
+                        DonGia = p.DonGia,
+                    }).ToList()
                 })
                 .ToListAsync();
 
@@ -146,7 +184,7 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                 throw new Exception("Đơn hàng đã có nhân viên tiếp nhận, không thể thay đổi người tiếp nhận.");
             }
 
-            if(tinhTrang.ToLower() != "Chờ xác nhận".ToLower())
+            if (tinhTrang.ToLower() != "Chờ xác nhận".ToLower())
             {
                 existingHoaDon.MaNv = maNv;
             }
@@ -157,17 +195,27 @@ namespace APIQuanLyCuaHang.Repositories.Bill
         {
             var bill = await db.Hoadons
                 .Include(hd => hd.Cthoadons)
-                .ThenInclude(ct => ct.MaCtspNavigation)    
+                .ThenInclude(ct => ct.MaCtspNavigation)
                 .ThenInclude(ctsp => ctsp.Hinhanhs)
                 .Include(hd => hd.Cthoadons)
                 .ThenInclude(ct => ct.MaCtspNavigation)
                 .ThenInclude(ctsp => ctsp.MaSpNavigation)
+                .Include(hd => hd.Cthoadons)
+                .ThenInclude(c => c.Combo)
+                .Include(p => p.MaNvNavigation)
+                .Include(p => p.Chitietcombohoadons)
+                .ThenInclude(c => c.MaComboNavigation)
+            .Include(p => p.Chitietcombohoadons)
+                .ThenInclude(c => c.MaCTSpNavigation)
+                    .ThenInclude(ctsp => ctsp.MaSpNavigation)
+
+
                 .Where(hd => hd.MaHd == maHd)
                 .FirstOrDefaultAsync();
 
-            if (bill == null) return null;
 
-            return new HoaDonDTOWithDetails
+            if (bill == null) return null;
+            var HoaDonDTOWithDetails = new HoaDonDTOWithDetails
             {
                 MaHd = bill.MaHd,
                 MaKh = bill.MaKh,
@@ -185,7 +233,8 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                 LyDoHuy = bill.LyDoHuy,
                 PhiVanChuyen = bill.PhiVanChuyen,
                 TienGoc = bill.TienGoc,
-                Tongtien = bill.TienGoc + bill.PhiVanChuyen,
+                Tongtien = bill.TienGoc + bill.PhiVanChuyen - bill.GiamGiaCoupon,
+                GiamGiaCoupon = bill.GiamGiaCoupon,
                 ChiTietHoaDon = bill.Cthoadons.Select(ct => new ChiTietHoaDonDTO
                 {
                     TenSanPham = ct.MaCtspNavigation != null && ct.MaCtspNavigation.MaSpNavigation != null
@@ -193,13 +242,31 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                         : "Không có tên",
                     KichThuoc = ct.MaCtspNavigation != null ? ct.MaCtspNavigation.KichThuoc : "N/A",
                     HuongVi = ct.MaCtspNavigation != null ? ct.MaCtspNavigation.HuongVi : "N/A",
-                    DonGia = ct.MaCtspNavigation?.DonGia ?? 0,
+                    DonGia = ct.DonGia,
                     HinhAnh = ct.MaCtspNavigation != null && ct.MaCtspNavigation.Hinhanhs != null && ct.MaCtspNavigation.Hinhanhs.Any()
                         ? ct.MaCtspNavigation.Hinhanhs.First().TenHinhAnh
                         : "default.jpg",
-                    SoLuong = ct.SoLuong
+                    SoLuong = ct.SoLuong,
+                    GiamGia = ct.MaCombo != null ? 
+                    (ct.Combo.PhanTramGiam != null && ct.Combo.PhanTramGiam > 0 ? (ct.DonGia * ct.SoLuong) * (decimal)ct.Combo.PhanTramGiam / 100 : (ct.DonGia * ct.SoLuong) - (decimal)ct.Combo.SoTienGiam) 
+                    : ct.GiamGia,
+                    TienGoc = ct.DonGia * ct.SoLuong,
+                    MaCombo = ct.MaCombo,
+                    TenCombo = ct.Combo?.TenCombo,
+                }).ToList(),
+                ChitietcombohoadonDTOs = bill.Chitietcombohoadons.Select(p => new ChitietcombohoadonDTO
+                {
+                    MaHd = bill.MaHd,
+                    MaCombo = p.MaCombo,
+                    MaCTSp = p.MaCTSp,
+                    TenSpCombo = p.MaCTSpNavigation.MaSpNavigation.TenSanPham,
+                    HuongVi = p.MaCTSpNavigation?.HuongVi,
+                    KichThuoc = p.MaCTSpNavigation?.KichThuoc, 
+                    SoLuong = p.SoLuong,
+                    DonGia = p.DonGia,
                 }).ToList()
             };
+            return HoaDonDTOWithDetails;
         }
     }
 }

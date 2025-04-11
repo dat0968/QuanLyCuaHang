@@ -26,6 +26,8 @@ using APIQuanLyCuaHang.Repositories;
 using System.Text;
 using APIQuanLyCuaHang.Repositories.UnitOfWork;
 using APIQuanLyCuaHang.Repositories.Dashboard;
+using APIQuanLyCuaHang.Repositories.DetailComboOrder;
+using APIQuanLyCuaHang.Repositories.DetailMaCoupon;
 var builder = WebApplication.CreateBuilder(args);
 ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 // Add services to the container.
@@ -105,8 +107,8 @@ builder.Services.AddScoped<IMaCouponRepository, MaCouponRepository>();
 builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddScoped<ITableRepository, TableRepository>();
 builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
-
-
+builder.Services.AddScoped<IDetailComboOrderRepository, DetailComboOrderRepository>();
+builder.Services.AddScoped<IDetailMaCoupon, DetailMaCoupon>();
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddAuthentication(options =>

@@ -3,6 +3,7 @@ using APIQuanLyCuaHang.DTO;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 namespace APIQuanLyCuaHang.Repository.MaCoupon
 {
     public class MaCouponRepository : IMaCouponRepository
@@ -107,6 +108,28 @@ namespace APIQuanLyCuaHang.Repository.MaCoupon
             };
             db.MaCoupons.Update(editCouponCode);
             db.SaveChanges();
+        }
+        public async Task<CouponDTO?> GetById(string macoupon)
+        {
+            var findCoupon = await db.MaCoupons.AsNoTracking().FirstOrDefaultAsync(p => p.MaCode == macoupon.Trim());
+            if(findCoupon != null)
+            {
+                var CouponDTO = new CouponDTO
+                {
+                    MaCode = findCoupon.MaCode,
+                    SoLuong = findCoupon.SoLuong,
+                    SoLuongDaDung = findCoupon.SoLuongDaDung,
+                    MoTa = findCoupon.MoTa,
+                    PhanTramGiam = findCoupon.PhanTramGiam,
+                    SoTienGiam = findCoupon.SoTienGiam,
+                    DonHangToiThieu = findCoupon.DonHangToiThieu,
+                    NgayBatDau = findCoupon.NgayBatDau,
+                    NgayKetThuc = findCoupon.NgayKetThuc,
+                    TrangThai = findCoupon.TrangThai,
+                };
+                return CouponDTO;
+            }
+            return null;
         }
     }
 }

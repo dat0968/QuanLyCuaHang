@@ -20,4 +20,7 @@ public partial class Combo
 
     public virtual ICollection<Chitietcombo> Chitietcombos { get; set; } = new List<Chitietcombo>();
     public virtual ICollection<Giohang> Giohangs { get; set; } = new List<Giohang>();
+    public virtual ICollection<Cthoadon> Cthoadons { get; set; } = new List<Cthoadon>();
+    public virtual ICollection<Chitietcombohoadon> Chitietcombohoadons { get; set; } = new List<Chitietcombohoadon>();
+
 }

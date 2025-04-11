@@ -30,9 +30,7 @@ status.value = route.params.status
                       trang
                     </h4>
                     <p class="text-muted m-b-30">Trang bạn đang tìm kiếm không tồn tại.</p>
-                    <RouterLink class="btn btn-primary btn-rounded mb-3" to="/">
-                      <i class="icon-home"></i> Đưa tôi trở lại
-                    </RouterLink>
+
                   </div>
                 </div>
               </div>

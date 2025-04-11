@@ -172,7 +172,48 @@ namespace APIQuanLyCuaHang.Repositories
             }
         }
 
+        public async Task RemoveCart(int maKh, int magiohang)
+        {
+            try
+            {
+                var findCart = await db.Giohangs.FirstOrDefaultAsync(p => p.Id == magiohang && p.MaKh == maKh);
+                if (findCart != null)
+                {
+                    var findDetailCart = await db.GioHangCTCombos.FirstOrDefaultAsync(p => p.MaGioHang == findCart.Id);
+                    if (findDetailCart != null)
+                    {
+                        db.GioHangCTCombos.Remove(findDetailCart);
+                    }
+                    db.Giohangs.Remove(findCart);
+                    await db.SaveChangesAsync();
+                }
+            }catch (Exception ex)
+            {
+                throw new Exception("Lỗi", ex);
+            }
+            
+            
+        }
+        public async Task RemoveAllCart(int maKh)
+        {
+            try
+            {
+                var findCart = await db.Giohangs.Where(p => p.MaKh == maKh).ToListAsync();
+                if (findCart.Any())
+                {
+                    var cartIds = findCart.Select(c => c.Id).ToList();
+                    var detailCarts = await db.GioHangCTCombos.Where(p => cartIds.Contains(p.MaGioHang)).ToListAsync();
+                    db.GioHangCTCombos.RemoveRange(detailCarts);
+                    db.Giohangs.RemoveRange(findCart);
+                    await db.SaveChangesAsync();
 
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi", ex);
+            }
+        }
         public async Task UpdateCartItem(int id, CartItemResquestDTO cartItem)
         {
             await db.Database.BeginTransactionAsync(); 
@@ -245,32 +286,6 @@ namespace APIQuanLyCuaHang.Repositories
             
         }
 
-        public async Task RemoveFromCart(int maKh, int maCtsp)
-        {
-            var cartItem = await db.Giohangs
-                .FirstOrDefaultAsync(c => c.MaKh == maKh && c.MaCtsp == maCtsp);
-
-            if (cartItem == null)
-            {
-                throw new Exception("Sản phẩm không tồn tại trong giỏ hàng.");
-            }
-
-            db.Giohangs.Remove(cartItem);
-            await db.SaveChangesAsync();
-        }
-
-        public async Task RemoveComboFromCart(int maKh, int maCombo)
-        {
-            var cartItem = await db.Giohangs
-                .FirstOrDefaultAsync(c => c.MaKh == maKh && c.MaCombo.HasValue && c.MaCombo == maCombo);
-
-            if (cartItem == null)
-            {
-                throw new Exception("Combo không tồn tại trong giỏ hàng.");
-            }
-
-            db.Giohangs.Remove(cartItem);
-            await db.SaveChangesAsync();
-        }
+      
     }
 }

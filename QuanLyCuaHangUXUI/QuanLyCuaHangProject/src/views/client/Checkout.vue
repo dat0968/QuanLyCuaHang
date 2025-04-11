@@ -94,7 +94,7 @@
                   v-model="couponCode"
                   placeholder="Nhập mã giảm giá"
                 />
-                <button class="btn btn-outline-primary">Áp dụng</button>
+                <button @click="fetchCoupon" class="btn btn-outline-primary">Áp dụng</button>
               </div>
             </div>
 
@@ -106,7 +106,7 @@
                   class="form-check-input"
                   type="radio"
                   v-model="shippingMethod"
-                  value="standard"
+                  value="COD"
                   id="standard"
                 />
                 <label class="form-check-label" for="standard"> COD </label>
@@ -116,7 +116,7 @@
                   class="form-check-input"
                   type="radio"
                   v-model="shippingMethod"
-                  value="express"
+                  value="VNPAY"
                   id="express"
                 />
                 <label class="form-check-label" for="express"> VNPAY </label>
@@ -141,11 +141,7 @@
             </div>
             <div class="mb-3">
               <label class="form-label">Tỉnh/Thành phố</label>
-              <select
-                class="form-control"
-                v-model="userInfo.provinceId"
-               
-              >
+              <select class="form-control" v-model="userInfo.provinceId">
                 <option
                   v-for="province in provinces"
                   :key="province.ProvinceID"
@@ -157,16 +153,11 @@
             </div>
             <div class="mb-3">
               <label class="form-label">Quận/Huyện</label>
-              <select
-                class="form-control"
-                v-model="userInfo.districtId"
-          
-              >
+              <select class="form-control" v-model="userInfo.districtId">
                 <option
                   v-for="district in districts"
                   :key="district.DistrictID"
                   :value="district.DistrictID"
-                  
                 >
                   {{ district.DistrictName }}
                 </option>
@@ -202,11 +193,7 @@
           <div class="card-body">
             <div class="d-flex justify-content-between mb-2">
               <span>Tổng tiền hàng:</span>
-              <span
-                >{{
-                  SumCart.toLocaleString('vi-VN')
-                }}đ</span
-              >
+              <span>{{ SumCart.toLocaleString('vi-VN') }}đ</span>
             </div>
             <div class="d-flex justify-content-between mb-2">
               <span>Phí vận chuyển:</span>
@@ -214,19 +201,12 @@
             </div>
             <div class="d-flex justify-content-between mb-2">
               <span>Giảm giá:</span>
-              <span>0đ</span>
+              <span>{{ discount.toLocaleString('vi-VN') }}đ</span>
             </div>
             <hr />
             <div class="d-flex justify-content-between mb-3">
               <strong>Tổng cộng:</strong>
-              <strong
-                >{{
-                  (
-                    SumCart +
-                    shippingFee
-                  ).toLocaleString('vi-VN')
-                }}đ</strong
-              >
+              <strong>{{ (SumCart + shippingFee - discount).toLocaleString('vi-VN') }}đ</strong>
             </div>
             <button class="btn btn-primary w-100" @click="proceedToCheckout">Đặt hàng</button>
           </div>
@@ -240,7 +220,8 @@
 import { computed, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Swal from 'sweetalert2'
-
+import { ReadToken, ValidateToken } from '../../Authentication_Authorization/auth.js'
+import Cookies from 'js-cookie'
 const router = useRouter()
 const cartItems = ref([])
 const provinces = ref([])
@@ -250,38 +231,66 @@ const token = 'eb507c61-0fad-11f0-9aa0-bece206412cb'
 const shippingFee = ref(0)
 const SumCart = ref(0)
 const totalQuantity = ref(0)
+const couponCode = ref('')
+const shippingMethod = ref('COD')
+const discount = ref(0)
+let accesstoken = Cookies.get('accessToken')
+let refreshtoken = Cookies.get('refreshToken')
+let IdUser = ''
 // Lấy URL hình ảnh
 const getImageUrl = (imageName) => {
   return `https://localhost:7139/HinhAnh/Food_Drink/${imageName}`
 }
 const FetchCart = async () => {
   try {
-    const response = await fetch(`https://localhost:7139/api/Cart/120`, {
+    const validateToken = await ValidateToken(accesstoken, refreshtoken)
+    if (validateToken == true) {
+      accesstoken = Cookies.get('accessToken')
+      const readtoken = ReadToken(accesstoken)
+      if (readtoken) {
+        IdUser = readtoken.IdUser
+      } else {
+        router.push('/Login')
+        return
+      }
+    }
+    const response = await fetch(`https://localhost:7139/api/Cart/${IdUser}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accesstoken}`,
       },
     })
+    if (response.status == 401) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Phiên của bạn đã hết hoặc bạn chưa đăng nhập, vui lòng đăng nhập lại!',
+        timer: 2000,
+        showConfirmButton: false,
+      })
+      router.push('/Login')
+      return
+    }
     if (!response.ok) {
       throw new Error('ERROR', response.status)
     }
     const result = await response.json()
-    cartItems.value = result.cartItems;
-    SumCart.value = result.total;
-    totalQuantity.value = result.totalQuantity;
+    cartItems.value = result.cartItems
+    SumCart.value = result.total
+    totalQuantity.value = result.totalQuantity
   } catch (error) {
     console.log(error)
   }
 }
 const userInfo = ref({
-  hoTen: 'Nguyễn Văn A',
-  email: 'example@email.com',
-  soDienThoai: '0123456789',
-  diaChi: '123 Đường ABC, Quận 1, TP.HCM',
+  hoTen: '',
+  email: '',
+  soDienThoai: '',
+  diaChi: '',
   moTa: '',
-  provinceId: "",
-  districtId: "",
-  wardCode: "",
+  provinceId: '',
+  districtId: '',
+  wardCode: '',
 })
 
 const fetchAddress = async () => {
@@ -291,7 +300,7 @@ const fetchAddress = async () => {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
-        'Token': `${token}`,
+        Token: `${token}`,
       },
     }
   )
@@ -308,35 +317,44 @@ const fetchAddress = async () => {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
-        'Token': `${token}`,
+        Token: `${token}`,
       },
       body: JSON.stringify({
-        "province_id": userInfo.value.provinceId
-      })
+        province_id: userInfo.value.provinceId,
+      }),
     }
   )
   const resultDistrict = await responseDistrict.json()
   if (resultDistrict.code === 200) {
-    districts.value = resultDistrict.data.filter((p) => p.DistrictName === 'Thành phố Buôn Ma Thuột')
+    districts.value = resultDistrict.data.filter(
+      (p) => p.DistrictName === 'Thành phố Buôn Ma Thuột'
+    )
     if (districts.value.length > 0) {
       userInfo.value.districtId = districts.value[0].DistrictID // Cập nhật khi có dữ liệu
     }
   }
-  
+
   const responseWard = await fetch(
     `https://online-gateway.ghn.vn/shiip/public-api/master-data/ward`,
     {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
-        'Token': `${token}`,
+        Token: `${token}`,
       },
       body: JSON.stringify({
-        "district_id": userInfo.value.districtId
-      })
+        district_id: userInfo.value.districtId,
+      }),
     }
   )
-  const allowedWard = ['Phường Thống Nhất', 'Phường Thành Công', 'Phường Thắng Lợi', 'Phường Tân Lợi', 'Phường Tân Lập', 'Phường Tân An']
+  const allowedWard = [
+    'Phường Thống Nhất',
+    'Phường Thành Công',
+    'Phường Thắng Lợi',
+    'Phường Tân Lợi',
+    'Phường Tân Lập',
+    'Phường Tân An',
+  ]
   const resultWard = await responseWard.json()
   if (resultWard.code === 200) {
     wards.value = resultWard.data.filter((p) => allowedWard.includes(p.WardName))
@@ -344,32 +362,34 @@ const fetchAddress = async () => {
 }
 const CalculateFee = async () => {
   const content = {
-      "from_district_id": userInfo.value.districtId,
-      "from_ward_code": "400103", // 400103 là WardCode của phường Tân An - BMT, đây là địa điểm của cửa hàng
-      "service_id": 53320,
-      "service_type_id":null,
-      "to_district_id": userInfo.value.districtId,
-      "to_ward_code": userInfo.value.wardCode,
-      "weight":200,
-      "insurance_value":10000,
-      "cod_failed_amount":2000,
+    from_district_id: userInfo.value.districtId,
+    from_ward_code: '400103', // 400103 là WardCode của phường Tân An - BMT, đây là địa điểm của cửa hàng
+    service_id: 53320,
+    service_type_id: null,
+    to_district_id: userInfo.value.districtId,
+    to_ward_code: userInfo.value.wardCode,
+    weight: 200,
+    insurance_value: 10000,
+    cod_failed_amount: 2000,
   }
-  const fetchAPIFee = await fetch(`https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee`, {
-    method: 'POST',
-    headers: {
+  const fetchAPIFee = await fetch(
+    `https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee`,
+    {
+      method: 'POST',
+      headers: {
         'Content-type': 'application/json',
-        'Token': `${token}`,
-        'ShopId': '5715364'
-    },
+        Token: `${token}`,
+        ShopId: '5715364',
+      },
 
-    /* Cửa hàng chỉ giao cho khách trong một phạm vi địa điểm nhất định, ở đây thì tỉnh/thành phố và quận/huyện sẽ được
+      /* Cửa hàng chỉ giao cho khách trong một phạm vi địa điểm nhất định, ở đây thì tỉnh/thành phố và quận/huyện sẽ được
     fix cứng chỉ để một giá trị duy nhất, chỉ có phường xã là có giá trị dựa trên lựa chọn của khách hàng*/
-    body: JSON.stringify(content)
-  })
-  const result = await fetchAPIFee.json();
-  console.log(content)
-  if(result.code === 200){
-    shippingFee.value = result.data.total;
+      body: JSON.stringify(content),
+    }
+  )
+  const result = await fetchAPIFee.json()
+  if (result.code === 200) {
+    shippingFee.value = result.data.total
   }
 }
 onMounted(() => {
@@ -381,53 +401,162 @@ onMounted(() => {
 const ProductList = computed(() => {
   return cartItems.value.filter((item) => item.maCombo === null)
 })
-console.log(ProductList)
 const ComboList = computed(() => {
   return cartItems.value.filter((item) => item.maCombo !== null)
 })
 
-
-const couponCode = ref('')
-const shippingMethod = ref('standard')
-
+const fetchCoupon = async () => {
+  try {
+    const validateToken = await ValidateToken(accesstoken, refreshtoken)
+    if (validateToken == true) {
+      accesstoken = Cookies.get('accessToken')
+      const readtoken = ReadToken(accesstoken)
+      if (readtoken) {
+        IdUser = readtoken.IdUser
+      } else {
+        router.push('/Login')
+        return
+      }
+    }
+    const response = await fetch(
+      `https://localhost:7139/api/Checkout/GetDiscountCoupon?maUser=${IdUser}&&couponcode=${
+        couponCode.value
+      }&&originalPrice=${SumCart.value}`,
+      {
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': `Bearer ${accesstoken}`,
+        },
+      }
+    )
+    if (response.status == 401) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Phiên của bạn đã hết hoặc bạn chưa đăng nhập, vui lòng đăng nhập lại!',
+        timer: 2000,
+        showConfirmButton: false,
+      })
+      router.push('/Login')
+      return
+    }
+    if (!response.ok) {
+      const errorMessage = response.message
+      throw new Error(errorMessage)
+    }
+    const result = await response.json()
+    if (result.success) {
+      discount.value = result.discount
+      Swal.fire(result.message, '', 'success')
+    } else {
+      Swal.fire(result.message, '', 'error')
+      discount.value = 0
+    }
+  } catch (error) {
+    console.error('Lỗi khi áp dụng mã coupon:', error)
+    Swal.fire({
+      icon: 'error',
+      title: 'Lỗi!',
+      text: 'Đã xảy ra lỗi. Vui lòng thử lại.',
+    })
+  }
+}
 
 const proceedToCheckout = async () => {
   try {
-    const orderData = {
-      maKh: 120, // TODO: Lấy từ thông tin người dùng đăng nhập
-      diaChiNhanHang: userInfo.value.diaChi,
-      ngayThanhToan: new Date(),
-      hinhThucTt: 'COD',
-      moTa: '',
-      hoTen: userInfo.value.hoTen,
-      sdt: userInfo.value.soDienThoai,
-      phiVanChuyen: shippingFee.value,
-      tienGoc: cartItems.value.reduce((total, item) => total + item.gia * item.soLuong, 0),
-    }
-
-    const response = await fetch('https://localhost:7139/api/Checkout', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(orderData),
-    })
-
-    if (!response.ok) {
-      throw new Error('Lỗi khi đặt hàng')
-    }
-
-    const result = await response.json()
-    if (result.success) {
-      Swal.fire({
-        icon: 'success',
-        title: 'Đặt hàng thành công!',
-        text: 'Cảm ơn bạn đã mua hàng tại cửa hàng chúng tôi.',
-      }).then(() => {
-        window.dispatchEvent(new CustomEvent('update-cart'))
-        router.push('/')
+    const detailComboOrderRequests = []
+    const comboItems = cartItems.value.filter((p) => p.maCombo !== null)
+    comboItems.forEach((p) => {
+      p.cartDetailCombos.forEach((detailcombo) => {
+        detailComboOrderRequests.push({
+          maCombo: p.maCombo,
+          maCTSp: detailcombo.maCTSp,
+          soLuong: detailcombo.soLuong,
+          donGia: detailcombo.donGia,
+        })
       })
+    })
+    const cthoadons = []
+    cartItems.value.forEach((detail) => {
+      cthoadons.push({
+        maCtsp: detail.maCtsp,
+        soLuong: detail.soLuong,
+        donGia: detail.donGia,
+        giamGia: detail.giamGia ?? 0,
+        maCombo: detail.maCombo,
+      })
+    })
+    const validateToken = await ValidateToken(accesstoken, refreshtoken)
+    if (validateToken == true) {
+      accesstoken = Cookies.get('accessToken')
+      const readtoken = ReadToken(accesstoken)
+      if (readtoken) {
+        IdUser = readtoken.IdUser
+      } else {
+        router.push('/Login')
+        return
+      }
     }
+    Swal.fire({
+      title: 'Bạn có chắc chắn muốn đặt hàng với các sản phẩm này không ?',
+      showCancelButton: true,
+      confirmButtonText: 'Xác nhận đặt hàng',
+      cancelButtonText: 'Hủy',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        console.log('Dữ liệu hợp lệ, chuẩn bị gửi request')
+        const orderData = {
+          maKh: IdUser,
+          diaChiNhanHang: userInfo.value.diaChi,
+          hinhThucTt: shippingMethod.value,
+          moTa: userInfo.value.moTa,
+          hoTen: userInfo.value.hoTen,
+          sdt: userInfo.value.soDienThoai,
+          phiVanChuyen: shippingFee.value,
+          tienGoc: SumCart.value,
+          maCoupon: couponCode.value,
+          giamGiaCoupon: discount.value,
+          detailCombo_OrderResquests: detailComboOrderRequests,
+          cthoadons: cthoadons,
+        }
+        const response = await fetch(`https://localhost:7139/api/Checkout`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accesstoken}`,
+          },
+          body: JSON.stringify(orderData),
+        })
+        if (response.status == 401) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Phiên của bạn đã hết hoặc bạn chưa đăng nhập, vui lòng đăng nhập lại!',
+            timer: 2000,
+            showConfirmButton: false,
+          })
+          router.push('/Login')
+          return
+        }
+        if (!response.ok) {
+          const errorMessage = await response.text()
+          throw new Error(errorMessage)
+        }
+        const result = await response.json()
+        if (result.success) {
+          Swal.fire({
+          icon: 'success',
+          title: result.message,
+          timer: 2000, 
+          showConfirmButton: false
+        });
+        window.dispatchEvent(new CustomEvent('updateCart'))
+        setTimeout(function(){
+          router.push('/')
+        }, 2000)
+        } else {
+          Swal.fire(result.message, '', 'error')
+        }
+      }
+    })
   } catch (error) {
     console.error('Lỗi khi đặt hàng:', error)
     Swal.fire({
