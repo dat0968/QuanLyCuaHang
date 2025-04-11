@@ -1,4 +1,6 @@
 ﻿using APIQuanLyCuaHang.Models;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace APIQuanLyCuaHang.DTO
 {
@@ -39,5 +41,22 @@ namespace APIQuanLyCuaHang.DTO
 
         public decimal TienGoc { get; set; }
         public decimal Tongtien { get; set; }
+        public decimal GiamGiaCoupon { get; set; } = 0;
+        public virtual List<ChitietcombohoadonDTO> ChitietcombohoadonDTOs { get; set; } = new List<ChitietcombohoadonDTO>();
+    }
+    public class ChitietcombohoadonDTO
+    {
+        public int MaHd { get; set; }
+
+        public int MaCombo { get; set; }
+        public string TenSpCombo { get; set; }
+        public int MaCTSp { get; set; }
+        public string? KichThuoc { get; set; }
+        public string? HuongVi { get; set; }
+        public int SoLuong { get; set; }
+
+        public decimal DonGia { get; set; }
+
+       
     }
 }

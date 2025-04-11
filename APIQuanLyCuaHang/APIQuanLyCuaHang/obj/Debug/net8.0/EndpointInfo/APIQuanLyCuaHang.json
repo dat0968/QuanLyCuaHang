@@ -528,14 +528,14 @@
         }
       }
     },
-    "/api/Cart/remove/{maKh}/{maCtsp}": {
+    "/api/Cart/{id}/{userId}": {
       "delete": {
         "tags": [
           "Cart"
         ],
         "parameters": [
           {
-            "name": "maKh",
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {
@@ -544,39 +544,7 @@
             }
           },
           {
-            "name": "maCtsp",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Cart/remove-combo/{maKh}/{maCombo}": {
-      "delete": {
-        "tags": [
-          "Cart"
-        ],
-        "parameters": [
-          {
-            "name": "maKh",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "maCombo",
+            "name": "userId",
             "in": "path",
             "required": true,
             "schema": {
@@ -628,6 +596,43 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Checkout/GetDiscountCoupon": {
+      "get": {
+        "tags": [
+          "Checkout"
+        ],
+        "parameters": [
+          {
+            "name": "maUser",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "couponcode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "originalPrice",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -3156,6 +3161,28 @@
         },
         "additionalProperties": false
       },
+      "DetailCombo_OrderResquest": {
+        "type": "object",
+        "properties": {
+          "maCombo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maCTSp": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "soLuong": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "donGia": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
       "DetailProductCreateRequestDTO": {
         "type": "object",
         "properties": {
@@ -3266,11 +3293,26 @@
         "properties": {
           "maCtsp": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "soLuong": {
             "type": "integer",
             "format": "int32"
+          },
+          "donGia": {
+            "type": "number",
+            "format": "double"
+          },
+          "giamGia": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "maCombo": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -3282,39 +3324,11 @@
             "type": "integer",
             "format": "int32"
           },
-          "maNv": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "ngayTao": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "batDauGiao": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "ngayNhan": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
           "diaChiNhanHang": {
             "type": "string",
             "nullable": true
           },
-          "ngayThanhToan": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
           "hinhThucTt": {
-            "type": "string",
-            "nullable": true
-          },
-          "tinhTrang": {
             "type": "string",
             "nullable": true
           },
@@ -3330,14 +3344,6 @@
             "type": "string",
             "nullable": true
           },
-          "lyDoHuy": {
-            "type": "string",
-            "nullable": true
-          },
-          "isDelete": {
-            "type": "boolean",
-            "nullable": true
-          },
           "phiVanChuyen": {
             "type": "number",
             "format": "double"
@@ -3345,6 +3351,21 @@
           "tienGoc": {
             "type": "number",
             "format": "double"
+          },
+          "maCoupon": {
+            "type": "string",
+            "nullable": true
+          },
+          "giamGiaCoupon": {
+            "type": "number",
+            "format": "double"
+          },
+          "detailCombo_OrderResquests": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DetailCombo_OrderResquest"
+            },
+            "nullable": true
           },
           "cthoadons": {
             "type": "array",
@@ -3368,10 +3389,6 @@
             "nullable": true
           },
           "sdt": {
-            "type": "string",
-            "nullable": true
-          },
-          "hinh": {
             "type": "string",
             "nullable": true
           },

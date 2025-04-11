@@ -1,4 +1,6 @@
 ﻿using APIQuanLyCuaHang.DTO;
+using APIQuanLyCuaHang.Repositories.DetailMaCoupon;
+using APIQuanLyCuaHang.Repository.MaCoupon;
 using APIQuanLyCuaHang.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +13,13 @@ namespace APIQuanLyCuaHang.Controllers
     public class CheckoutController : ControllerBase
     {
         private readonly OrderService orderService;
-        public CheckoutController(OrderService orderService)
+        private readonly IMaCouponRepository MaCouponRepository;
+        private readonly IDetailMaCoupon DetailMaCoupon;
+        public CheckoutController(OrderService orderService, IMaCouponRepository MaCouponRepository, IDetailMaCoupon DetailMaCoupon)
         {
             this.orderService = orderService;
+            this.MaCouponRepository = MaCouponRepository;
+            this.DetailMaCoupon = DetailMaCoupon;
         }
         [HttpPost]
         public async Task<IActionResult> Checkout(OrderRequestDTO NewOrder)
@@ -26,16 +32,53 @@ namespace APIQuanLyCuaHang.Controllers
                 return Ok(new
                 {
                     Success = true,
-                    Message = "Thanh toán thành công"
+                    Message = "Đặt hàng thành công"
                 });
             }
             catch (Exception ex)
             {
-                return BadRequest(new
+                return Ok(new
                 {
                     Success = false,
                     Message = ex.InnerException,
                 }); 
+            }
+        }
+        [HttpGet("GetDiscountCoupon")]
+        public async Task<IActionResult> GetDiscountCoupon(int maUser, string couponcode, decimal originalPrice)
+        {
+            try
+            {
+                var findCouponCode = await MaCouponRepository.GetById(couponcode);
+                if (findCouponCode == null)
+                {
+                    return Ok( new { Success = false, Message = "Mã Coupon này không tồn tại" });
+                }
+                if(findCouponCode.SoLuongDaDung + 1 > findCouponCode.SoLuong)
+                {
+                    return Ok(new { Success = false, Message = "Mã này đã hết hàng" });
+                }
+                if(findCouponCode.NgayBatDau > DateTime.Now || findCouponCode.NgayKetThuc < DateTime.Now || findCouponCode.TrangThai == false)
+                {
+                    return Ok( new { Success = false, Message = "Mã không khả dụng" });
+                }
+                var check = await DetailMaCoupon.CheckUser_CouponCode(maUser, couponcode);
+                if(check == false)
+                {
+                    return Ok( new { Success = false, Message = "Bạn đã sử dụng mã này rồi" });
+                }
+                var afterApplyCouponPrice = (decimal)(findCouponCode.PhanTramGiam != null ? (originalPrice * findCouponCode.PhanTramGiam / 100) : (findCouponCode.SoTienGiam != null ? originalPrice - findCouponCode.SoTienGiam : 0));
+                return Ok(new
+                {
+                    Success = true,
+                    OriginalPrice = originalPrice,
+                    Discount = afterApplyCouponPrice,
+                    Message = "Áp dụng mã coupon thành công"
+                });
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new { Success = false, Message = ex.InnerException });
             }
         }
     }

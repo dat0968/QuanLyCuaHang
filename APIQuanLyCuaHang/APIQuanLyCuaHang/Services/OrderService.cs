@@ -1,7 +1,14 @@
 ﻿using APIQuanLyCuaHang.DTO;
 using APIQuanLyCuaHang.Models;
+using APIQuanLyCuaHang.Repositories;
 using APIQuanLyCuaHang.Repositories.Bill;
+using APIQuanLyCuaHang.Repositories.Combo;
 using APIQuanLyCuaHang.Repositories.DetailBill;
+using APIQuanLyCuaHang.Repositories.DetailComboOrder;
+using APIQuanLyCuaHang.Repositories.DetailProduct;
+using APIQuanLyCuaHang.Repository.MaCoupon;
+using Microsoft.EntityFrameworkCore;
+using System.Net.WebSockets;
 using System.Runtime.CompilerServices;
 
 namespace APIQuanLyCuaHang.Services
@@ -11,17 +18,29 @@ namespace APIQuanLyCuaHang.Services
         private readonly QuanLyCuaHangContext db;
         private readonly IBillRepository billRepository;
         private readonly IDetailBill detailBill;
-        public OrderService(QuanLyCuaHangContext db, IBillRepository billRepository, IDetailBill detailBill)
+        private readonly IMaCouponRepository MaCouponRepository;
+        private readonly IComboRepository ComboRepository;
+        private readonly IDetailComboOrderRepository DetailComboOrderRepository;
+        private readonly IDetailProduct DetailProductRepository;
+        private readonly ICartRepository CartRepository;
+        public OrderService(QuanLyCuaHangContext db, IBillRepository billRepository, IDetailBill detailBill, IMaCouponRepository MaCouponRepository, 
+        IComboRepository ComboRepository, IDetailComboOrderRepository DetailComboOrderRepository, IDetailProduct DetailProductRepository, ICartRepository CartRepository)
         {
             this.db = db;
             this.billRepository = billRepository;
             this.detailBill = detailBill;
+            this.MaCouponRepository = MaCouponRepository;
+            this.ComboRepository = ComboRepository;
+            this.DetailComboOrderRepository = DetailComboOrderRepository;
+            this.DetailProductRepository = DetailProductRepository;
+            this.CartRepository = CartRepository;
         }
         public async Task AddOrder(OrderRequestDTO NewOrder)
         {
             await db.Database.BeginTransactionAsync();
             try
             {
+                // Thêm hóa đơn mới
                 var ModelOrder = new Hoadon
                 {
                     MaKh = NewOrder.MaKh,
@@ -39,23 +58,113 @@ namespace APIQuanLyCuaHang.Services
                     IsDelete = false,
                     PhiVanChuyen = NewOrder.PhiVanChuyen,
                     TienGoc = NewOrder.TienGoc,
+                    GiamGiaCoupon = NewOrder.GiamGiaCoupon,
                 };
                 ModelOrder = await billRepository.CreateOrder(ModelOrder);
 
+                //Thêm CTHOADON mới
                 foreach (var detail in NewOrder.Cthoadons) {
                     var ModelDetailOrder = new Cthoadon
                     {
                         MaHd = ModelOrder.MaHd,
                         MaCtsp = detail.MaCtsp,
                         SoLuong = detail.SoLuong,
+                        DonGia = detail.DonGia,
+                        GiamGia = detail.GiamGia,
+                        MaCombo = detail.MaCombo,
                     };
-                    await detailBill.CreateDetailOrder(ModelDetailOrder);
+                    ModelDetailOrder = await detailBill.CreateDetailOrder(ModelDetailOrder);
+                    /* Cập nhật số lượng Combo và sản phẩm và cập thông sản phẩm trong
+                     combo vào chitietcombohoadon ( nếu có )*/
+                    if (detail.MaCombo != null)
+                    {
+                        var FindCombo = await ComboRepository.GetById(detail.MaCombo.Value);
+                        if(FindCombo != null)
+                        {
+                            //Cập nhật số lượng combo
+                            FindCombo.SoLuong = FindCombo.SoLuong - detail.SoLuong;
+                           // UpdateCombo.TenCombo = FindCombo.TenCombo;
+                            if(FindCombo.SoLuong < 0)
+                            {
+                                throw new Exception("Số lượng còn lại của combo không đủ");
+                            }
+                            await ComboRepository.EditCombo(FindCombo);
+                            // Lọc DetailCombo_OrderResquests theo MaCombo của ModelDetailOrder
+                            var filteredDetailComboOrders = NewOrder.DetailCombo_OrderResquests
+                                ?.Where(d => d.MaCombo == detail.MaCombo.Value)
+                                .ToList();
+                            // Cập thông sp trong combo vào chitietcombohoadon
+                            if (filteredDetailComboOrders != null && filteredDetailComboOrders.Any())
+                            {
+                                foreach (var detailComboOrder in filteredDetailComboOrders)
+                                {
+                                    var NewModel = new Chitietcombohoadon
+                                    {
+                                        MaHd = ModelOrder.MaHd,
+                                        MaCombo = detailComboOrder.MaCombo,
+                                        MaCTSp = detailComboOrder.MaCTSp,
+                                        SoLuong = detailComboOrder.SoLuong,
+                                        DonGia = detailComboOrder.DonGia
+                                    };
+                                    NewModel = await DetailComboOrderRepository.AddDetailComboOrder(NewModel);
+
+                                    // Cập nhật lại số lượng sản phẩm 
+                                    var UpdateProduct = await DetailProductRepository.GetDetailByMaCTSp(detailComboOrder.MaCTSp);
+                                    if (UpdateProduct == null)
+                                    {
+                                        throw new Exception("Sản phẩm không tồn tại");
+                                    }
+                                    UpdateProduct.SoLuongTon = UpdateProduct.SoLuongTon - detailComboOrder.SoLuong;
+                                    if (UpdateProduct.SoLuongTon < 0)
+                                    {
+                                        throw new Exception($"Số lượng còn lại của sản phẩm không đủ để đáp ứng cho combo mã {NewModel.MaCombo}");
+                                    }
+                                    else
+                                    {
+                                        await DetailProductRepository.UpdateDetailProduct(UpdateProduct);
+                                    }
+                                }
+                            }                                
+                            
+                        }
+                        
+                    }
+                    else
+                    {
+                        // Cập nhật lại số lượng sản phẩm 
+                        var UpdateProduct = await DetailProductRepository.GetDetailByMaCTSp(detail.MaCtsp.Value);
+                        UpdateProduct.SoLuongTon = UpdateProduct.SoLuongTon - ModelDetailOrder.SoLuong;
+                        if (UpdateProduct.SoLuongTon < 0)
+                        {
+                            throw new Exception("Sản phẩm đã hết hàng");
+                        }
+                        else
+                        {
+                            await DetailProductRepository.UpdateDetailProduct(UpdateProduct);
+                        }
+                    }
                 }
+                //Cộng cột số lượng đã dùng Mã Coupon ( nếu có )
+                if (!string.IsNullOrEmpty(NewOrder.MaCoupon))
+                {
+                    var FindCoupon = await MaCouponRepository.GetById(NewOrder.MaCoupon);
+                    if(FindCoupon != null)
+                    {
+                        FindCoupon.SoLuongDaDung++;
+                        MaCouponRepository.Update(FindCoupon);
+                    }
+                    else
+                    {
+                        throw new Exception("CouponCode not Found");
+                    }
+                }
+
+                await CartRepository.RemoveAllCart(NewOrder.MaKh);
                 await db.Database.CommitTransactionAsync();
             }catch(Exception ex)
             {
                 await db.Database.RollbackTransactionAsync();
-                throw;
+                throw new Exception("Lỗi", ex);
             }
         }
     }

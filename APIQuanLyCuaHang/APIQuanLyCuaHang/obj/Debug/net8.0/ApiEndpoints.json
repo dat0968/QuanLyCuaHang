@@ -323,6 +323,27 @@
   },
   {
     "ContainingType": "APIQuanLyCuaHang.Controllers.CartController",
+    "Method": "RemoveCart",
+    "RelativePath": "api/Cart/{id}/{userId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.CartController",
     "Method": "GetCart",
     "RelativePath": "api/Cart/{maKh}",
     "HttpMethod": "GET",
@@ -331,48 +352,6 @@
     "Parameters": [
       {
         "Name": "maKh",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "APIQuanLyCuaHang.Controllers.CartController",
-    "Method": "RemoveComboFromCart",
-    "RelativePath": "api/Cart/remove-combo/{maKh}/{maCombo}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "maKh",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "maCombo",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "APIQuanLyCuaHang.Controllers.CartController",
-    "Method": "RemoveFromCart",
-    "RelativePath": "api/Cart/remove/{maKh}/{maCtsp}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "maKh",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "maCtsp",
         "Type": "System.Int32",
         "IsRequired": true
       }
@@ -401,6 +380,32 @@
         "Name": "NewOrder",
         "Type": "APIQuanLyCuaHang.DTO.OrderRequestDTO",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.CheckoutController",
+    "Method": "GetDiscountCoupon",
+    "RelativePath": "api/Checkout/GetDiscountCoupon",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "maUser",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "couponcode",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "originalPrice",
+        "Type": "System.Decimal",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

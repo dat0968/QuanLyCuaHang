@@ -68,7 +68,7 @@ namespace APIQuanLyCuaHang.Repositories.Combo
         {
             try
             {
-                var listCombo = await db.Combos.Where(p => p.IsDelete == false).Select(p => new ComboResponseDTO
+                var listCombo = await db.Combos.AsNoTracking().Where(p => p.IsDelete == false).Select(p => new ComboResponseDTO
                 {
                     MaCombo = p.MaCombo,
                     TenCombo = p.TenCombo,
@@ -97,27 +97,28 @@ namespace APIQuanLyCuaHang.Repositories.Combo
            
         }
 
-        public async Task<ComboResponseDTO> GetById(int id)
+        public async Task<APIQuanLyCuaHang.Models.Combo?> GetById(int id)
         {
             try
             {
-                var getCombobyID = await db.Combos.Select(p => new ComboResponseDTO
-                {
-                    MaCombo = p.MaCombo,
-                    TenCombo = p.TenCombo,
-                    Hinh = p.Hinh,
-                    PhanTramGiam = p.PhanTramGiam,
-                    SoTienGiam = p.SoTienGiam,
-                    SoLuong = p.SoLuong,
-                    MoTa = p.MoTa,
-                    IsDelete = p.IsDelete,
-                    Chitietcombos = p.Chitietcombos.Select(p => new DetaisComboResponseDTO
-                    {
-                        MaSp = p.MaSp,
-                        TenSp = p.MaSpNavigation.TenSanPham,
-                        SoLuongSp = p.SoLuongSp
-                    }).ToList()
-                }).FirstOrDefaultAsync(p => p.MaCombo == id);
+                //var getCombobyID = await db.Combos.AsNoTracking().Select(p => new ComboResponseDTO
+                //{
+                //    MaCombo = p.MaCombo,
+                //    TenCombo = p.TenCombo,
+                //    Hinh = p.Hinh,
+                //    PhanTramGiam = p.PhanTramGiam,
+                //    SoTienGiam = p.SoTienGiam,
+                //    SoLuong = p.SoLuong,
+                //    MoTa = p.MoTa,
+                //    IsDelete = p.IsDelete,
+                //    Chitietcombos = p.Chitietcombos.Select(p => new DetaisComboResponseDTO
+                //    {
+                //        MaSp = p.MaSp,
+                //        TenSp = p.MaSpNavigation.TenSanPham,
+                //        SoLuongSp = p.SoLuongSp
+                //    }).ToList()
+                //}).FirstOrDefaultAsync(p => p.MaCombo == id);
+                var getCombobyID = await db.Combos.AsNoTracking().FirstOrDefaultAsync(p => p.MaCombo == id);
                 return getCombobyID;
             }catch (Exception ex)
             {

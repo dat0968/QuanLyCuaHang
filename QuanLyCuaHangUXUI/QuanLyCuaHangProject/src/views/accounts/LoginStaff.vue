@@ -30,8 +30,8 @@ const handleLogin = async () => {
     const data = await response.json();
 
     if (data.success) {
-      Cookies.set('accessToken', data.data.accessToken, { expires: 2 / 24 }); // set 2 giờ nha 
-      Cookies.set('refreshToken', data.data.refreshToken, { expires: 2 / 24 });
+      Cookies.set('accessToken', data.data.accessToken, { expires: 3 / 24 }); // set 2 giờ nha 
+      Cookies.set('refreshToken', data.data.refreshToken, { expires: 3 / 24 });
       await Swal.fire({
         icon: 'success',
         title: 'Đăng nhập thành công!',
@@ -42,7 +42,7 @@ const handleLogin = async () => {
       if (router.currentRoute.query && router.currentRoute.query.redirect) {
         router.push(router.currentRoute.query.redirect)
       } else {
-        router.push('/')
+        router.push('/Admin')
       }
     } else {
       errorMessage.value = data.Message || 'Đăng nhập thất bại';

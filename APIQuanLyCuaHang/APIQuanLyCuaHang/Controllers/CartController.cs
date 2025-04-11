@@ -9,6 +9,7 @@ namespace APIQuanLyCuaHang.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Customer")]
     public class CartController : ControllerBase
     {
         private readonly ICartRepository cartRepository;
@@ -19,7 +20,7 @@ namespace APIQuanLyCuaHang.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+       
         public async Task<IActionResult> AddToCart([FromBody] CartItemResquestDTO cartItem)
         {
             try
@@ -34,7 +35,7 @@ namespace APIQuanLyCuaHang.Controllers
         }
 
         [HttpGet("{maKh}")]
-        [Authorize] 
+        
         public async Task<IActionResult> GetCart(int maKh)
         {
             try
@@ -51,7 +52,7 @@ namespace APIQuanLyCuaHang.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize]
+        
         public async Task<IActionResult> UpdateCartItem([FromRoute] int id, [FromBody] CartItemResquestDTO cartItem)
         {
             try
@@ -70,34 +71,20 @@ namespace APIQuanLyCuaHang.Controllers
             }
         }
 
-        [HttpDelete("remove/{maKh}/{maCtsp}")]
-        [Authorize]
-        public async Task<IActionResult> RemoveFromCart(int maKh, int maCtsp)
+        [HttpDelete("{id}/{userId}")]
+        
+        public async Task<IActionResult> RemoveCart(int id, int userId)
         {
             try
             {
-                await cartRepository.RemoveFromCart(maKh, maCtsp);
-                return Ok(new { Success = true, Message = "Xóa sản phẩm khỏi giỏ hàng thành công" });
+                await cartRepository.RemoveCart(userId, id);
+                return Ok(new { Success = true, Message = "Đã xóa sản phẩm ra khỏi giỏ hàng" });
             }
             catch (Exception ex)
             {
-                return BadRequest(new { Success = false, Message = ex.Message });
+                return Ok(new { Success = false, Message = ex.Message });
             }
         }
 
-        [HttpDelete("remove-combo/{maKh}/{maCombo}")]
-        [Authorize]
-        public async Task<IActionResult> RemoveComboFromCart(int maKh, int maCombo)
-        {
-            try
-            {
-                await cartRepository.RemoveComboFromCart(maKh, maCombo);
-                return Ok(new { Success = true, Message = "Xóa combo khỏi giỏ hàng thành công" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { Success = false, Message = ex.Message });
-            }
-        }
     }
 }

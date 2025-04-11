@@ -26,4 +26,6 @@ public partial class Chitietsanpham
     public virtual ICollection<GioHangCTCombo> GioHangCTCombos { get; set; } = new List<GioHangCTCombo>();
 
     public virtual Sanpham MaSpNavigation { get; set; } = null!;
+    public virtual ICollection<Chitietcombohoadon> Chitietcombohoadons { get; set; } = new List<Chitietcombohoadon>();
+
 }

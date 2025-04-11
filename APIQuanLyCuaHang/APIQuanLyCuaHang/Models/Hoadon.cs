@@ -38,10 +38,12 @@ public partial class Hoadon
     public decimal PhiVanChuyen { get; set; }
 
     public decimal TienGoc { get; set; }
+    public decimal GiamGiaCoupon { get; set; } = 0;
 
     public virtual ICollection<Cthoadon> Cthoadons { get; set; } = new List<Cthoadon>();
 
     public virtual Khachhang MaKhNavigation { get; set; } = null!;
 
     public virtual Nhanvien? MaNvNavigation { get; set; }
+    public virtual ICollection<Chitietcombohoadon> Chitietcombohoadons { get; set; } = new List<Chitietcombohoadon>();
 }

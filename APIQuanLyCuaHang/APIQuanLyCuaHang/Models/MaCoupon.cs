@@ -20,5 +20,6 @@ namespace APIQuanLyCuaHang.Models
         public int SoLuongDaDung { get; set; }
         [Required]
         public bool TrangThai { get; set; }
+        public virtual ICollection<ChitietmaCoupon> ChitietmaCoupons { get; set; } = new List<ChitietmaCoupon>();
     }
 }

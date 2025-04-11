@@ -48,11 +48,11 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                     ChiTietHoaDonKhachs = lo.Cthoadons.Select(ct => new ChiTietHoaDonKhachDTO
                     {
                         MaHd = ct.MaHd,
-                        MaCtsp = ct.MaCtsp,
+                        MaCtsp = ct.MaCtsp ?? 0,
                         SoLuong = ct.SoLuong,
-                        KichThuoc = ct.MaCtspNavigation.KichThuoc,
-                        HuongVi = ct.MaCtspNavigation.HuongVi,
-                        DonGia = ct.MaCtspNavigation.DonGia,
+                        KichThuoc = ct.MaCtspNavigation?.KichThuoc ?? "Không có",
+                        HuongVi = ct.MaCtspNavigation?.HuongVi ?? "Không có",
+                        DonGia = ct.DonGia,
                         TenSanPham = ct.MaCtspNavigation.MaSpNavigation.TenSanPham,
                         MoTa = ct.MaCtspNavigation.MaSpNavigation.MoTa
                     }).ToList()

@@ -97,6 +97,50 @@ namespace APIQuanLyCuaHang.Migrations
                     b.ToTable("CHITIETCOMBO", (string)null);
                 });
 
+            modelBuilder.Entity("APIQuanLyCuaHang.Models.Chitietcombohoadon", b =>
+                {
+                    b.Property<int>("MaHd")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaCombo")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaCTSp")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("DonGia")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("SoLuong")
+                        .HasColumnType("int");
+
+                    b.HasKey("MaHd", "MaCombo", "MaCTSp");
+
+                    b.HasIndex("MaCTSp");
+
+                    b.HasIndex("MaCombo");
+
+                    b.ToTable("CHITIETCOMBOHOADON", (string)null);
+                });
+
+            modelBuilder.Entity("APIQuanLyCuaHang.Models.ChitietmaCoupon", b =>
+                {
+                    b.Property<int>("MaKh")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MaCode")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("NgaySuDung")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("MaKh", "MaCode");
+
+                    b.HasIndex("MaCode");
+
+                    b.ToTable("CHITIETMACOUPON", (string)null);
+                });
+
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Chitietsanpham", b =>
                 {
                     b.Property<int>("MaCtsp")
@@ -212,15 +256,26 @@ namespace APIQuanLyCuaHang.Migrations
                         .HasColumnType("int")
                         .HasColumnName("MaHD");
 
-                    b.Property<int>("MaCtsp")
+                    b.Property<int?>("MaCtsp")
                         .HasColumnType("int")
                         .HasColumnName("MaCTSP");
+
+                    b.Property<decimal>("DonGia")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("GiamGia")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("MaCombo")
+                        .HasColumnType("int");
 
                     b.Property<int>("SoLuong")
                         .HasColumnType("int");
 
                     b.HasKey("MaHd", "MaCtsp")
                         .HasName("PK__CTHOADON__E6C15A0CD99CD838");
+
+                    b.HasIndex("MaCombo");
 
                     b.HasIndex("MaCtsp");
 
@@ -358,6 +413,9 @@ namespace APIQuanLyCuaHang.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<decimal>("GiamGiaCoupon")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("HinhThucTt")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
@@ -473,7 +531,7 @@ namespace APIQuanLyCuaHang.Migrations
                     b.Property<string>("MatKhau")
                         .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(255)")
+                        .HasColumnType("char(255)")
                         .IsFixedLength();
 
                     b.Property<DateOnly?>("NgaySinh")
@@ -642,6 +700,7 @@ namespace APIQuanLyCuaHang.Migrations
                         .HasColumnType("nvarchar(5)");
 
                     b.Property<string>("HinhAnh")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HoTen")
@@ -780,6 +839,52 @@ namespace APIQuanLyCuaHang.Migrations
                     b.Navigation("MaSpNavigation");
                 });
 
+            modelBuilder.Entity("APIQuanLyCuaHang.Models.Chitietcombohoadon", b =>
+                {
+                    b.HasOne("APIQuanLyCuaHang.Models.Chitietsanpham", "MaCTSpNavigation")
+                        .WithMany("Chitietcombohoadons")
+                        .HasForeignKey("MaCTSp")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("APIQuanLyCuaHang.Models.Combo", "MaComboNavigation")
+                        .WithMany("Chitietcombohoadons")
+                        .HasForeignKey("MaCombo")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("APIQuanLyCuaHang.Models.Hoadon", "MaHdNavigation")
+                        .WithMany("Chitietcombohoadons")
+                        .HasForeignKey("MaHd")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MaCTSpNavigation");
+
+                    b.Navigation("MaComboNavigation");
+
+                    b.Navigation("MaHdNavigation");
+                });
+
+            modelBuilder.Entity("APIQuanLyCuaHang.Models.ChitietmaCoupon", b =>
+                {
+                    b.HasOne("APIQuanLyCuaHang.Models.MaCoupon", "MaCodeNavigation")
+                        .WithMany("ChitietmaCoupons")
+                        .HasForeignKey("MaCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("APIQuanLyCuaHang.Models.Khachhang", "MaKhNavigation")
+                        .WithMany("ChitietmaCoupons")
+                        .HasForeignKey("MaKh")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MaCodeNavigation");
+
+                    b.Navigation("MaKhNavigation");
+                });
+
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Chitietsanpham", b =>
                 {
                     b.HasOne("APIQuanLyCuaHang.Models.Sanpham", "MaSpNavigation")
@@ -793,6 +898,10 @@ namespace APIQuanLyCuaHang.Migrations
 
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Cthoadon", b =>
                 {
+                    b.HasOne("APIQuanLyCuaHang.Models.Combo", "Combo")
+                        .WithMany("Cthoadons")
+                        .HasForeignKey("MaCombo");
+
                     b.HasOne("APIQuanLyCuaHang.Models.Chitietsanpham", "MaCtspNavigation")
                         .WithMany("Cthoadons")
                         .HasForeignKey("MaCtsp")
@@ -804,6 +913,8 @@ namespace APIQuanLyCuaHang.Migrations
                         .HasForeignKey("MaHd")
                         .IsRequired()
                         .HasConstraintName("FK__CTHOADON__MaHD__5CD6CB2B");
+
+                    b.Navigation("Combo");
 
                     b.Navigation("MaCtspNavigation");
 
@@ -939,6 +1050,8 @@ namespace APIQuanLyCuaHang.Migrations
 
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Chitietsanpham", b =>
                 {
+                    b.Navigation("Chitietcombohoadons");
+
                     b.Navigation("Cthoadons");
 
                     b.Navigation("GioHangCTCombos");
@@ -955,7 +1068,11 @@ namespace APIQuanLyCuaHang.Migrations
 
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Combo", b =>
                 {
+                    b.Navigation("Chitietcombohoadons");
+
                     b.Navigation("Chitietcombos");
+
+                    b.Navigation("Cthoadons");
 
                     b.Navigation("Giohangs");
                 });
@@ -972,14 +1089,23 @@ namespace APIQuanLyCuaHang.Migrations
 
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Hoadon", b =>
                 {
+                    b.Navigation("Chitietcombohoadons");
+
                     b.Navigation("Cthoadons");
                 });
 
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Khachhang", b =>
                 {
+                    b.Navigation("ChitietmaCoupons");
+
                     b.Navigation("Giohangs");
 
                     b.Navigation("Hoadons");
+                });
+
+            modelBuilder.Entity("APIQuanLyCuaHang.Models.MaCoupon", b =>
+                {
+                    b.Navigation("ChitietmaCoupons");
                 });
 
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Nhanvien", b =>

@@ -36,4 +36,6 @@ public partial class Khachhang
     public virtual ICollection<Giohang> Giohangs { get; set; } = new List<Giohang>();
 
     public virtual ICollection<Hoadon> Hoadons { get; set; } = new List<Hoadon>();
+    public virtual ICollection<ChitietmaCoupon> ChitietmaCoupons { get; set; } = new List<ChitietmaCoupon>();
+
 }
