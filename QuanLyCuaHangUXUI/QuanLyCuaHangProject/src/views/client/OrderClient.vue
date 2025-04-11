@@ -246,6 +246,7 @@ import toastr from 'toastr'
 import Swal from 'sweetalert2'
 import ConfigsRequest from '@/models/ConfigsRequest'
 import TrangThaiDonHang from '@/constants/trangThaiDonHang'
+import StoreInfo from '@/constants/storeInfo'
 
 pdfMake.vfs = pdfFonts.vfs // Nhúng font vào pdfmake
 
@@ -255,7 +256,6 @@ export default {
     return {
       orders: [],
       filteredOrders: [], // Dữ liệu sau khi lọc
-      userId: 100,
       selectedOrder: null, // Lưu thông tin hóa đơn để hiển thị chi tiết trong modal
       modalTarget: typeof document !== 'undefined' ? 'body' : null,
       filter: {
@@ -300,13 +300,13 @@ export default {
 
         return [
           // Thay đổi { content: [...] } thành một mảng
-          { text: 'CỬA HÀNG DARK BEE', style: 'companyHeader', alignment: 'center' },
+          { text: StoreInfo.COMPANY_NAME, style: 'companyHeader', alignment: 'center' },
           {
-            text: '300, 6 đường Hà Huy Tập, BMT, Đắk Lắk',
+            text: StoreInfo.ADDRESS,
             alignment: 'center',
           },
           {
-            text: '0262 8884 375 - datntpk03691@gmail.com',
+            text: `${StoreInfo.PHONE_NUMBER} - ${StoreInfo.EMAIL}`,
             alignment: 'center',
           },
           { text: ' ' },
@@ -619,7 +619,7 @@ export default {
 
     loadOrders() {
       axiosClient
-        .getFromApi(`/OrderClient/Get/${this.userId}`, ConfigsRequest.takeAuth())
+        .getFromApi(`/OrderClient/Get/`, ConfigsRequest.takeAuth())
         .then((response) => {
           if (response.success) {
             this.orders = response.data
@@ -763,7 +763,7 @@ export default {
         // Gửi yêu cầu API hủy đơn
         axiosClient
           .postToApi(
-            `/OrderClient/ChangeStatusOrder?userId=${this.userId}&orderId=${orderId}&statusChange=${selectedStatus}${'&reasonCancel=' + cancellationReason}`,
+            `/OrderClient/ChangeStatusOrder?orderId=${orderId}&statusChange=${selectedStatus}${'&reasonCancel=' + cancellationReason}`,
           )
           .then((response) => {
             if (response.success) {
@@ -797,16 +797,7 @@ export default {
   },
   computed: {
     statusList() {
-      return [
-        'Chờ xác nhận',
-        'Đã xác nhận',
-        'Đã giao cho đơn vị vận chuyển',
-        'Đang giao hàng',
-        'Chờ thanh toán',
-        'Đã thanh toán',
-        'Hoàn trả/Hoàn tiền',
-        'Đã hủy',
-      ]
+      return [TrangThaiDonHang.TatCaTrangThai]
     },
   },
 }

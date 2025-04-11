@@ -19,21 +19,16 @@ namespace APIQuanLyCuaHang.Controllers
             _unit = unit;
         }
         [HttpGet("{userId}")]
-        public async Task<IActionResult> Get(int? userId)
+        public async Task<IActionResult> Get()
         {
-            // TODO: Remove the userId request to this API
-            string? userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (!string.IsNullOrEmpty(userIdString))
-            {
-                userId = Convert.ToInt32(userIdString);
-            }
+            int? userId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var response = await _unit.HoaDonKhachs.GetAllInvoiceByUserId(userId);
-            // response.Message += $"[{userId}]";
             return Ok(response);
         }
         [HttpPost]
-        public async Task<IActionResult> ChangeStatusOrder(int? userId, int? orderId, string? statusChange, string? reasonCancel)
+        public async Task<IActionResult> ChangeStatusOrder(int? orderId, string? statusChange, string? reasonCancel)
         {
+            int? userId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var response = await _unit.HoaDonKhachs.UpdateStatusOrderOfUser(userId, orderId, statusChange, reasonCancel);
             return Ok(response);
         }
