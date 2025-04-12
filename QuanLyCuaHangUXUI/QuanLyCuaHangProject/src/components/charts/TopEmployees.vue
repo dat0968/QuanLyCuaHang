@@ -1,6 +1,9 @@
 <template>
   <div class="table-responsive">
     <table class="table" :id="tableId"></table>
+    <div v-if="employees.length === 0" class="alert alert-warning" role="alert">
+      Không có dữ liệu để hiển thị.
+    </div>
   </div>
 </template>
 
@@ -66,10 +69,7 @@ export default {
             render: (data) => formatCurrency(data),
           },
         ],
-        order: [
-          [1, 'asc'],
-          [2, 'desc'],
-        ],
+        order: [],
         language: configsDt.defaultLanguageDatatable,
         initComplete: () => {
           configsDt.attachDetailsControl(`#${this.tableId}`, this.formatEmployeeDetails.bind(this))

@@ -123,14 +123,32 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
                 List<ComboDC> comboDTOs = new List<ComboDC>();
                 foreach (var group in groupedCombos)
                 {
+                    int soLuongBan = group.Sum(x => x.SoLuong);
+                    decimal donGia = group.First().DonGia;
+                    decimal tienGoc = soLuongBan * donGia;
+
+                    decimal? tiLeGiamGia = (decimal?)(group.First().MaComboNavigation.PhanTramGiam);
+                    decimal? soTienGiamGia = (decimal?)(group.First().MaComboNavigation.SoTienGiam);
+                    decimal tongTien = 0m;
+                    if (tiLeGiamGia != null)
+                    {
+                        tongTien = (1 - tiLeGiamGia.Value / 100) * tienGoc;
+                    }
+                    if (soTienGiamGia != null)
+                    {
+                        tongTien = tienGoc - soTienGiamGia.Value;
+                    }
                     var comboDto = new ComboDC
                     {
                         MaCombo = group.Key,
                         TenCombo = group.First().MaComboNavigation.TenCombo,
                         Hinh = group.First().MaComboNavigation.Hinh,
-                        SoLuong = group.Sum(x => x.SoLuong),
-                        PhanTramGiam = group.First().MaComboNavigation.PhanTramGiam,
-                        SoTienGiam = group.First().MaComboNavigation.SoTienGiam,
+                        SoLuong = soLuongBan,
+                        DonGia = donGia,
+                        PhanTramGiam = tiLeGiamGia ?? 0,
+                        SoTienGiam = soTienGiamGia,
+                        TienGoc = tienGoc,
+                        TongTien = tongTien,
                         MoTa = group.First().MaComboNavigation.MoTa,
                         IsDelete = group.First().MaComboNavigation.IsDelete,
                         ChiTietCombos = group.First().MaComboNavigation.Chitietcombos.Select(ctcb => new DetailComboDC
@@ -441,7 +459,7 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
             catch (Exception ex)
             {
                 Console.WriteLine("Lỗi: " + ex.Message);
-                return null;
+                return new List<StaffDC>();
             }
         }
 

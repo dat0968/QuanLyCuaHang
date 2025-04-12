@@ -1,6 +1,9 @@
 <template>
   <div class="table-responsive">
     <table class="table" :id="tableId"></table>
+    <div v-if="products.length === 0" class="alert alert-warning" role="alert">
+      Không có dữ liệu để hiển thị.
+    </div>
   </div>
 </template>
 

@@ -11,6 +11,7 @@
     <div class="card-body">
       <TopSellingProducts v-if="selectedType === 'topSellingProducts'" tableId="dt-topSelling" />
       <TopEmployees v-if="selectedType === 'topEmployees'" tableId="dt-topEmployees" />
+      <TopSellingCombos v-if="selectedType === 'topSellingCombos'" tableId="dt-topCombos" />
     </div>
   </div>
 </template>
@@ -18,12 +19,14 @@
 <script>
 import TopSellingProducts from '@/components/charts/TopSellingProducts.vue'
 import TopEmployees from '@/components/charts/TopEmployees.vue'
+import TopSellingCombos from './TopSellingCombos.vue'
 
 export default {
   name: 'TopDashboardEntities',
   components: {
     TopSellingProducts,
     TopEmployees,
+    TopSellingCombos,
   },
   data() {
     return {
@@ -34,6 +37,9 @@ export default {
         },
         topEmployees: {
           title: 'Top nhân viên',
+        },
+        topSellingCombos: {
+          title: 'Top Combo bán chạy',
         },
       },
     }
