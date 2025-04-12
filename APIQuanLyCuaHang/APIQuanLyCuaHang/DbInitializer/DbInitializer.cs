@@ -27,11 +27,11 @@ namespace APIQuanLyCuaHang.DbInitializer
                 CreateATestAccount();
             }
             // CreateOrderForTestUser("admin@default.com");
-            /* 
+
             if (!_db.Nhanviens.Any(nv => nv.Email == "staff666@gmail.com"))
             {
                 CreateTestStaffAccount();
-            } */
+            }
             if (_db.Combos.Count() == 10)
             {
                 CreateTestCombos(10);
@@ -73,7 +73,7 @@ namespace APIQuanLyCuaHang.DbInitializer
                 TenTaiKhoan = "staff666",
                 // MatKhau = BCrypt.Net.BCrypt.HashPassword("Admin@123"),
                 MatKhau = "Admin@123",
-                TinhTrang = "Ổn",
+                TinhTrang = "Đang hoạt động",
                 IsDelete = false,
                 MaChucVu = 1,
             };
