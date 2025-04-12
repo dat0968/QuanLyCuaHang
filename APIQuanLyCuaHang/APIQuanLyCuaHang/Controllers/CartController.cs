@@ -20,7 +20,6 @@ namespace APIQuanLyCuaHang.Controllers
         }
 
         [HttpPost]
-       
         public async Task<IActionResult> AddToCart([FromBody] CartItemResquestDTO cartItem)
         {
             try
@@ -35,7 +34,6 @@ namespace APIQuanLyCuaHang.Controllers
         }
 
         [HttpGet("{maKh}")]
-        
         public async Task<IActionResult> GetCart(int maKh)
         {
             try
@@ -52,7 +50,6 @@ namespace APIQuanLyCuaHang.Controllers
         }
 
         [HttpPut("{id}")]
-        
         public async Task<IActionResult> UpdateCartItem([FromRoute] int id, [FromBody] CartItemResquestDTO cartItem)
         {
             try
@@ -85,6 +82,5 @@ namespace APIQuanLyCuaHang.Controllers
                 return Ok(new { Success = false, Message = ex.Message });
             }
         }
-
     }
 }

@@ -883,6 +883,60 @@
         }
       }
     },
+    "/api/CounterBill": {
+      "post": {
+        "tags": [
+          "CounterBill"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CounterBillCreateDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CounterBillCreateDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CounterBillCreateDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/CounterBill/GetBillDetails/details/{id}": {
+      "get": {
+        "tags": [
+          "CounterBill"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Coupon/GetAllCouponCodeByPage": {
       "get": {
         "tags": [
@@ -1710,6 +1764,37 @@
         "tags": [
           "Home"
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Home/TraLoi": {
+      "post": {
+        "tags": [
+          "Home"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatRequestDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatRequestDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatRequestDTO"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -2942,6 +3027,29 @@
         }
       }
     },
+    "/api/Table/{id}/menu": {
+      "get": {
+        "tags": [
+          "Table"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/UploadImage": {
       "post": {
         "tags": [
@@ -3171,6 +3279,86 @@
               "$ref": "#/components/schemas/CartDetailRequestCombo"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChatRequestDTO": {
+        "type": "object",
+        "properties": {
+          "userInput": {
+            "type": "string",
+            "nullable": true
+          },
+          "previousAnswer": {
+            "type": "string",
+            "nullable": true
+          },
+          "confirmation": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CounterBillCreateDTO": {
+        "type": "object",
+        "properties": {
+          "maKh": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "maNv": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "tinhTrang": {
+            "type": "string",
+            "nullable": true
+          },
+          "ngayTao": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "hinhThucTt": {
+            "type": "string",
+            "nullable": true
+          },
+          "tienGoc": {
+            "type": "number",
+            "format": "double"
+          },
+          "phiVanChuyen": {
+            "type": "number",
+            "format": "double"
+          },
+          "cthoadons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CounterBillDetailCreateDTO"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CounterBillDetailCreateDTO": {
+        "type": "object",
+        "properties": {
+          "maCtsp": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "soLuong": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "donGia": {
+            "type": "number",
+            "format": "double"
           }
         },
         "additionalProperties": false

@@ -18,6 +18,7 @@ wwwroot\Hinh\AnhKhachHang\b5c23119-77ad-420d-a4d5-230d5199081f.png
 wwwroot\Hinh\AnhKhachHang\c52eb16f-54dc-49b3-a7ba-0fb84eaeba5b.jpg
 wwwroot\Hinh\AnhKhachHang\cc68216b-e199-4992-a523-087f5337de7f.png
 wwwroot\Hinh\AnhKhachHang\cf3c7cf3-bebd-4dea-9d1a-22bb38c174d9.jpg
+wwwroot\Hinh\AnhKhachHang\d6e9e28c-a70d-4f2d-b85e-64b2ea89b1aa.png
 wwwroot\Hinh\AnhKhachHang\e0bfe1f7-3b6c-477c-a525-17b3fcda633a.png
 wwwroot\Hinh\AnhKhachHang\edc59c27-c659-4018-acb1-44429474d9c3.png
 wwwroot\HinhAnh\Combo\CaNhaNoNe-2Mi-2Uc-1Canh-3Nuoc-1Khoai.png
@@ -94,6 +95,7 @@ wwwroot\uploads\5672ffcd-b23b-4749-815d-6a2051b89a3d_natra-3.jpg
 wwwroot\uploads\8ca560a4-0d44-40cb-be2b-8b935ff0e668_natra-3.jpg
 wwwroot\uploads\8e6ba019-3683-4d23-ab44-9131186029b9_One-Piece-Gear-5.jpg
 wwwroot\uploads\a3619e00-f9f7-43c0-bf3e-e9968428a722_natra-3.jpg
+wwwroot\uploads\a9b5d1f5-d2ca-4d80-8921-71d689c8a731_1fd2f6c4-e6f6-4f58-8969-3df8b08eeb18.jpg
 wwwroot\uploads\bf50dee4-8dfa-4a46-8c98-fd6bd4f4f96a_One-Piece-Gear-5.jpg
 wwwroot\uploads\c5c7a14b-d9f2-41b5-b30f-5302019339fa_natra-3.jpg
 wwwroot\uploads\cbe9ba78-55fb-42af-82ec-312499d471a3_natra-3.jpg

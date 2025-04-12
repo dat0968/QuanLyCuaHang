@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "7OZ5Ht9iiM+9tczqYNxx4fayKml2X33khSYbpkqzmEk=",
+  "Hash": "pdDVRlPHo0t3/TmpkaoIC3WnASKJZV6x5cCCbyww0o4=",
   "Source": "APIQuanLyCuaHang",
   "BasePath": "_content/APIQuanLyCuaHang",
   "Mode": "Default",
@@ -435,6 +435,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Hinh\\AnhKhachHang\\cf3c7cf3-bebd-4dea-9d1a-22bb38c174d9.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\Hinh\\AnhKhachHang\\d6e9e28c-a70d-4f2d-b85e-64b2ea89b1aa.png",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "Hinh/AnhKhachHang/d6e9e28c-a70d-4f2d-b85e-64b2ea89b1aa#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "uia036evsh",
+      "Integrity": "um8mo5fDkDTOZTyOtXq/S7hEwdDQj8lz88RiGyNdSog=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Hinh\\AnhKhachHang\\d6e9e28c-a70d-4f2d-b85e-64b2ea89b1aa.png"
     },
     {
       "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\Hinh\\AnhKhachHang\\e0bfe1f7-3b6c-477c-a525-17b3fcda633a.png",
@@ -2031,6 +2052,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\a3619e00-f9f7-43c0-bf3e-e9968428a722_natra-3.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\a9b5d1f5-d2ca-4d80-8921-71d689c8a731_1fd2f6c4-e6f6-4f58-8969-3df8b08eeb18.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "uploads/a9b5d1f5-d2ca-4d80-8921-71d689c8a731_1fd2f6c4-e6f6-4f58-8969-3df8b08eeb18#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "jm84uofbls",
+      "Integrity": "q/K2HU9DiG1a8OgCWhW88SF1/ywGv2kZ4dqx5j56nEw=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\a9b5d1f5-d2ca-4d80-8921-71d689c8a731_1fd2f6c4-e6f6-4f58-8969-3df8b08eeb18.jpg"
     },
     {
       "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\bf50dee4-8dfa-4a46-8c98-fd6bd4f4f96a_One-Piece-Gear-5.jpg",
@@ -3797,6 +3839,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-q/K2HU9DiG1a8OgCWhW88SF1/ywGv2kZ4dqx5j56nEw="
+        }
+      ]
+    },
+    {
+      "Route": "Hinh/AnhKhachHang/d6e9e28c-a70d-4f2d-b85e-64b2ea89b1aa.png",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\Hinh\\AnhKhachHang\\d6e9e28c-a70d-4f2d-b85e-64b2ea89b1aa.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "803713"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"um8mo5fDkDTOZTyOtXq/S7hEwdDQj8lz88RiGyNdSog=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 12 Apr 2025 15:55:54 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-um8mo5fDkDTOZTyOtXq/S7hEwdDQj8lz88RiGyNdSog="
+        }
+      ]
+    },
+    {
+      "Route": "Hinh/AnhKhachHang/d6e9e28c-a70d-4f2d-b85e-64b2ea89b1aa.uia036evsh.png",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\Hinh\\AnhKhachHang\\d6e9e28c-a70d-4f2d-b85e-64b2ea89b1aa.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "803713"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"um8mo5fDkDTOZTyOtXq/S7hEwdDQj8lz88RiGyNdSog=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 12 Apr 2025 15:55:54 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "uia036evsh"
+        },
+        {
+          "Name": "label",
+          "Value": "Hinh/AnhKhachHang/d6e9e28c-a70d-4f2d-b85e-64b2ea89b1aa.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-um8mo5fDkDTOZTyOtXq/S7hEwdDQj8lz88RiGyNdSog="
         }
       ]
     },
@@ -10029,6 +10153,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/a9b5d1f5-d2ca-4d80-8921-71d689c8a731_1fd2f6c4-e6f6-4f58-8969-3df8b08eeb18.jm84uofbls.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\a9b5d1f5-d2ca-4d80-8921-71d689c8a731_1fd2f6c4-e6f6-4f58-8969-3df8b08eeb18.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5055"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"q/K2HU9DiG1a8OgCWhW88SF1/ywGv2kZ4dqx5j56nEw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 12 Apr 2025 15:55:54 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "jm84uofbls"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/a9b5d1f5-d2ca-4d80-8921-71d689c8a731_1fd2f6c4-e6f6-4f58-8969-3df8b08eeb18.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-q/K2HU9DiG1a8OgCWhW88SF1/ywGv2kZ4dqx5j56nEw="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/a9b5d1f5-d2ca-4d80-8921-71d689c8a731_1fd2f6c4-e6f6-4f58-8969-3df8b08eeb18.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\a9b5d1f5-d2ca-4d80-8921-71d689c8a731_1fd2f6c4-e6f6-4f58-8969-3df8b08eeb18.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5055"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"q/K2HU9DiG1a8OgCWhW88SF1/ywGv2kZ4dqx5j56nEw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 12 Apr 2025 15:55:54 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-q/K2HU9DiG1a8OgCWhW88SF1/ywGv2kZ4dqx5j56nEw="
         }
       ]
     },

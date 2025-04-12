@@ -29,6 +29,7 @@ using APIQuanLyCuaHang.Repositories.Dashboard;
 using APIQuanLyCuaHang.Repositories.DetailComboOrder;
 using APIQuanLyCuaHang.Repositories.DetailMaCoupon;
 using APIQuanLyCuaHang.Repositories.VNPAY;
+using static APIQuanLyCuaHang.Controllers.HomeController;
 var builder = WebApplication.CreateBuilder(args);
 ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 // Add services to the container.
@@ -113,6 +114,7 @@ builder.Services.AddScoped<IDetailMaCoupon, DetailMaCoupon>();
 builder.Services.AddScoped<IVnPayService, VnPayService>();
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.Configure<AuthSettings>(builder.Configuration.GetSection("GeminiSettings"));
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
