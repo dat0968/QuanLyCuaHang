@@ -14,7 +14,16 @@
         <option value="year">Năm</option>
       </select>
     </div>
-    <canvas id="earningChart" ref="earningChart"></canvas>
+
+    <div v-show="loading" class="text-center">
+      <p>Đang tải dữ liệu...</p>
+    </div>
+    <div v-show="errorMessage" class="text-center">
+      <p>{{ errorMessage }}</p>
+    </div>
+    <div v-show="!loading && !errorMessage">
+      <canvas id="earningChart" ref="earningChart"></canvas>
+    </div>
   </div>
 </template>
 
@@ -53,6 +62,8 @@ export default {
       earningData: new EarningData(),
       selectedTimeRange: 'day', // Giá trị mặc định cho dropdown
       chart: null, // Biến để lưu trữ instance của biểu đồ
+      loading: false, // Trạng thái tải dữ liệu
+      errorMessage: '', // Thông báo lỗi
     }
   },
   mounted() {
@@ -60,24 +71,33 @@ export default {
   },
   methods: {
     async fetchEarningData(timeRange) {
+      this.loading = true
+      this.errorMessage = ''
       try {
         const response = await axiosConfig.getFromApi(
           `Dashboard/GetEarningData/${timeRange}`,
           ConfigsRequest.getSkipAuthConfig(),
         )
 
-        // Cập nhật dữ liệu biểu đồ
-        this.earningData = EarningData.fromJson(response.data)
+        if (response.success) {
+          // Cập nhật dữ liệu biểu đồ
+          this.earningData = EarningData.fromJson(response.data)
 
-        console.log(this.earningData)
+          const labels = this.earningData.categories // Nhãn
+          const data = this.earningData.data // Dữ liệu
 
-        const labels = this.earningData.categories // Nhãn
-        const data = this.earningData.data // Dữ liệu
-
-        // Vẽ biểu đồ
-        this.renderChart(labels, data)
+          // Vẽ biểu đồ
+          this.renderChart(labels, data)
+        } else {
+          this.errorMessage = 'Không có dữ liệu để hiển thị.'
+          this.renderEmptyChart()
+        }
       } catch (error) {
+        this.errorMessage = 'Lỗi khi tải dữ liệu doanh thu.'
         console.error('Error fetching earning data', error)
+        this.renderEmptyChart()
+      } finally {
+        this.loading = false
       }
     },
     renderChart(labels, data) {
@@ -95,6 +115,38 @@ export default {
             {
               label: 'Doanh thu',
               data: data,
+              backgroundColor: 'rgba(75, 192, 192, 0.2)',
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      })
+    },
+    renderEmptyChart() {
+      // Nếu biểu đồ đã tồn tại, hủy nó trước khi tạo mới
+      if (this.chart) {
+        this.chart.destroy()
+      }
+
+      const ctx = this.$refs.earningChart.getContext('2d')
+      this.chart = new Chart(ctx, {
+        type: 'line', // Loại biểu đồ
+        data: {
+          labels: [],
+          datasets: [
+            {
+              label: 'Doanh thu',
+              data: [],
               backgroundColor: 'rgba(75, 192, 192, 0.2)',
               borderColor: 'rgba(75, 192, 192, 1)',
               borderWidth: 1,

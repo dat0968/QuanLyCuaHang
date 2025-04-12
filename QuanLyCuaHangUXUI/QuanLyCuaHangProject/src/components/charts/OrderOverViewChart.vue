@@ -13,7 +13,16 @@
         </select>
       </div>
 
-      <canvas ref="orderOverviewChart"></canvas>
+      <div v-show="loading" class="text-center">
+        <p>Đang tải dữ liệu...</p>
+      </div>
+      <div v-show="errorMessage" class="text-center">
+        <p>{{ errorMessage }}</p>
+      </div>
+      <div v-show="!loading && !errorMessage">
+        <p v-if="!chart" class="text-center">Không có dữ liệu để hiển thị.</p>
+        <canvas ref="orderOverviewChart"></canvas>
+      </div>
     </div>
   </div>
 </template>
@@ -63,10 +72,14 @@ export default {
         'Đã hủy': '#A0A7B0',
         'Chờ xác nhận': '#6CC2BD',
       },
+      loading: false, // Trạng thái tải dữ liệu
+      errorMessage: '', // Thông báo lỗi
     }
   },
   methods: {
     async fetchOrderOverviewData() {
+      this.loading = true
+      this.errorMessage = ''
       try {
         const response = await axiosConfig.getFromApi(
           `/Dashboard/GetOrderOverViewData/${this.selectedRange}`,
@@ -105,9 +118,16 @@ export default {
             .flat()
 
           this.renderChart(categories, datasets)
+        } else {
+          this.errorMessage = 'Không có dữ liệu để hiển thị.'
+          this.renderEmptyChart()
         }
       } catch (error) {
+        this.errorMessage = 'Lỗi khi tải dữ liệu tổng quan đơn hàng.'
         console.error('Lỗi khi lấy dữ liệu tổng quan đơn hàng:', error)
+        this.renderEmptyChart()
+      } finally {
+        this.loading = false
       }
     },
     renderChart(labels, datasets) {
@@ -161,6 +181,36 @@ export default {
         },
       })
     },
+    renderEmptyChart() {
+      const ctx = this.$refs.orderOverviewChart.getContext('2d')
+      if (this.chart) this.chart.destroy()
+
+      this.chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Không có dữ liệu'],
+          datasets: [
+            {
+              label: 'Trống',
+              data: [1],
+              backgroundColor: ['#e0e0e0'],
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: { enabled: false },
+          },
+          scales: {
+            x: { display: false },
+            y: { display: false },
+          },
+        },
+      })
+    },
     hexToRGBA(hex, alpha) {
       let r = parseInt(hex.slice(1, 3), 16),
         g = parseInt(hex.slice(3, 5), 16),
@@ -177,6 +227,7 @@ export default {
 <style scoped>
 canvas {
   max-width: 100%;
-  max-height: 450px;
+  height: 500px;
+  max-height: 600px;
 }
 </style>

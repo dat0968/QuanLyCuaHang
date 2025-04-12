@@ -1,14 +1,13 @@
 <template>
-  <div class="container">
-    <h3 class="row">Biểu đồ thống kê đối tượng</h3>
-    <div class="row">
-      <div class="col-6">
-        <h4>Khách hàng</h4>
-        <canvas ref="customerChart"></canvas>
+  <div class="row">
+    <div class="card m-b-30">
+      <div class="card-header bg-white">
+        <h5 class="card-title text-black mb-0">Biểu đồ thống kê trạng thái người dùng</h5>
       </div>
-      <div class="col-6">
-        <h4>Nhân viên</h4>
-        <canvas ref="employeeChart"></canvas>
+      <div class="card-body text-center">
+        <div v-show="loading">Đang tải dữ liệu...</div>
+        <div v-show="errorMessage">{{ errorMessage }}</div>
+        <canvas v-show="!loading && !errorMessage" ref="userChart"></canvas>
       </div>
     </div>
   </div>
@@ -25,25 +24,20 @@ export default {
   name: 'StatisticsObjectChart',
   data() {
     return {
-      customerChart: null,
-      employeeChart: null,
-      customerData: [],
-      employeeData: [],
+      userChart: null,
+      loading: true,
+      errorMessage: '',
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
           legend: {
-            position: 'bottom',
-            labels: {
-              color: '#333',
-            },
+            position: 'top',
+            labels: { color: '#333' },
           },
           tooltip: {
             callbacks: {
-              label: (tooltipItem) => {
-                return `${tooltipItem.label}: ${tooltipItem.raw}`
-              },
+              label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw}`,
             },
           },
         },
@@ -52,62 +46,67 @@ export default {
   },
   methods: {
     async fetchStatisticsData() {
+      this.loading = true
+      this.errorMessage = ''
       try {
         const response = await axiosConfig.getFromApi(
           '/Dashboard/GetListStatObject',
           ConfigsRequest.getSkipAuthConfig(),
         )
         if (response.success) {
-          this.renderCharts(response.data)
+          this.renderChart(response.data)
         } else {
-          console.error(response.message)
+          this.errorMessage = 'Không có dữ liệu để hiển thị.'
         }
       } catch (error) {
         console.error('Lỗi khi lấy dữ liệu thống kê:', error)
+        this.errorMessage = 'Lỗi khi tải dữ liệu.'
+      } finally {
+        this.loading = false
       }
     },
-    renderCharts(data) {
+    renderChart(data) {
+      if (this.userChart) this.userChart.destroy()
+
+      // Chuẩn bị dữ liệu cho biểu đồ
+      const labels = ['Khách hàng', 'Nhân viên']
+      const legendLabels = ['🟢 Hoạt động', '🔴 Không hoạt động']
+      this.chartOptions.plugins.legend.labels.generateLabels = (chart) => {
+        const datasets = chart.data.datasets[0].data
+        return legendLabels.map((label, index) => ({
+          text: `${label} (${datasets[index] || 0})`,
+          fillStyle: chart.data.datasets[0].backgroundColor[index],
+          hidden: false,
+          index,
+        }))
+      }
+      const chartData = []
+
       const customerData = data.find((item) => item.nameObject === 'Khách hàng')
       const employeeData = data.find((item) => item.nameObject === 'Nhân viên')
 
-      // Dữ liệu cho biểu đồ Khách hàng
-      const customerChartData = [customerData.amountActive, customerData.amountUnactive]
-      const customerChartLabels = ['Hoạt động', 'Không hoạt động']
+      if (customerData) {
+        chartData.push(customerData.amountActive, customerData.amountUnactive)
+      } else {
+        chartData.push(0, 0)
+      }
 
-      // Dữ liệu cho biểu đồ Nhân viên
-      const employeeChartData = [employeeData.amountActive, employeeData.amountUnactive]
-      const employeeChartLabels = ['Hoạt động', 'Không hoạt động']
+      if (employeeData) {
+        chartData.push(employeeData.amountActive, employeeData.amountUnactive)
+      } else {
+        chartData.push(0, 0)
+      }
 
-      // Vẽ biểu đồ Khách hàng
-      if (this.customerChart) this.customerChart.destroy()
-      const customerCtx = this.$refs.customerChart.getContext('2d')
-      this.customerChart = new Chart(customerCtx, {
-        type: 'pie',
+      // Vẽ biểu đồ
+      const ctx = this.$refs.userChart.getContext('2d')
+      this.userChart = new Chart(ctx, {
+        type: 'doughnut',
         data: {
-          labels: customerChartLabels,
+          labels,
           datasets: [
             {
-              label: 'Khách hàng',
-              data: customerChartData,
-              backgroundColor: ['#008FFB', '#FF4560'],
-            },
-          ],
-        },
-        options: this.chartOptions,
-      })
-
-      // Vẽ biểu đồ Nhân viên
-      if (this.employeeChart) this.employeeChart.destroy()
-      const employeeCtx = this.$refs.employeeChart.getContext('2d')
-      this.employeeChart = new Chart(employeeCtx, {
-        type: 'pie',
-        data: {
-          labels: employeeChartLabels,
-          datasets: [
-            {
-              label: 'Nhân viên',
-              data: employeeChartData,
-              backgroundColor: ['#00E396', '#FF4560'],
+              data: chartData,
+              backgroundColor: ['#008FFB', '#FF4560', '#00E396', '#FEB019'],
             },
           ],
         },
@@ -124,7 +123,7 @@ export default {
 <style scoped>
 canvas {
   max-width: 100%;
-  max-height: 500px;
+  max-height: 200px;
   margin-bottom: 20px;
 }
 </style>
