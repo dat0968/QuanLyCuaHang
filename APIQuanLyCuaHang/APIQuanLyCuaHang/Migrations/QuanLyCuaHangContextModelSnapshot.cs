@@ -252,13 +252,11 @@ namespace APIQuanLyCuaHang.Migrations
 
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Cthoadon", b =>
                 {
-                    b.Property<int>("MaHd")
-                        .HasColumnType("int")
-                        .HasColumnName("MaHD");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.Property<int?>("MaCtsp")
-                        .HasColumnType("int")
-                        .HasColumnName("MaCTSP");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("DonGia")
                         .HasColumnType("decimal(18,2)");
@@ -269,15 +267,24 @@ namespace APIQuanLyCuaHang.Migrations
                     b.Property<int?>("MaCombo")
                         .HasColumnType("int");
 
+                    b.Property<int?>("MaCtsp")
+                        .HasColumnType("int")
+                        .HasColumnName("MaCTSP");
+
+                    b.Property<int>("MaHd")
+                        .HasColumnType("int")
+                        .HasColumnName("MaHD");
+
                     b.Property<int>("SoLuong")
                         .HasColumnType("int");
 
-                    b.HasKey("MaHd", "MaCtsp")
-                        .HasName("PK__CTHOADON__E6C15A0CD99CD838");
+                    b.HasKey("Id");
 
                     b.HasIndex("MaCombo");
 
                     b.HasIndex("MaCtsp");
+
+                    b.HasIndex("MaHd");
 
                     b.ToTable("CTHOADON", (string)null);
                 });
@@ -700,7 +707,6 @@ namespace APIQuanLyCuaHang.Migrations
                         .HasColumnType("nvarchar(5)");
 
                     b.Property<string>("HinhAnh")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HoTen")
@@ -900,12 +906,12 @@ namespace APIQuanLyCuaHang.Migrations
                 {
                     b.HasOne("APIQuanLyCuaHang.Models.Combo", "Combo")
                         .WithMany("Cthoadons")
-                        .HasForeignKey("MaCombo");
+                        .HasForeignKey("MaCombo")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("APIQuanLyCuaHang.Models.Chitietsanpham", "MaCtspNavigation")
                         .WithMany("Cthoadons")
                         .HasForeignKey("MaCtsp")
-                        .IsRequired()
                         .HasConstraintName("FK__CTHOADON__MaCTSP__5DCAEF64");
 
                     b.HasOne("APIQuanLyCuaHang.Models.Hoadon", "MaHdNavigation")
