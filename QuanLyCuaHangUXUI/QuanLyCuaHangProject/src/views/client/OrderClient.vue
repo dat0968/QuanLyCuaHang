@@ -191,33 +191,93 @@
                       <table class="table">
                         <thead>
                           <tr>
-                            <th>#</th>
                             <th>Tên Sản Phẩm</th>
-                            <th>Mô Tả</th>
                             <th>Số Lượng</th>
-                            <th>Kích Thước</th>
                             <th>Đơn Giá</th>
                             <th>Thành Tiền</th>
                           </tr>
                         </thead>
                         <tbody class="overflow-auto-y">
                           <tr
-                            v-for="(item, index) in selectedOrder.chiTietHoaDonKhachs"
+                            v-for="item in selectedOrder.chiTietHoaDonKhachs"
                             :key="item.maDoiTuong"
                           >
-                            <td>{{ index + 1 }}</td>
                             <td>
-                              {{ item.tenDoiTuong }}<br />
-                              <small>Loại: {{ item.loaiDoiTuong }}</small>
+                              <div class="row align-items-center">
+                                <div class="col">
+                                  <img
+                                    :src="getImageUrl(item.hinhAnh, `/HinhAnh/Food_Drink`)"
+                                    :alt="item.tenDoiTuong"
+                                    class="img-fluid rounded"
+                                  />
+                                </div>
+
+                                <div class="col-8">
+                                  {{ item.tenDoiTuong }}<br />
+                                  <p>Loại: {{ item.loaiDoiTuong }}</p>
+                                  <p>Kích thước: {{ item.kichThuoc || 'N/A' }}</p>
+                                </div>
+                              </div>
                             </td>
-                            <td>{{ item.moTa }}</td>
                             <td>{{ item.soLuong }}</td>
-                            <td>{{ item.kichThuoc || 'N/A' }}</td>
                             <td>{{ formatCurrency(item.donGia) }}</td>
                             <td>{{ formatCurrency(item.soLuong * item.donGia) }}</td>
                           </tr>
                         </tbody>
                       </table>
+                    </div>
+                    <div class="col-12">
+                      <h5>Tổng cộng</h5>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <p><strong>Hình thức thanh toán:</strong></p>
+                        </div>
+                        <div class="col-md-6 text-end">
+                          <p>{{ selectedOrder.hinhThucTt }}</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <p><strong>Tổng tiền hàng:</strong></p>
+                        </div>
+                        <div class="col-md-6 text-end">
+                          <p>{{ formatCurrency(selectedOrder.tienGoc) }}</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <p><strong>Phí vận chuyển:</strong></p>
+                        </div>
+                        <div class="col-md-6 text-end">
+                          <p>{{ formatCurrency(selectedOrder.phiVanChuyen) }}</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <p><strong>Giảm giá:</strong></p>
+                        </div>
+                        <div class="col-md-6 text-end">
+                          <p>{{ formatCurrency(selectedOrder.giamGiaCoupon) }}</p>
+                        </div>
+                      </div>
+                      <hr />
+                      <div class="row">
+                        <div class="col-md-6">
+                          <p><strong>Tổng tiền thanh toán:</strong></p>
+                        </div>
+                        <div class="col-md-6 text-end">
+                          <p class="fw-bold text-danger">
+                            {{ formatCurrency(selectedOrder.tongTien) }}
+                          </p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12 text-end">
+                          <p>
+                            <em>(Bằng chữ: {{ convertNumberToWords(selectedOrder.tongTien) }})</em>
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -251,7 +311,7 @@ import ConfigsRequest from '@/models/ConfigsRequest'
 import TrangThaiDonHang from '@/constants/trangThaiDonHang'
 import StoreInfo from '@/constants/storeInfo'
 import authService from '@/services/authService'
-
+import { getImageUrl } from '@/utils/generalMethod'
 pdfMake.vfs = pdfFonts.vfs // Nhúng font vào pdfmake
 
 export default {
@@ -274,6 +334,7 @@ export default {
     this.loadOrders()
   },
   methods: {
+    getImageUrl,
     formatCurrency,
     convertNumberToWords,
     formatDate,
@@ -428,13 +489,6 @@ export default {
       // Thêm tiêu đề cột vào đầu bảng
       tableBody.unshift(['STT', 'Tên sản phẩm', 'Số lượng', 'Đơn giá', 'Thành tiền'])
 
-      // Tính tổng tiền và thuế VAT
-      const totalAmount = order.chiTietHoaDonKhachs.reduce(
-        (sum, item) => sum + (item.soLuong ?? 0) * (item.donGia ?? 0),
-        0,
-      )
-      const totalPayment = order.tongTien
-
       // Tạo đối tượng pdfmake
       const docDefinition = {
         content: [
@@ -482,21 +536,35 @@ export default {
             text: `HÌNH THỨC THANH TOÁN: ${order.hinhThucTt ?? 'N/A'}`,
             margin: [0, 5, 0, 5],
           },
-          { text: 'TỔNG CỘNG', style: 'subheader', alignment: 'right', margin: [0, 5, 0, 5] },
+          { text: 'TỔNG CỘNG', style: 'subheader', alignment: 'left', margin: [0, 5, 0, 5] },
           {
             table: {
               widths: ['*', 'auto'],
               body: [
                 [
                   {
-                    text: `Tổng tiền hàng: ${this.formatCurrency(totalAmount)}`,
+                    text: `Tổng tiền hàng: ${this.formatCurrency(order.tienGoc)}`,
                     alignment: 'left',
                   },
                   '',
                 ],
                 [
                   {
-                    text: `Tổng tiền thanh toán: ${this.formatCurrency(totalPayment)} (Bằng chữ: ${this.convertNumberToWords(totalPayment)})`,
+                    text: `Phí vận chuyển: ${this.formatCurrency(order.phiVanChuyen)}`,
+                    alignment: 'left',
+                  },
+                  '',
+                ],
+                [
+                  {
+                    text: `Giảm giá: ${this.formatCurrency(order.giamGiaCoupon)}`,
+                    alignment: 'left',
+                  },
+                  '',
+                ],
+                [
+                  {
+                    text: `Tổng tiền thanh toán: ${this.formatCurrency(order.tongTien)} (Bằng chữ: ${this.convertNumberToWords(order.tongTien)})`,
                     bold: true,
                     alignment: 'left',
                   },

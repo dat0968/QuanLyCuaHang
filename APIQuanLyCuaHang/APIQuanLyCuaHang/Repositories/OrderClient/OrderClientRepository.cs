@@ -79,6 +79,7 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                                     HuongVi = aDetailProductOrder.MaCtspNavigation?.HuongVi ?? "Không có",
                                     DonGia = aDetailProductOrder.DonGia,
                                     TenDoiTuong = aDetailProductOrder.MaCtspNavigation.MaSpNavigation.TenSanPham,
+                                    HinhAnh = aDetailProductOrder.MaCtspNavigation.Hinhanhs.FirstOrDefault()?.TenHinhAnh ?? "",
                                     MoTa = aDetailProductOrder.MaCtspNavigation.MaSpNavigation.MoTa
                                 };
                                 configDataDTO.ChiTietHoaDonKhachs.Add(configDetailDTO); // Thêm chi tiết vào danh sách
@@ -98,6 +99,7 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                                     SoLuong = aDetailComboOrder.SoLuong,
                                     DonGia = aDetailComboOrder.DonGia,
                                     TenDoiTuong = aDetailComboOrder.MaComboNavigation.TenCombo,
+                                    HinhAnh = aDetailComboOrder.MaComboNavigation.Hinh ?? "",
                                     MoTa = aDetailComboOrder.MaComboNavigation.MoTa
                                 };
                                 configDataDTO.ChiTietHoaDonKhachs.Add(configDetailDTO); // Thêm chi tiết vào danh sách
