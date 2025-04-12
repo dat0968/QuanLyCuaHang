@@ -33,7 +33,7 @@ public partial class Nhanvien
 
     public int? MaChucVu { get; set; }
 
-    public string HinhAnh { get; set; } = string.Empty;
+    public string? HinhAnh { get; set; } = string.Empty;
     public virtual ICollection<Hoadon> Hoadons { get; set; } = new List<Hoadon>();
 
     public virtual ICollection<Lichsulamviec> Lichsulamviecs { get; set; } = new List<Lichsulamviec>();

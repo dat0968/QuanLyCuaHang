@@ -28,6 +28,7 @@ using APIQuanLyCuaHang.Repositories.UnitOfWork;
 using APIQuanLyCuaHang.Repositories.Dashboard;
 using APIQuanLyCuaHang.Repositories.DetailComboOrder;
 using APIQuanLyCuaHang.Repositories.DetailMaCoupon;
+using APIQuanLyCuaHang.Repositories.VNPAY;
 var builder = WebApplication.CreateBuilder(args);
 ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 // Add services to the container.
@@ -81,7 +82,7 @@ builder.Services.AddCors(options =>
     {
         ops.AllowAnyHeader();
         ops.AllowAnyMethod();
-        ops.AllowAnyOrigin();
+        ops.WithOrigins("http://localhost:5173");
     });
 });
 builder.Services.AddScoped<IProduct, Product>();
@@ -109,6 +110,7 @@ builder.Services.AddScoped<ITableRepository, TableRepository>();
 builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
 builder.Services.AddScoped<IDetailComboOrderRepository, DetailComboOrderRepository>();
 builder.Services.AddScoped<IDetailMaCoupon, DetailMaCoupon>();
+builder.Services.AddScoped<IVnPayService, VnPayService>();
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddAuthentication(options =>

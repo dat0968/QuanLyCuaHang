@@ -26,9 +26,7 @@ namespace APIQuanLyCuaHang.Controllers
         {
             try
             {
-                if(NewOrder.HinhThucTt.ToLower() == "cod"){
-                    await orderService.AddOrder(NewOrder);
-                }
+                await orderService.AddOrder(NewOrder);
                 return Ok(new
                 {
                     Success = true,

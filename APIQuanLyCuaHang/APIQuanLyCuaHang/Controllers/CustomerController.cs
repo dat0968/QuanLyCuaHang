@@ -44,6 +44,28 @@ namespace APIQuanLyCuaHang.Controllers
                 return BadRequest(new { message = "Đã có lỗi xảy ra", error = ex.Message });
             }
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById([FromRoute]int id)
+        {
+            try
+            {
+                var findCustomer = await _customerRepository.GetCustomerByIdAsync(id);
+                return Ok(new
+                {
+                    Success = true,
+                    Data = findCustomer,
+                    Message = "Lấy thông tin khách hàng thành công"
+                });
+            }
+            catch(Exception ex)
+            {
+                return Ok(new
+                {
+                    Success = false,
+                    Message = ex.InnerException
+                });
+            }
+        }
 
         [HttpPost]
         public async Task<IActionResult> AddCustomer([FromForm] KhachhangDTO customerDto)

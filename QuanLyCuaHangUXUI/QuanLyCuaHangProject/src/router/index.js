@@ -26,6 +26,7 @@ import OrderClient from '@/views/client/OrderClient.vue'
 import Cart from '@/views/client/Cart.vue'
 import TableIndex from '@/views/admin/Table/TableIndex.vue'
 import Profile from '../views/Profile/Profile.vue';
+import VNPAYresponse from '../views/client/VNPaySuccess.vue'
 import { ReadToken, ValidateToken } from '../Authentication_Authorization/auth.js'
 import Cookies from 'js-cookie'
 import Swal from 'sweetalert2'
@@ -116,6 +117,7 @@ const routes = [
     name: 'GoogleLoginSuccess',
     component: GoogleLoginSuccess,
   },
+  {path: `/VNPAYresponse/:OderId/:Total`, name: 'VNPAYresponse', component: VNPAYresponse}
 ]
 
 const router = createRouter({
@@ -148,7 +150,7 @@ router.beforeEach(async (to, from, next) => {
       next('/Login')
       return;
     }
-    if(to.path.startsWith('/admin')){
+    if(to.path.startsWith('/Admin')){
       next('/Error/401')
       return;
     }
