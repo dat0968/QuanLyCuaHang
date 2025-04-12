@@ -356,13 +356,6 @@ export default {
                 ],
                 [
                   {
-                    text: `Thuế VAT (${vatPercentage}%): ${this.formatCurrency(vatAmount)}`,
-                    alignment: 'left',
-                  },
-                  '',
-                ],
-                [
-                  {
                     text: `Tổng tiền thanh toán: ${this.formatCurrency(totalPayment)} (Bằng chữ: ${this.convertNumberToWords(totalPayment)})`,
                     bold: true,
                     alignment: 'left',
@@ -440,8 +433,6 @@ export default {
         (sum, item) => sum + (item.soLuong ?? 0) * (item.donGia ?? 0),
         0,
       )
-      const vatPercentage = order.vatPercentage || 0 // tỷ lệ VAT nếu có
-      const vatAmount = totalAmount * (vatPercentage / 100)
       const totalPayment = order.tongTien
 
       // Tạo đối tượng pdfmake
@@ -499,13 +490,6 @@ export default {
                 [
                   {
                     text: `Tổng tiền hàng: ${this.formatCurrency(totalAmount)}`,
-                    alignment: 'left',
-                  },
-                  '',
-                ],
-                [
-                  {
-                    text: `Thuế VAT (${vatPercentage}%): ${this.formatCurrency(vatAmount)}`,
                     alignment: 'left',
                   },
                   '',
