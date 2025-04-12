@@ -119,7 +119,6 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
                     .GroupBy(cb => cb.MaCombo)
                     .ToListAsync();
 
-                Console.WriteLine($"Here!!!!!!!!!!!!!!!!!!!!!!!!!! {await _db.Chitietcombohoadons.CountAsync()}");
                 // Bước 2: Tạo danh sách ComboDC từ các nhóm
                 List<ComboDC> comboDTOs = new List<ComboDC>();
                 foreach (var group in groupedCombos)
