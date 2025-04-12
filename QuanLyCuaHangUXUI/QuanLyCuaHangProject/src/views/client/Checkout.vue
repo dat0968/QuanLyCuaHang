@@ -238,6 +238,7 @@ const SumCart = ref(0)
 const totalQuantity = ref(0)
 const shippingMethod = ref('COD')
 const discount = ref(0)
+const couponCode = ref('')
 let accesstoken = Cookies.get('accessToken')
 let refreshtoken = Cookies.get('refreshToken')
 let IdUser = ''
@@ -630,42 +631,55 @@ const proceedToCheckout = async () => {
           detailCombo_OrderResquests: detailComboOrderRequests,
           cthoadons: cthoadons,
         }
-        const response = await fetch(`https://localhost:7139/api/Checkout`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accesstoken}`,
-          },
-          body: JSON.stringify(orderData),
-        })
-        if (response.status == 401) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Phiên của bạn đã hết hoặc bạn chưa đăng nhập, vui lòng đăng nhập lại!',
-            timer: 2000,
-            showConfirmButton: false,
+        if (orderData.hinhThucTt.toLowerCase() == 'vnpay') {
+          const total = orderData.tienGoc + orderData.phiVanChuyen - orderData.giamGiaCoupon
+          const CreatePaymentUrl = await fetch(`https://localhost:7139/api/VNPAY`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(orderData),
           })
-          router.push('/Login')
-          return
-        }
-        if (!response.ok) {
-          const errorMessage = await response.text()
-          throw new Error(errorMessage)
-        }
-        const result = await response.json()
-        if (result.success) {
-          Swal.fire({
-            icon: 'success',
-            title: result.message,
-            timer: 2000,
-            showConfirmButton: false,
-          })
-          window.dispatchEvent(new CustomEvent('updateCart'))
-          setTimeout(function () {
-            router.push('/')
-          }, 2000)
+          const responseVNPAY = await CreatePaymentUrl.text()
+          window.location.href = responseVNPAY
         } else {
-          Swal.fire(result.message, '', 'error')
+          const response = await fetch(`https://localhost:7139/api/Checkout`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${accesstoken}`,
+            },
+            body: JSON.stringify(orderData),
+          })
+          if (response.status == 401) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Phiên của bạn đã hết hoặc bạn chưa đăng nhập, vui lòng đăng nhập lại!',
+              timer: 2000,
+              showConfirmButton: false,
+            })
+            router.push('/Login')
+            return
+          }
+          if (!response.ok) {
+            const errorMessage = await response.text()
+            throw new Error(errorMessage)
+          }
+          const result = await response.json()
+          if (result.success) {
+            Swal.fire({
+              icon: 'success',
+              title: result.message,
+              timer: 2000,
+              showConfirmButton: false,
+            })
+            window.dispatchEvent(new CustomEvent('updateCart'))
+            setTimeout(function () {
+              router.push('/')
+            }, 2000)
+          } else {
+            Swal.fire(result.message, '', 'error')
+          }
         }
       }
     })

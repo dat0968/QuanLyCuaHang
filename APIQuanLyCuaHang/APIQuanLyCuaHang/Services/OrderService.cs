@@ -35,7 +35,7 @@ namespace APIQuanLyCuaHang.Services
             this.DetailProductRepository = DetailProductRepository;
             this.CartRepository = CartRepository;
         }
-        public async Task AddOrder(OrderRequestDTO NewOrder)
+        public async Task<Hoadon> AddOrder(OrderRequestDTO NewOrder)
         {
             await db.Database.BeginTransactionAsync();
             try
@@ -44,13 +44,14 @@ namespace APIQuanLyCuaHang.Services
                 var ModelOrder = new Hoadon
                 {
                     MaKh = NewOrder.MaKh,
+                    MaNv = null,
                     NgayTao = DateTime.Now,
                     BatDauGiao = null,
                     NgayNhan = null,
                     DiaChiNhanHang = NewOrder.DiaChiNhanHang,
                     NgayThanhToan = NewOrder.HinhThucTt.ToLower() == "cod" ? null : DateTime.Now,
                     HinhThucTt = NewOrder.HinhThucTt,
-                    TinhTrang = "Chờ xác nhận",
+                    TinhTrang = NewOrder.HinhThucTt.ToLower() == "cod" ? "Chờ xác nhận" : "Đang xử lý VNPAY",
                     MoTa = NewOrder.MoTa,
                     HoTen = NewOrder.HoTen,
                     Sdt = NewOrder.Sdt,
@@ -161,7 +162,9 @@ namespace APIQuanLyCuaHang.Services
 
                 await CartRepository.RemoveAllCart(NewOrder.MaKh);
                 await db.Database.CommitTransactionAsync();
-            }catch(Exception ex)
+                return ModelOrder;
+            }
+            catch(Exception ex)
             {
                 await db.Database.RollbackTransactionAsync();
                 throw new Exception("Lỗi", ex);

@@ -2009,6 +2009,32 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.VNPAYController",
+    "Method": "CreatePaymentUrl",
+    "RelativePath": "api/VNPAY",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "APIQuanLyCuaHang.DTO.OrderRequestDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APIQuanLyCuaHang.Controllers.VNPAYController",
+    "Method": "PaymentCallback",
+    "RelativePath": "api/VNPAY",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "APIQuanLyCuaHang.Controllers.WeatherForecastController",
     "Method": "Get",
     "RelativePath": "WeatherForecast",
