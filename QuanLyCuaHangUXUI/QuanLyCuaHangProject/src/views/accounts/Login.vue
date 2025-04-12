@@ -1,45 +1,44 @@
-
 <script setup>
-import { ref } from 'vue';
-import { RouterLink, useRouter } from 'vue-router';
-import Swal from 'sweetalert2';
-import Cookies from 'js-cookie';
-const emailOrUsername = ref('');
-const password = ref('');
-const errorMessage = ref('');
-const router = useRouter();
+import { ref } from 'vue'
+import { RouterLink, useRouter } from 'vue-router'
+import Swal from 'sweetalert2'
+import Cookies from 'js-cookie'
+const emailOrUsername = ref('')
+const password = ref('')
+const errorMessage = ref('')
+const router = useRouter()
 
 const handleLogin = async () => {
-  errorMessage.value = '';
+  errorMessage.value = ''
   try {
     const payload = {
       Email_TenTaiKhoan: emailOrUsername.value.trim(),
       MatKhau: password.value,
-    };
+    }
     const response = await fetch('https://localhost:7139/api/Account/LoginCustomer', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(payload),
-    });
+    })
 
     if (!response.ok) {
-      const errorText = await response.text();
-      console.log('Phản hồi lỗi từ server:', errorText);
-      throw new Error(`Lỗi HTTP ${response.status}: ${errorText || 'Không có chi tiết'}`);
+      const errorText = await response.text()
+      console.log('Phản hồi lỗi từ server:', errorText)
+      throw new Error(`Lỗi HTTP ${response.status}: ${errorText || 'Không có chi tiết'}`)
     }
-    const data = await response.json();
+    const data = await response.json()
 
     if (data.success) {
-      Cookies.set('accessToken', data.data.accessToken, { expires: 3 / 24 }); 
-      Cookies.set('refreshToken', data.data.refreshToken, { expires: 3 / 24 });
+      Cookies.set('accessToken', data.data.accessToken, { expires: 3 / 24 })
+      Cookies.set('refreshToken', data.data.refreshToken, { expires: 3 / 24 })
       await Swal.fire({
         icon: 'success',
         title: 'Đăng nhập thành công!',
         text: 'Chào mừng bạn trở lại.',
         confirmButtonText: 'OK',
-      });
+      })
       // ? Kiểm tra có link web không có đăng nhập trước đó để dùng thì điều hướng lại
       if (router.currentRoute.query && router.currentRoute.query.redirect) {
         router.push(router.currentRoute.query.redirect)
@@ -47,25 +46,24 @@ const handleLogin = async () => {
         router.push('/')
       }
     } else {
-      errorMessage.value = data.Message || 'Đăng nhập thất bại';
+      errorMessage.value = data.Message || 'Đăng nhập thất bại'
     }
   } catch (error) {
     console.error('Lỗi trong handleLogin:', {
       message: error.message,
       name: error.name,
       stack: error.stack,
-    });
-    errorMessage.value = error.message || 'Có lỗi xảy ra, vui lòng thử lại!';
+    })
+    errorMessage.value = error.message || 'Có lỗi xảy ra, vui lòng thử lại!'
   }
-};
+}
 const handleGoogleLogin = () => {
-  console.log('Chuyển hướng đến endpoint LoginGoogle...');
-  window.location.href = 'https://localhost:7139/api/Account/LoginGoogle';
-};
+  console.log('Chuyển hướng đến endpoint LoginGoogle...')
+  window.location.href = 'https://localhost:7139/api/Account/LoginGoogle'
+}
 </script>
 
 <template>
-  
   <div>
     <div class="xp-authenticate-bg"></div>
     <div id="xp-container" class="xp-container">
@@ -85,7 +83,8 @@ const handleGoogleLogin = () => {
                       <div class="text-center mb-3">
                         <h4 class="text-black">Đăng nhập</h4>
                         <p class="text-muted">
-                          Bạn chưa có tài khoản ? <router-link to="/Register" class="text-primary">Đăng ký</router-link>
+                          Bạn chưa có tài khoản ?
+                          <router-link to="/Register" class="text-primary">Đăng ký</router-link>
                         </p>
                       </div>
                       <div v-if="errorMessage" class="alert alert-danger text-center">
@@ -127,7 +126,9 @@ const handleGoogleLogin = () => {
                         <div class="form-group col-6">
                           <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="rememberme" />
-                            <label class="custom-control-label" for="rememberme">Nhớ tài khoản</label>
+                            <label class="custom-control-label" for="rememberme"
+                              >Nhớ tài khoản</label
+                            >
                           </div>
                         </div>
                         <div class="form-group col-6 text-right">
@@ -139,6 +140,11 @@ const handleGoogleLogin = () => {
                       <button type="submit" class="btn btn-primary btn-rounded btn-lg btn-block">
                         Đăng nhập
                       </button>
+                      <p class="text-center mt-3 mb-0">
+                        <router-link to="/LoginStaff" class="text-link text-decoration-none"
+                          >Bạn là nhân viên?</router-link
+                        >
+                      </p>
                     </form>
                   </div>
                 </div>
@@ -156,36 +162,35 @@ const handleGoogleLogin = () => {
   margin-bottom: 15px;
 }
 .btn-googleplus {
-  background-color: rgb(231, 60, 60); 
-  color: white; 
-  border: none; 
-  padding: 8px 16px; 
-  border-radius: 5px; 
-  display: inline-flex; 
-  align-items: center; 
-  font-size: 16px; 
-  font-weight: 500; 
+  background-color: rgb(231, 60, 60);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
   transition: all 0.3s ease;
   cursor: pointer;
 }
 
 /* Hiệu ứng hover */
 .btn-googleplus:hover {
-  background-color: rgb(200, 50, 50); 
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); 
-  transform: translateY(-2px); 
+  background-color: rgb(200, 50, 50);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
 }
 
 /* Hiệu ứng active (khi nhấn nút) */
 .btn-googleplus:active {
-  background-color: rgb(180, 40, 40); 
-  transform: translateY(0); 
-  box-shadow: none; 
+  background-color: rgb(180, 40, 40);
+  transform: translateY(0);
+  box-shadow: none;
 }
-
 
 .btn-googleplus .custom-google-icon,
 .btn-googleplus i {
-  margin-right: 5px;  
+  margin-right: 5px;
 }
 </style>

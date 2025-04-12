@@ -120,6 +120,11 @@ const handleLogin = async () => {
                       <button type="submit" class="btn btn-primary btn-rounded btn-lg btn-block">
                         Đăng nhập
                       </button>
+                      <p class="text-center mt-3 mb-0">
+                        <router-link to="/Login" class="text-link text-decoration-none"
+                          >Bạn là khách hàng?</router-link
+                        >
+                      </p>
                     </form>
                   </div>
                 </div>
