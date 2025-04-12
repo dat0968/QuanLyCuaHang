@@ -26,7 +26,7 @@ namespace APIQuanLyCuaHang.DbInitializer
             {
                 CreateATestAccount();
             }
-            CreateOrderForTestUser("admin@default.com");
+            // CreateOrderForTestUser("admin@default.com");
             /* 
             if (!_db.Nhanviens.Any(nv => nv.Email == "staff666@gmail.com"))
             {
@@ -173,7 +173,8 @@ namespace APIQuanLyCuaHang.DbInitializer
                         {
                             MaCtsp = product.MaCtsp, // Khóa chính với bảng CHITIETSANPHAM
                             MaHd = order.MaHd,       // Khóa chính với Hoadon
-                            SoLuong = quantity
+                            SoLuong = quantity,
+                            DonGia = product.DonGia ?? 0
                         };
 
                         // Xác minh tồn tại trong bảng CHITIETSANPHAM thông qua _db context hoặc danh sách `products`
@@ -200,10 +201,11 @@ namespace APIQuanLyCuaHang.DbInitializer
                         int quantity = rand.Next(1, Math.Min(5, combo.SoLuong + 1));
                         var detail = new Chitietcombohoadon
                         {
-                            MaCombo = combo.MaCombo, // Khóa chính với bảng CHITIETSANPHAM
+                            MaCombo = combo.MaCombo,
                             MaCTSp = maCtsp,
                             MaHd = order.MaHd,       // Khóa chính với Hoadon
-                            SoLuong = quantity
+                            SoLuong = quantity,
+                            DonGia = products[maCtsp].DonGia ?? 0m
                         };
 
                         // Xác minh tồn tại trong bảng CHITIETSANPHAM thông qua _db context hoặc danh sách `products`
