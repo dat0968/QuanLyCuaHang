@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
+import Cookies from 'js-cookie';
 import Swal from 'sweetalert2';
 const emailOrUsername = ref('');
 const password = ref('');

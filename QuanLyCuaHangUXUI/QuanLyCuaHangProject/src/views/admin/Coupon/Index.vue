@@ -1,10 +1,13 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import Swal from 'sweetalert2';
-
+import { ReadToken, ValidateToken } from '../../../Authentication_Authorization/auth.js'
+import Cookies from 'js-cookie'
 const coupons = ref([]);
 const showModal = ref(false);
 const isEdit = ref(false);
+let accesstoken = Cookies.get('accessToken')
+let refreshtoken = Cookies.get('refreshToken')
 const couponForm = ref({
   maCode: '',
   soTienGiam: null,
@@ -21,8 +24,30 @@ const baseUrl = 'https://localhost:7139/api/Coupon';
 
 // Fetch all coupons
 const fetchCoupons = async () => {
+  
   try {
+    const validateToken = await ValidateToken(accesstoken, refreshtoken)
+    if (validateToken == true) {
+      accesstoken = Cookies.get('accessToken')
+      const readtoken = ReadToken(accesstoken)
+      if (readtoken) {
+        
+      } else {
+        router.push('/Login')
+        return
+      }
+    }
     const response = await fetch(`${baseUrl}/GetAllCouponCodeByPage`);
+    if (response.status == 401) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Phiên của bạn đã hết hoặc bạn chưa đăng nhập, vui lòng đăng nhập lại!',
+        timer: 2000,
+        showConfirmButton: false,
+      })
+      router.push('/Login')
+      return
+    }
     const data = await response.json();
     if (data.success) {
       coupons.value = data.data.map(coupon => ({
