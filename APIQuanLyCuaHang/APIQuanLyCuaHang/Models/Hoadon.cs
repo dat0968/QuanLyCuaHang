@@ -27,9 +27,9 @@ public partial class Hoadon
 
     public string? MoTa { get; set; }
 
-    public string HoTen { get; set; } = null!;
+    public string? HoTen { get; set; } = null!;
 
-    public string Sdt { get; set; } = null!;
+    public string? Sdt { get; set; } 
 
     public string? LyDoHuy { get; set; }
 

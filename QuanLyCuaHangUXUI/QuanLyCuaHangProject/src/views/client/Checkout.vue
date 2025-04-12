@@ -256,7 +256,7 @@ const getImageUrl = (imageName) => {
 }
 const FetchCart = async () => {
   try {
-    const response = await fetch(`https://localhost:7139/api/Cart/120`, {
+    const response = await fetch(`https://localhost:7139/api/Cart/123`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -394,7 +394,7 @@ const shippingMethod = ref('standard')
 const proceedToCheckout = async () => {
   try {
     const orderData = {
-      maKh: 120, // TODO: Lấy từ thông tin người dùng đăng nhập
+      maKh: 123, // TODO: Lấy từ thông tin người dùng đăng nhập
       diaChiNhanHang: userInfo.value.diaChi,
       ngayThanhToan: new Date(),
       hinhThucTt: 'COD',

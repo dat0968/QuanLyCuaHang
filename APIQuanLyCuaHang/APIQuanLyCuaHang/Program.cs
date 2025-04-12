@@ -26,6 +26,8 @@ using APIQuanLyCuaHang.Repositories;
 using System.Text;
 using APIQuanLyCuaHang.Repositories.UnitOfWork;
 using APIQuanLyCuaHang.Repositories.Dashboard;
+using static APIQuanLyCuaHang.Controllers.HomeController;
+using APIQuanLyCuaHang.Controllers;
 var builder = WebApplication.CreateBuilder(args);
 ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 // Add services to the container.
@@ -109,6 +111,7 @@ builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
 
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.Configure<AuthSettings>(builder.Configuration.GetSection("GeminiSettings"));
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

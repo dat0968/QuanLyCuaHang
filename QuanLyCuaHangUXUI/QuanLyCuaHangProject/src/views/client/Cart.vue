@@ -137,7 +137,7 @@ const quantityError = ref({})
 const oldQuantities = ref({})
 const FetchCart = async () => {
   try {
-    const response = await fetch(`https://localhost:7139/api/Cart/120`, {
+    const response = await fetch(`https://localhost:7139/api/Cart/123`, {
       method: 'GET',
       Headers: {
         'Content-Type': 'application/json',

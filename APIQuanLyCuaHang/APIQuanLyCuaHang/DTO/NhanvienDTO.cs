@@ -19,6 +19,6 @@ namespace APIQuanLyCuaHang.DTO
         public int? MaChucVu { get; set; }
         public IFormFile HinhAnh { get; set; } // Dùng để upload file, không bắt buộc
 
-        public string HinhAnhDuongDan { get; set; }
+        public string? HinhAnhDuongDan { get; set; }
     }
 }
