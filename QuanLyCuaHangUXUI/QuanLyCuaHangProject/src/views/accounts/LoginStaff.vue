@@ -43,7 +43,7 @@ const handleLogin = async () => {
       if (router.currentRoute.query && router.currentRoute.query.redirect) {
         router.push(router.currentRoute.query.redirect)
       } else {
-        router.push('/Admin')
+        router.push('/admin')
       }
     } else {
       errorMessage.value = data.Message || 'Đăng nhập thất bại';

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 import Swal from 'sweetalert2'
 import { jwtDecode } from 'jwt-decode'
 import Cookies from 'js-cookie'
@@ -16,6 +16,7 @@ const selectedOrder = ref(null)
 const isLoading = ref(false)
 const userInfo = ref(null)
 const statusOptions = [
+  'Đang xử lý VNPAY',
   'Chờ xác nhận',
   'Đã xác nhận',
   'Đã giao cho đơn vị vận chuyển',
@@ -158,6 +159,15 @@ watch([searchQuery, paymentFilter, statusFilter, currentPage], fetchOrders, { de
 onMounted(() => {
   fetchOrders()
 })
+
+const filteredStatusOptions = computed(() => {
+  return (tinhTrang) => {
+    if (tinhTrang?.toLowerCase() === 'chờ xác nhận') {
+      return ['Chờ xác nhận', 'Đã hủy'];
+    }
+    return statusOptions;
+  };
+})
 </script>
 
 <template>
@@ -220,7 +230,7 @@ onMounted(() => {
                 @change="updateStatus(order, $event.target.value)"
                 :disabled="immutableStatuses.includes(order.tinhTrang)"
               >
-                <option v-for="status in statusOptions" :key="status" :value="status">
+                <option v-for="status in filteredStatusOptions(order.tinhTrang)" :key="status" :value="status">
                   {{ status }}
                 </option>
               </select>

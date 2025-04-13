@@ -132,14 +132,21 @@ router.beforeEach(async (to, from, next) => {
     accessToken = Cookies.get('accessToken')
     const readtoken = ReadToken(accessToken)
     const role = readtoken.Role
-    if ((role === 'Admin' || role === 'Nhân viên') && to.path.startsWith('/')) {
+    if ((role !== 'Customer') && !to.path.toLowerCase().startsWith('/admin')) {
       next('/Error/401')
+      return;
     }
-    if ((role === 'Customer') && to.path.startsWith('/admin')) {
+    if ((role === 'Customer') && to.path.toLowerCase().startsWith('/admin')) {
       next('/Error/401')
+      return;
     }
+    next();
   }
   else if(validateToken == false) {
+    if (to.path.toLowerCase() === '/login') {
+      next();
+      return;
+    }
     if (to.path.toLowerCase() === '/cart'.toLowerCase() || to.path.toLowerCase() === '/checkout'.toLowerCase()) {
       Swal.fire({
         icon: 'error',
@@ -150,11 +157,11 @@ router.beforeEach(async (to, from, next) => {
       next('/Login')
       return;
     }
-    if(to.path.startsWith('/Admin')){
+    if(to.path.toLowerCase().startsWith('/Admin')){
       next('/Error/401')
       return;
     }
+    next()
   }
-  next()
 })
 export default router
