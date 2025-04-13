@@ -764,7 +764,7 @@ export default {
               let buttonHtml = `<button class="btn btn-primary btn-sm btn-view mx-2" data-id="${row.maHd}"> <i class="icon-doc"></i> Chi tiết</button>`
 
               // Chỉ hiển thị một nút "Hủy đơn"
-              if (TrangThaiDonHang.TrangThaiCoTheDoi.includes(status)) {
+              if (!TrangThaiDonHang.TrangThaiKhongBinhThuong.includes(status)) {
                 buttonHtml += `<button class="btn btn-danger btn-sm btn-change-status" data-id="${row.maHd}" data-status="${status}"> <i class="icon-close"></i> Hủy đơn</button>`
               }
               return buttonHtml
@@ -789,24 +789,12 @@ export default {
       $('#dt-orderClient').on('click', '.btn-change-status', async (event) => {
         const target = $(event.target)
         const orderId = target.data('id')
-        const currentStatus = target.data('status')
-
-        // Lấy các trạng thái hủy được từ cấu hình
-        const availableCancelStatuses = TrangThaiDonHang.isCancelable(currentStatus) || []
-        if (availableCancelStatuses.length === 0) {
-          Swal.fire({
-            icon: 'info',
-            title: 'Không thể hủy đơn',
-            text: `Trạng thái hiện tại: "${currentStatus}" không cho phép hủy.`,
-          })
-          return
-        }
 
         // Hiển thị Swal để chọn trạng thái muốn hủy
         const { value: selectedStatus } = await Swal.fire({
           title: 'Chọn trạng thái hủy',
           input: 'select',
-          inputOptions: availableCancelStatuses.reduce((options, status) => {
+          inputOptions: TrangThaiDonHang.TrangThaiKhongBinhThuong.reduce((options, status) => {
             options[status] = status
             return options
           }, {}),
@@ -841,9 +829,12 @@ export default {
         }
         // Gửi yêu cầu API hủy đơn
         axiosClient
-          .postToApi(
-            `/OrderClient/ChangeStatusOrder?orderId=${orderId}&statusChange=${selectedStatus}${'&reasonCancel=' + cancellationReason}`,
-          )
+          .postToApi(`/OrderClient/ChangeStatusOrder`, {
+            orderId: orderId,
+            statusChange: selectedStatus,
+            reasonCancel: cancellationReason,
+          })
+
           .then((response) => {
             if (response.success) {
               Swal.fire({
