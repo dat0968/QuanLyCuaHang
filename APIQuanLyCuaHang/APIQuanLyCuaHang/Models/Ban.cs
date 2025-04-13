@@ -3,6 +3,6 @@
     public class Ban
     {
         public int Id { get; set; }
-        public string TinhTrang { get; set; }
+        public string TinhTrang { get; set; } = string.Empty;
     }
 }

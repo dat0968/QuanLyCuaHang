@@ -405,7 +405,7 @@ namespace APIQuanLyCuaHang.Migrations
                         .HasDefaultValue(false);
 
                     b.Property<string>("MatKhau")
-                        .HasMaxLength(30)
+                        .HasMaxLength(255)
                         .IsUnicode(false)
                         .HasColumnType("varchar(255)")
                         .IsFixedLength();
@@ -532,9 +532,9 @@ namespace APIQuanLyCuaHang.Migrations
 
                     b.Property<string>("MatKhau")
                         .IsRequired()
-                        .HasMaxLength(20)
+                        .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("char(20)")
+                        .HasColumnType("varchar(255)")
                         .IsFixedLength();
 
                     b.Property<DateOnly?>("NgaySinh")

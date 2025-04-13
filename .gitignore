@@ -32,3 +32,4 @@ APIQuanLyCuaHang/APIQuanLyCuaHang/Repositories/OrderManager/IOrderManagerReposit
 APIQuanLyCuaHang/APIQuanLyCuaHang/Repositories/OrderManager/OrderManagerRepository.cs
 APIQuanLyCuaHang/APIQuanLyCuaHang/Controllers/OrderManagerController.cs
 QuanLyCuaHangUXUI/QuanLyCuaHangProject/src/views/admin/OrderManager.vue
+.vscode

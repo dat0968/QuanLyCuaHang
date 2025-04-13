@@ -435,7 +435,7 @@ export default {
         const response = await axiosConfig.postToApi(
           apiEndpoint,
           requestBody,
-          ConfigsRequest.getSkipAuthConfig(),
+          ConfigsRequest.takeAuth(),
         )
         if (ResponseAPI.handleNotification(response)) {
           return
@@ -462,7 +462,7 @@ export default {
         // Gọi API lấy thông tin cập nhật của CaKip
         const updatedShiftResponse = await axiosConfig.getFromApi(
           `/Shift/Employees/${maCaKip}`,
-          ConfigsRequest.getSkipAuthConfig(),
+          ConfigsRequest.takeAuth(),
         )
 
         if (updatedShiftResponse && updatedShiftResponse.success) {

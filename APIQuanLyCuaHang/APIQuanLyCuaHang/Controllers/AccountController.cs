@@ -64,6 +64,20 @@ namespace APIQuanLyCuaHang.Controllers
             }
 
         }
+        ///
+        /// <summary>
+        /// Đăng nhập tài khoản khách hàng
+        /// </summary>
+        /// <param name="model"></param>
+        /// <remarks>
+        /// {
+        ///     "email_TenTaiKhoan": "admin@default.com",
+        ///     "matKhau": "Admin@123"
+        /// }
+        /// </remarks>
+        /// <returns>                                
+        ///</returns>
+
         [HttpPost("LoginCustomer")]
         public async Task<IActionResult> LoginCustomer(LoginDTO model)
         {
@@ -78,7 +92,7 @@ namespace APIQuanLyCuaHang.Controllers
             }
             else
             {
-                if(findUser.TinhTrang?.Trim().ToLower() != "Đang hoạt động".Trim().ToLower())
+                if (findUser.TinhTrang?.Trim().ToLower() != "Đang hoạt động".Trim().ToLower())
                 {
                     return Ok(new
                     {
@@ -129,7 +143,7 @@ namespace APIQuanLyCuaHang.Controllers
                     },
                 });
             }
-            
+
         }
         [HttpPost("LoginStaff")]
         public async Task<IActionResult> LoginStaff(LoginDTO model)
@@ -174,7 +188,8 @@ namespace APIQuanLyCuaHang.Controllers
                 }
                 var cv = db.Chucvus.FirstOrDefault(p => p.MaChucVu == findUser.MaChucVu);
                 string tenCv = "";
-                if (cv != null) { 
+                if (cv != null)
+                {
                     tenCv = cv.TenChucVu.Trim();
                 }
                 var nhanvien = new PersonalInformationDTO
@@ -183,13 +198,13 @@ namespace APIQuanLyCuaHang.Controllers
                     HoTen = findUser.HoTen,
                     SDT = findUser.Sdt,
                     VaiTro = tenCv,
-                    Hinh = null 
+                    Hinh = null
                 };
                 var AccessToken = _tokenServices.GenerateAccessToken(nhanvien);
                 var RefreshToken = _tokenServices.GenerateRefreshToken();
                 var AddRefreshTokenDb = new Refreshtoken
                 {
-                    
+
                     UserId = findUser.MaNv,
                     Token = RefreshToken,
                     IssuedAt = DateTime.UtcNow,
@@ -273,7 +288,7 @@ namespace APIQuanLyCuaHang.Controllers
             {
                 Success = true,
                 Message = "Yêu cầu đổi mật khẩu mới được chấp nhận. Vui lòng kiểm tra Email của bạn",
-                Data = newPassword 
+                Data = newPassword
             });
         }
         [HttpGet("ForgotPasswordStaff")]
@@ -313,7 +328,7 @@ namespace APIQuanLyCuaHang.Controllers
             {
                 Success = true,
                 Message = "Yêu cầu đổi mật khẩu mới được chấp nhận. Vui lòng kiểm tra Email của bạn",
-                Data = newPassword 
+                Data = newPassword
             });
         }
         private async Task SendEmailAsync(string email, string subject, string message)

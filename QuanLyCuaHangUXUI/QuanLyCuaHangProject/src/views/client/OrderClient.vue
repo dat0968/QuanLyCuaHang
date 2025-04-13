@@ -49,7 +49,7 @@
           </div>
           <div class="col-md-3 d-flex align-items-end">
             <button class="btn btn-primary w-100" @click="applyFilter">Lọc</button>
-            <i class="icon-printer py-2 px-4" @click="downloadAllInvoice"></i>
+            <i class="icon-printer py-2 px-4" @click="downloadAllInvoiceAsPDF"></i>
           </div>
           <div class="col-md-3 d-flex align-items-end"></div>
         </div>
@@ -177,7 +177,7 @@
                           class="icon-printer text-primary"
                           type="button"
                           title="Tải Hóa đơn (PDF)"
-                          @click="downloadInvoice(selectedOrder)"
+                          @click="downloadInvoiceAsPDF(selectedOrder)"
                         ></i>
                         <i
                           class="icon-printer"
@@ -191,30 +191,93 @@
                       <table class="table">
                         <thead>
                           <tr>
-                            <th>#</th>
                             <th>Tên Sản Phẩm</th>
-                            <th>Mô Tả</th>
                             <th>Số Lượng</th>
-                            <th>Kích Thước</th>
                             <th>Đơn Giá</th>
                             <th>Thành Tiền</th>
                           </tr>
                         </thead>
                         <tbody class="overflow-auto-y">
                           <tr
-                            v-for="(item, index) in selectedOrder.chiTietHoaDonKhachs"
-                            :key="item.maCtsp"
+                            v-for="item in selectedOrder.chiTietHoaDonKhachs"
+                            :key="item.maDoiTuong"
                           >
-                            <td>{{ index + 1 }}</td>
-                            <td>{{ item.tenSanPham }}</td>
-                            <td>{{ item.moTa }}</td>
+                            <td>
+                              <div class="row align-items-center">
+                                <div class="col">
+                                  <img
+                                    :src="getImageUrl(item.hinhAnh, `/HinhAnh/Food_Drink`)"
+                                    :alt="item.tenDoiTuong"
+                                    class="img-fluid rounded"
+                                  />
+                                </div>
+
+                                <div class="col-8">
+                                  {{ item.tenDoiTuong }}<br />
+                                  <p>Loại: {{ item.loaiDoiTuong }}</p>
+                                  <p>Kích thước: {{ item.kichThuoc || 'N/A' }}</p>
+                                </div>
+                              </div>
+                            </td>
                             <td>{{ item.soLuong }}</td>
-                            <td>{{ item.kichThuoc || 'N/A' }}</td>
                             <td>{{ formatCurrency(item.donGia) }}</td>
                             <td>{{ formatCurrency(item.soLuong * item.donGia) }}</td>
                           </tr>
                         </tbody>
                       </table>
+                    </div>
+                    <div class="col-12">
+                      <h5>Tổng cộng</h5>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <p><strong>Hình thức thanh toán:</strong></p>
+                        </div>
+                        <div class="col-md-6 text-end">
+                          <p>{{ selectedOrder.hinhThucTt }}</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <p><strong>Tổng tiền hàng:</strong></p>
+                        </div>
+                        <div class="col-md-6 text-end">
+                          <p>{{ formatCurrency(selectedOrder.tienGoc) }}</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <p><strong>Phí vận chuyển:</strong></p>
+                        </div>
+                        <div class="col-md-6 text-end">
+                          <p>{{ formatCurrency(selectedOrder.phiVanChuyen) }}</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <p><strong>Giảm giá:</strong></p>
+                        </div>
+                        <div class="col-md-6 text-end">
+                          <p>{{ formatCurrency(selectedOrder.giamGiaCoupon) }}</p>
+                        </div>
+                      </div>
+                      <hr />
+                      <div class="row">
+                        <div class="col-md-6">
+                          <p><strong>Tổng tiền thanh toán:</strong></p>
+                        </div>
+                        <div class="col-md-6 text-end">
+                          <p class="fw-bold text-danger">
+                            {{ formatCurrency(selectedOrder.tongTien) }}
+                          </p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12 text-end">
+                          <p>
+                            <em>(Bằng chữ: {{ convertNumberToWords(selectedOrder.tongTien) }})</em>
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -235,20 +298,21 @@
 import $ from 'jquery'
 import 'datatables.net'
 import 'datatables.net-dt/css/dataTables.dataTables.css'
-import jsPDF from 'jspdf'
-import autoTable from 'jspdf-autotable'
+import pdfMake from 'pdfmake/build/pdfmake'
+import pdfFonts from 'pdfmake/build/vfs_fonts'
 
 import * as configsDt from '@/utils/configsDatatable.js'
 import * as axiosClient from '@/utils/axiosClient'
-import formatCurrency from '@/constants/formatCurrency'
-import '@/assets/default/fonts/Roboto-Regular-normal'
-import '@/assets/default/fonts/Roboto-Bold-bold'
-import '@/assets/default/fonts/Roboto-Italic-italic'
+import { formatCurrency, convertNumberToWords } from '@/constants/formatCurrency'
 import { formatDate } from '@/constants/formatDatetime'
 import toastr from 'toastr'
 import Swal from 'sweetalert2'
 import ConfigsRequest from '@/models/ConfigsRequest'
 import TrangThaiDonHang from '@/constants/trangThaiDonHang'
+import StoreInfo from '@/constants/storeInfo'
+import authService from '@/services/authService'
+import { getImageUrl } from '@/utils/generalMethod'
+pdfMake.vfs = pdfFonts.vfs // Nhúng font vào pdfmake
 
 export default {
   name: 'OrderClient',
@@ -256,7 +320,6 @@ export default {
     return {
       orders: [],
       filteredOrders: [], // Dữ liệu sau khi lọc
-      userId: 100,
       selectedOrder: null, // Lưu thông tin hóa đơn để hiển thị chi tiết trong modal
       modalTarget: typeof document !== 'undefined' ? 'body' : null,
       filter: {
@@ -267,167 +330,294 @@ export default {
     }
   },
   mounted() {
+    authService.hasAnyRole(['Customer'])
     this.loadOrders()
   },
   methods: {
+    getImageUrl,
     formatCurrency,
+    convertNumberToWords,
     formatDate,
-    downloadAllInvoice() {
+    downloadAllInvoiceAsPDF() {
       if (this.filteredOrders.length === 0) {
         toastr.warning('Không có hóa đơn nào để in!')
         return
       }
+      // Kiểm tra xem có hóa đơn nào không
+      const invoiceContents = this.filteredOrders.map((order) => {
+        const tableBody = order.chiTietHoaDonKhachs.map((item, index) => [
+          index + 1,
+          item.tenDoiTuong + '\nLoại: ' + item.loaiDoiTuong ?? 'N/A',
+          item.soLuong ?? 0,
+          this.formatCurrency(item.donGia ?? 0),
+          this.formatCurrency((item.soLuong ?? 0) * (item.donGia ?? 0)),
+        ])
 
-      // Tạo đối tượng jsPDF
-      const doc = new jsPDF('p', 'mm', 'a4') // Chế độ dọc, đơn vị mm, kích thước A4
+        // Thêm tiêu đề cột vào đầu bảng
+        tableBody.unshift(['STT', 'Tên sản phẩm', 'Số lượng', 'Đơn giá', 'Thành tiền'])
 
-      // Tiêu đề chính của PDF
-      doc.setFont('Roboto-Bold', 'bold')
-      doc.setFontSize(20)
-      doc.text('DANH SÁCH HÓA ĐƠN', 105, 15, { align: 'center' })
-
-      // Vòng lặp qua các hóa đơn để tạo nội dung chi tiết
-      let finalY = 25 // Điểm bắt đầu sau tiêu đề chính
-
-      // eslint-disable-next-line no-unused-vars
-      this.filteredOrders.forEach((order, index) => {
-        // Tiêu đề hóa đơn nhỏ
-        doc.setFont('Roboto-Bold', 'bold')
-        doc.setFontSize(12)
-        doc.text(`Hóa đơn mã ${order.maHd}`, 10, finalY)
-        doc.setFont('Roboto-Regular', 'normal')
-        doc.setFontSize(10)
-
-        // Điền thông tin chi tiết cơ bản
-        doc.text(`Khách hàng: ${order.hoTen}`, 10, finalY + 5)
-        doc.text(`Ngày tạo: ${this.formatDate(order.ngayTao)}`, 10, finalY + 10)
-        doc.text(`Trạng thái: ${order.tinhTrang}`, 10, finalY + 15)
-
-        finalY += 25 // Bắt đầu cho bảng
-
-        // Cấu hình bảng chi tiết sản phẩm
-        const { tableColumns, tableRows } = this.generateTableData(order)
-
-        autoTable(doc, {
-          head: [tableColumns.map((column) => column.header)],
-          body: tableRows.map((row) => tableColumns.map((column) => row[column.dataKey])),
-          startY: finalY,
-          styles: { font: 'Roboto-Regular', fontSize: 10 },
-          headStyles: { fillColor: [22, 160, 133], textColor: [255, 255, 255] },
-          alternateRowStyles: { fillColor: [240, 240, 240] },
-        })
-
-        // Cộng dồn Y để bắt đầu hóa đơn tiếp theo bên dưới bảng
-        finalY = doc.lastAutoTable.finalY + 10
-
-        // Nếu vượt quá chiều cao của A4, tự động chuyển sang trang mới
-        doc.addPage()
-        finalY = 10
+        return [
+          // Thay đổi { content: [...] } thành một mảng
+          { text: StoreInfo.COMPANY_NAME, style: 'companyHeader', alignment: 'center' },
+          {
+            text: StoreInfo.ADDRESS,
+            alignment: 'center',
+          },
+          {
+            text: `${StoreInfo.PHONE_NUMBER} - ${StoreInfo.EMAIL}`,
+            alignment: 'center',
+          },
+          { text: ' ' },
+          { text: 'HÓA ĐƠN BÁN HÀNG', style: 'header', alignment: 'center' },
+          {
+            columns: [
+              { text: `Số: ${order.maHd}`, alignment: 'left' },
+              { text: `Ngày: ${this.formatDate(order.ngayTao)}`, alignment: 'right' },
+            ],
+            columnGap: 50,
+          },
+          { text: ' ' },
+          { text: 'THÔNG TIN KHÁCH HÀNG', style: 'subheader' },
+          { text: `Tên khách hàng: ${order.hoTen ?? 'N/A'}`, margin: [0, 2, 0, 2] },
+          { text: `Địa chỉ: ${order.diaChiNhanHang ?? 'N/A'}`, margin: [0, 2, 0, 2] },
+          { text: `Số điện thoại: ${order.sdt ?? 'N/A'}`, margin: [0, 2, 0, 2] },
+          { text: ' ' },
+          { text: 'CHI TIẾT HÓA ĐƠN', style: 'subheader' },
+          {
+            table: {
+              widths: ['auto', '*', 'auto', 'auto', 'auto'],
+              body: tableBody,
+            },
+            layout: 'lightHorizontalLines', // Sử dụng layout mặc định
+          },
+          { text: ' ' },
+          {
+            text: `HÌNH THỨC THANH TOÁN: ${order.hinhThucTt ?? 'N/A'}`,
+            margin: [0, 5, 0, 5],
+          },
+          { text: 'TỔNG CỘNG', style: 'subheader', alignment: 'left', margin: [0, 5, 0, 5] },
+          {
+            table: {
+              widths: ['*', 'auto'],
+              body: [
+                [
+                  {
+                    text: `Tổng tiền hàng: ${this.formatCurrency(order.tienGoc)}`,
+                    alignment: 'left',
+                  },
+                  '',
+                ],
+                [
+                  {
+                    text: `Phí vận chuyển: ${this.formatCurrency(order.phiVanChuyen)}`,
+                    alignment: 'left',
+                  },
+                  '',
+                ],
+                [
+                  {
+                    text: `Giảm giá: ${this.formatCurrency(order.giamGiaCoupon)}`,
+                    alignment: 'left',
+                  },
+                  '',
+                ],
+                [
+                  {
+                    text: `Tổng tiền thanh toán: ${this.formatCurrency(order.tongTien)} (Bằng chữ: ${this.convertNumberToWords(order.tongTien)})`,
+                    bold: true,
+                    alignment: 'left',
+                  },
+                  '',
+                ],
+              ],
+            },
+            layout: 'noBorders',
+          },
+          { text: ' ' },
+          { text: 'GHI CHÚ:', style: 'subheader', margin: [0, 5, 0, 2] },
+          { text: `${order.moTa ?? 'Không có ghi chú'}`, margin: [0, 2, 0, 5] },
+          { text: ' ' },
+          { text: '--------------------------------------------', alignment: 'center' },
+          { text: 'Cảm ơn vì đã mua hàng!', alignment: 'center' },
+          { text: ' ', pageBreak: 'after' }, // Thêm ngắt trang sau mỗi hóa đơn
+        ]
       })
+      // Loại bỏ ngắt trang cuối cùng nếu có
+      if (invoiceContents.length > 0) {
+        invoiceContents[invoiceContents.length - 1].pop() // Xóa phần tử cuối cùng (là ngắt trang)
+      }
 
-      // Xuất file PDF
-      doc.save('DanhSachHoaDon.pdf')
+      // Định nghĩa tài liệu PDF cho tất cả hóa đơn
+      const pdfDefinition = {
+        content: invoiceContents.flat(), // Sử dụng flat() để kết hợp các mảng con
+        styles: {
+          header: { fontSize: 18, bold: true, margin: [0, 0, 0, 10] },
+          subheader: { fontSize: 14, bold: true, margin: [0, 10, 0, 5] },
+          companyHeader: { fontSize: 20, bold: true, margin: [0, 0, 0, 20] },
+        },
+        footer: function (currentPage, pageCount) {
+          return {
+            text: `Trang ${currentPage} / ${pageCount}`,
+            alignment: 'center',
+            margin: [0, 10],
+          }
+        },
+      }
+
+      // Tải xuống file PDF
+      pdfMake.createPdf(pdfDefinition).download('DanhSachHoaDon.pdf')
     },
-    generateTableData(order) {
-      const tableColumns = [
-        { header: 'STT', dataKey: 'stt' },
-        { header: 'Tên sản phẩm', dataKey: 'tenSanPham' },
-        { header: 'Số lượng', dataKey: 'soLuong' },
-        { header: 'Đơn giá', dataKey: 'donGia' },
-        { header: 'Thành tiền', dataKey: 'thanhTien' },
-      ]
-
-      const tableRows = order.chiTietHoaDonKhachs.map((item, index) => ({
-        stt: index + 1,
-        tenSanPham: item.tenSanPham,
-        soLuong: item.soLuong,
-        donGia: this.formatCurrency(item.donGia),
-        thanhTien: this.formatCurrency(item.soLuong * item.donGia),
-      }))
-
-      return { tableColumns, tableRows }
-    },
-    downloadInvoice(order) {
+    downloadInvoiceAsPDF(order) {
       if (!order) {
-        alert('Không có thông tin hóa đơn để tải xuống!')
+        toastr.info('Không có thông tin hóa đơn để tải xuống!')
         return
       }
 
-      // Kiểm tra xem chi tiết hóa đơn có tồn tại và là một mảng không
-      if (!order.chiTietHoaDonKhachs || !Array.isArray(order.chiTietHoaDonKhachs)) {
-        alert('Không có chi tiết hóa đơn để tải xuống!')
+      // Kiểm tra chi tiết hóa đơn có tồn tại và là một mảng không
+      if (
+        !order.chiTietHoaDonKhachs ||
+        !Array.isArray(order.chiTietHoaDonKhachs) ||
+        order.chiTietHoaDonKhachs.length === 0
+      ) {
+        toastr.info('Không có chi tiết hóa đơn để tải xuống!')
         return
       }
 
-      // Xử lý dữ liệu cột và dòng cho bảng
-      const tableColumns = [
-        { header: 'STT', dataKey: 'stt' },
-        { header: 'Tên sản phẩm', dataKey: 'tenSanPham' },
-        { header: 'Số lượng', dataKey: 'soLuong' },
-        { header: 'Đơn giá', dataKey: 'donGia' },
-        { header: 'Thành tiền', dataKey: 'thanhTien' },
-      ]
-      const tableRows = order.chiTietHoaDonKhachs.map((item, index) => ({
-        stt: index + 1,
-        tenSanPham: item.tenSanPham,
-        soLuong: item.soLuong,
-        donGia: this.formatCurrency(item.donGia),
-        thanhTien: this.formatCurrency(item.soLuong * item.donGia),
-      }))
+      // Chuẩn bị dữ liệu cho bảng
+      const tableBody = order.chiTietHoaDonKhachs.map((item, index) => [
+        index + 1,
+        item.tenDoiTuong + '\nLoại: ' + item.loaiDoiTuong ?? 'N/A',
+        item.soLuong ?? 0, // Dùng 0 nếu không có số lượng
+        this.formatCurrency(item.donGia ?? 0), // Đơn giá
+        this.formatCurrency((item.soLuong ?? 0) * (item.donGia ?? 0)), // Thành tiền
+      ])
 
-      // Tạo đối tượng jsPDF
-      const doc = new jsPDF()
+      // Thêm tiêu đề cột vào đầu bảng
+      tableBody.unshift(['STT', 'Tên sản phẩm', 'Số lượng', 'Đơn giá', 'Thành tiền'])
 
-      // Kiểm tra danh sách font khả dụng
-      console.log(doc.getFontList())
+      // Tạo đối tượng pdfmake
+      const docDefinition = {
+        content: [
+          { text: 'CỬA HÀNG DARK BEE', style: 'companyHeader', alignment: 'center' },
+          {
+            text: '300, 6 đường Hà Huy Tập, BMT, Đắk Lắk',
+            style: 'companyHeader',
+            alignment: 'center',
+          },
+          {
+            text: '0262 8884 375 - datntpk03691@gmail.com',
+            style: 'companyHeader',
+            alignment: 'center',
+          },
+          { text: ' ', margin: [0, 5, 0, 5] }, // Khoảng trắng giữa các phần
+          { text: 'HÓA ĐƠN BÁN HÀNG', style: 'header', alignment: 'center' },
+          {
+            columns: [
+              { text: `Số: ${order.maHd}`, alignment: 'left' },
+              { text: `Ngày: ${formatDate(order.ngayTao)}`, alignment: 'right' },
+            ],
+            columnGap: 50,
+          },
+          { text: ' ', margin: [0, 5, 0, 5] }, // Khoảng trắng giữa các phần
+          { text: 'THÔNG TIN KHÁCH HÀNG', style: 'subheader' },
+          { text: `Tên khách hàng: ${order.hoTen ?? 'N/A'}`, margin: [0, 2, 0, 2] },
+          { text: `Địa chỉ: ${order.diaChiNhanHang ?? 'N/A'}`, margin: [0, 2, 0, 2] },
+          { text: `Số điện thoại: ${order.sdt ?? 'N/A'}`, margin: [0, 2, 0, 2] },
+          { text: `Mã số thuế (nếu có): ${order.maSoThue ?? 'N/A'}`, margin: [0, 2, 0, 2] },
+          { text: ' ', margin: [0, 5, 0, 5] }, // Khoảng trắng giữa các phần
+          { text: 'CHI TIẾT HÓA ĐƠN', style: 'subheader' },
+          {
+            table: {
+              widths: ['auto', '*', 'auto', 'auto', 'auto'],
+              body: tableBody,
+            },
+            layout: {
+              hLineWidth: (i, node) => (i === 0 || i === node.table.body.length ? 1 : 0), // Đường viền cho hàng đầu
+              vLineWidth: () => 0,
+              fillColor: (rowIndex) => (rowIndex === 0 ? '#f0f0f0' : null),
+            },
+          },
+          { text: ' ', margin: [0, 5, 0, 5] }, // Khoảng trắng giữa các phần
+          {
+            text: `HÌNH THỨC THANH TOÁN: ${order.hinhThucTt ?? 'N/A'}`,
+            margin: [0, 5, 0, 5],
+          },
+          { text: 'TỔNG CỘNG', style: 'subheader', alignment: 'left', margin: [0, 5, 0, 5] },
+          {
+            table: {
+              widths: ['*', 'auto'],
+              body: [
+                [
+                  {
+                    text: `Tổng tiền hàng: ${this.formatCurrency(order.tienGoc)}`,
+                    alignment: 'left',
+                  },
+                  '',
+                ],
+                [
+                  {
+                    text: `Phí vận chuyển: ${this.formatCurrency(order.phiVanChuyen)}`,
+                    alignment: 'left',
+                  },
+                  '',
+                ],
+                [
+                  {
+                    text: `Giảm giá: ${this.formatCurrency(order.giamGiaCoupon)}`,
+                    alignment: 'left',
+                  },
+                  '',
+                ],
+                [
+                  {
+                    text: `Tổng tiền thanh toán: ${this.formatCurrency(order.tongTien)} (Bằng chữ: ${this.convertNumberToWords(order.tongTien)})`,
+                    bold: true,
+                    alignment: 'left',
+                  },
+                  '',
+                ],
+              ],
+            },
+            layout: 'noBorders', // Không có viền cho bảng tổng cộng
+          },
+          { text: ' ' },
+          { text: 'GHI CHÚ:', style: 'subheader', margin: [0, 5, 0, 2] },
+          { text: `${order.moTa ?? 'Không có ghi chú'}`, margin: [0, 2, 0, 5] },
+          { text: ' ', margin: [0, 10, 0, 0] }, // Khoảng trắng dưới ghi chú
+          { text: '--------------------------------------------', alignment: 'center' },
+          { text: 'Cảm ơn vì đã mua hàng!', alignment: 'center' },
+        ],
+        styles: {
+          companyHeader: {
+            fontSize: 12,
+            bold: true,
+            margin: [0, 2, 0, 2],
+          },
+          header: {
+            fontSize: 20,
+            bold: true,
+            margin: [0, 10, 0, 10],
+          },
+          subheader: {
+            fontSize: 14,
+            bold: true,
+            margin: [0, 5, 0, 2],
+          },
+        },
+        defaultStyle: {
+          font: 'Roboto',
+        },
+      }
 
-      // Sử dụng các font đã được nhúng
-      doc.setFont('Roboto-Regular', 'normal') // Font mặc định
-      doc.setFontSize(20)
-
-      // Tiêu đề hóa đơn
-      doc.text('HÓA ĐƠN CHI TIẾT', 105, 10, { align: 'center' })
-
-      // Điền thông tin khách hàng
-      doc.setFontSize(12)
-      doc.text(`Tên khách hàng: ${order.hoTen}`, 10, 30)
-      doc.text(`Địa chỉ: ${order.diaChiNhanHang}`, 10, 40)
-      doc.text(`Số điện thoại: ${order.sdt}`, 10, 50)
-      doc.text(`Mã hóa đơn: ${order.maHd}`, 10, 60)
-      doc.text(`Ngày tạo: ${formatDate(order.ngayTao)}`, 10, 70)
-
-      // Thêm khoảng cách trước bảng
-      doc.setFontSize(14)
-      doc.text('Chi tiết sản phẩm:', 10, 90)
-
-      // Thêm bảng chi tiết bằng autoTable
-      autoTable(doc, {
-        head: [tableColumns.map((column) => column.header)],
-        body: tableRows.map((row) => tableColumns.map((column) => row[column.dataKey])),
-        startY: 100,
-        styles: { font: 'Roboto-Regular', fontSize: 10 },
-        headStyles: { fillColor: [22, 160, 133] }, // Màu nền cho tiêu đề bảng
-        alternateRowStyles: { fillColor: [240, 240, 240] }, // Màu nền cho hàng chẵn
-      })
-
-      // Tính tổng tiền và in ra cuối bảng
-      const total = order.chiTietHoaDonKhachs.reduce(
-        (sum, item) => sum + item.soLuong * item.donGia,
-        0,
-      )
-      doc.text(`Tổng tiền: ${this.formatCurrency(total)}`, 10, doc.lastAutoTable.finalY + 10)
-
-      // Lưu file PDF với tên file
-      doc.save(`HoaDon_${order.maHd}.pdf`)
+      // Tạo và tải file PDF
+      pdfMake.createPdf(docDefinition).download(`HoaDon_${order.maHd}.pdf`)
     },
-
     downloadInvoiceAsHTML(order) {
       if (!order) {
         alert('Không tìm thấy thông tin hóa đơn để tải xuống!')
         return
       }
 
-      // Nội dung HTML
       const content = `
         <!DOCTYPE html>
         <html>
@@ -435,25 +625,35 @@ export default {
           <title>Hóa Đơn: ${order.maHd}</title>
           <style>
             body { font-family: Arial, sans-serif; padding: 20px; }
-            h1 { text-align: center; }
+            h1, h4, h5 { text-align: center; }
             table { width: 100%; border-collapse: collapse; margin-top: 20px; }
             th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
             th { background-color: #f2f2f2; }
+            .text-end { text-align: right; }
+            .fw-bold { font-weight: bold; }
+            .text-danger { color: red; }
           </style>
         </head>
         <body>
-          <h1>Chi Tiết Hóa Đơn</h1>
+          <h1>CỬA HÀNG DARK BEE</h1>
+          <p>300, 6 đường Hà Huy Tập, BMT, Đắk Lắk</p>
+          <p>0262 8884 375 - datntpk03691@gmail.com</p>
+          <hr />
+          <h4>HÓA ĐƠN BÁN HÀNG</h4>
           <p><strong>Mã Hóa Đơn:</strong> ${order.maHd}</p>
-          <p><strong>Tên Khách Hàng:</strong> ${order.tenKhachHang}</p>
-          <p><strong>Số Điện Thoại:</strong> ${order.soDienThoaiKhachHang}</p>
-          <p><strong>Địa Chỉ:</strong> ${order.diaChiNhanHang}</p>
+          <p><strong>Ngày Tạo:</strong> ${this.formatDate(order.ngayTao)}</p>
+          <h5>THÔNG TIN KHÁCH HÀNG</h5>
+          <p><strong>Tên Khách Hàng:</strong> ${order.hoTen}</p>
+          <p><strong>Số Điện Thoại:</strong> ${order.sdt}</p>
+          <p><strong>Địa Chỉ Nhận Hàng:</strong> ${order.diaChiNhanHang}</p>
+          ${order.lyDoHuy ? `<p><strong>Lý Do Hủy:</strong> ${order.lyDoHuy}</p>` : ''}
+          <h5>CHI TIẾT HÓA ĐƠN</h5>
           <table>
             <thead>
               <tr>
                 <th>#</th>
                 <th>Tên Sản Phẩm</th>
                 <th>Số Lượng</th>
-                <th>Kích Thước</th>
                 <th>Đơn Giá</th>
                 <th>Thành Tiền</th>
               </tr>
@@ -464,9 +664,8 @@ export default {
                   (item, index) => `
                 <tr>
                   <td>${index + 1}</td>
-                  <td>${item.tenSanPham}</td>
+                  <td>${item.tenDoiTuong}<br><small>Loại: ${item.loaiDoiTuong}</small></td>
                   <td>${item.soLuong}</td>
-                  <td>${item.kichThuoc || 'N/A'}</td>
                   <td>${this.formatCurrency(item.donGia)}</td>
                   <td>${this.formatCurrency(item.soLuong * item.donGia)}</td>
                 </tr>
@@ -475,12 +674,19 @@ export default {
                 .join('')}
             </tbody>
           </table>
-          <p><strong>Tổng Thanh Toán:</strong> ${this.formatCurrency(order.chiTietHoaDonKhachs.reduce((sum, item) => sum + item.soLuong * item.donGia, 0))}</p>
+          <h5>TỔNG CỘNG</h5>
+          <p><strong>Hình Thức Thanh Toán:</strong> ${order.hinhThucTt}</p>
+          <p><strong>Tổng Tiền Hàng:</strong> ${this.formatCurrency(order.tienGoc)}</p>
+          <p><strong>Phí Vận Chuyển:</strong> ${this.formatCurrency(order.phiVanChuyen)}</p>
+          <p><strong>Giảm Giá:</strong> ${this.formatCurrency(order.giamGiaCoupon)}</p>
+          <p class="fw-bold text-danger"><strong>Tổng Tiền Thanh Toán:</strong> ${this.formatCurrency(order.tongTien)}</p>
+          <p><em>(Bằng chữ: ${this.convertNumberToWords(order.tongTien)})</em></p>
+          <hr />
+          <p style="text-align: center;">Cảm ơn vì đã mua hàng!</p>
         </body>
         </html>
       `
 
-      // Tạo file Blob từ HTML
       const blob = new Blob([content], { type: 'text/html' })
       const link = document.createElement('a')
       link.href = URL.createObjectURL(blob)
@@ -490,7 +696,7 @@ export default {
 
     loadOrders() {
       axiosClient
-        .getFromApi(`/OrderClient/Get/${this.userId}`, ConfigsRequest.takeAuth())
+        .getFromApi(`/OrderClient/Get`, ConfigsRequest.takeAuth())
         .then((response) => {
           if (response.success) {
             this.orders = response.data
@@ -634,7 +840,7 @@ export default {
         // Gửi yêu cầu API hủy đơn
         axiosClient
           .postToApi(
-            `/OrderClient/ChangeStatusOrder?userId=${this.userId}&orderId=${orderId}&statusChange=${selectedStatus}${'&reasonCancel=' + cancellationReason}`,
+            `/OrderClient/ChangeStatusOrder?orderId=${orderId}&statusChange=${selectedStatus}${'&reasonCancel=' + cancellationReason}`,
           )
           .then((response) => {
             if (response.success) {
@@ -668,16 +874,7 @@ export default {
   },
   computed: {
     statusList() {
-      return [
-        'Chờ xác nhận',
-        'Đã xác nhận',
-        'Đã giao cho đơn vị vận chuyển',
-        'Đang giao hàng',
-        'Chờ thanh toán',
-        'Đã thanh toán',
-        'Hoàn trả/Hoàn tiền',
-        'Đã hủy',
-      ]
+      return [TrangThaiDonHang.TatCaTrangThai]
     },
   },
 }

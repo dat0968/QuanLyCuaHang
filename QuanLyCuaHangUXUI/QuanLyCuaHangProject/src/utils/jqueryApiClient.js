@@ -1,6 +1,7 @@
 import { jwtDecode } from 'jwt-decode'
 import $ from 'jquery'
 import toastr from 'toastr'
+import Cookies from 'js-cookie' // Import js-cookie
 
 const apiBaseUrl = 'https://localhost:7139/api'
 
@@ -16,7 +17,7 @@ function isTokenExpired(token) {
 
 // Hàm refresh token
 async function refreshAccessToken() {
-  const refreshToken = localStorage.getItem('refreshToken')
+  const refreshToken = Cookies.get('refreshToken')
 
   if (!refreshToken) {
     throw new Error('Refresh Token không tồn tại!')
@@ -32,8 +33,8 @@ async function refreshAccessToken() {
 
     if (response) {
       const { accessToken, refreshToken: newRefreshToken } = response
-      localStorage.setItem('accessToken', accessToken)
-      localStorage.setItem('refreshToken', newRefreshToken)
+      Cookies.set('accessToken', accessToken)
+      Cookies.set('refreshToken', newRefreshToken)
       return accessToken
     }
   } catch (error) {
@@ -49,7 +50,7 @@ async function refreshAccessToken() {
 
 // Hàm xử lý request với jQuery
 async function apiRequest(url, method = 'GET', data = null, skipAuth = false) {
-  let accessToken = localStorage.getItem('accessToken')
+  let accessToken = Cookies.get('accessToken')
   let headers = { 'Content-Type': 'application/json' }
 
   if (!skipAuth && accessToken) {

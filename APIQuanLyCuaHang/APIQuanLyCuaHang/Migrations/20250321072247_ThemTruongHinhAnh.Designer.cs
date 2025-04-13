@@ -404,9 +404,9 @@ namespace APIQuanLyCuaHang.Migrations
                         .HasDefaultValue(false);
 
                     b.Property<string>("MatKhau")
-                        .HasMaxLength(30)
+                        .HasMaxLength(255)
                         .IsUnicode(false)
-                        .HasColumnType("char(30)")
+                        .HasColumnType("varchar(255)")
                         .IsFixedLength();
 
                     b.Property<DateOnly?>("NgaySinh")

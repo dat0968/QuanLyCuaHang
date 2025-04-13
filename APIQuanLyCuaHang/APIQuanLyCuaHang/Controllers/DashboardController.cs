@@ -91,6 +91,16 @@ namespace APIQuanLyCuaHang.Controllers
             return Ok(response);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetTopSellingCombos()
+        {
+            var response = await _dash.GetTopSellingCombosAsync();
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
         /// <summary>
         /// Dữ liệu thống kê sản phẩm theo được chọn nhiều nhất,...
         /// </summary>

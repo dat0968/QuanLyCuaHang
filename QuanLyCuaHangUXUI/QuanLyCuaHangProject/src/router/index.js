@@ -127,27 +127,28 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   let accessToken = Cookies.get('accessToken')
   let refreshToken = Cookies.get('refreshToken')
+  const customerOnlyPages = ['/', '/cart', '/checkout', '/profile', '/client-order']
+  if(!accessToken || !refreshToken){
+
+  }
   const validateToken = await ValidateToken(accessToken, refreshToken)
   if (validateToken == true) {
     accessToken = Cookies.get('accessToken')
     const readtoken = ReadToken(accessToken)
     const role = readtoken.Role
-    if ((role !== 'Customer') && !to.path.toLowerCase().startsWith('/admin')) {
-      next('/Error/401')
-      return;
+    if ((role !== 'Customer') && customerOnlyPages.includes(to.path)) {
+      if (to.path !== '/Error/401') {
+        return next('/Error/401')
+      }
     }
     if ((role === 'Customer') && to.path.toLowerCase().startsWith('/admin')) {
-      next('/Error/401')
-      return;
+      if (to.path !== '/Error/401') {
+        return next('/Error/401')
+      }
     }
-    next();
   }
   else if(validateToken == false) {
-    if (to.path.toLowerCase() === '/login') {
-      next();
-      return;
-    }
-    if (to.path.toLowerCase() === '/cart'.toLowerCase() || to.path.toLowerCase() === '/checkout'.toLowerCase()) {
+    if (to.path.toLowerCase() === '/cart'|| to.path.toLowerCase() === '/checkout') {
       Swal.fire({
         icon: 'error',
         title: 'Phiên của bạn đã hết hoặc bạn chưa đăng nhập, vui lòng đăng nhập lại!',
@@ -157,11 +158,12 @@ router.beforeEach(async (to, from, next) => {
       next('/Login')
       return;
     }
-    if(to.path.toLowerCase().startsWith('/Admin')){
-      next('/Error/401')
-      return;
+    if(to.path.toLowerCase().startsWith('/admin')){
+      if (to.path !== '/Error/401') {
+        return next('/Error/401')
+      }
     }
-    next()
   }
+  next()
 })
 export default router

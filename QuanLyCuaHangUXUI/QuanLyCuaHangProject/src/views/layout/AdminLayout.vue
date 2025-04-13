@@ -77,37 +77,37 @@ components: {
               </li>
               <li>
                 <RouterLink to="/Admin/Product">
-                  <i class="fas fa-box"></i><span>SẢN PHẨM</span>
+                  <i class="icon-tag"></i><span>SẢN PHẨM</span>
                 </RouterLink>
               </li>
               <li>
                 <RouterLink to="/Admin/Combo">
-                  <i class="fas fa-box"></i><span>COMBO</span>
+                  <i class="icon-trophy"></i><span>COMBO</span>
                 </RouterLink>
               </li>
               <li>
                 <RouterLink to="/Admin/Bill">
-                  <i class="fas fa-box"></i><span> ĐƠN HÀNG</span>
+                  <i class="icon-paypal"></i><span>ĐƠN HÀNG</span>
                 </RouterLink>
               </li>
               <li>
                 <RouterLink to="/Admin/Coupon">
-                  <i class="fas fa-box"></i><span> COUPON</span>
+                  <i class="icon-present"></i><span>COUPON</span>
                 </RouterLink>
               </li>
               <li>
                 <RouterLink to="/admin/customer">
-                  <i class="fas fa-user"></i><span>KHÁCH HÀNG</span>
-                </RouterLink> 
+                  <i class="icon-user"></i><span>KHÁCH HÀNG</span>
+                </RouterLink>
               </li>
               <li>
                 <RouterLink to="/Admin/Table">
-                  <i class="fas fa-box"></i><span> BÀN</span>
+                  <i class="icon-note"></i><span>BÀN</span>
                 </RouterLink>
               </li>
               <li>
                 <router-link to="/admin/staff">
-                  <i class="fas fa-user"></i><span>NHÂN VIÊN</span>
+                  <i class="icon-people"></i><span>NHÂN VIÊN</span>
                 </router-link>
               </li>
               <li>
@@ -175,8 +175,18 @@ components: {
                         >
                         <a class="dropdown-item" href="#"
                           ><i class="icon-user text-primary mr-2"></i> Hồ sơ</a
-                        > -->
-                        <!-- <a class="dropdown-item" href="#"
+                        >
+                        <a class="dropdown-item" href="#"
+                          ><i class="icon-wallet text-success mr-2"></i> Thanh toán</a
+                        >
+                        <QrScanAndShiftManagerModal />
+                        <a class="dropdown-item" href="#"
+                          ><i class="icon-settings text-warning mr-2"></i> Cài đặt</a
+                        >
+                        <a class="dropdown-item" href="#"
+                          ><i class="icon-lock text-info mr-2"></i> Khóa màn hình</a
+                        >
+                        <a class="dropdown-item" href="#"
                           ><i class="icon-power text-danger mr-2"></i> Đăng xuất</a
                         > -->
                         <!-- Đăng xuất -->
