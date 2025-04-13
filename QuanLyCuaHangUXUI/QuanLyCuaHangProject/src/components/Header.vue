@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import CartButton from './CartButton.vue';
+import LoginButton from './LoginButton.vue';
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import OrderClientButton from './ui/OrderClientButton.vue'
 const cartComponent = ref(null)
@@ -61,6 +62,8 @@ const cartComponent = ref(null)
               <cart ref="cartComponent" />
               <!-- Nút đơn hàng -->
               <OrderClientButton />
+              <!-- Nút đăng nhập -->
+              <LoginButton />
             </div>
           </nav>
         </div>

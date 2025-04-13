@@ -1,12 +1,12 @@
 <script setup>
-import { ref } from 'vue'
-import { RouterLink, useRouter } from 'vue-router'
-import Swal from 'sweetalert2'
-import Cookies from 'js-cookie'
-const emailOrUsername = ref('')
-const password = ref('')
-const errorMessage = ref('')
-const router = useRouter()
+import { ref } from 'vue';
+import { RouterLink, useRouter } from 'vue-router';
+import Cookies from 'js-cookie';
+import Swal from 'sweetalert2';
+const emailOrUsername = ref('');
+const password = ref('');
+const errorMessage = ref('');
+const router = useRouter();
 
 const handleLogin = async () => {
   errorMessage.value = ''

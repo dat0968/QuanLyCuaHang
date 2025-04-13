@@ -1,7 +1,10 @@
 ﻿using APIQuanLyCuaHang.DTO;
 using APIQuanLyCuaHang.Models;
 using APIQuanLyCuaHang.Repositories.Table;
+using APIQuanLyCuaHang.Repositories.Product;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace APIQuanLyCuaHang.Controllers
 {
@@ -10,10 +13,14 @@ namespace APIQuanLyCuaHang.Controllers
     public class TableController : ControllerBase
     {
         private readonly ITableRepository _tableRepository;
+        private readonly IProduct _productRepository;
+        private readonly QuanLyCuaHangContext _db;
 
-        public TableController(ITableRepository tableRepository)
+        public TableController(ITableRepository tableRepository, IProduct productRepository, QuanLyCuaHangContext db)
         {
             _tableRepository = tableRepository;
+            _productRepository = productRepository;
+            _db = db;
         }
 
         [HttpGet]
@@ -36,7 +43,6 @@ namespace APIQuanLyCuaHang.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            // Chuyển BanDTO thành Ban để thêm vào DB
             var ban = new Ban
             {
                 TinhTrang = string.IsNullOrEmpty(banDTO.TinhTrang) ? "Trống" : banDTO.TinhTrang
@@ -86,6 +92,56 @@ namespace APIQuanLyCuaHang.Controllers
 
             var (tables, totalItems) = await _tableRepository.FilterTablesByStatus(tinhTrang, page, pageSize);
             return Ok(new { Items = tables, TotalItems = totalItems });
+        }
+
+        [HttpGet("{id}/menu")]
+        //[Authorize(Roles = "Staff")] 
+        public async Task<IActionResult> GetMenuForTable(int id)
+        {
+            var table = await _tableRepository.GetTableById(id);
+            if (table == null) return NotFound(new { message = $"Không tìm thấy bàn với ID {id}." });
+
+            var products = await _productRepository.GetAll(null, null, null, null);
+            var combos = await _db.Combos
+                .Where(c => c.IsDelete == false)
+                .Include(c => c.Chitietcombos)
+                .ThenInclude(ct => ct.MaSpNavigation)
+                .ThenInclude(sp => sp.Chitietsanphams)
+                .Select(c => new ComboResponseDTO
+                {
+                    MaCombo = c.MaCombo,
+                    TenCombo = c.TenCombo,
+                    Hinh = c.Hinh,
+                    SoTienGiam = c.SoTienGiam,
+                    PhanTramGiam = c.PhanTramGiam,
+                    SoLuong = c.SoLuong,
+                    MoTa = c.MoTa,
+                    IsDelete = c.IsDelete,
+                    Chitietcombos = c.Chitietcombos.Select(ct => new DetaisComboResponseDTO
+                    {
+                        MaSp = ct.MaSp,
+                        TenSp = ct.MaSpNavigation.TenSanPham,
+                        SoLuongSp = ct.SoLuongSp,
+                        Chitietsanphams = ct.MaSpNavigation.Chitietsanphams.Select(ctsp => new DetailProductResponseDTO
+                        {
+                            MaCtsp = ctsp.MaCtsp,
+                            MaSp = ctsp.MaSp,
+                            KichThuoc = ctsp.KichThuoc,
+                            HuongVi = ctsp.HuongVi,
+                            SoLuongTon = ctsp.SoLuongTon,
+                            DonGia = ctsp.DonGia,
+                            AnhDaiDien = ctsp.Hinhanhs.OrderBy(img => img.MaHinhAnh).Select(img => img.TenHinhAnh).FirstOrDefault(),
+                        }).ToList()
+                    }).ToList()
+                })
+                .ToListAsync();
+
+            return Ok(new
+            {
+                Table = table,
+                Products = products,
+                Combos = combos
+            });
         }
     }
 }
