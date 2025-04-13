@@ -188,38 +188,40 @@
                       </div>
                     </div>
                     <div class="col-12 table-responsive">
-                      <table class="table">
+                      <table class="overflow-auto-y table" style="max-height: 300px">
                         <thead>
                           <tr>
                             <th>Tên Sản Phẩm</th>
-                            <th>Số Lượng</th>
+                            <th class="text-center">Số Lượng</th>
                             <th>Đơn Giá</th>
                             <th>Thành Tiền</th>
                           </tr>
                         </thead>
-                        <tbody class="overflow-auto-y">
+                        <tbody>
                           <tr
                             v-for="item in selectedOrder.chiTietHoaDonKhachs"
                             :key="item.maDoiTuong"
                           >
                             <td>
                               <div class="row align-items-center">
-                                <div class="col">
+                                <div class="col-3">
                                   <img
                                     :src="getImageUrl(item.hinhAnh, `/HinhAnh/Food_Drink`)"
                                     :alt="item.tenDoiTuong"
-                                    class="img-fluid rounded"
+                                    class="img-fluid rounded border"
+                                    style="width: 100px; height: 100px; object-fit: cover"
                                   />
                                 </div>
-
-                                <div class="col-8">
+                                <div class="col-9">
                                   {{ item.tenDoiTuong }}<br />
                                   <p>Loại: {{ item.loaiDoiTuong }}</p>
-                                  <p>Kích thước: {{ item.kichThuoc || 'N/A' }}</p>
+                                  <p v-if="item.kichThuoc">
+                                    Kích thước: {{ item.kichThuoc || 'N/A' }}
+                                  </p>
                                 </div>
                               </div>
                             </td>
-                            <td>{{ item.soLuong }}</td>
+                            <td class="text-center">{{ item.soLuong }}</td>
                             <td>{{ formatCurrency(item.donGia) }}</td>
                             <td>{{ formatCurrency(item.soLuong * item.donGia) }}</td>
                           </tr>
@@ -227,55 +229,55 @@
                       </table>
                     </div>
                     <div class="col-12">
-                      <h5>Tổng cộng</h5>
+                      <h4><strong>Tổng cộng</strong></h4>
                       <div class="row">
                         <div class="col-md-6">
-                          <p><strong>Hình thức thanh toán:</strong></p>
+                          <h5>Hình thức thanh toán:</h5>
                         </div>
                         <div class="col-md-6 text-end">
-                          <p>{{ selectedOrder.hinhThucTt }}</p>
+                          <h5>{{ selectedOrder.hinhThucTt }}</h5>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-md-6">
-                          <p><strong>Tổng tiền hàng:</strong></p>
+                          <h5>Tổng tiền hàng:</h5>
                         </div>
                         <div class="col-md-6 text-end">
-                          <p>{{ formatCurrency(selectedOrder.tienGoc) }}</p>
+                          <h5>{{ formatCurrency(selectedOrder.tienGoc) }}</h5>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-md-6">
-                          <p><strong>Phí vận chuyển:</strong></p>
+                          <h5>Phí vận chuyển:</h5>
                         </div>
                         <div class="col-md-6 text-end">
-                          <p>{{ formatCurrency(selectedOrder.phiVanChuyen) }}</p>
+                          <h5>{{ formatCurrency(selectedOrder.phiVanChuyen) }}</h5>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-md-6">
-                          <p><strong>Giảm giá:</strong></p>
+                          <h5>Giảm giá:</h5>
                         </div>
                         <div class="col-md-6 text-end">
-                          <p>{{ formatCurrency(selectedOrder.giamGiaCoupon) }}</p>
+                          <h5>{{ formatCurrency(selectedOrder.giamGiaCoupon) }}</h5>
                         </div>
                       </div>
                       <hr />
                       <div class="row">
                         <div class="col-md-6">
-                          <p><strong>Tổng tiền thanh toán:</strong></p>
+                          <h5>Tổng tiền thanh toán:</h5>
                         </div>
                         <div class="col-md-6 text-end">
-                          <p class="fw-bold text-danger">
+                          <h5 class="fw-bold text-danger">
                             {{ formatCurrency(selectedOrder.tongTien) }}
-                          </p>
+                          </h5>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-md-12 text-end">
-                          <p>
+                          <h5>
                             <em>(Bằng chữ: {{ convertNumberToWords(selectedOrder.tongTien) }})</em>
-                          </p>
+                          </h5>
                         </div>
                       </div>
                     </div>
