@@ -343,7 +343,7 @@ export default {
         toastr.warning('Không có hóa đơn nào để in!')
         return
       }
-
+      // Kiểm tra xem có hóa đơn nào không
       const invoiceContents = this.filteredOrders.map((order) => {
         const tableBody = order.chiTietHoaDonKhachs.map((item, index) => [
           index + 1,
@@ -355,14 +355,6 @@ export default {
 
         // Thêm tiêu đề cột vào đầu bảng
         tableBody.unshift(['STT', 'Tên sản phẩm', 'Số lượng', 'Đơn giá', 'Thành tiền'])
-
-        const totalAmount = order.chiTietHoaDonKhachs.reduce(
-          (sum, item) => sum + (item.soLuong ?? 0) * (item.donGia ?? 0),
-          0,
-        )
-        const vatPercentage = order.vatPercentage || 0
-        const vatAmount = totalAmount * (vatPercentage / 100)
-        const totalPayment = totalAmount + vatAmount
 
         return [
           // Thay đổi { content: [...] } thành một mảng
@@ -410,14 +402,28 @@ export default {
               body: [
                 [
                   {
-                    text: `Tổng tiền hàng: ${this.formatCurrency(totalAmount)}`,
+                    text: `Tổng tiền hàng: ${this.formatCurrency(order.tienGoc)}`,
                     alignment: 'left',
                   },
                   '',
                 ],
                 [
                   {
-                    text: `Tổng tiền thanh toán: ${this.formatCurrency(totalPayment)} (Bằng chữ: ${this.convertNumberToWords(totalPayment)})`,
+                    text: `Phí vận chuyển: ${this.formatCurrency(order.phiVanChuyen)}`,
+                    alignment: 'left',
+                  },
+                  '',
+                ],
+                [
+                  {
+                    text: `Giảm giá: ${this.formatCurrency(order.giamGiaCoupon)}`,
+                    alignment: 'left',
+                  },
+                  '',
+                ],
+                [
+                  {
+                    text: `Tổng tiền thanh toán: ${this.formatCurrency(order.tongTien)} (Bằng chữ: ${this.convertNumberToWords(order.tongTien)})`,
                     bold: true,
                     alignment: 'left',
                   },
@@ -612,7 +618,6 @@ export default {
         return
       }
 
-      // Nội dung HTML
       const content = `
         <!DOCTYPE html>
         <html>
@@ -620,25 +625,35 @@ export default {
           <title>Hóa Đơn: ${order.maHd}</title>
           <style>
             body { font-family: Arial, sans-serif; padding: 20px; }
-            h1 { text-align: center; }
+            h1, h4, h5 { text-align: center; }
             table { width: 100%; border-collapse: collapse; margin-top: 20px; }
             th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
             th { background-color: #f2f2f2; }
+            .text-end { text-align: right; }
+            .fw-bold { font-weight: bold; }
+            .text-danger { color: red; }
           </style>
         </head>
         <body>
-          <h1>Chi Tiết Hóa Đơn</h1>
+          <h1>CỬA HÀNG DARK BEE</h1>
+          <p>300, 6 đường Hà Huy Tập, BMT, Đắk Lắk</p>
+          <p>0262 8884 375 - datntpk03691@gmail.com</p>
+          <hr />
+          <h4>HÓA ĐƠN BÁN HÀNG</h4>
           <p><strong>Mã Hóa Đơn:</strong> ${order.maHd}</p>
+          <p><strong>Ngày Tạo:</strong> ${this.formatDate(order.ngayTao)}</p>
+          <h5>THÔNG TIN KHÁCH HÀNG</h5>
           <p><strong>Tên Khách Hàng:</strong> ${order.hoTen}</p>
           <p><strong>Số Điện Thoại:</strong> ${order.sdt}</p>
-          <p><strong>Địa Chỉ:</strong> ${order.diaChiNhanHang}</p>
+          <p><strong>Địa Chỉ Nhận Hàng:</strong> ${order.diaChiNhanHang}</p>
+          ${order.lyDoHuy ? `<p><strong>Lý Do Hủy:</strong> ${order.lyDoHuy}</p>` : ''}
+          <h5>CHI TIẾT HÓA ĐƠN</h5>
           <table>
             <thead>
               <tr>
                 <th>#</th>
                 <th>Tên Sản Phẩm</th>
                 <th>Số Lượng</th>
-                <th>Kích Thước</th>
                 <th>Đơn Giá</th>
                 <th>Thành Tiền</th>
               </tr>
@@ -649,11 +664,8 @@ export default {
                   (item, index) => `
                 <tr>
                   <td>${index + 1}</td>
-                  <td>${item.tenDoiTuong}<br>
-                      <small>Loại: ${item.loaiDoiTuong}</small>
-                  </td>
+                  <td>${item.tenDoiTuong}<br><small>Loại: ${item.loaiDoiTuong}</small></td>
                   <td>${item.soLuong}</td>
-                  <td>${item.kichThuoc || 'N/A'}</td>
                   <td>${this.formatCurrency(item.donGia)}</td>
                   <td>${this.formatCurrency(item.soLuong * item.donGia)}</td>
                 </tr>
@@ -662,12 +674,19 @@ export default {
                 .join('')}
             </tbody>
           </table>
-          <p><strong>Tổng Thanh Toán:</strong> ${this.formatCurrency(order.chiTietHoaDonKhachs.reduce((sum, item) => sum + item.soLuong * item.donGia, 0))}</p>
+          <h5>TỔNG CỘNG</h5>
+          <p><strong>Hình Thức Thanh Toán:</strong> ${order.hinhThucTt}</p>
+          <p><strong>Tổng Tiền Hàng:</strong> ${this.formatCurrency(order.tienGoc)}</p>
+          <p><strong>Phí Vận Chuyển:</strong> ${this.formatCurrency(order.phiVanChuyen)}</p>
+          <p><strong>Giảm Giá:</strong> ${this.formatCurrency(order.giamGiaCoupon)}</p>
+          <p class="fw-bold text-danger"><strong>Tổng Tiền Thanh Toán:</strong> ${this.formatCurrency(order.tongTien)}</p>
+          <p><em>(Bằng chữ: ${this.convertNumberToWords(order.tongTien)})</em></p>
+          <hr />
+          <p style="text-align: center;">Cảm ơn vì đã mua hàng!</p>
         </body>
         </html>
       `
 
-      // Tạo file Blob từ HTML
       const blob = new Blob([content], { type: 'text/html' })
       const link = document.createElement('a')
       link.href = URL.createObjectURL(blob)
