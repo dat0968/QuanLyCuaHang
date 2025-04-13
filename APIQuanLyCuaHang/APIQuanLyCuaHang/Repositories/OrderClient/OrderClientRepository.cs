@@ -143,77 +143,11 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                     throw new Exception("Trạng thái không thay đổi.");
                 }
 
-                // Logic chuyển đổi trạng thái
-                switch (originData.TinhTrang)
+                // Xử lí thay đổi trạng thái đơn hàng và có hoàn lại sản phẩm hay không
+                if (TrangThaiDonHang.ValidateAndCancelOrderForCustomer(originData, statusChange, reasonCancel))
                 {
-                    case TrangThaiDonHang.ChoThanhToan:
-                        if (statusChange == TrangThaiDonHang.DaHuy)
-                        {
-                            TrangThaiDonHang.ValidateAndChangeStatus(originData, statusChange, reasonCancel);
-                            await ReturnProductWhenCancel(orderId.Value!);
-                        }
-                        else
-                        {
-                            throw new Exception($"Không thể chuyển từ 'Chờ thanh toán' sang trạng thái [{statusChange}].");
-                        }
-                        break;
-
-                    case TrangThaiDonHang.DaXacNhan:
-                        if (statusChange == TrangThaiDonHang.HoanTra_HoanTien)
-                        {
-                            TrangThaiDonHang.ValidateAndChangeStatus(originData, statusChange, reasonCancel);
-                            await ReturnProductWhenCancel(orderId.Value!);
-                        }
-                        else if (statusChange == TrangThaiDonHang.DaHuy)
-                        {
-                            TrangThaiDonHang.ValidateAndChangeStatus(originData, statusChange, reasonCancel);
-                            await ReturnProductWhenCancel(orderId.Value!);
-                        }
-                        else
-                        {
-                            throw new Exception($"Không thể chuyển từ 'Đã xác nhận' sang trạng thái [{statusChange}].");
-                        }
-                        break;
-
-                    case TrangThaiDonHang.DaGiaoChoDonViVanChuyen:
-                        if (statusChange == TrangThaiDonHang.HoanTra_HoanTien)
-                        {
-                            originData.TinhTrang = statusChange;
-                            originData.LyDoHuy = reasonCancel;
-                        }
-                        else if (statusChange == TrangThaiDonHang.DaHuy)
-                        {
-                            TrangThaiDonHang.ValidateAndChangeStatus(originData, statusChange, reasonCancel);
-                        }
-                        else
-                        {
-                            throw new Exception($"Không thể chuyển từ 'Đã giao cho đơn vị vận chuyển' sang trạng thái [{statusChange}].");
-                        }
-                        break;
-
-                    case TrangThaiDonHang.DangGiaoHang:
-                        if (statusChange == TrangThaiDonHang.HoanTra_HoanTien)
-                        {
-                            TrangThaiDonHang.ValidateAndChangeStatus(originData, statusChange, reasonCancel);
-                        }
-                        else if (statusChange == TrangThaiDonHang.DaHuy)
-                        {
-                            TrangThaiDonHang.ValidateAndChangeStatus(originData, statusChange, reasonCancel);
-                        }
-                        else
-                        {
-                            throw new Exception($"Không thể chuyển từ 'Đang giao hàng' sang trạng thái [{statusChange}].");
-                        }
-                        break;
-
-                    case TrangThaiDonHang.HoanTra_HoanTien:
-                        throw new Exception("Đơn hàng đã hoàn trả/hoàn tiền không thể thay đổi trạng thái.");
-
-                    case TrangThaiDonHang.DaHuy:
-                        throw new Exception("Đơn hàng đã hủy không thể thay đổi trạng thái.");
-
-                    default:
-                        throw new Exception("Trạng thái không hợp lệ.");
+                    // Nếu trạng thái là hủy đơn hàng thì trả lại sản phẩm về kho
+                    await ReturnProductAndComboWhenCancel((int)orderId);
                 }
 
                 _db.Update(originData);
@@ -231,16 +165,26 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
 
         #region [Private Method]
         // ? Trả về lại sản phẩm về kho khi bị hủy, bruh
-        private async Task ReturnProductWhenCancel(int orderId)
+        private async Task ReturnProductAndComboWhenCancel(int orderId)
         {
-            var listDetailOrder = await _db.Cthoadons.Where(x => x.MaHd == orderId).ToListAsync();
+            var listDetailProductInOrder = await _db.Cthoadons.Where(x => x.MaHd == orderId).ToListAsync();
             var listDetailsProducts = await _db.Chitietsanphams.ToListAsync();
-            foreach (var aDetail in listDetailOrder)
+            var listDetailsCombosInOrder = await _db.Chitietcombohoadons.Where(x => x.MaHd == orderId).ToListAsync();
+            var listDetailsCombos = await _db.Combos.ToListAsync();
+            foreach (var aDetail in listDetailProductInOrder)
             {
                 var increaseDtProduct = listDetailsProducts.FirstOrDefault(x => x.MaCtsp == aDetail.MaCtsp);
                 if (increaseDtProduct == null) continue;
                 increaseDtProduct.SoLuongTon += aDetail.SoLuong;
             }
+            foreach (var aCombo in listDetailsCombosInOrder)
+            {
+                var increaseDtCombo = listDetailsCombos.FirstOrDefault(x => x.MaCombo == aCombo.MaCombo);
+                if (increaseDtCombo == null) continue;
+                increaseDtCombo.SoLuong += aCombo.SoLuong;
+            }
+            _db.UpdateRange(listDetailsProducts);
+            _db.UpdateRange(listDetailsCombos);
             await _db.SaveChangesAsync();
         }
         #endregion

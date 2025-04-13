@@ -8,13 +8,16 @@ namespace APIQuanLyCuaHang.Constants
 {
     public static class TrangThaiDonHang
     {
+        public const string DangXuLy = "Đang xử lý VNPAY";
         public const string DaXacNhan = "Đã xác nhận";
         public const string DaGiaoChoDonViVanChuyen = "Đã giao cho đơn vị vận chuyển";
         public const string DangGiaoHang = "Đang giao hàng";
         public const string ChoThanhToan = "Chờ thanh toán";
+        public const string DaThanhToan = "Đã thanh toán";
         public const string HoanTra_HoanTien = "Hoàn trả/Hoàn tiền";
         public const string DaHuy = "Đã hủy";
         public const string ChoXacNhan = "Chờ xác nhận";
+        public const string DaNhan = "Đã Nhận";
 
         public static readonly List<string> TatCaTrangThai = new List<string>
         {
@@ -26,7 +29,16 @@ namespace APIQuanLyCuaHang.Constants
             DaHuy,
             ChoXacNhan
         };
-
+        public static readonly List<string> TrangThaiXuLy = new List<string>
+        {
+            DangXuLy,
+            ChoXacNhan,
+            DaXacNhan,
+            DaGiaoChoDonViVanChuyen,
+            DangGiaoHang,
+            ChoThanhToan,
+            DaThanhToan
+        };
         public static readonly List<string> TrangThaiKhongBinhThuong = new List<string>
         {
             HoanTra_HoanTien,
@@ -36,39 +48,55 @@ namespace APIQuanLyCuaHang.Constants
            @originHoadon Dữ liệu đơn hàng nguyên bản
            @reasonCancel Lý do hủy
         */
-        public static void ValidateAndChangeStatus(Hoadon originHoadon, string statusChange, string? reasonCancel)
+        public static bool ValidateAndCancelOrderForCustomer(Hoadon originHoadon, string statusChange, string? reasonCancel)
         {
-            var validTransitions = new Dictionary<string, List<string>>
-            {
-                { TrangThaiDonHang.ChoThanhToan, new List<string> { TrangThaiDonHang.DaXacNhan, TrangThaiDonHang.DaHuy, TrangThaiDonHang.HoanTra_HoanTien } },
-                { TrangThaiDonHang.DaXacNhan, new List<string> { TrangThaiDonHang.DaGiaoChoDonViVanChuyen, TrangThaiDonHang.DaHuy, TrangThaiDonHang.HoanTra_HoanTien } },
-                { TrangThaiDonHang.DaGiaoChoDonViVanChuyen, new List<string> { TrangThaiDonHang.DangGiaoHang, TrangThaiDonHang.DaHuy, TrangThaiDonHang.HoanTra_HoanTien } },
-                { TrangThaiDonHang.DangGiaoHang, new List<string> { TrangThaiDonHang.DaHuy, TrangThaiDonHang.HoanTra_HoanTien } }
-            };
+            bool isReturn = false;
 
-            if (validTransitions.TryGetValue(originHoadon.TinhTrang!, out var validStatuses) && validStatuses.Contains(statusChange))
+            // Kiểm tra trạng thái muốn đổi có nằm trong danh sách trạng thái không bình thường hay không
+            if (TrangThaiKhongBinhThuong.Contains(statusChange))
             {
-                if (statusChange == TrangThaiDonHang.DaHuy || statusChange == TrangThaiDonHang.HoanTra_HoanTien)
+                switch (originHoadon.TinhTrang)
                 {
-                    ValidateCancellationTime(originHoadon);
-                    originHoadon.LyDoHuy = reasonCancel ?? "Auto: Không có lý do hủy.";
+                    case DangXuLy:
+                    case ChoThanhToan:
+                        {
+                            // Chắc sẽ viết gì đó ở đây
+                            break;
+                        }
+                    case DaThanhToan:
+                    case ChoXacNhan:
+                    case DaXacNhan:
+                    case DaGiaoChoDonViVanChuyen:
+                    case DangGiaoHang:
+                        {
+                            isReturn = true;
+                            break;
+                        }
+                    case DaNhan:
+                        {
+                            ValidateCancellationTime(originHoadon);
+                            isReturn = true;
+                            break;
+                        }
                 }
                 originHoadon.TinhTrang = statusChange;
-                if (statusChange == TrangThaiDonHang.DaGiaoChoDonViVanChuyen)
-                {
-                    originHoadon.BatDauGiao = DateTime.Now; // Record the shipping time
-                }
+                originHoadon.LyDoHuy = reasonCancel ?? "Auto: Không có lý do hủy.";
             }
             else
             {
                 throw new Exception($"Không thể chuyển từ '{originHoadon.TinhTrang}' sang trạng thái [{statusChange}].");
             }
+            return isReturn;
         }
 
         public static void ValidateCancellationTime(Hoadon originHoadon)
         {
             DateTime timeNow = DateTime.Now;
-            TimeSpan timeReceivedOrder = (originHoadon.NgayNhan!.Value - timeNow);
+            if (originHoadon.NgayNhan == null)
+            {
+                throw new Exception("Dữ liệu đơn hàng không hợp lệ, vui lòng liên hệ nhân viên để được hỗ trợ.");
+            }
+            TimeSpan timeReceivedOrder = originHoadon.NgayNhan.Value - timeNow;
             if (timeReceivedOrder.Days > 0 && timeReceivedOrder.Hours > 1)
             {
                 throw new Exception("Bạn không thể hủy đơn hàng đã quá 1h từ lần cuối bạn nhận đơn.");
