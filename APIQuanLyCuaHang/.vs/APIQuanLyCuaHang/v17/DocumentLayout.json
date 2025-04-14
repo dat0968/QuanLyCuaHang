@@ -73,8 +73,12 @@
       "DocumentGroups": [
         {
           "DockedWidth": 354,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -98,8 +102,7 @@
               "RelativeToolTip": "APIQuanLyCuaHang\\Models\\Hoadon.cs",
               "ViewState": "AgIAABgAAAAAAAAAAAAIwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-13T17:49:43.425Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-13T17:49:43.425Z"
             },
             {
               "$type": "Document",
@@ -111,8 +114,7 @@
               "RelativeToolTip": "APIQuanLyCuaHang\\DTO\\PersonalInformationDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-13T14:39:20.436Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-13T14:39:20.436Z"
             },
             {
               "$type": "Document",
@@ -124,8 +126,7 @@
               "RelativeToolTip": "APIQuanLyCuaHang\\Respositoies\\Token\\TokenServices.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAAAAwBAAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-13T14:38:12.175Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-13T14:38:12.175Z"
             },
             {
               "$type": "Document",
@@ -137,8 +138,7 @@
               "RelativeToolTip": "APIQuanLyCuaHang\\Repositories\\CounterBill\\AtCounterBillRepository.cs",
               "ViewState": "AgIAADYAAAAAAAAAAAAhwEkAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-13T13:13:10.576Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-13T13:13:10.576Z"
             },
             {
               "$type": "Document",
@@ -150,8 +150,7 @@
               "RelativeToolTip": "APIQuanLyCuaHang\\Controllers\\CounterBillController.cs",
               "ViewState": "AgIAAKIAAAAAAAAAAAAlwEUAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-13T13:12:49.871Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-13T13:12:49.871Z"
             },
             {
               "$type": "Document",
@@ -163,8 +162,7 @@
               "RelativeToolTip": "APIQuanLyCuaHang\\DTO\\HoaDonDTO.cs",
               "ViewState": "AgIAAA4AAAAAAAAAAAAwwB8AAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-13T13:11:45.283Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-13T13:11:45.283Z"
             },
             {
               "$type": "Document",
@@ -176,12 +174,7 @@
               "RelativeToolTip": "APIQuanLyCuaHang\\Repositories\\Bill\\IBillRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-13T12:18:06.017Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+              "WhenOpened": "2025-04-13T12:18:06.017Z"
             },
             {
               "$type": "Document",
@@ -193,8 +186,7 @@
               "RelativeToolTip": "APIQuanLyCuaHang\\Controllers\\BillController.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAUwDYAAABMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-13T11:27:05.906Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-13T11:27:05.906Z"
             },
             {
               "$type": "Document",
@@ -206,8 +198,7 @@
               "RelativeToolTip": "APIQuanLyCuaHang\\Repositories\\Bill\\BillRepository.cs",
               "ViewState": "AgIAAIEAAAAAAAAAAAAvwJMAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-13T11:26:40.34Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-13T11:26:40.34Z"
             },
             {
               "$type": "Document",
@@ -219,8 +210,7 @@
               "RelativeToolTip": "APIQuanLyCuaHang\\Controllers\\HomeController.cs",
               "ViewState": "AgIAABQAAAAAAAAAAAAAwCEAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-13T05:35:09.271Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-13T05:35:09.271Z"
             },
             {
               "$type": "Document",
@@ -254,8 +244,7 @@
               "RelativeToolTip": "APIQuanLyCuaHang\\Controllers\\CartController.cs",
               "ViewState": "AgIAADcAAAAAAAAAAAAkwFMAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-12T15:57:15.153Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-12T15:57:15.153Z"
             },
             {
               "$type": "Document",

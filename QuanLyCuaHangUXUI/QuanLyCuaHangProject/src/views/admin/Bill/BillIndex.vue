@@ -78,7 +78,7 @@ const selectStatusCancel = ref('')
 const cancelModal = () => {
   showCancelReasonModal.value = false;
 }
-const confirmCancel = () => {
+const confirmCancel = async () => {
   if(cancelReason.value == ''){
     Swal.fire({
         icon: 'error',
@@ -88,9 +88,10 @@ const confirmCancel = () => {
       })
     return;
   }
-  updateStatus(selectedOrder.value, selectStatusCancel.value, cancelReason.value)
+  await updateStatus(selectedOrder.value, selectStatusCancel.value, cancelReason.value)
 }
 const updateStatus = async (order, newStatus, reasonCancel = '') => {
+  console.log("Đã rõ")
   const previousStatus = order.tinhTrang
   validateToken = await ValidateToken(accesstoken, refreshtoken)
   if (validateToken == true) {
@@ -113,7 +114,7 @@ const updateStatus = async (order, newStatus, reasonCancel = '') => {
       })
       return;
     }
-    if(newStatus.toLowerCase() == 'đã hủy' || newStatus.toLowerCase() == 'hoàn trả/hoàn tiền'){
+    if((newStatus.toLowerCase() == 'đã hủy' || newStatus.toLowerCase() == 'hoàn trả/hoàn tiền' )&& reasonCancel == ''){
       selectStatusCancel.value = newStatus;
       selectedOrder.value = order;
       showCancelReasonModal.value = true;
@@ -267,7 +268,7 @@ const filteredStatusOptions = computed(() => {
     <textarea v-model="cancelReason" class="form-control" rows="3" placeholder="Lý do hủy..."></textarea>
     <div class="text-end mt-3">
       <button class="btn btn-secondary me-2" @click="cancelModal">Hủy</button>
-      <button class="btn btn-danger" @click="confirmCancel">Xác nhận hủy</button>
+      <button class="btn btn-danger" @click="confirmCancel">Xác nhận</button>
     </div>
   </div>
 </div>
@@ -473,6 +474,10 @@ const filteredStatusOptions = computed(() => {
               <div class="modal-item">
                 <label>Mô tả</label>
                 <div class="value">{{ selectedOrder.moTa || 'Không có' }}</div>
+              </div>
+              <div class="modal-item">
+                <label>Lý do hủy/hoàn trả</label>
+                <div class="value">{{ selectedOrder.lyDoHuy || 'Không có' }}</div>
               </div>
               <div class="modal-item">
                 <label>Tổng tiền</label>
