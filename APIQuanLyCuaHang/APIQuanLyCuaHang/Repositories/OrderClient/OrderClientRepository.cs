@@ -150,7 +150,7 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                 if (TrangThaiDonHang.ValidateAndCancelOrderForCustomer(originData, statusChange, reasonCancel))
                 {
                     // Nếu trạng thái là hủy đơn hàng thì trả lại sản phẩm về kho
-                    await ReturnProductAndComboWhenCancel((int)orderId);
+                    await ReturnProductAndComboWhenCancel((int)orderId, originData.MaCoupon);
                 }
 
                 _db.Update(originData);
@@ -168,7 +168,7 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
 
         #region [Private Method]
         // ? Trả về lại sản phẩm về kho khi bị hủy, bruh
-        private async Task ReturnProductAndComboWhenCancel(int orderId)
+        private async Task ReturnProductAndComboWhenCancel(int orderId, string? couponId)
         {
             var listDetailProductInOrder = await _db.Cthoadons.Where(x => x.MaHd == orderId).ToListAsync();
             var listDetailsProducts = await _db.Chitietsanphams.ToListAsync();
@@ -185,6 +185,15 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                 var increaseDtCombo = listDetailsCombos.FirstOrDefault(x => x.MaCombo == aCombo.MaCombo);
                 if (increaseDtCombo == null) continue;
                 increaseDtCombo.SoLuong += aCombo.SoLuong;
+            }
+            if (!string.IsNullOrEmpty(couponId))
+            {
+                var coupon = await _db.MaCoupons.FirstOrDefaultAsync(x => x.MaCode == couponId);
+                if (coupon != null)
+                {
+                    coupon.SoLuong += 1;
+                    _db.MaCoupons.Update(coupon);
+                }
             }
             _db.UpdateRange(listDetailsProducts);
             _db.UpdateRange(listDetailsCombos);
