@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using APIQuanLyCuaHang.Constants;
 using APIQuanLyCuaHang.DTO;
+using APIQuanLyCuaHang.Helpers.Handlers;
 using APIQuanLyCuaHang.Models;
 using APIQuanLyCuaHang.Repositories.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -122,7 +123,7 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
             return response;
         }
@@ -157,7 +158,7 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
 
             return response;

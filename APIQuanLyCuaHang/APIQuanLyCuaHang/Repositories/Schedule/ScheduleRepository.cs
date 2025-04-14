@@ -75,7 +75,7 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
 
             return response;
@@ -141,7 +141,7 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
 
             return response;
@@ -158,7 +158,7 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
             return response;
         }
@@ -244,7 +244,7 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
 
             return response;
@@ -315,7 +315,7 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
 
             return response;
@@ -337,7 +337,7 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
             return response;
         }
@@ -355,7 +355,7 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
             return response;
         }

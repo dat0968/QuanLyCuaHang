@@ -174,7 +174,7 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
             return response;
         }
@@ -271,7 +271,7 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
             return response;
         }
@@ -307,7 +307,7 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
             return response;
         }
