@@ -95,8 +95,6 @@ export default {
       </div>
       <!-- End XP Row -->
 
-      <!-- ! This ever have 2 row -->
-
       <!-- Start Project -->
       <!-- End XP Row -->
       <div class="row">
