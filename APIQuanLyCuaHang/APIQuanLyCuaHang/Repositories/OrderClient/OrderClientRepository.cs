@@ -135,7 +135,7 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                 orderId ??= orderId ?? throw new Exception("Không nhận được mã đơn hàng.");
                 statusChange ??= statusChange ?? throw new Exception("Không xác định được trạng thái muốn đổi.");
 
-                var originData = await base.GetAsync(x => x.MaHd == orderId) ?? throw new Exception("Đơn hàng không tồn tại.");
+                var originData = await base.GetAsync(x => x.MaKh == userId && x.MaHd == orderId) ?? throw new Exception("Đơn hàng không tồn tại.");
 
                 // Kiểm tra trạng thái hiện tại và trạng thái muốn chuyển đổi
                 if (originData.TinhTrang == statusChange)

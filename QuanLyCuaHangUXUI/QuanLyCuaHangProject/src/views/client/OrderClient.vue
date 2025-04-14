@@ -829,11 +829,15 @@ export default {
         }
         // Gửi yêu cầu API hủy đơn
         axiosClient
-          .postToApi(`/OrderClient/ChangeStatusOrder`, {
-            orderId: orderId,
-            statusChange: selectedStatus,
-            reasonCancel: cancellationReason,
-          })
+          .postToApi(
+            `/OrderClient/ChangeStatusOrder?orderId=${orderId}&statusChange=${selectedStatus}&reasonCancel=${cancellationReason}`,
+            {
+              orderId: orderId,
+              statusChange: selectedStatus,
+              reasonCancel: cancellationReason,
+            },
+            ConfigsRequest.takeAuth(),
+          )
 
           .then((response) => {
             if (response.success) {
