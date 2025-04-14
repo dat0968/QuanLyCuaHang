@@ -202,8 +202,7 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
                 }
 
                 // Kiểm tra số lượng nhân viên trong CaKip
-                int currentEmployees = await _db.Lichsulamviecs
-                    .CountAsync(ls => ls.MaCaKip == request.MaCaKip);
+                int currentEmployees = caKip.SoNguoiHienTai;
 
                 if (currentEmployees + request.MaNvs.Length > caKip.SoNguoiToiDa)
                 {
@@ -230,18 +229,6 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
                 await _db.SaveChangesAsync();
 
                 response.SetSuccessResponse($"Đã cập nhật trạng thái {request.TrangThaiCapNhap} cho {schedules.Count} nhân viên.");
-            }
-            catch (ArgumentException ex)
-            {
-                response.SetMessageResponseWithException(400, ex);
-            }
-            catch (KeyNotFoundException ex)
-            {
-                response.SetMessageResponseWithException(404, ex);
-            }
-            catch (InvalidOperationException ex)
-            {
-                response.SetMessageResponseWithException(409, ex);
             }
             catch (Exception ex)
             {
@@ -305,14 +292,6 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
                 await _db.SaveChangesAsync();
 
                 response.SetSuccessResponse($"Đã cập nhật trạng thái {request.TrangThaiCapNhap} cho nhân viên {request.MaNv}.");
-            }
-            catch (ArgumentException ex)
-            {
-                response.SetMessageResponseWithException(400, ex);
-            }
-            catch (KeyNotFoundException ex)
-            {
-                response.SetMessageResponseWithException(404, ex);
             }
             catch (Exception ex)
             {

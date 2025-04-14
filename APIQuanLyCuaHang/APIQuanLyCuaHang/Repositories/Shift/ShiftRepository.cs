@@ -136,14 +136,6 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
                 response.SetSuccessResponse("Lấy danh sách Ca thành công!");
                 response.SetData(dataFormatted);
             }
-            catch (KeyNotFoundException ex)
-            {
-                response.SetMessageResponseWithException(404, ex);
-            }
-            catch (ArgumentException ex)
-            {
-                response.SetMessageResponseWithException(400, ex);
-            }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, response);
