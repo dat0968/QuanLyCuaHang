@@ -3,7 +3,7 @@ import toastr from 'toastr'
 class ResponseAPI {
   constructor(
     callBackResult = {
-      status: 500,
+      status: 204,
       success: false,
       message: 'Phản hồi không xác định',
       data: null,
@@ -11,7 +11,7 @@ class ResponseAPI {
   ) {
     console.log(callBackResult)
 
-    this.status = callBackResult?.status || 500 // Mã trạng thái của phản hồi (status code)
+    this.status = callBackResult?.status || 204 // Mã trạng thái của phản hồi (status code)
     this.success = callBackResult?.success || false // Trạng thái thành công/chưa thành công
     this.message = callBackResult?.message || 'Phản hồi không xác định' // Thông báo phản hồi từ backend
     this.data = callBackResult?.data || null // Payload dữ liệu trả về từ backend
