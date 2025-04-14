@@ -20,7 +20,6 @@ namespace APIQuanLyCuaHang.DTO
 
         public decimal TienGoc { get; set; }
         public string? MaCoupon { get; set; }
-        public decimal GiamGiaCoupon { get; set; } = 0;
         public virtual List<DetailCombo_OrderResquest> DetailCombo_OrderResquests { get; set; } = new List<DetailCombo_OrderResquest>();
         public List<OrderDetailRequestDTO> Cthoadons { get; set; } = new List<OrderDetailRequestDTO>();
     }

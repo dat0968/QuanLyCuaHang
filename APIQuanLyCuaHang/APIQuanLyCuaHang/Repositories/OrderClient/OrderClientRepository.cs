@@ -34,7 +34,7 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                 }
 
                 // Lấy danh sách hóa đơn của người dùng
-                var listOrigin = await base.GetAllAsync(x => x.MaKh == userId, "Cthoadons,Cthoadons.MaCtspNavigation,Cthoadons.MaCtspNavigation.MaSpNavigation,Chitietcombohoadons,Chitietcombohoadons.MaComboNavigation");
+                var listOrigin = await base.GetAllAsync(x => x.MaKh == userId, "Cthoadons,Cthoadons.MaCtspNavigation,Cthoadons.MaCtspNavigation.MaSpNavigation,Chitietcombohoadons,Chitietcombohoadons.MaComboNavigation,MaCouponNavigation");
 
                 List<HoaDonKhachDTO> listDTO = new();
 
@@ -44,6 +44,12 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                     {
                         if (aOrder == null) continue; // Kiểm tra xem aOrder có null không
 
+                        decimal tienGoc = aOrder?.TienGoc ?? 0m;
+                        decimal giamGiaCoupon = 0m;
+                        if (aOrder?.MaCouponNavigation != null)
+                        {
+                            giamGiaCoupon = aOrder.MaCouponNavigation.SoTienGiam ?? (1 - aOrder.MaCouponNavigation.PhanTramGiam / 100) * tienGoc ?? 0m;
+                        }
                         // Kiểm tra xem hóa đơn có tồn tại không
                         HoaDonKhachDTO configDataDTO = new HoaDonKhachDTO
                         {
@@ -63,8 +69,8 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                             LyDoHuy = aOrder?.LyDoHuy ?? "Không có lý do",
                             IsDelete = aOrder?.IsDelete,
                             PhiVanChuyen = aOrder?.PhiVanChuyen ?? 0m,
-                            TienGoc = aOrder?.TienGoc ?? 0m,
-                            GiamGiaCoupon = aOrder?.GiamGiaCoupon ?? 0m,
+                            TienGoc = tienGoc,
+                            GiamGiaCoupon = giamGiaCoupon,
                             ChiTietHoaDonKhachs = new List<ChiTietHoaDonKhachDTO>() // Khởi tạo danh sách chi tiết hóa đơn
                         };
 

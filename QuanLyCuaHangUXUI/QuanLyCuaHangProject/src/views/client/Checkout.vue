@@ -559,9 +559,11 @@ const fetchCoupon = async () => {
     } else {
       Swal.fire(result.message, '', 'error')
       discount.value = 0
+      couponCode.value = ''
     }
   } catch (error) {
     console.error('Lỗi khi áp dụng mã coupon:', error)
+    couponCode.value = ''
     Swal.fire({
       icon: 'error',
       title: 'Lỗi!',
@@ -609,6 +611,10 @@ const proceedToCheckout = async () => {
         return
       }
     }
+    const provinceName = provinces.value.filter(p => p.ProvinceID == userInfo.value.provinceId)[0].ProvinceName
+    const districtName = districts.value.filter(p => p.DistrictID == userInfo.value.districtId)[0].DistrictName
+    const wardName = wards.value.filter(p => p.WardCode == userInfo.value.wardCode)[0].WardName
+    console.log(provinceName + "-" + districtName + "-" + wardName)
     Swal.fire({
       title: 'Bạn có chắc chắn muốn đặt hàng với các sản phẩm này không ?',
       showCancelButton: true,
@@ -619,7 +625,7 @@ const proceedToCheckout = async () => {
         console.log('Dữ liệu hợp lệ, chuẩn bị gửi request')
         const orderData = {
           maKh: IdUser,
-          diaChiNhanHang: userInfo.value.diaChi,
+          diaChiNhanHang: userInfo.value.diaChi + " " + wardName + " " + districtName + " " + provinceName,
           hinhThucTt: shippingMethod.value,
           moTa: userInfo.value.moTa,
           hoTen: userInfo.value.hoTen,
@@ -627,12 +633,10 @@ const proceedToCheckout = async () => {
           phiVanChuyen: shippingFee.value,
           tienGoc: SumCart.value,
           maCoupon: couponCode.value,
-          giamGiaCoupon: discount.value,
           detailCombo_OrderResquests: detailComboOrderRequests,
           cthoadons: cthoadons,
         }
         if (orderData.hinhThucTt.toLowerCase() == 'vnpay') {
-          const total = orderData.tienGoc + orderData.phiVanChuyen - orderData.giamGiaCoupon
           const CreatePaymentUrl = await fetch(`https://localhost:7139/api/VNPAY`, {
             method: 'POST',
             headers: {

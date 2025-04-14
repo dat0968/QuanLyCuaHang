@@ -420,16 +420,12 @@ namespace APIQuanLyCuaHang.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<decimal>("GiamGiaCoupon")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<string>("HinhThucTt")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("HinhThucTT");
 
                     b.Property<string>("HoTen")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -441,6 +437,9 @@ namespace APIQuanLyCuaHang.Migrations
                     b.Property<string>("LyDoHuy")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("MaCoupon")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("MaKh")
                         .HasColumnType("int")
@@ -467,7 +466,6 @@ namespace APIQuanLyCuaHang.Migrations
                         .HasColumnType("decimal(11, 2)");
 
                     b.Property<string>("Sdt")
-                        .IsRequired()
                         .HasMaxLength(11)
                         .IsUnicode(false)
                         .HasColumnType("char(11)")
@@ -483,6 +481,8 @@ namespace APIQuanLyCuaHang.Migrations
 
                     b.HasKey("MaHd")
                         .HasName("PK__HOADON__2725A6E0A656C6A7");
+
+                    b.HasIndex("MaCoupon");
 
                     b.HasIndex("MaKh");
 
@@ -985,6 +985,10 @@ namespace APIQuanLyCuaHang.Migrations
 
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Hoadon", b =>
                 {
+                    b.HasOne("APIQuanLyCuaHang.Models.MaCoupon", "MaCouponNavigation")
+                        .WithMany("Hoadons")
+                        .HasForeignKey("MaCoupon");
+
                     b.HasOne("APIQuanLyCuaHang.Models.Khachhang", "MaKhNavigation")
                         .WithMany("Hoadons")
                         .HasForeignKey("MaKh")
@@ -995,6 +999,8 @@ namespace APIQuanLyCuaHang.Migrations
                         .WithMany("Hoadons")
                         .HasForeignKey("MaNv")
                         .HasConstraintName("FK__HOADON__MaNV__59FA5E80");
+
+                    b.Navigation("MaCouponNavigation");
 
                     b.Navigation("MaKhNavigation");
 
@@ -1112,6 +1118,8 @@ namespace APIQuanLyCuaHang.Migrations
             modelBuilder.Entity("APIQuanLyCuaHang.Models.MaCoupon", b =>
                 {
                     b.Navigation("ChitietmaCoupons");
+
+                    b.Navigation("Hoadons");
                 });
 
             modelBuilder.Entity("APIQuanLyCuaHang.Models.Nhanvien", b =>

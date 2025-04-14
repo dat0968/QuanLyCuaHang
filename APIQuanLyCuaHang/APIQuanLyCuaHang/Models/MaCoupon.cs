@@ -21,5 +21,6 @@ namespace APIQuanLyCuaHang.Models
         [Required]
         public bool TrangThai { get; set; }
         public virtual ICollection<ChitietmaCoupon> ChitietmaCoupons { get; set; } = new List<ChitietmaCoupon>();
+        public virtual ICollection<Hoadon> Hoadons { get; set; } = new List<Hoadon>();
     }
 }

@@ -56,7 +56,7 @@ namespace APIQuanLyCuaHang.Controllers
             return Ok(new { orders, totalItems });
         }
         [HttpGet("details/{id}")]
-        public async Task<IActionResult> GetBillDetails(int id)
+        public async Task<IActionResult> GetBillDetails([FromRoute]int id)
         {
             var billDetails = await _billRepository.GetBillDetails(id);
             if (billDetails == null)
