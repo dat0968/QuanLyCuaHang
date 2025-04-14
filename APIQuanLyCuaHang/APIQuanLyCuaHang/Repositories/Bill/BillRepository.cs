@@ -372,21 +372,24 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                     }                  
                 }
                 //Hoàn lại mã coupon
-                var findCoupon = db.MaCoupons.Local.FirstOrDefault(p => p.MaCode == existingHoaDon.MaCoupon) ?? await db.MaCoupons.FirstOrDefaultAsync(p => p.MaCode == existingHoaDon.MaCoupon);
-                if(findCoupon == null)
+                if (!string.IsNullOrEmpty(existingHoaDon.MaCoupon))
                 {
-                    throw new Exception($"Không tìm mã coupon {existingHoaDon.MaCoupon}");
-                }
-                findCoupon.SoLuongDaDung -= 1;
-                db.MaCoupons.Update(findCoupon);
+                    var findCoupon = db.MaCoupons.Local.FirstOrDefault(p => p.MaCode == existingHoaDon.MaCoupon) ?? await db.MaCoupons.FirstOrDefaultAsync(p => p.MaCode == existingHoaDon.MaCoupon);
+                    if (findCoupon == null)
+                    {
+                        throw new Exception($"Không tìm mã coupon {existingHoaDon.MaCoupon}");
+                    }
+                    findCoupon.SoLuongDaDung -= 1;
+                    db.MaCoupons.Update(findCoupon);
 
-                var detailCoupon = db.ChitietmaCoupons.Local.FirstOrDefault(p => p.MaCode == existingHoaDon.MaCoupon && p.MaKh == existingHoaDon.MaKh) ??
-                                   await db.ChitietmaCoupons.FirstOrDefaultAsync(p => p.MaCode == existingHoaDon.MaCoupon && p.MaKh == existingHoaDon.MaKh);
-                if(detailCoupon == null)
-                {
-                    throw new Exception($"Không tìm chi tiết mã coupon {existingHoaDon.MaCoupon}");
-                }
-                db.ChitietmaCoupons.Remove(detailCoupon);
+                    var detailCoupon = db.ChitietmaCoupons.Local.FirstOrDefault(p => p.MaCode == existingHoaDon.MaCoupon && p.MaKh == existingHoaDon.MaKh) ??
+                                       await db.ChitietmaCoupons.FirstOrDefaultAsync(p => p.MaCode == existingHoaDon.MaCoupon && p.MaKh == existingHoaDon.MaKh);
+                    if (detailCoupon == null)
+                    {
+                        throw new Exception($"Không tìm chi tiết mã coupon {existingHoaDon.MaCoupon}");
+                    }
+                    db.ChitietmaCoupons.Remove(detailCoupon);
+                }               
                 await db.SaveChangesAsync();
                 await db.Database.CommitTransactionAsync();
             }
