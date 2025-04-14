@@ -171,7 +171,18 @@
                   <div class="row mb-3">
                     <!-- Tiêu đề cùng nút in hóa đơn-->
                     <div class="d-flex justify-content-between">
-                      <h5>Chi tiết hóa đơn</h5>
+                      <h5>
+                        Chi tiết hóa đơn
+                        <select
+                          class="form-select"
+                          id="selectTypeObject"
+                          @change="filterTypeObjectInDetailOrder"
+                        >
+                          <option value="">Chọn loại đối tượng</option>
+                          <option value="product">Sản phẩm</option>
+                          <option value="combo">Combo</option>
+                        </select>
+                      </h5>
                       <div class="d-flex gap-4">
                         <i
                           class="icon-printer text-primary"
@@ -198,6 +209,11 @@
                           </tr>
                         </thead>
                         <tbody>
+                          <tr v-if="selectedOrder.chiTietHoaDonKhachs.length === 0">
+                            <td colspan="4" class="text-center">
+                              Không có sản phẩm nào trong hóa đơn này.
+                            </td>
+                          </tr>
                           <tr
                             v-for="item in selectedOrder.chiTietHoaDonKhachs"
                             :key="item.maDoiTuong"
@@ -777,6 +793,24 @@ export default {
           this.handleTableActions()
         },
       })
+    },
+    filterTypeObjectInDetailOrder() {
+      // Lọc theo loại đối tượng trong chi tiết hóa đơn
+      const typeObject = $('#selectTypeObject').val()
+      console.log(typeObject)
+      this.selectedOrder = this.orders.find((order) => order.maHd == this.selectedOrder.maHd) // Hiển thị tất cả nếu không có loại nào được chọn
+
+      if (typeObject != '') {
+        if (typeObject === 'product') {
+          this.selectedOrder.chiTietHoaDonKhachs = this.selectedOrder.chiTietHoaDonKhachs.filter(
+            (item) => item.loaiDoiTuong !== 'Combo',
+          )
+        } else if (typeObject === 'combo') {
+          this.selectedOrder.chiTietHoaDonKhachs = this.selectedOrder.chiTietHoaDonKhachs.filter(
+            (item) => item.loaiDoiTuong === 'Combo',
+          )
+        }
+      }
     },
     handleTableActions() {
       // Xử lý nút "Xem chi tiết"
