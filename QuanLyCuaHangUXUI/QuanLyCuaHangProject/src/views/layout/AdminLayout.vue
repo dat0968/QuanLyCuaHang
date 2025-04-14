@@ -183,7 +183,6 @@ components: {
                         <a class="dropdown-item" href="#"
                           ><i class="icon-wallet text-success mr-2"></i> Thanh toán</a
                         >
-                        <QrScanAndShiftManagerModal />
                         <a class="dropdown-item" href="#"
                           ><i class="icon-settings text-warning mr-2"></i> Cài đặt</a
                         >
@@ -194,6 +193,7 @@ components: {
                           ><i class="icon-power text-danger mr-2"></i> Đăng xuất</a
                         > -->
                         <!-- Đăng xuất -->
+                        <QrScanAndShiftManagerModal />
                         <LogoutAdmin />
                       </div>
                     </div>

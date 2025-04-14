@@ -71,8 +71,8 @@
         <div class="col-8 border-left">
           <h5 class="mb-3">Danh Sách Ca Kíp</h5>
           <hr />
-          <div style="height: 400px; overflow-y: auto">
-            <table class="table" id="dt-listShifts">
+          <div style="overflow-y: auto">
+            <table class="table" id="dt-listShiftsPage">
               <!-- Nội dung bảng sẽ được thêm bằng JavaScript -->
             </table>
           </div>
@@ -130,9 +130,11 @@ export default {
     }
   },
   methods: {
-    loadShifts() {
+    async loadShifts() {
+      console.log('Loading shifts...')
+
       axiosConfig
-        .getFromApi('/Shift/GetAll')
+        .getFromApi('/Shift/GetAll', ConfigsRequest.takeAuth())
         .then((response) => {
           if (response.success) {
             this.listShifts = response.data
@@ -147,28 +149,32 @@ export default {
     },
 
     initDataTable() {
+      console.log('Initializing DataTable...')
+      // Xóa DataTable cũ nếu đã tồn tại
       if (this.datatable) {
         this.datatable.destroy()
         this.datatable = null
       }
 
-      this.datatable = $('#dt-listShifts').DataTable({
+      this.datatable = $('#dt-listShiftsPage').DataTable({
         data: this.listShifts,
         columns: [
           configsDt.defaultTdToShowDetail,
           {
-            data: 'maCaKip',
-            title: 'ID',
+            data: null,
+            title: 'Thông tin Ca Làm Việc',
             className: 'text-left',
-            render: (data, type, row) =>
-              `<span class="text-secondary">[${data}]</span><br/>${row.tenCa}`,
-          },
-          {
-            data: 'soNguoiHienTai',
-            title: 'Số người làm',
-            className: 'text-center',
-            render: function (data, type, row) {
-              return `${data}/${row.soNguoiToiDa}`
+            render: (data, type, row) => {
+              const tenCa = row.tenCa || 'N/A'
+              const soNguoiHienTai = row.soNguoiHienTai || 0
+              const soNguoiToiDa = row.soNguoiToiDa || 'N/A'
+
+              return `
+                <div>
+                  <strong>${tenCa}</strong><br/>
+                  <span>Số người làm: ${soNguoiHienTai}/${soNguoiToiDa}</span>
+                </div>
+              `
             },
           },
           {
@@ -176,7 +182,9 @@ export default {
             title: 'Thời gian làm',
             className: 'text-center',
             render: function (data, type, row) {
-              return `${data}<br/> - <br/>${row.gioKetThuc}`
+              const gioBatDau = data || 'N/A'
+              const gioKetThuc = row.gioKetThuc || 'N/A'
+              return `${gioBatDau} - ${gioKetThuc}`
             },
           },
           {
@@ -186,18 +194,18 @@ export default {
             render: (data, type, row) => {
               const isActive = row.isDelete
               return `
-                  <div class="d-flex gap-1 justify-content-between">
-                    <span class="text-danger edit-shift" data-id="${data}" title="Sửa" style="cursor: pointer;">
-                      <i class="bi icon-pencil"></i>
-                    </span>
-                    <span class="text-info change-status" data-id="${row.maCaKip}" title="Kích hoạt" style="cursor: pointer;">
-                      <i class="bi ${isActive ? 'icon-close' : 'icon-check'}"></i>
-                    </span>
-                    <span class="text-primary generate-qr" data-id="${data}" title="Tải QR" style="cursor: pointer;">
-                      <i class="bi icon-pin"></i>
-                    </span>
-                  </div>
-                `
+                <div class="d-flex gap-1 justify-content-between">
+                  <span class="text-danger edit-shift" data-id="${data}" title="Sửa" style="cursor: pointer;">
+                    <i class="bi icon-pencil"></i>
+                  </span>
+                  <span class="text-info change-status" data-id="${row.maCaKip}" title="Kích hoạt" style="cursor: pointer;">
+                    <i class="bi ${isActive ? 'icon-close' : 'icon-check'}"></i>
+                  </span>
+                  <span class="text-primary generate-qr" data-id="${data}" title="Tải QR" style="cursor: pointer;">
+                    <i class="bi icon-pin"></i>
+                  </span>
+                </div>
+              `
             },
           },
         ],
@@ -209,24 +217,24 @@ export default {
       })
 
       // Gắn sự kiện cho các thao tác
-      $('#dt-listShifts tbody').on('click', '.edit-shift', (event) => {
+      $('#dt-listShiftsPage tbody').on('click', '.edit-shift', (event) => {
         const id = $(event.currentTarget).data('id')
         const shift = this.listShifts.find((s) => s.maCaKip == id)
         if (shift) this.shift = { ...shift }
       })
 
-      $('#dt-listShifts tbody').on('click', '.generate-qr', async (event) => {
+      $('#dt-listShiftsPage tbody').on('click', '.generate-qr', async (event) => {
         const id = $(event.currentTarget).data('id')
         await this.generateQRCode(id)
       })
 
-      $('#dt-listShifts tbody').on('click', '.change-status', (event) => {
+      $('#dt-listShiftsPage tbody').on('click', '.change-status', (event) => {
         const id = $(event.currentTarget).data('id')
         this.changeStatusShift(id)
       })
 
       // Gắn sự kiện hiển thị chi tiết
-      configsDt.attachDetailsControl('#dt-listShifts', this.formatDetails)
+      configsDt.attachDetailsControl('#dt-listShiftsPage', this.formatDetails)
     },
     formatDetails(rowData) {
       const currentShift = this.listShifts.find((shift) => shift.maCaKip === rowData.maCaKip)
@@ -243,22 +251,35 @@ export default {
       if (currentShift && currentShift.schedules && currentShift.schedules.length > 0) {
         const detailsHtml = `
           <div class="container">
-              <div class="row mb-3">
-                  <div class="col-6">
-                      <label>Lọc theo trạng thái:</label>
-                      <select class="status-filter form-control">
-                          <option value="">Tất cả</option>
-                          ${validStatuses.map((status) => `<option value="${status}">${status}</option>`).join('')}
-                      </select>
-                  </div>
-                  <div class="col-3 d-flex align-items-end">
-                      <button class="btn-update-status btn btn-primary w-100" title="Cập nhật trạng thái đã chọn!" disabled>
-                          Cập nhật
-                      </button>
-                  </div>
-                  <div class="col-3 d-flex justify-content-end align-items-end">
-                      <button class="toggle-view-btn btn btn-secondary">Chi tiết</button>
-                  </div>
+              <div class="row mb-3 align-items-center">
+                <!-- Bộ lọc trạng thái -->
+                <div class="col-md-6">
+                  <label for="status-filter"><strong>Lọc theo trạng thái:</strong></label>
+                  <select id="status-filter" class="status-filter form-select">
+                    <option value="">Tất cả</option>
+                    ${validStatuses.map((status) => `<option value="${status}">${status}</option>`).join('')}
+                  </select>
+                </div>
+
+                <!-- Bộ lọc ngày -->
+                <div class="col-md-6">
+                  <label for="date-filter"><strong>Lọc theo ngày:</strong></label>
+                  <input id="date-filter" type="date" class="date-filter form-control" />
+                </div>
+
+                <!-- Nút chuyển đổi -->
+                <div class="col-12 mt-3 d-flex justify-content-end gap-2">
+                  <button
+                    class="btn-update-status btn btn-primary"
+                    title="Cập nhật trạng thái đã chọn!"
+                    disabled
+                  >
+                    Cập nhật
+                  </button>
+                  <button class="toggle-view-btn btn btn-secondary">
+                    Chi tiết
+                  </button>
+                </div>
               </div>
 
               <div class="row border-left border-right justify-content-center" style="max-height: 400px; overflow-y: auto">
@@ -273,7 +294,8 @@ export default {
                           <input type="checkbox" class="employee-checkbox" data-ma-nv="${employee.maNv}" />
                           <div class="ml-2">
                               <p><strong>${employee.tenNhanVien} <span class="text-secondary">[${employee.maNv}]</span></strong></p>
-                              <p class="text-muted">Trạng thái: <span class="status-screw">${employee.trangThai}</span></p>
+                              <p class="text-muted"><strong>Trạng thái:</strong> <span class="status-screw">${employee.trangThai}</span></p>
+                              <p><strong>Ngày làm:</strong> <span class="date-screw">${formatDatetime.formatDate(employee.ngayThangNam) || 'Không có'}</span></p>
                               <div class="additional-info d-none">
                                   <div class="row mb-2">
                                       <div class="col-4">
@@ -283,7 +305,7 @@ export default {
                                           <p><strong>Giờ ra:</strong> ${formatDatetime.formatTime(employee.gioRa) || 'Không có'}</p>
                                       </div>
                                       <div class="col-4">
-                                          <p><strong>Số giờ làm:</strong> ${employee.soGioLam || 0}</p>
+                                          <p><strong>Số giờ làm:</strong> ${employee.soGioLam || 0}h</p>
                                       </div>
                                   </div>
                                   <div class="row">
@@ -306,6 +328,7 @@ export default {
           const toggleViewBtn = container.find('.toggle-view-btn')
           const employees = container.find('.employee-item')
           const statusFilter = container.find('.status-filter')
+          const dateFilter = container.find('.date-filter')
           const btnUpdateStatus = container.find('.btn-update-status')
           const selectAllCheckbox = container.find('.select-all-checkbox')
 
@@ -322,19 +345,24 @@ export default {
               employees.find('.additional-info').removeClass('d-none')
             }
           })
-
-          // Lọc trạng thái
-          statusFilter.off('change').on('change', (e) => {
-            const selectedStatus = e.target.value.trim().toLowerCase()
+          // Hàm gộp lọc trạng thái và ngày
+          const applyFilters = () => {
+            const selectedStatus = statusFilter.val()?.trim().toLowerCase() || ''
+            const selectedDate = formatDatetime.formatDate(dateFilter.val()?.trim()) || ''
             let hasVisibleEmployees = false
 
-            // Clear danh sách nhân viên trước khi lọc
+            // Lọc danh sách nhân viên
             employees.each(function () {
               const employee = $(this)
               const employeeStatus = employee.find('.status-screw').text().toLowerCase()
+              const employeeDate = employee.find('.date-screw').text().trim()
+              // console.table(employeeDate, selectedDate, employeeDate == selectedDate)
 
-              // Kiểm tra trạng thái
-              if (!selectedStatus || employeeStatus.includes(selectedStatus)) {
+              // Kiểm tra trạng thái và ngày
+              const matchesStatus = !selectedStatus || employeeStatus.includes(selectedStatus)
+              const matchesDate = !selectedDate || employeeDate === selectedDate
+
+              if (matchesStatus && matchesDate) {
                 employee.removeClass('d-none').addClass('d-flex')
                 hasVisibleEmployees = true
               } else {
@@ -342,25 +370,26 @@ export default {
               }
             })
 
-            // Bật nút "Cập nhật" nếu có trạng thái được chọn và có nhân viên hiển thị
-            const enableUpdate = !!selectedStatus && hasVisibleEmployees
-            // Kiểm tra nếu không có nhân viên nào hiển thị
+            // Hiển thị hoặc xóa thông báo nếu không có nhân viên phù hợp
             if (!hasVisibleEmployees) {
-              // Kiểm tra xem thông báo đã được thêm chưa
               if (employees.parent().find('.no-info-message').length === 0) {
-                // Thêm thông báo nếu chưa có
                 employees.parent().append(`
-                <p class="no-info-message text-center line-through w-100">
-                    Không có thông tin thuộc tình trạng được chọn
-                </p>
-                `)
+              <p class="no-info-message text-center line-through w-100">
+                Không có thông tin phù hợp với bộ lọc.
+              </p>
+            `)
               }
             } else {
-              // Xóa thông báo nếu có nhân viên hiển thị
               employees.parent().find('.no-info-message').remove()
             }
-            btnUpdateStatus.prop('disabled', !enableUpdate)
-          })
+
+            // Bật hoặc tắt nút "Cập nhật trạng thái"
+            btnUpdateStatus.prop('disabled', !hasVisibleEmployees)
+          }
+
+          // Gắn sự kiện cho bộ lọc trạng thái và ngày
+          statusFilter.off('change').on('change', applyFilters)
+          dateFilter.off('change').on('change', applyFilters)
 
           // Cập nhật trạng thái nhân viên
           btnUpdateStatus.off('click').on('click', () => {
@@ -562,7 +591,7 @@ export default {
           const response = await axiosConfig.patchToApi(`/Shift/ChangeStatusShift?id=${maCaKip}`)
           if (response.success) {
             toastr.success(response.message)
-            this.loadShifts()
+            await this.loadShifts()
           } else {
             toastr.error(response.message)
           }
@@ -588,7 +617,7 @@ export default {
             const response = await axiosConfig.deleteFromApi(`/Shift/Remove/${maCaKip}`)
             if (response.success) {
               toastr.success(response.message)
-              this.loadShifts()
+              await this.loadShifts()
             } else {
               toastr.error(response.message)
             }
@@ -619,8 +648,8 @@ export default {
       }
     },
   },
-  mounted() {
-    this.loadShifts()
+  async mounted() {
+    await this.loadShifts()
   },
 }
 </script>
