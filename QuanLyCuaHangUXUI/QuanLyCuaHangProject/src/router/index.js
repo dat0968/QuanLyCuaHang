@@ -25,11 +25,12 @@ import DetailCombo from '@/views/client/DetailCombo.vue'
 import OrderClient from '@/views/client/OrderClient.vue'
 import Cart from '@/views/client/Cart.vue'
 import TableIndex from '@/views/admin/Table/TableIndex.vue'
-import Profile from '../views/Profile/Profile.vue';
+import Profile from '../views/Profile/Profile.vue'
 import VNPAYresponse from '../views/client/VNPaySuccess.vue'
 import { ReadToken, ValidateToken } from '../Authentication_Authorization/auth.js'
 import Cookies from 'js-cookie'
 import Swal from 'sweetalert2'
+import ShiftManager from '@/views/admin/ShiftManager.vue'
 const routes = [
   {
     path: '/',
@@ -82,42 +83,54 @@ const routes = [
   {
     path: '/admin',
     component: AdminLayout,
-    children:
-      [
-        { path: '', component: dashboard },
-        { path: '/admin/Product', component: ProductIndex },
-        { path: '/admin/Bill', component: BillIndex },
-        { path: 'customer', name: 'CustomerIndex', component: CustomerIndex },
-        { path: 'combo', component: ComboIndex },
-        { path: '/admin/Coupon', name: 'Coupon', component: Coupon },
-        { path: '/admin/Table', component: TableIndex },
-        { path: 'staff', name: 'Staff', component: Staff },
-      ]
+    children: [
+      { path: '', component: dashboard },
+      { path: '/admin/Product', component: ProductIndex },
+      { path: '/admin/Bill', component: BillIndex },
+      { path: 'customer', name: 'CustomerIndex', component: CustomerIndex },
+      { path: 'combo', component: ComboIndex },
+      { path: '/admin/Coupon', name: 'Coupon', component: Coupon },
+      { path: '/admin/Table', component: TableIndex },
+      { path: 'staff', name: 'Staff', component: Staff },
+      { path: '/admin/shift-manager', component: ShiftManager },
+    ],
   },
   {
-    path: '/Login', name: 'Login', component: Login
+    path: '/Login',
+    name: 'Login',
+    component: Login,
   },
   {
-    path: '/LoginStaff', name: 'LoginStaff', component: LoginStaff
+    path: '/LoginStaff',
+    name: 'LoginStaff',
+    component: LoginStaff,
   },
   {
-    path: '/Register', name: 'Register', component: Register
+    path: '/Register',
+    name: 'Register',
+    component: Register,
   },
   {
-    path: '/ForgotPassword', name: 'ForgotPassword', component: ForgotPassword
+    path: '/ForgotPassword',
+    name: 'ForgotPassword',
+    component: ForgotPassword,
   },
   {
-    path: '/ForgotPasswordStaff', name: 'ForgotPasswordStaff', component: ForgotPasswordStaff
+    path: '/ForgotPasswordStaff',
+    name: 'ForgotPasswordStaff',
+    component: ForgotPasswordStaff,
   },
   {
-    path: '/Error/:status', name: 'Error', component: Error
+    path: '/Error/:status',
+    name: 'Error',
+    component: Error,
   },
   {
     path: '/GoogleLoginSuccess',
     name: 'GoogleLoginSuccess',
     component: GoogleLoginSuccess,
   },
-  {path: `/VNPAYresponse/:OderId/:Total`, name: 'VNPAYresponse', component: VNPAYresponse}
+  { path: `/VNPAYresponse/:OderId/:Total`, name: 'VNPAYresponse', component: VNPAYresponse },
 ]
 
 const router = createRouter({
@@ -128,27 +141,54 @@ router.beforeEach(async (to, from, next) => {
   let accessToken = Cookies.get('accessToken')
   let refreshToken = Cookies.get('refreshToken')
   const customerOnlyPages = ['/', '/cart', '/checkout', '/profile', '/client-order']
-  if(!accessToken || !refreshToken){
-
+  if (!accessToken || !refreshToken) {
+    // if (
+    //   to.path === '/Login' ||
+    //   to.path === '/Register' ||
+    //   to.path === '/ForgotPassword' ||
+    //   to.path === '/ForgotPasswordStaff' ||
+    //   to.path === '/LoginStaff' ||
+    //   to.path === '/GoogleLoginSuccess'
+    // ) {
+    //   next()
+    //   return
+    // }
+    // if (to.path.toLowerCase() === '/cart' || to.path.toLowerCase() === '/checkout') {
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: 'Phiên của bạn đã hết hoặc bạn chưa đăng nhập, vui lòng đăng nhập lại!',
+    //     timer: 2000,
+    //     showConfirmButton: false,
+    //   })
+    //   next('/Login')
+    //   return
+    // }
+    // if (to.path.toLowerCase().startsWith('/admin')) {
+    //   if (to.path !== '/Error/401') {
+    //     return next('/Error/401')
+    //   }
+    // }
+    // if (to.path !== '/Error/401') {
+    //   return next('/Error/401')
+    // }
   }
   const validateToken = await ValidateToken(accessToken, refreshToken)
   if (validateToken == true) {
     accessToken = Cookies.get('accessToken')
     const readtoken = ReadToken(accessToken)
     const role = readtoken.Role
-    if ((role !== 'Customer') && customerOnlyPages.includes(to.path)) {
+    if (role !== 'Customer' && customerOnlyPages.includes(to.path)) {
       if (to.path !== '/Error/401') {
         return next('/Error/401')
       }
     }
-    if ((role === 'Customer') && to.path.toLowerCase().startsWith('/admin')) {
+    if (role === 'Customer' && to.path.toLowerCase().startsWith('/admin')) {
       if (to.path !== '/Error/401') {
         return next('/Error/401')
       }
     }
-  }
-  else if(validateToken == false) {
-    if (to.path.toLowerCase() === '/cart'|| to.path.toLowerCase() === '/checkout') {
+  } else if (validateToken == false) {
+    if (to.path.toLowerCase() === '/cart' || to.path.toLowerCase() === '/checkout') {
       Swal.fire({
         icon: 'error',
         title: 'Phiên của bạn đã hết hoặc bạn chưa đăng nhập, vui lòng đăng nhập lại!',
@@ -156,9 +196,9 @@ router.beforeEach(async (to, from, next) => {
         showConfirmButton: false,
       })
       next('/Login')
-      return;
+      return
     }
-    if(to.path.toLowerCase().startsWith('/admin')){
+    if (to.path.toLowerCase().startsWith('/admin')) {
       if (to.path !== '/Error/401') {
         return next('/Error/401')
       }
