@@ -76,22 +76,22 @@ const showCancelReasonModal = ref(false)
 const cancelReason = ref('')
 const selectStatusCancel = ref('')
 const cancelModal = () => {
-  showCancelReasonModal.value = false;
+  showCancelReasonModal.value = false
 }
 const confirmCancel = async () => {
-  if(cancelReason.value == ''){
+  if (cancelReason.value == '') {
     Swal.fire({
-        icon: 'error',
-        title: 'Lý do hủy hoặc hoàn trả/hoàn tiền không được để trống!',
-        timer: 2000,
-        showConfirmButton: false,
-      })
-    return;
+      icon: 'error',
+      title: 'Lý do hủy hoặc hoàn trả/hoàn tiền không được để trống!',
+      timer: 2000,
+      showConfirmButton: false,
+    })
+    return
   }
   await updateStatus(selectedOrder.value, selectStatusCancel.value, cancelReason.value)
 }
 const updateStatus = async (order, newStatus, reasonCancel = '') => {
-  console.log("Đã rõ")
+  console.log('Đã rõ')
   const previousStatus = order.tinhTrang
   validateToken = await ValidateToken(accesstoken, refreshtoken)
   if (validateToken == true) {
@@ -105,20 +105,23 @@ const updateStatus = async (order, newStatus, reasonCancel = '') => {
     return
   }
   try {
-    if(maNV.value != order.maNv){
+    if (maNV.value != order.maNv && order.maNv != undefined) {
       Swal.fire({
         icon: 'error',
         title: 'Đơn hàng đã có nhân viên tiếp nhận, không thể cập nhật!',
         timer: 2000,
         showConfirmButton: false,
       })
-      return;
+      return
     }
-    if((newStatus.toLowerCase() == 'đã hủy' || newStatus.toLowerCase() == 'hoàn trả/hoàn tiền' )&& reasonCancel == ''){
-      selectStatusCancel.value = newStatus;
-      selectedOrder.value = order;
-      showCancelReasonModal.value = true;
-      return;
+    if (
+      (newStatus.toLowerCase() == 'đã hủy' || newStatus.toLowerCase() == 'hoàn trả/hoàn tiền') &&
+      reasonCancel == ''
+    ) {
+      selectStatusCancel.value = newStatus
+      selectedOrder.value = order
+      showCancelReasonModal.value = true
+      return
     }
     const response = await fetch(
       `https://localhost:7139/api/Bill/UpdateStatus/update-status/${order.maHd}`,
@@ -131,8 +134,8 @@ const updateStatus = async (order, newStatus, reasonCancel = '') => {
     if (!response.ok) {
       let errorMessage = 'Cập nhật thất bại'
       try {
-        const errorData = await response.json()
-        errorMessage = errorData.message || errorMessage
+        const errorData = await response.text()
+        errorMessage = errorData
       } catch {
         errorMessage = response.statusText || 'Không thể kết nối tới server'
       }
@@ -150,16 +153,17 @@ const updateStatus = async (order, newStatus, reasonCancel = '') => {
       showConfirmButton: false,
       timer: 1500,
     })
+    showCancelReasonModal.value = false
   } catch (error) {
     console.error('Lỗi khi cập nhật trạng thái:', error)
     Swal.fire({
       icon: 'error',
       title: 'Lỗi!',
-      text: error.message,
+      text: error,
       confirmButtonText: 'OK',
     })
     order.tinhTrang = previousStatus
-    fetchOrders();
+    fetchOrders()
   }
 }
 // const viewDetails = (order) => {
@@ -171,7 +175,9 @@ const viewDetails = async (order) => {
       `https://localhost:7139/api/Bill/GetBillDetails/details/${order.maHd}`
     )
     if (!response.ok) {
-      throw new Error(`Lỗi: ${response.status}`)
+      var responsetext = await response.text()
+      console.log(order.maHd)
+      throw new Error(`Lỗi: ${responsetext}`)
     }
     const data = await response.json()
     console.log('Dữ liệu từ API:', data) // 🔍 Kiểm tra dữ liệu trả về
@@ -260,23 +266,25 @@ const filteredStatusOptions = computed(() => {
 </script>
 
 <template>
-  
   <div class="container mt-4">
     <div v-if="showCancelReasonModal" class="modal-overlay">
-  <div class="modal-content">
-    <h5>Nhập lý do hủy/hoàn trả đơn hàng</h5>
-    <textarea v-model="cancelReason" class="form-control" rows="3" placeholder="Lý do hủy..."></textarea>
-    <div class="text-end mt-3">
-      <button class="btn btn-secondary me-2" @click="cancelModal">Hủy</button>
-      <button class="btn btn-danger" @click="confirmCancel">Xác nhận</button>
+      <div class="modal-content">
+        <h5>Nhập lý do hủy/hoàn trả đơn hàng</h5>
+        <textarea
+          v-model="cancelReason"
+          class="form-control"
+          rows="3"
+          placeholder="Lý do hủy..."
+        ></textarea>
+        <div class="text-end mt-3">
+          <button class="btn btn-secondary me-2" @click="cancelModal">Hủy</button>
+          <button class="btn btn-danger" @click="confirmCancel">Xác nhận</button>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-
-    <h2 class="mb-4 text-center">Quản lý đơn hàng</h2>
 
     <!-- Thanh tìm kiếm và lọc -->
-    <div class="row g-3 mb-3 align-items-center">
+    <div style="margin-top: 25px" class="row g-3 mb-3 align-items-center">
       <div class="col-md-3">
         <input
           v-model="searchQuery"
@@ -399,7 +407,9 @@ const filteredStatusOptions = computed(() => {
               </div>
               <div class="modal-item">
                 <label>Tên người đặt</label>
-                <div class="value">{{ selectedOrder.hoTenNguoiDat }} (id: {{ selectedOrder.maKh }})</div>
+                <div class="value">
+                  {{ selectedOrder.hoTenNguoiDat }} (id: {{ selectedOrder.maKh }})
+                </div>
               </div>
               <div class="modal-item">
                 <label>Số điện thoại</label>

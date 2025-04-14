@@ -5,6 +5,7 @@ using APIQuanLyCuaHang.Repositories.Bill;
 using APIQuanLyCuaHang.Repositories.Combo;
 using APIQuanLyCuaHang.Repositories.DetailBill;
 using APIQuanLyCuaHang.Repositories.DetailComboOrder;
+using APIQuanLyCuaHang.Repositories.DetailMaCoupon;
 using APIQuanLyCuaHang.Repositories.DetailProduct;
 using APIQuanLyCuaHang.Repository.MaCoupon;
 using Microsoft.EntityFrameworkCore;
@@ -23,8 +24,9 @@ namespace APIQuanLyCuaHang.Services
         private readonly IDetailComboOrderRepository DetailComboOrderRepository;
         private readonly IDetailProduct DetailProductRepository;
         private readonly ICartRepository CartRepository;
+        private readonly IDetailMaCoupon DetailMaCouponRepository;
         public OrderService(QuanLyCuaHangContext db, IBillRepository billRepository, IDetailBill detailBill, IMaCouponRepository MaCouponRepository, 
-        IComboRepository ComboRepository, IDetailComboOrderRepository DetailComboOrderRepository, IDetailProduct DetailProductRepository, ICartRepository CartRepository)
+        IComboRepository ComboRepository, IDetailComboOrderRepository DetailComboOrderRepository, IDetailProduct DetailProductRepository, ICartRepository CartRepository, IDetailMaCoupon DetailMaCouponRepository)
         {
             this.db = db;
             this.billRepository = billRepository;
@@ -34,6 +36,7 @@ namespace APIQuanLyCuaHang.Services
             this.DetailComboOrderRepository = DetailComboOrderRepository;
             this.DetailProductRepository = DetailProductRepository;
             this.CartRepository = CartRepository;
+            this.DetailMaCouponRepository = DetailMaCouponRepository;
         }
         public async Task<Hoadon> AddOrder(OrderRequestDTO NewOrder)
         {
@@ -59,7 +62,7 @@ namespace APIQuanLyCuaHang.Services
                     IsDelete = false,
                     PhiVanChuyen = NewOrder.PhiVanChuyen,
                     TienGoc = NewOrder.TienGoc,
-                    GiamGiaCoupon = NewOrder.GiamGiaCoupon,
+                    MaCoupon = NewOrder.MaCoupon,
                 };
                 ModelOrder = await billRepository.CreateOrder(ModelOrder);
 
@@ -145,7 +148,7 @@ namespace APIQuanLyCuaHang.Services
                         }
                     }
                 }
-                //Cộng cột số lượng đã dùng Mã Coupon ( nếu có )
+                //Cộng cột số lượng đã dùng Mã Coupon và cập nhật bảng chitietmacoupon ( nếu có )
                 if (!string.IsNullOrEmpty(NewOrder.MaCoupon))
                 {
                     var FindCoupon = await MaCouponRepository.GetById(NewOrder.MaCoupon);
@@ -153,11 +156,12 @@ namespace APIQuanLyCuaHang.Services
                     {
                         FindCoupon.SoLuongDaDung++;
                         MaCouponRepository.Update(FindCoupon);
+                        await DetailMaCouponRepository.AddDetailMacoupon(FindCoupon.MaCode, NewOrder.MaKh);
                     }
                     else
                     {
                         throw new Exception("CouponCode not Found");
-                    }
+                    }                  
                 }
 
                 await CartRepository.RemoveAllCart(NewOrder.MaKh);

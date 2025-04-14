@@ -1,6 +1,7 @@
 ﻿using APIQuanLyCuaHang.DTO;
 using APIQuanLyCuaHang.Models;
 using APIQuanLyCuaHang.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace APIQuanLyCuaHang.Repositories.VNPAY
 {
@@ -23,7 +24,16 @@ namespace APIQuanLyCuaHang.Repositories.VNPAY
             var tick = DateTime.Now.Ticks.ToString();
             var pay = new VnPayLibrary();
             var urlCallBack = _configuration["Vnpay:ReturnUrl"];
-            var total = model.TienGoc + model.PhiVanChuyen - model.GiamGiaCoupon;
+            var GiamGiaCoupon = 0;
+            if (!string.IsNullOrEmpty(model.MaCoupon))
+            {
+                var findCoupon = await db.MaCoupons.AsNoTracking().FirstOrDefaultAsync(p => p.MaCode == model.MaCoupon);
+                if (findCoupon != null)
+                {
+                    GiamGiaCoupon = (int)(findCoupon.SoTienGiam.Value == null ? (findCoupon.PhanTramGiam.Value == null ? 0 : model.TienGoc - findCoupon.PhanTramGiam.Value) : 0);
+                }
+            }
+            var total = model.TienGoc + model.PhiVanChuyen - GiamGiaCoupon;
             pay.AddRequestData("vnp_Version", _configuration["Vnpay:Version"]);
             pay.AddRequestData("vnp_Command", _configuration["Vnpay:Command"]);
             pay.AddRequestData("vnp_TmnCode", _configuration["Vnpay:TmnCode"]);

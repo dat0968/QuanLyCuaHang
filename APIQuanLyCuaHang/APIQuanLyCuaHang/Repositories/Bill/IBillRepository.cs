@@ -11,6 +11,7 @@ namespace APIQuanLyCuaHang.Repositories.Bill
         Task UpdateStatus(int maHd, string tinhTrang, int? maNv, string? lydohuy);
         Task<(IEnumerable<HoaDonDTO>, int)> GetFilteredBill(string? maHD, string? hinhThucTt, string? tinhTrang, int page, int pageSize);
         Task<HoaDonDTOWithDetails?> GetBillDetails(int maHd);
+        Task CancelOrder(int oderId, string selectedCancelStatus, string reasonCancel);
     }
     public class HoaDonDTOWithDetails : HoaDonDTO
     {

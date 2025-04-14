@@ -30,7 +30,7 @@ namespace APIQuanLyCuaHang.DTO
 
         public string HoTenNguoiNhan { get; set; } = null!;
         public string HoTenNguoiDat { get; set; } = null!;
-        public string HoTenNv { get; set; } = null!;
+        public string? HoTenNv { get; set; }
 
         public string Sdt { get; set; } = null!;
 

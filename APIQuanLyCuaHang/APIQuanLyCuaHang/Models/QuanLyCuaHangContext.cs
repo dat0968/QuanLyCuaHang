@@ -264,6 +264,9 @@ public partial class QuanLyCuaHangContext : DbContext
             entity.HasOne(d => d.MaNvNavigation).WithMany(p => p.Hoadons)
                 .HasForeignKey(d => d.MaNv)
                 .HasConstraintName("FK__HOADON__MaNV__59FA5E80");
+
+            entity.HasOne(d => d.MaCouponNavigation).WithMany(p => p.Hoadons)
+                .HasForeignKey(d => d.MaCoupon);
         });
 
         modelBuilder.Entity<Khachhang>(entity =>

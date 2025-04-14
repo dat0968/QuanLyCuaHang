@@ -60,7 +60,7 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                             IsDelete = aOrder.IsDelete,
                             PhiVanChuyen = aOrder.PhiVanChuyen,
                             TienGoc = aOrder.TienGoc,
-                            GiamGiaCoupon = aOrder.GiamGiaCoupon,
+                            //GiamGiaCoupon = aOrder.GiamGiaCoupon,
                             ChiTietHoaDonKhachs = new List<ChiTietHoaDonKhachDTO>() // Khởi tạo danh sách chi tiết hóa đơn
                         };
 
