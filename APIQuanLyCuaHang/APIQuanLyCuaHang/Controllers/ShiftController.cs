@@ -22,7 +22,7 @@ namespace APIQuanLyCuaHang.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            await UpdateDataIfNeededAsync();
+            // await UpdateDataIfNeededAsync();
             var result = await _unit.CaKips.GetAllAsync();
             return Ok(result);
         }
