@@ -141,54 +141,27 @@ router.beforeEach(async (to, from, next) => {
   let accessToken = Cookies.get('accessToken')
   let refreshToken = Cookies.get('refreshToken')
   const customerOnlyPages = ['/', '/cart', '/checkout', '/profile', '/client-order']
-  if (!accessToken || !refreshToken) {
-    // if (
-    //   to.path === '/Login' ||
-    //   to.path === '/Register' ||
-    //   to.path === '/ForgotPassword' ||
-    //   to.path === '/ForgotPasswordStaff' ||
-    //   to.path === '/LoginStaff' ||
-    //   to.path === '/GoogleLoginSuccess'
-    // ) {
-    //   next()
-    //   return
-    // }
-    // if (to.path.toLowerCase() === '/cart' || to.path.toLowerCase() === '/checkout') {
-    //   Swal.fire({
-    //     icon: 'error',
-    //     title: 'Phiên của bạn đã hết hoặc bạn chưa đăng nhập, vui lòng đăng nhập lại!',
-    //     timer: 2000,
-    //     showConfirmButton: false,
-    //   })
-    //   next('/Login')
-    //   return
-    // }
-    // if (to.path.toLowerCase().startsWith('/admin')) {
-    //   if (to.path !== '/Error/401') {
-    //     return next('/Error/401')
-    //   }
-    // }
-    // if (to.path !== '/Error/401') {
-    //   return next('/Error/401')
-    // }
+  if(!accessToken || !refreshToken){
+
   }
   const validateToken = await ValidateToken(accessToken, refreshToken)
   if (validateToken == true) {
     accessToken = Cookies.get('accessToken')
     const readtoken = ReadToken(accessToken)
     const role = readtoken.Role
-    if (role !== 'Customer' && customerOnlyPages.includes(to.path)) {
+    if ((role !== 'Customer') && customerOnlyPages.includes(to.path)) {
       if (to.path !== '/Error/401') {
         return next('/Error/401')
       }
     }
-    if (role === 'Customer' && to.path.toLowerCase().startsWith('/admin')) {
+    if ((role === 'Customer') && to.path.toLowerCase().startsWith('/admin')) {
       if (to.path !== '/Error/401') {
         return next('/Error/401')
       }
     }
-  } else if (validateToken == false) {
-    if (to.path.toLowerCase() === '/cart' || to.path.toLowerCase() === '/checkout') {
+  }
+  else if(validateToken == false) {
+    if (to.path.toLowerCase() === '/cart'|| to.path.toLowerCase() === '/checkout') {
       Swal.fire({
         icon: 'error',
         title: 'Phiên của bạn đã hết hoặc bạn chưa đăng nhập, vui lòng đăng nhập lại!',
@@ -196,9 +169,9 @@ router.beforeEach(async (to, from, next) => {
         showConfirmButton: false,
       })
       next('/Login')
-      return
+      return;
     }
-    if (to.path.toLowerCase().startsWith('/admin')) {
+    if(to.path.toLowerCase().startsWith('/admin')){
       if (to.path !== '/Error/401') {
         return next('/Error/401')
       }

@@ -34,7 +34,7 @@ namespace APIQuanLyCuaHang.Controllers
         {
             try
             {
-                await _billRepository.UpdateStatus(id, request.TinhTrang, request.MaNv);
+                await _billRepository.UpdateStatus(id, request.TinhTrang, request.MaNv, request.LyDoHuy);
                 return Ok(new { message = "Cập nhật trạng thái hóa đơn thành công!" });
             }
             catch (Exception ex)
@@ -47,11 +47,12 @@ namespace APIQuanLyCuaHang.Controllers
         {
             public string TinhTrang { get; set; }
             public int? MaNv { get; set; }
+            public string? LyDoHuy { get; set; }
         }
         [HttpGet("search")]
-        public async Task<IActionResult> GetFiltered([FromQuery] string? hoTen, [FromQuery] string? hinhThucTt, [FromQuery] string? tinhTrang, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        public async Task<IActionResult> GetFiltered([FromQuery] string? maHD, [FromQuery] string? hinhThucTt, [FromQuery] string? tinhTrang, [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
-            var (orders, totalItems) = await _billRepository.GetFilteredBill(hoTen, hinhThucTt, tinhTrang, page, pageSize);
+            var (orders, totalItems) = await _billRepository.GetFilteredBill(maHD, hinhThucTt, tinhTrang, page, pageSize);
             return Ok(new { orders, totalItems });
         }
         [HttpGet("details/{id}")]
