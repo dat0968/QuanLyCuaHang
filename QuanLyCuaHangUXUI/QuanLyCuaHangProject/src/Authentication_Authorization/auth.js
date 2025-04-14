@@ -31,7 +31,7 @@ export async function ValidateToken(accessToken, refreshToken) {
                     hoTen: readtoken.Name,
                     sdt: readtoken.Phone,
                     vaiTro: readtoken.Role,
-                    readtoken: refreshToken,
+                    refreshToken: refreshToken,
                 }
                 const response = await fetch(`https://localhost:7139/api/Account/RenewAccessToken`, {
                     method: 'POST',
@@ -41,7 +41,8 @@ export async function ValidateToken(accessToken, refreshToken) {
                     body: JSON.stringify(content)
                 })
                 if (!response.ok) {
-                    throw new Error('Lỗi ' + response.status)
+                    const errorData = await response.text();    
+                    throw new Error(`Lỗi ${response.status}: ${errorData || 'Không thể làm mới token'}`);
                 }
                 const result = await response.json()
                 if (result.success) {

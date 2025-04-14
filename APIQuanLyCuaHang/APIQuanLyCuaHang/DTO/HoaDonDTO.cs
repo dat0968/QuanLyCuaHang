@@ -28,7 +28,8 @@ namespace APIQuanLyCuaHang.DTO
 
         public string? MoTa { get; set; }
 
-        public string HoTen { get; set; } = null!;
+        public string HoTenNguoiNhan { get; set; } = null!;
+        public string HoTenNguoiDat { get; set; } = null!;
         public string HoTenNv { get; set; } = null!;
 
         public string Sdt { get; set; } = null!;

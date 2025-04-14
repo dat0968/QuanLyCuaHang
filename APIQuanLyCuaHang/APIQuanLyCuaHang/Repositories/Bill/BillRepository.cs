@@ -30,6 +30,7 @@ namespace APIQuanLyCuaHang.Repositories.Bill
         {
             return await db.Hoadons
                 .Include(p => p.MaNvNavigation)
+                .Include(p => p.MaKhNavigation)
                 .Include(p => p.Chitietcombohoadons)
                 .ThenInclude(c => c.MaComboNavigation)
                 .Select(hd => new HoaDonDTO
@@ -45,7 +46,8 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                     HinhThucTt = hd.HinhThucTt,
                     TinhTrang = hd.TinhTrang,
                     MoTa = hd.MoTa,
-                    HoTen = hd.HoTen,
+                    HoTenNguoiNhan = hd.HoTen,
+                    HoTenNguoiDat = hd.MaKhNavigation.HoTen,
                     HoTenNv = hd.MaNvNavigation.HoTen,
                     Sdt = hd.Sdt,
                     LyDoHuy = hd.LyDoHuy,
@@ -70,6 +72,7 @@ namespace APIQuanLyCuaHang.Repositories.Bill
         {
             var hd = await db.Hoadons.AsNoTracking()
                 .Include(p => p.MaNvNavigation)
+                .Include(p => p.MaKhNavigation)
                 .Include(p => p.Chitietcombohoadons)
                 .ThenInclude(c => c.MaComboNavigation)
                 .FirstOrDefaultAsync(p => p.MaHd == id);
@@ -88,7 +91,8 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                 HinhThucTt = hd.HinhThucTt,
                 TinhTrang = hd.TinhTrang,
                 MoTa = hd.MoTa,
-                HoTen = hd.HoTen,
+                HoTenNguoiNhan = hd.HoTen,
+                HoTenNguoiDat = hd.MaKhNavigation.HoTen,
                 HoTenNv = hd.MaNvNavigation.HoTen,
                 Sdt = hd.Sdt,
                 LyDoHuy = hd.LyDoHuy,
@@ -107,17 +111,18 @@ namespace APIQuanLyCuaHang.Repositories.Bill
             };
         }
         
-        public async Task<(IEnumerable<HoaDonDTO>, int)> GetFilteredBill(string? hoTen, string? hinhThucTt, string? tinhTrang, int page, int pageSize)
+        public async Task<(IEnumerable<HoaDonDTO>, int)> GetFilteredBill(string? maHD, string? hinhThucTt, string? tinhTrang, int page, int pageSize)
         {
             var query = db.Hoadons
                 .Include(p => p.MaNvNavigation)
+                .Include(p => p.MaKhNavigation)
                 .Include(p => p.Chitietcombohoadons)
                 .ThenInclude(c => c.MaComboNavigation)
                 .AsQueryable();
 
-            if (!string.IsNullOrEmpty(hoTen))
+            if (!string.IsNullOrEmpty(maHD))
             {
-                query = query.Where(hd => hd.HoTen.Contains(hoTen));
+                query = query.Where(hd => hd.MaHd.ToString().Contains(maHD));
             }
 
             if (!string.IsNullOrEmpty(hinhThucTt))
@@ -139,7 +144,10 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                 .Select(hd => new HoaDonDTO
                 {
                     MaHd = hd.MaHd,
-                    HoTen = hd.HoTen,
+                    MaKh = hd.MaKh,
+                    MaNv = hd.MaNv,
+                    HoTenNguoiNhan = hd.HoTen,
+                    HoTenNguoiDat = hd.MaKhNavigation.HoTen,
                     HoTenNv = hd.MaNvNavigation.HoTen,
                     Sdt = hd.Sdt,
                     DiaChiNhanHang = hd.DiaChiNhanHang,
@@ -167,7 +175,7 @@ namespace APIQuanLyCuaHang.Repositories.Bill
         }
 
         // Cập nhật tình trạng hóa đơn
-        public async Task UpdateStatus(int maHd, string tinhTrang, int? maNv)
+        public async Task UpdateStatus(int maHd, string tinhTrang, int? maNv, string? lydohuy)
         {
             var existingHoaDon = await db.Hoadons.FindAsync(maHd);
             if (existingHoaDon == null)
@@ -179,14 +187,18 @@ namespace APIQuanLyCuaHang.Repositories.Bill
             {
                 throw new Exception($"Hóa đơn với trạng thái '{existingHoaDon.TinhTrang}' không thể được cập nhật.");
             }
-            if (existingHoaDon.MaNv.HasValue && existingHoaDon.MaNv != maNv)
-            {
-                throw new Exception("Đơn hàng đã có nhân viên tiếp nhận, không thể thay đổi người tiếp nhận.");
-            }
+            //if (existingHoaDon.MaNv.HasValue && existingHoaDon.MaNv != maNv)
+            //{
+            //    throw new Exception("Đơn hàng đã có nhân viên tiếp nhận, không thể cập nhật");
+            //}
 
             if (tinhTrang.ToLower() != "Chờ xác nhận".ToLower())
             {
                 existingHoaDon.MaNv = maNv;
+            }
+            if((tinhTrang.ToLower() == "Đã hủy".ToLower() || tinhTrang.ToLower() == "Hoàn trả/Hoàn tiền".ToLower()) && !string.IsNullOrEmpty(lydohuy))
+            {
+                existingHoaDon.LyDoHuy = lydohuy;
             }
             existingHoaDon.TinhTrang = tinhTrang;
             await db.SaveChangesAsync();
@@ -203,6 +215,7 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                 .Include(hd => hd.Cthoadons)
                 .ThenInclude(c => c.Combo)
                 .Include(p => p.MaNvNavigation)
+                .Include(p => p.MaKhNavigation)
                 .Include(p => p.Chitietcombohoadons)
                 .ThenInclude(c => c.MaComboNavigation)
             .Include(p => p.Chitietcombohoadons)
@@ -220,6 +233,7 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                 MaHd = bill.MaHd,
                 MaKh = bill.MaKh,
                 MaNv = bill.MaNv,
+                HoTenNv = bill.MaNvNavigation.HoTen,
                 DiaChiNhanHang = bill.DiaChiNhanHang,
                 NgayTao = bill.NgayTao,
                 BatDauGiao = bill.BatDauGiao,
@@ -228,7 +242,8 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                 HinhThucTt = bill.HinhThucTt,
                 TinhTrang = bill.TinhTrang,
                 MoTa = bill.MoTa,
-                HoTen = bill.HoTen,
+                HoTenNguoiNhan = bill.HoTen,
+                HoTenNguoiDat = bill.MaKhNavigation.HoTen,
                 Sdt = bill.Sdt,
                 LyDoHuy = bill.LyDoHuy,
                 PhiVanChuyen = bill.PhiVanChuyen,

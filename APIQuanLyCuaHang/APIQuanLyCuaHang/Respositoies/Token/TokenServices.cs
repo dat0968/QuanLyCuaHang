@@ -27,7 +27,7 @@ namespace APIQuanLyCuaHang.Respositoies.Token
                     new Claim(JwtRegisteredClaimNames.Jti, radomIDToken.ToString()),
                     new Claim("PhoneNumber", model.SDT ?? ""),
                     new Claim("FullName", model.HoTen),
-                    new Claim(ClaimTypes.Role, model.VaiTro),
+                    new Claim(ClaimTypes.Role, model.VaiTro ?? "Customer"),
                     new Claim("Avatar", model.Hinh ?? ""),
                 }),
                 Expires = DateTime.UtcNow.AddHours(2),

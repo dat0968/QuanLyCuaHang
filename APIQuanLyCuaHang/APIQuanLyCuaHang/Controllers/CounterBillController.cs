@@ -67,7 +67,7 @@ namespace APIQuanLyCuaHang.Controllers
                     HinhThucTt = createdBill.HinhThucTt,
                     TienGoc = createdBill.TienGoc,
                     PhiVanChuyen = createdBill.PhiVanChuyen,
-                    HoTen = "Khách tại quầy",
+                    HoTenNguoiNhan = "Khách tại quầy",
                     Sdt = ""
                 });
             }

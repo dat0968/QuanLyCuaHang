@@ -3,6 +3,7 @@ import { ref, onMounted, watch, computed } from 'vue'
 import Swal from 'sweetalert2'
 import { jwtDecode } from 'jwt-decode'
 import Cookies from 'js-cookie'
+import { ReadToken, ValidateToken } from '../../../Authentication_Authorization/auth.js'
 const immutableStatuses = ['Đã hủy', 'Hoàn trả/Hoàn tiền']
 
 const orders = ref([])
@@ -14,36 +15,40 @@ const currentPage = ref(1)
 const pageSize = 10
 const selectedOrder = ref(null)
 const isLoading = ref(false)
-const userInfo = ref(null)
 const statusOptions = [
   'Đang xử lý VNPAY',
   'Chờ xác nhận',
   'Đã xác nhận',
   'Đã giao cho đơn vị vận chuyển',
-  'Đã Nhận',
+  'Đã nhận',
   'Đã thanh toán',
   'Đã hủy',
   'Hoàn trả/Hoàn tiền',
 ]
 const chitietcombohoadonDTOs = ref([])
 const paymentOptions = ['COD', 'VNPAY']
-const token = ref(Cookies.get('accessToken'))
-try {
-  if (token == null) {
-    throw new Error('Error')
-  }
-  userInfo.value = jwtDecode(token) // Giải mã Base64
-  console.log(userInfo.value)
-} catch (error) {
-  console.error('Lỗi khi giải mã token:', error.message)
-}
+let accesstoken = Cookies.get('accessToken')
+const refreshtoken = Cookies.get('refreshToken')
+let validateToken = true
+const maNV = ref(-1)
 const fetchOrders = async () => {
   isLoading.value = true
+  validateToken = await ValidateToken(accesstoken, refreshtoken)
+  if (validateToken == true) {
+    accesstoken = Cookies.get('accessToken')
+  }
+  var readtoken = ReadToken(accesstoken)
+  if (readtoken) {
+    maNV.value = readtoken.IdUser
+  } else {
+    router.push('/Login')
+    return
+  }
   try {
     const params = new URLSearchParams({
       page: currentPage.value,
       pageSize,
-      ...(searchQuery.value && { hoTen: searchQuery.value }),
+      ...(searchQuery.value && { maHd: searchQuery.value }),
       ...(paymentFilter.value && { hinhThucTt: paymentFilter.value }),
       ...(statusFilter.value && { tinhTrang: statusFilter.value }),
     })
@@ -67,20 +72,59 @@ const fetchOrders = async () => {
     isLoading.value = false
   }
 }
-const updateStatus = async (order, newStatus) => {
+const showCancelReasonModal = ref(false)
+const cancelReason = ref('')
+const selectStatusCancel = ref('')
+const cancelModal = () => {
+  showCancelReasonModal.value = false;
+}
+const confirmCancel = () => {
+  if(cancelReason.value == ''){
+    Swal.fire({
+        icon: 'error',
+        title: 'Lý do hủy hoặc hoàn trả/hoàn tiền không được để trống!',
+        timer: 2000,
+        showConfirmButton: false,
+      })
+    return;
+  }
+  updateStatus(selectedOrder.value, selectStatusCancel.value, cancelReason.value)
+}
+const updateStatus = async (order, newStatus, reasonCancel = '') => {
   const previousStatus = order.tinhTrang
+  validateToken = await ValidateToken(accesstoken, refreshtoken)
+  if (validateToken == true) {
+    accesstoken = Cookies.get('accessToken')
+  }
+  var readtoken = ReadToken(accesstoken)
+  if (readtoken) {
+    maNV.value = readtoken.IdUser
+  } else {
+    router.push('/Login')
+    return
+  }
   try {
-    // Kiểm tra xem userInfo.value có tồn tại và có sub không
-    if (!userInfo.value || !userInfo.value.sub) {
-      throw new Error('Không tìm thấy thông tin nhân viên, vui lòng đăng nhập lại')
+    if(maNV.value != order.maNv){
+      Swal.fire({
+        icon: 'error',
+        title: 'Đơn hàng đã có nhân viên tiếp nhận, không thể cập nhật!',
+        timer: 2000,
+        showConfirmButton: false,
+      })
+      return;
     }
-    const maNv = parseInt(userInfo.value.sub) // Chuyển sub thành số nguyên (100)
+    if(newStatus.toLowerCase() == 'đã hủy' || newStatus.toLowerCase() == 'hoàn trả/hoàn tiền'){
+      selectStatusCancel.value = newStatus;
+      selectedOrder.value = order;
+      showCancelReasonModal.value = true;
+      return;
+    }
     const response = await fetch(
       `https://localhost:7139/api/Bill/UpdateStatus/update-status/${order.maHd}`,
       {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tinhTrang: newStatus, maNv: maNv }),
+        body: JSON.stringify({ tinhTrang: newStatus, maNv: maNV.value, lyDoHuy: reasonCancel }),
       }
     )
     if (!response.ok) {
@@ -96,9 +140,8 @@ const updateStatus = async (order, newStatus) => {
 
     const result = await response.json()
     order.tinhTrang = newStatus
-    order.maNv = maNv
+    order.maNv = maNV.value
 
-    // order.maNv =
     Swal.fire({
       icon: 'success',
       title: 'Thành công!',
@@ -108,13 +151,14 @@ const updateStatus = async (order, newStatus) => {
     })
   } catch (error) {
     console.error('Lỗi khi cập nhật trạng thái:', error)
-    order.tinhTrang = previousStatus
     Swal.fire({
       icon: 'error',
       title: 'Lỗi!',
       text: error.message,
       confirmButtonText: 'OK',
     })
+    order.tinhTrang = previousStatus
+    fetchOrders();
   }
 }
 // const viewDetails = (order) => {
@@ -132,7 +176,6 @@ const viewDetails = async (order) => {
     console.log('Dữ liệu từ API:', data) // 🔍 Kiểm tra dữ liệu trả về
     selectedOrder.value = data
     chitietcombohoadonDTOs.value = selectedOrder.value.chitietcombohoadonDTOs
-    console.log(chitietcombohoadonDTOs.value)
   } catch (error) {
     console.error('Lỗi khi lấy chi tiết đơn hàng:', error)
   }
@@ -163,15 +206,72 @@ onMounted(() => {
 const filteredStatusOptions = computed(() => {
   return (tinhTrang) => {
     if (tinhTrang?.toLowerCase() === 'chờ xác nhận') {
-      return ['Chờ xác nhận', 'Đã hủy'];
+      return statusOptions.filter((status) => !['đang xử lý vnpay'].includes(status.toLowerCase()))
     }
-    return statusOptions;
-  };
+    if (tinhTrang?.toLowerCase() === 'đã xác nhận') {
+      return statusOptions.filter(
+        (status) =>
+          !['chờ xác nhận', 'đang xử lý vnpay', 'hoàn trả/hoàn tiền'].includes(status.toLowerCase())
+      )
+    }
+    if (tinhTrang?.toLowerCase() === 'đã giao cho đơn vị vận chuyển') {
+      return statusOptions.filter(
+        (status) =>
+          !['chờ xác nhận', 'đã xác nhận', 'đang xử lý vnpay', 'hoàn trả/hoàn tiền'].includes(
+            status.toLowerCase()
+          )
+      )
+    }
+    if (tinhTrang?.toLowerCase() === 'đã nhận') {
+      return statusOptions.filter(
+        (status) =>
+          ![
+            'chờ xác nhận',
+            'đã xác nhận',
+            'đã giao cho đơn vị vận chuyển',
+            'đang xử lý vnpay',
+            'hoàn trả/hoàn tiền',
+          ].includes(status.toLowerCase())
+      )
+    }
+    if (tinhTrang?.toLowerCase() === 'đã thanh toán') {
+      return statusOptions.filter(
+        (status) =>
+          ![
+            'chờ xác nhận',
+            'đã xác nhận',
+            'đã giao cho đơn vị vận chuyển',
+            'đã nhận',
+            'đang xử lý vnpay',
+            'đã hủy',
+          ].includes(status.toLowerCase())
+      )
+    }
+    if (tinhTrang?.toLowerCase() === 'đã hủy') {
+      return ['Đã hủy']
+    }
+    if (tinhTrang?.toLowerCase() === 'hoàn trả/hoàn tiền') {
+      return ['Hoàn trả/Hoàn tiền']
+    }
+    return statusOptions
+  }
 })
 </script>
 
 <template>
+  
   <div class="container mt-4">
+    <div v-if="showCancelReasonModal" class="modal-overlay">
+  <div class="modal-content">
+    <h5>Nhập lý do hủy/hoàn trả đơn hàng</h5>
+    <textarea v-model="cancelReason" class="form-control" rows="3" placeholder="Lý do hủy..."></textarea>
+    <div class="text-end mt-3">
+      <button class="btn btn-secondary me-2" @click="cancelModal">Hủy</button>
+      <button class="btn btn-danger" @click="confirmCancel">Xác nhận hủy</button>
+    </div>
+  </div>
+</div>
+
     <h2 class="mb-4 text-center">Quản lý đơn hàng</h2>
 
     <!-- Thanh tìm kiếm và lọc -->
@@ -181,7 +281,7 @@ const filteredStatusOptions = computed(() => {
           v-model="searchQuery"
           type="text"
           class="form-control shadow-sm border-primary bg-white"
-          placeholder="🔍 Nhập tên khách hàng..."
+          placeholder="🔍 Nhập mã đơn hàng..."
         />
       </div>
       <div class="col-md-3">
@@ -211,7 +311,7 @@ const filteredStatusOptions = computed(() => {
         <thead class="table-dark text-center">
           <tr>
             <th>Mã hóa đơn</th>
-            <th>Tên khách hàng</th>
+            <th>Khách hàng</th>
             <th>Hình thức thanh toán</th>
             <th>Trạng thái</th>
             <th>Tổng tiền</th>
@@ -221,7 +321,7 @@ const filteredStatusOptions = computed(() => {
         <tbody>
           <tr v-for="order in orders" :key="order.maHd">
             <td class="text-center">{{ order.maHd }}</td>
-            <td class="text-center">{{ order.hoTen }}</td>
+            <td class="text-center">{{ order.hoTenNguoiDat }} (id: {{ order.maKh }})</td>
             <td class="text-center">{{ order.hinhThucTt }}</td>
             <td class="text-center">
               <select
@@ -230,7 +330,11 @@ const filteredStatusOptions = computed(() => {
                 @change="updateStatus(order, $event.target.value)"
                 :disabled="immutableStatuses.includes(order.tinhTrang)"
               >
-                <option v-for="status in filteredStatusOptions(order.tinhTrang)" :key="status" :value="status">
+                <option
+                  v-for="status in filteredStatusOptions(order.tinhTrang)"
+                  :key="status"
+                  :value="status"
+                >
                   {{ status }}
                 </option>
               </select>
@@ -289,8 +393,12 @@ const filteredStatusOptions = computed(() => {
             <!-- Cột 1 -->
             <div class="modal-column">
               <div class="modal-item">
-                <label>Tên khách hàng</label>
-                <div class="value">{{ selectedOrder.hoTen }}</div>
+                <label>Tên người nhận</label>
+                <div class="value">{{ selectedOrder.hoTenNguoiNhan }}</div>
+              </div>
+              <div class="modal-item">
+                <label>Tên người đặt</label>
+                <div class="value">{{ selectedOrder.hoTenNguoiDat }} (id: {{ selectedOrder.maKh }})</div>
               </div>
               <div class="modal-item">
                 <label>Số điện thoại</label>
@@ -332,7 +440,7 @@ const filteredStatusOptions = computed(() => {
             <div class="modal-column">
               <div class="modal-item">
                 <label>Tên nhân viên</label>
-                <div class="value">{{ selectedOrder.hoTenNv }}</div>
+                <div class="value">{{ selectedOrder.hoTenNv }} (ID: {{ selectedOrder.maNv }})</div>
               </div>
               <div class="modal-item">
                 <label>Ngày tạo</label>
@@ -421,7 +529,7 @@ const filteredStatusOptions = computed(() => {
                       >- {{ item.giamGia != null && item.giamGia > 0 ? item.giamGia : 0 }} VNĐ</span
                     >
                   </td>
-                  <td>{{ item.tongTien }}</td>
+                  <td>{{ item.tienGoc - item.giamGia }}</td>
                 </tr>
               </tbody>
             </table>
@@ -463,7 +571,7 @@ const filteredStatusOptions = computed(() => {
                       <li v-for="(detail, index) in chitietcombohoadonDTOs" :key="index">
                         <div><strong>Tên SP:</strong> {{ detail.tenSpCombo }}</div>
                         <div v-if="detail.kichThuoc || detail.huongVi">
-                          <strong>Biến thể:</strong> <br>
+                          <strong>Biến thể:</strong> <br />
                           <span v-if="detail.kichThuoc">Kích thước: {{ detail.kichThuoc }}</span>
                           <span v-if="detail.kichThuoc && detail.huongVi"> | </span>
                           <span v-if="detail.huongVi">Hương vị: {{ detail.huongVi }}</span>

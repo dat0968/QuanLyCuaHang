@@ -69,7 +69,7 @@ namespace APIQuanLyCuaHang.Repositories.AtCounterBill
                 HinhThucTt = bill.HinhThucTt,
                 TinhTrang = bill.TinhTrang,
                 MoTa = bill.MoTa,
-                HoTen = bill.HoTen,
+                HoTenNguoiNhan = bill.HoTen,
                 Sdt = bill.Sdt,
                 LyDoHuy = bill.LyDoHuy,
                 PhiVanChuyen = bill.PhiVanChuyen,
