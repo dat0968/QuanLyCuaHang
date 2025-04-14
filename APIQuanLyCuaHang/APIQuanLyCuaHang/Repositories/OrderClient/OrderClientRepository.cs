@@ -69,20 +69,21 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                         {
                             foreach (var aDetailProductOrder in aOrder.Cthoadons)
                             {
+                                var testInfo = aDetailProductOrder.MaCtspNavigation;
                                 ChiTietHoaDonKhachDTO configDetailDTO = new ChiTietHoaDonKhachDTO()
                                 {
                                     MaHd = aDetailProductOrder.MaHd,
                                     MaDoiTuong = aDetailProductOrder.MaCtsp ?? 0,
                                     LoaiDoiTuong = "Sản phẩm",
                                     SoLuong = aDetailProductOrder.SoLuong,
-                                    KichThuoc = aDetailProductOrder.MaCtspNavigation?.KichThuoc ?? "Không có",
-                                    HuongVi = aDetailProductOrder.MaCtspNavigation?.HuongVi ?? "Không có",
-                                    DonGia = aDetailProductOrder.DonGia,
-                                    TenDoiTuong = aDetailProductOrder.MaCtspNavigation.MaSpNavigation.TenSanPham,
-                                    HinhAnh = aDetailProductOrder.MaCtspNavigation.Hinhanhs.FirstOrDefault()?.TenHinhAnh ?? "",
-                                    MoTa = aDetailProductOrder.MaCtspNavigation.MaSpNavigation.MoTa
+                                    KichThuoc = testInfo == null ? "" : testInfo?.KichThuoc ?? "Không có",
+                                    HuongVi = testInfo == null ? "" :testInfo?.HuongVi ?? "Không có",
+                                    DonGia = testInfo == null ? 1m :aDetailProductOrder.DonGia,
+                                    TenDoiTuong = testInfo == null ? "" :testInfo?.MaSpNavigation?.TenSanPham ?? "Noname",
+                                    HinhAnh = testInfo == null ? "" :testInfo?.Hinhanhs.FirstOrDefault()?.TenHinhAnh ?? "",
+                                    MoTa = testInfo == null ? "" : testInfo?.MaSpNavigation.MoTa
                                 };
-                                configDataDTO.ChiTietHoaDonKhachs.Add(configDetailDTO); // Thêm chi tiết vào danh sách
+                                configDataDTO.ChiTietHoaDonKhachs.Add(configDetailDTO); // Thêm chi tiết vào danh sách Hmmm
                             }
                         }
 
@@ -135,7 +136,7 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                 orderId ??= orderId ?? throw new Exception("Không nhận được mã đơn hàng.");
                 statusChange ??= statusChange ?? throw new Exception("Không xác định được trạng thái muốn đổi.");
 
-                var originData = await base.GetAsync(x => x.MaHd == orderId) ?? throw new Exception("Đơn hàng không tồn tại.");
+                var originData = await base.GetAsync(x => x.MaKh == userId && x.MaHd == orderId) ?? throw new Exception("Đơn hàng không tồn tại.");
 
                 // Kiểm tra trạng thái hiện tại và trạng thái muốn chuyển đổi
                 if (originData.TinhTrang == statusChange)
@@ -143,77 +144,11 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                     throw new Exception("Trạng thái không thay đổi.");
                 }
 
-                // Logic chuyển đổi trạng thái
-                switch (originData.TinhTrang)
+                // Xử lí thay đổi trạng thái đơn hàng và có hoàn lại sản phẩm hay không
+                if (TrangThaiDonHang.ValidateAndCancelOrderForCustomer(originData, statusChange, reasonCancel))
                 {
-                    case TrangThaiDonHang.ChoThanhToan:
-                        if (statusChange == TrangThaiDonHang.DaHuy)
-                        {
-                            TrangThaiDonHang.ValidateAndChangeStatus(originData, statusChange, reasonCancel);
-                            await ReturnProductWhenCancel(orderId.Value!);
-                        }
-                        else
-                        {
-                            throw new Exception($"Không thể chuyển từ 'Chờ thanh toán' sang trạng thái [{statusChange}].");
-                        }
-                        break;
-
-                    case TrangThaiDonHang.DaXacNhan:
-                        if (statusChange == TrangThaiDonHang.HoanTra_HoanTien)
-                        {
-                            TrangThaiDonHang.ValidateAndChangeStatus(originData, statusChange, reasonCancel);
-                            await ReturnProductWhenCancel(orderId.Value!);
-                        }
-                        else if (statusChange == TrangThaiDonHang.DaHuy)
-                        {
-                            TrangThaiDonHang.ValidateAndChangeStatus(originData, statusChange, reasonCancel);
-                            await ReturnProductWhenCancel(orderId.Value!);
-                        }
-                        else
-                        {
-                            throw new Exception($"Không thể chuyển từ 'Đã xác nhận' sang trạng thái [{statusChange}].");
-                        }
-                        break;
-
-                    case TrangThaiDonHang.DaGiaoChoDonViVanChuyen:
-                        if (statusChange == TrangThaiDonHang.HoanTra_HoanTien)
-                        {
-                            originData.TinhTrang = statusChange;
-                            originData.LyDoHuy = reasonCancel;
-                        }
-                        else if (statusChange == TrangThaiDonHang.DaHuy)
-                        {
-                            TrangThaiDonHang.ValidateAndChangeStatus(originData, statusChange, reasonCancel);
-                        }
-                        else
-                        {
-                            throw new Exception($"Không thể chuyển từ 'Đã giao cho đơn vị vận chuyển' sang trạng thái [{statusChange}].");
-                        }
-                        break;
-
-                    case TrangThaiDonHang.DangGiaoHang:
-                        if (statusChange == TrangThaiDonHang.HoanTra_HoanTien)
-                        {
-                            TrangThaiDonHang.ValidateAndChangeStatus(originData, statusChange, reasonCancel);
-                        }
-                        else if (statusChange == TrangThaiDonHang.DaHuy)
-                        {
-                            TrangThaiDonHang.ValidateAndChangeStatus(originData, statusChange, reasonCancel);
-                        }
-                        else
-                        {
-                            throw new Exception($"Không thể chuyển từ 'Đang giao hàng' sang trạng thái [{statusChange}].");
-                        }
-                        break;
-
-                    case TrangThaiDonHang.HoanTra_HoanTien:
-                        throw new Exception("Đơn hàng đã hoàn trả/hoàn tiền không thể thay đổi trạng thái.");
-
-                    case TrangThaiDonHang.DaHuy:
-                        throw new Exception("Đơn hàng đã hủy không thể thay đổi trạng thái.");
-
-                    default:
-                        throw new Exception("Trạng thái không hợp lệ.");
+                    // Nếu trạng thái là hủy đơn hàng thì trả lại sản phẩm về kho
+                    await ReturnProductAndComboWhenCancel((int)orderId);
                 }
 
                 _db.Update(originData);
@@ -223,26 +158,38 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                response.SetMessageResponseWithException(500,ex);
             }
 
             return response;
         }
 
+
         #region [Private Method]
         // ? Trả về lại sản phẩm về kho khi bị hủy, bruh
-        private async Task ReturnProductWhenCancel(int orderId)
+        private async Task ReturnProductAndComboWhenCancel(int orderId)
         {
-            var listDetailOrder = await _db.Cthoadons.Where(x => x.MaHd == orderId).ToListAsync();
+            var listDetailProductInOrder = await _db.Cthoadons.Where(x => x.MaHd == orderId).ToListAsync();
             var listDetailsProducts = await _db.Chitietsanphams.ToListAsync();
-            foreach (var aDetail in listDetailOrder)
+            var listDetailsCombosInOrder = await _db.Chitietcombohoadons.Where(x => x.MaHd == orderId).ToListAsync();
+            var listDetailsCombos = await _db.Combos.ToListAsync();
+            foreach (var aDetail in listDetailProductInOrder)
             {
                 var increaseDtProduct = listDetailsProducts.FirstOrDefault(x => x.MaCtsp == aDetail.MaCtsp);
                 if (increaseDtProduct == null) continue;
                 increaseDtProduct.SoLuongTon += aDetail.SoLuong;
             }
+            foreach (var aCombo in listDetailsCombosInOrder)
+            {
+                var increaseDtCombo = listDetailsCombos.FirstOrDefault(x => x.MaCombo == aCombo.MaCombo);
+                if (increaseDtCombo == null) continue;
+                increaseDtCombo.SoLuong += aCombo.SoLuong;
+            }
+            _db.UpdateRange(listDetailsProducts);
+            _db.UpdateRange(listDetailsCombos);
             await _db.SaveChangesAsync();
         }
         #endregion
+
     }
 }

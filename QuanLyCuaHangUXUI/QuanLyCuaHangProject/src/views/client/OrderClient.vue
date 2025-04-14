@@ -874,7 +874,7 @@ export default {
   },
   computed: {
     statusList() {
-      return [TrangThaiDonHang.TatCaTrangThai]
+      return TrangThaiDonHang.TatCaTrangThai
     },
   },
 }
