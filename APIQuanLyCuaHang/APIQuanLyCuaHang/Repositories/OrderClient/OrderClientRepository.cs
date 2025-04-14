@@ -113,14 +113,6 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                 response.SetSuccessResponse("Lấy danh sách thành công.");
                 response.SetData(listDTO);
             }
-            catch (ArgumentNullException argEx)
-            {
-                response.SetMessageResponseWithException(400, argEx);
-            }
-            catch (EntryPointNotFoundException userEx)
-            {
-                response.SetMessageResponseWithException(404, userEx);
-            }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex, response);
