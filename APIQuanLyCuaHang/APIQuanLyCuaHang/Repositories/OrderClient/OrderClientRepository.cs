@@ -42,6 +42,9 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                 {
                     foreach (var aOrder in listOrigin)
                     {
+                        if (aOrder == null) continue; // Kiểm tra xem aOrder có null không
+
+                        // Kiểm tra xem hóa đơn có tồn tại không
                         HoaDonKhachDTO configDataDTO = new HoaDonKhachDTO
                         {
                             MaHd = aOrder.MaHd,
@@ -55,35 +58,36 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                             HinhThucTt = aOrder.HinhThucTt,
                             TinhTrang = aOrder.TinhTrang,
                             MoTa = aOrder.MoTa,
-                            HoTen = aOrder.HoTen,
-                            Sdt = aOrder.Sdt,
-                            LyDoHuy = aOrder.LyDoHuy,
-                            IsDelete = aOrder.IsDelete,
-                            PhiVanChuyen = aOrder.PhiVanChuyen,
-                            TienGoc = aOrder.TienGoc,
-                            GiamGiaCoupon = aOrder.GiamGiaCoupon,
+                            HoTen = aOrder?.HoTen ?? "Tên khách hàng",
+                            Sdt = aOrder?.Sdt ?? "xxx-xxx-xxx",
+                            LyDoHuy = aOrder?.LyDoHuy ?? "Không có lý do",
+                            IsDelete = aOrder?.IsDelete,
+                            PhiVanChuyen = aOrder?.PhiVanChuyen ?? 0m,
+                            TienGoc = aOrder?.TienGoc ?? 0m,
+                            GiamGiaCoupon = aOrder?.GiamGiaCoupon ?? 0m,
                             ChiTietHoaDonKhachs = new List<ChiTietHoaDonKhachDTO>() // Khởi tạo danh sách chi tiết hóa đơn
                         };
 
                         // Thêm chi tiết sản phẩm vào hóa đơn
-                        if (aOrder.Cthoadons.Count != 0)
+                        if (aOrder!.Cthoadons.Count != 0)
                         {
                             foreach (var aDetailProductOrder in aOrder.Cthoadons)
                             {
+                                var testInfo = aDetailProductOrder.MaCtspNavigation;
                                 ChiTietHoaDonKhachDTO configDetailDTO = new ChiTietHoaDonKhachDTO()
                                 {
                                     MaHd = aDetailProductOrder.MaHd,
                                     MaDoiTuong = aDetailProductOrder.MaCtsp ?? 0,
                                     LoaiDoiTuong = "Sản phẩm",
                                     SoLuong = aDetailProductOrder.SoLuong,
-                                    KichThuoc = aDetailProductOrder.MaCtspNavigation?.KichThuoc ?? "Không có",
-                                    HuongVi = aDetailProductOrder.MaCtspNavigation?.HuongVi ?? "Không có",
-                                    DonGia = aDetailProductOrder.DonGia,
-                                    TenDoiTuong = aDetailProductOrder.MaCtspNavigation.MaSpNavigation.TenSanPham,
-                                    HinhAnh = aDetailProductOrder.MaCtspNavigation.Hinhanhs.FirstOrDefault()?.TenHinhAnh ?? "",
-                                    MoTa = aDetailProductOrder.MaCtspNavigation.MaSpNavigation.MoTa
+                                    KichThuoc = testInfo == null ? "" : testInfo?.KichThuoc ?? "Không có",
+                                    HuongVi = testInfo == null ? "" : testInfo?.HuongVi ?? "Không có",
+                                    DonGia = testInfo == null ? 1m : aDetailProductOrder.DonGia,
+                                    TenDoiTuong = testInfo == null ? "" : testInfo?.MaSpNavigation?.TenSanPham ?? "Noname",
+                                    HinhAnh = testInfo == null ? "" : testInfo?.Hinhanhs.FirstOrDefault()?.TenHinhAnh ?? "",
+                                    MoTa = testInfo == null ? "" : testInfo?.MaSpNavigation.MoTa
                                 };
-                                configDataDTO.ChiTietHoaDonKhachs.Add(configDetailDTO); // Thêm chi tiết vào danh sách
+                                configDataDTO.ChiTietHoaDonKhachs.Add(configDetailDTO); // Thêm chi tiết vào danh sách Hmmm
                             }
                         }
 
