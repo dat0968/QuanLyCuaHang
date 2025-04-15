@@ -1,14 +1,15 @@
 import { jwtDecode } from 'jwt-decode'
 import toastr from 'toastr'
 import router from '@/router/index'
+import Cookies from 'js-cookie' // Import js-cookie
 
 const authService = {
   isAccess() {
-    return !!localStorage.getItem('accessToken')
+    return !!Cookies.get('accessToken')
   },
 
   getRole() {
-    const token = localStorage.getItem('accessToken')
+    const token = Cookies.get('accessToken')
     if (!token) return null
 
     try {

@@ -2,7 +2,16 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-4 border-right">
-        <h5 class="mb-3">Thông Tin Ca Kíp</h5>
+        <h5 class="mb-3">
+          Thông Tin Ca Kíp
+          <RouterLink
+            class="text-link-format text-dark"
+            to="/admin/shift-manager"
+            title="Đơn hàng khách hàng"
+          >
+            <i class="icon-docs"></i>Quản lý
+          </RouterLink>
+        </h5>
         <hr />
         <form @submit.prevent="saveShift">
           <div class="mb-2">
