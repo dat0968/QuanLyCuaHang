@@ -40,11 +40,6 @@ import '../../assets/admin/plugins/datepicker/datepicker.min.js'
 import '../../assets/admin/plugins/datepicker/i18n/datepicker.en.js'
 //import '../../assets/admin/js/init/dashborad.js'
 import '../../assets/admin/js/main.js'
-import QrScanAndShiftManagerModal from '@/components/shift/QrScanAndShiftManagerModal.vue'
-
-components: {
-  QrScanAndShiftManagerModal
-}
 </script>
 <template>
   <div class="xp-vertical">
@@ -193,7 +188,6 @@ components: {
                           ><i class="icon-power text-danger mr-2"></i> Đăng xuất</a
                         > -->
                         <!-- Đăng xuất -->
-                        <QrScanAndShiftManagerModal />
                         <LogoutAdmin />
                       </div>
                     </div>

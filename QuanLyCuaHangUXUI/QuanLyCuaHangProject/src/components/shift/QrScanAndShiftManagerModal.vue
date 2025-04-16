@@ -1,7 +1,7 @@
 <template>
   <!-- Dropdown Item -->
   <a class="dropdown-item" href="#">
-    <i class="icon-user text-primary mr-2"></i>
+    <i class="icon-bell text-primary mr-2"></i>
     <span @click="openModal">Chấm công bằng QR</span>
   </a>
 
