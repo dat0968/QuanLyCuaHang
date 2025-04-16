@@ -191,7 +191,7 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                 var coupon = await _db.MaCoupons.FirstOrDefaultAsync(x => x.MaCode == couponId);
                 if (coupon != null)
                 {
-                    coupon.SoLuong += 1;
+                    coupon.SoLuongDaDung -= 1;
                     _db.MaCoupons.Update(coupon);
                 }
             }
