@@ -4,7 +4,7 @@
     <div class="xp-breadcrumbbar">
       <div class="row">
         <div class="col-md-6 col-lg-6">
-          <h4 class="xp-page-title">Quản lý Ca Làm Việc</h4>
+          <h4 class="xp-page-title"><strong>Quản lý Ca Làm Việc</strong></h4>
         </div>
       </div>
     </div>

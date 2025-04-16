@@ -13,13 +13,20 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">
-                {{
-                  isNotification
-                    ? 'Thông báo'
-                    : isScanning
-                      ? 'Chấm Công Bằng QR Code'
-                      : 'Quản lý Ca làm việc'
-                }}
+                <div v-if="isNotification" class="">
+                  <strong>Thông báo!</strong>
+                </div>
+                <div v-else-if="isScanning" class="">
+                  <strong>Chấm công bằng QR</strong>
+                </div>
+                <div v-else class="">
+                  <strong>Quản lý ca làm việc</strong>
+                  <a
+                    v-if="!isNotification && !isScanning"
+                    href="/admin/shift-manager"
+                    class="icon-info ml-2 text-link text-decoration-none"
+                  ></a>
+                </div>
               </h5>
               <button type="button" class="btn btn-danger rounded" @click="isModalOpen = false">
                 x
@@ -70,10 +77,10 @@ export default {
   },
   methods: {
     openModal() {
-      const isLoggedIn = authService.isLoggedIn() // Check if the user is logged in
+      const isAccess = authService.isAccess() // Check if the user is logged in
       const userRole = authService.getRole() // Get the user's role
 
-      if (!isLoggedIn) {
+      if (!isAccess) {
         // User is not logged in
         this.isNotification = true
         this.notificationMessage = 'Vui lòng đăng nhập để dùng chức năng này.'

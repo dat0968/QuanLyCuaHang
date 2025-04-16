@@ -2,16 +2,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-4 border-right">
-        <h5 class="mb-3">
-          Thông Tin Ca Kíp
-          <RouterLink
-            class="text-link-format text-dark"
-            to="/admin/shift-manager"
-            title="Đơn hàng khách hàng"
-          >
-            <i class="icon-docs"></i>Quản lý
-          </RouterLink>
-        </h5>
+        <h5 class="mb-3">Thông Tin Ca Kíp</h5>
         <hr />
         <form @submit.prevent="saveShift">
           <div class="mb-2">
@@ -180,15 +171,15 @@ export default {
             render: (data, type, row) => {
               const isActive = row.isDelete
               return `
-                  <div class="d-flex gap-1 justify-content-between">
-                    <span class="text-danger edit-shift" data-id="${data}" title="Sửa" style="cursor: pointer;">
-                      <i class="bi icon-pencil"></i>
+                  <div class="d-flex gap-1 justify-content-between flex-column">
+                    <span class="btn btn-outline-warning edit-shift" data-id="${data}" title="Sửa" style="cursor: pointer;">
+                      <i class="bi icon-pencil"></i>Sửa
                     </span>
-                    <span class="text-info change-status" data-id="${row.maCaKip}" title="Kích hoạt" style="cursor: pointer;">
-                      <i class="bi ${isActive ? 'icon-close' : 'icon-check'}"></i>
+                    <span class="btn btn-outline-danger change-status" data-id="${row.maCaKip}" title="Kích hoạt" style="cursor: pointer;">
+                      <i class="bi ${isActive ? 'icon-close' : 'icon-check'}"></i> ${isActive ? 'Hủy' : 'Mở'}
                     </span>
-                    <span class="text-primary generate-qr" data-id="${data}" title="Tải QR" style="cursor: pointer;">
-                      <i class="bi icon-pin"></i>
+                    <span class="btn btn-outline-primary generate-qr" data-id="${data}" title="Tải QR" style="cursor: pointer;">
+                      <i class="bi icon-pin"></i>QR
                     </span>
                   </div>
                 `
