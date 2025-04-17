@@ -40,7 +40,7 @@ const FetchCart = async () => {
     if(readtoken){
       IdUser = readtoken.IdUser
     }
-    const response = await fetch(`${getApiUrl}+/api/Cart/${IdUser}`, {
+    const response = await fetch(`${getApiUrl}/api/Cart/${IdUser}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${accesstoken}`,

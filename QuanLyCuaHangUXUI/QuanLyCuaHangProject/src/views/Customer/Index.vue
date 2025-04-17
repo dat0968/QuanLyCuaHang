@@ -66,7 +66,7 @@
               <td>
                 <img
                   v-if="customer.hinhDaiDien"
-                  :src="getApiUrl + customer.hinhDaiDien"
+                  :src="getApiUrl + `/Hinh/AnhKhachHang/` + customer.hinhDaiDien"
                   alt="Hình đại diện"
                   class="avatar-table-img"
                   @click="openDetailModal(customer)"
@@ -144,7 +144,7 @@
                     <div class="avatar-container">
                       <img
                         v-if="currentCustomer.hinhDaiDien"
-                        :src="isEditMode && !currentCustomer.anh ? getApiUrl+currentCustomer.hinhDaiDien : currentCustomer.hinhDaiDien"
+                        :src="isEditMode && !currentCustomer.anh ? getApiUrl+`/Hinh/AnhKhachHang/`+currentCustomer.hinhDaiDien : currentCustomer.hinhDaiDien"
                         alt="Hình đại diện"
                         class="avatar-img"
                       />
@@ -264,7 +264,7 @@
                   <div class="avatar-container">
                     <img
                       v-if="selectedCustomer.hinhDaiDien"
-                      :src="getApiUrl+ selectedCustomer.hinhDaiDien"
+                      :src= "getApiUrl + `/Hinh/AnhKhachHang/` + selectedCustomer.hinhDaiDien"
                       alt="Hình đại diện"
                       class="avatar-img"
                     />
@@ -341,6 +341,7 @@ let getApiUrl = GetApiUrl()
 export default {
   data() {
     return {
+      getApiUrl: GetApiUrl(),
       customers: [],
       searchTerm: '',
       sortBy: '',
