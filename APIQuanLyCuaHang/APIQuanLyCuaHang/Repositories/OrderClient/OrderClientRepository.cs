@@ -77,10 +77,10 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                                     LoaiDoiTuong = "Sản phẩm",
                                     SoLuong = aDetailProductOrder.SoLuong,
                                     KichThuoc = testInfo == null ? "" : testInfo?.KichThuoc ?? "Không có",
-                                    HuongVi = testInfo == null ? "" : testInfo?.HuongVi ?? "Không có",
-                                    DonGia = testInfo == null ? 1m : aDetailProductOrder.DonGia,
-                                    TenDoiTuong = testInfo == null ? "" : testInfo?.MaSpNavigation?.TenSanPham ?? "Noname",
-                                    HinhAnh = testInfo == null ? "" : testInfo?.Hinhanhs.FirstOrDefault()?.TenHinhAnh ?? "",
+                                    HuongVi = testInfo == null ? "" :testInfo?.HuongVi ?? "Không có",
+                                    DonGia = testInfo == null ? 1m :aDetailProductOrder.DonGia,
+                                    TenDoiTuong = testInfo == null ? "" :testInfo?.MaSpNavigation?.TenSanPham ?? "Noname",
+                                    HinhAnh = testInfo == null ? "" :testInfo?.Hinhanhs.FirstOrDefault()?.TenHinhAnh ?? "",
                                     MoTa = testInfo == null ? "" : testInfo?.MaSpNavigation.MoTa
                                 };
                                 configDataDTO.ChiTietHoaDonKhachs.Add(configDetailDTO); // Thêm chi tiết vào danh sách Hmmm
@@ -158,7 +158,7 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                response.SetMessageResponseWithException(500,ex);
             }
 
             return response;

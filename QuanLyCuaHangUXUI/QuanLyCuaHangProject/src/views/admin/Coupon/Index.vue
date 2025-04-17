@@ -1,53 +1,36 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import Swal from 'sweetalert2';
-import { ReadToken, ValidateToken } from '../../../Authentication_Authorization/auth.js'
-import Cookies from 'js-cookie'
+
 const coupons = ref([]);
 const showModal = ref(false);
 const isEdit = ref(false);
-let accesstoken = Cookies.get('accessToken')
-let refreshtoken = Cookies.get('refreshToken')
 const couponForm = ref({
-  maCode: '',
+  maCode: '', // Sửa từ masabCode thành maCode để đồng bộ
   soTienGiam: null,
   phanTramGiam: null,
   ngayBatDau: '',
   ngayKetThuc: '',
-  trangThai: true, // Mặc định là true (Hoạt động)
+  trangThai: true,
   donHangToiThieu: null,
   soLuong: null,
   soLuongDaDung: 0
 });
 
+// Thêm các biến cho bộ lọc
+const searchQuery = ref('');
+const sortField = ref('maCode');
+const sortOrder = ref('asc');
+const filterStatus = ref('all');
+const currentPage = ref(1);
+const itemsPerPage = ref(10);
+
 const baseUrl = 'https://localhost:7139/api/Coupon';
 
 // Fetch all coupons
 const fetchCoupons = async () => {
-  
   try {
-    const validateToken = await ValidateToken(accesstoken, refreshtoken)
-    if (validateToken == true) {
-      accesstoken = Cookies.get('accessToken')
-      const readtoken = ReadToken(accesstoken)
-      if (readtoken) {
-        
-      } else {
-        router.push('/Login')
-        return
-      }
-    }
-    const response = await fetch(`${baseUrl}/GetAllCouponCodeByPage`);
-    if (response.status == 401) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Phiên của bạn đã hết hoặc bạn chưa đăng nhập, vui lòng đăng nhập lại!',
-        timer: 2000,
-        showConfirmButton: false,
-      })
-      router.push('/Login')
-      return
-    }
+    const response = await fetch(`${baseUrl}/GetAll`);
     const data = await response.json();
     if (data.success) {
       coupons.value = data.data.map(coupon => ({
@@ -62,20 +45,56 @@ const fetchCoupons = async () => {
   }
 };
 
-// Format date for display in table
+// Computed properties
+const filteredCoupons = computed(() => {
+  let result = [...coupons.value];
+  if (searchQuery.value) {
+    const query = searchQuery.value.toLowerCase();
+    result = result.filter(coupon => 
+      coupon.maCode.toLowerCase().includes(query) ||
+      String(coupon.soTienGiam).includes(query) ||
+      String(coupon.phanTramGiam).includes(query)
+    );
+  }
+  if (filterStatus.value !== 'all') {
+    result = result.filter(coupon => 
+      coupon.trangThai === (filterStatus.value === 'active')
+    );
+  }
+  result.sort((a, b) => {
+    const fieldA = a[sortField.value];
+    const fieldB = b[sortField.value];
+    if (sortOrder.value === 'asc') {
+      return fieldA > fieldB ? 1 : -1;
+    }
+    return fieldA < fieldB ? 1 : -1;
+  });
+  return result;
+});
+
+const paginatedCoupons = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage.value;
+  const end = start + itemsPerPage.value;
+  return filteredCoupons.value.slice(start, end);
+});
+
+const totalPages = computed(() => {
+  return Math.ceil(filteredCoupons.value.length / itemsPerPage.value);
+});
+
+// Format date
 const formatDate = (dateString) => {
   if (!dateString) return '';
   const date = new Date(dateString);
   return isNaN(date.getTime()) ? '' : date.toLocaleDateString('vi-VN');
 };
 
-// Format date for input fields
 const formatDateForInput = (dateString) => {
   if (!dateString) return '';
   return new Date(dateString).toISOString().split('T')[0];
 };
 
-// Show add modal
+// Modal handlers
 const showAddModal = () => {
   isEdit.value = false;
   couponForm.value = {
@@ -84,7 +103,7 @@ const showAddModal = () => {
     phanTramGiam: null,
     ngayBatDau: '',
     ngayKetThuc: '',
-    trangThai: true, // Mặc định là Hoạt động khi thêm mới
+    trangThai: true,
     donHangToiThieu: null,
     soLuong: null,
     soLuongDaDung: 0
@@ -92,7 +111,6 @@ const showAddModal = () => {
   showModal.value = true;
 };
 
-// Show edit modal
 const showEditModal = (coupon) => {
   isEdit.value = true;
   couponForm.value = {
@@ -109,12 +127,11 @@ const showEditModal = (coupon) => {
   showModal.value = true;
 };
 
-// Hide modal
 const hideModal = () => {
   showModal.value = false;
 };
 
-// Validate discount fields: Chỉ cho phép nhập một trong hai
+// Validate discount
 const validateDiscount = () => {
   const hasSoTienGiam = couponForm.value.soTienGiam !== null && couponForm.value.soTienGiam > 0;
   const hasPhanTramGiam = couponForm.value.phanTramGiam !== null && couponForm.value.phanTramGiam > 0;
@@ -130,7 +147,7 @@ const validateDiscount = () => {
   return true;
 };
 
-// Create coupon
+// CRUD operations
 const createCoupon = async () => {
   if (!validateDiscount()) return;
 
@@ -139,18 +156,16 @@ const createCoupon = async () => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        soTienGiam: couponForm.value.soTienGiam || 0, // Gửi 0 nếu không nhập
-        phanTramGiam: couponForm.value.phanTramGiam || 0, // Gửi 0 nếu không nhập
+        ...couponForm.value,
+        soTienGiam: couponForm.value.soTienGiam || 0,
+        phanTramGiam: couponForm.value.phanTramGiam || 0,
         ngayBatDau: couponForm.value.ngayBatDau ? new Date(couponForm.value.ngayBatDau).toISOString() : null,
         ngayKetThuc: couponForm.value.ngayKetThuc ? new Date(couponForm.value.ngayKetThuc).toISOString() : null,
-        trangThai: couponForm.value.trangThai,
         donHangToiThieu: couponForm.value.donHangToiThieu || 0,
-        soLuong: couponForm.value.soLuong,
         soLuongDaDung: 0
       })
     });
     const data = await response.json();
-
     if (data.success) {
       Swal.fire('Thành công', data.message, 'success');
       hideModal();
@@ -164,7 +179,6 @@ const createCoupon = async () => {
   }
 };
 
-// Update coupon
 const updateCoupon = async () => {
   if (!validateDiscount()) return;
 
@@ -173,19 +187,15 @@ const updateCoupon = async () => {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        maCode: couponForm.value.maCode,
+        ...couponForm.value,
         soTienGiam: couponForm.value.soTienGiam || 0,
         phanTramGiam: couponForm.value.phanTramGiam || 0,
         ngayBatDau: couponForm.value.ngayBatDau ? new Date(couponForm.value.ngayBatDau).toISOString() : null,
         ngayKetThuc: couponForm.value.ngayKetThuc ? new Date(couponForm.value.ngayKetThuc).toISOString() : null,
-        trangThai: couponForm.value.trangThai,
-        donHangToiThieu: couponForm.value.donHangToiThieu || 0,
-        soLuong: couponForm.value.soLuong,
-        soLuongDaDung: couponForm.value.soLuongDaDung || 0
+        donHangToiThieu: couponForm.value.donHangToiThieu || 0
       })
     });
     const data = await response.json();
-
     if (data.success) {
       Swal.fire('Thành công', data.message, 'success');
       hideModal();
@@ -199,7 +209,6 @@ const updateCoupon = async () => {
   }
 };
 
-// Delete coupon
 const deleteCoupon = async (id) => {
   const result = await Swal.fire({
     title: 'Bạn có chắc?',
@@ -216,7 +225,6 @@ const deleteCoupon = async (id) => {
         method: 'PUT'
       });
       const data = await response.json();
-
       if (data.success) {
         Swal.fire('Thành công', data.message, 'success');
         fetchCoupons();
@@ -230,26 +238,85 @@ const deleteCoupon = async (id) => {
   }
 };
 
+// Sort and pagination handlers
+const changeSort = (field) => {
+  if (sortField.value === field) {
+    sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc';
+  } else {
+    sortField.value = field;
+    sortOrder.value = 'asc';
+  }
+};
+
+const goToPage = (page) => {
+  if (page >= 1 && page <= totalPages.value) {
+    currentPage.value = page;
+  }
+};
+
 onMounted(() => {
   fetchCoupons();
 });
 </script>
 
 <template>
-  
+  <br>
+  <br>
   <div class="container mt-4">
     <h1>Quản lý mã Coupon</h1>
-    
-    <!-- Add Button -->
-    <button class="btn btn-primary mb-3" @click="showAddModal">Thêm mới Coupon</button>
+   
+    <!-- Bộ lọc -->
+    <div class="row mb-3">
+      
+      <div class="col-md-4">
+        <label for="search" class="form-label">Tìm kiếm</label>
+        <input 
+          v-model="searchQuery" 
+          type="text" 
+          class="form-control" 
+          placeholder="Tìm kiếm mã, số tiền, phần trăm..." 
+        >
+      </div>
+      
+      <div class="col-md-3">
+        <label for="statusFilter" class="form-label">Trạng thái</label>
+        <select v-model="filterStatus" class="form-control">
+          <option value="all">Tất cả trạng thái</option>
+          <option value="active">Hoạt động</option>
+          <option value="inactive">Đã hủy</option>
+        </select>
+      </div>
+      <div class="col-md-1">
+        <label for="itemsPerPage" class="form-label">Số trang</label>
+        <select v-model="itemsPerPage" class="form-control">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+      <label class="form-label invisible">Ẩn label</label>
+      <button class="btn btn-primary w-100" @click="showAddModal">Thêm mới</button>
+    </div>
+    </div>
 
-    <!-- Coupons Table -->
+    <!-- Bảng coupons -->
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>Mã Coupon</th>
-          <th>Số tiền giảm</th>
-          <th>Phần trăm giảm</th>
+          <th @click="changeSort('maCode')" class="sortable">
+            Mã Coupon
+            <span v-if="sortField === 'maCode'">{{ sortOrder === 'asc' ? '↑' : '↓' }}</span>
+          </th>
+          <th @click="changeSort('soTienGiam')" class="sortable">
+            Số tiền giảm
+            <span v-if="sortField === 'soTienGiam'">{{ sortOrder === 'asc' ? '↑' : '↓' }}</span>
+          </th>
+          <th @click="changeSort('phanTramGiam')" class="sortable">
+            Phần trăm giảm
+            <span v-if="sortField === 'phanTramGiam'">{{ sortOrder === 'asc' ? '↑' : '↓' }}</span>
+          </th>
           <th>Ngày bắt đầu</th>
           <th>Ngày kết thúc</th>
           <th>Đơn tối thiểu</th>
@@ -259,24 +326,62 @@ onMounted(() => {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="coupon in coupons" :key="coupon.maCode">
+        <tr v-for="coupon in paginatedCoupons" :key="coupon.maCode">
           <td>{{ coupon.maCode }}</td>
           <td>{{ coupon.soTienGiam }}</td>
-          <td>{{ coupon.phanTramGiam }}</td>
+          <td>{{ coupon.phanTramGiam?? 0 }} %</td>
           <td>{{ formatDate(coupon.ngayBatDau) }}</td>
           <td>{{ formatDate(coupon.ngayKetThuc) }}</td>
           <td>{{ coupon.donHangToiThieu }}</td>
           <td>{{ coupon.soLuong }}</td>
           <td>{{ coupon.trangThai ? 'Hoạt động' : 'Đã hủy' }}</td>
           <td>
-            <button class="btn btn-warning btn-sm me-2" @click="showEditModal(coupon)">Sửa</button>
-            <button class="btn btn-danger btn-sm" @click="deleteCoupon(coupon.maCode)">Hủy</button>
+            <button 
+              v-if="coupon.trangThai" 
+              class="btn btn-warning btn-sm me-2" 
+              @click="showEditModal(coupon)"
+            >
+              Sửa
+            </button>
+            <button 
+              v-if="coupon.trangThai" 
+              class="btn btn-danger btn-sm" 
+              @click="deleteCoupon(coupon.maCode)"
+            >
+              Hủy
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
 
-    <!-- Add/Edit Modal -->
+    <!-- Phân trang -->
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        Hiển thị {{ (currentPage - 1) * itemsPerPage + 1 }} - 
+        {{ Math.min(currentPage * itemsPerPage, filteredCoupons.length) }} 
+        của {{ filteredCoupons.length }} kết quả
+      </div>
+      <div>
+        <button 
+          class="btn btn-secondary me-2" 
+          :disabled="currentPage === 1" 
+          @click="goToPage(currentPage - 1)"
+        >
+          Trước
+        </button>
+        <span>Trang {{ currentPage }} / {{ totalPages }}</span>
+        <button 
+          class="btn btn-secondary ms-2" 
+          :disabled="currentPage === totalPages" 
+          @click="goToPage(currentPage + 1)"
+        >
+          Sau
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal -->
     <div class="modal" :class="{ 'd-block': showModal }" tabindex="-1">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -351,5 +456,12 @@ onMounted(() => {
 }
 .table {
   margin-top: 20px;
+}
+.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+.sortable:hover {
+  background-color: #f5f5f5;
 }
 </style>
