@@ -36,7 +36,7 @@ namespace APIQuanLyCuaHang.Controllers
         public async Task<IActionResult> SetStatusList([FromBody] SetStatusListRequest request)
         {
             int? userManagerId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            var result = await _unit.Schedules.SetStatusList(request, userManagerId);
+            var result = await _unit.Schedules.SetStatusList(request, userManagerId, null);
             return Ok(result);
         }
         [HttpPost]
@@ -58,6 +58,19 @@ namespace APIQuanLyCuaHang.Controllers
         {
             var response = await _unit.Schedules.GetScheduleActiveOfShift(shiftId);
             return Ok(response);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllUserId()
+        {
+            var response = await _unit.Schedules.GetAllUserIdAsync();
+            return Ok(response);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateSchedules([FromBody] SetStatusListRequest request)
+        {
+            int? userManagerId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var result = await _unit.Schedules.SetStatusList(request, userManagerId, true);
+            return Ok(result);
         }
     }
 }

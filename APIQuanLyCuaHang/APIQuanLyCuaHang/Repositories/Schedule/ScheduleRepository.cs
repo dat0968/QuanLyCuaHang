@@ -17,6 +17,9 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
     public class ScheduleRepository(QuanLyCuaHangContext db) : Repository<Lichsulamviec>(db), IScheduleRepository
     {
         private readonly QuanLyCuaHangContext _db = db;
+        #region [PUBLIC METHOD]
+
+        #region [MAIN METHOD] 
         public async Task<ResponseAPI<List<ScheduleDTO>>> SignUpScheduleWorkAsync(int? maNv, int maCaKip, DateOnly? ngayLam)
         {
             ResponseAPI<List<ScheduleDTO>> response = new();
@@ -163,7 +166,7 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
             }
             return response;
         }
-        public async Task<ResponseAPI<dynamic>> SetStatusList(SetStatusListRequest request, int? managerUserId)
+        public async Task<ResponseAPI<dynamic>> SetStatusList(SetStatusListRequest request, int? managerUserId, bool? isCreate)
         {
             ResponseAPI<dynamic> response = new();
             try
@@ -191,47 +194,64 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
                 {
                     throw new KeyNotFoundException("Không tìm thấy CaKip.");
                 }
-
-                var schedules = await _db.Lichsulamviecs
-                    .Where(ls => request.MaNvs.Contains(ls.MaNv) && ls.MaCaKip == request.MaCaKip)
-                    .ToListAsync();
-
-                if (!schedules.Any())
+                // Nếu không có ca kíp thì không thể thêm lịch làm việc
+                if (caKip.IsDelete == true)
                 {
-                    throw new KeyNotFoundException("Không tìm thấy lịch làm việc phù hợp.");
+                    throw new KeyNotFoundException("Ca kíp đã bị vô hiệu hóa.");
                 }
-
-                // Kiểm tra số lượng nhân viên trong CaKip
-                int currentEmployees = caKip.SoNguoiHienTai;
-
-                if (request.TrangThaiCapNhap == TrangThaiLichLamViec.DiLam)
+                if (isCreate.HasValue && isCreate.Value)
                 {
-                    if (currentEmployees + request.MaNvs.Length > caKip.SoNguoiToiDa)
+                    var existStaff = await _db.Nhanviens.AnyAsync(nv => request.MaNvs.Contains(nv.MaNv));
+                    if (!existStaff)
                     {
-                        throw new InvalidOperationException($"Số lượng nhân viên vượt quá giới hạn {caKip.SoNguoiToiDa} của CaKip.");
+                        throw new Exception("Không tìm thấy nhân viên trong hệ thống.");
                     }
-                }
-                if (TrangThaiLichLamViec.TrangThaiBatThuong.Contains(request.TrangThaiCapNhap) && String.IsNullOrEmpty(request.GhiChu))
-                {
-                    request.GhiChu = "Không được ghi chú.";
-                }
-                // Cập nhật trạng thái và giờ làm nếu trạng thái là "Đi làm"
-                TimeOnly now = TimeOnly.FromDateTime(DateTime.Now);
-                bool isHaveNote = !String.IsNullOrEmpty(request.GhiChu);
-                schedules.ForEach(ls =>
-                {
-                    ls.NguoiXacNhan = managerUserId;
-                    ls.TrangThai = request.TrangThaiCapNhap;
-                    if (request.TrangThaiCapNhap == TrangThaiLichLamViec.DiLam)
+
+                    foreach (var maNv in request.MaNvs)
                     {
-                        ls.GioVao = now;
+                        var schedule = new Lichsulamviec
+                        {
+                            MaNv = maNv,
+                            MaCaKip = request.MaCaKip,
+                            NgayThangNam = DateOnly.FromDateTime(DateTime.Today),
+                            SoGioLam = 0,
+                            TongLuong = null,
+                            IsDelete = false,
+                            TrangThai = request.TrangThaiCapNhap
+                        };
+
+                        await _db.Lichsulamviecs.AddAsync(schedule);
                     }
-                    if (isHaveNote) ls.GhiChu = request.GhiChu;
-                });
-                _db.UpdateRange(schedules);
+                    caKip.SoNguoiHienTai += request.MaNvs.Length;
+                    response.SetSuccessResponse($"Đã thêm {request.MaNvs.Length} nhân viên vào lịch làm việc.");
+                }
+                else // Cập nhập trạng thái
+                {
+                    var schedules = await _db.Lichsulamviecs
+                        .Where(ls => request.MaNvs.Contains(ls.MaNv) && ls.MaCaKip == request.MaCaKip)
+                        .ToListAsync();
+
+                    if (!schedules.Any())
+                    {
+                        throw new KeyNotFoundException("Không tìm thấy lịch làm việc phù hợp.");
+                    }
+
+                    int currentEmployees = caKip.SoNguoiHienTai;
+
+                    foreach (var schedule in schedules)
+                    {
+                        schedule.NguoiXacNhan = managerUserId;
+
+                        TrangThaiLichLamViec.XuLyTrangThaiLichLamViec(schedule, request, caKip, currentEmployees);
+
+                        schedule.TrangThai = request.TrangThaiCapNhap;
+                    }
+                    _db.UpdateRange(schedules);
+                    response.SetSuccessResponse($"Đã cập nhật trạng thái {request.TrangThaiCapNhap} cho {schedules.Count} nhân viên.");
+                }
+
                 await _db.SaveChangesAsync();
 
-                response.SetSuccessResponse($"Đã cập nhật trạng thái {request.TrangThaiCapNhap} cho {schedules.Count} nhân viên.");
             }
             catch (Exception ex)
             {
@@ -276,21 +296,20 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
                 {
                     throw new KeyNotFoundException("Không tìm thấy lịch làm việc phù hợp.");
                 }
-                if (TrangThaiLichLamViec.TrangThaiBatThuong.Contains(request.TrangThaiCapNhap) && String.IsNullOrEmpty(request.GhiChu))
-                {
-                    request.GhiChu = "Không được ghi chú.";
-                }
 
-                // Cập nhật trạng thái và giờ làm nếu trạng thái là "Đi làm"
-                bool isHaveNote = !String.IsNullOrEmpty(request.GhiChu);
-                if (request.TrangThaiCapNhap == TrangThaiLichLamViec.DiLam)
-                {
-                    schedule.NguoiXacNhan = managerUserId;
-                    schedule.GioVao = TimeOnly.FromDateTime(DateTime.Now);
-                    if (isHaveNote) schedule.GhiChu = request.GhiChu;
-                }
+                int currentEmployees = caKip.SoNguoiHienTai;
+
+                schedule.NguoiXacNhan = managerUserId;
+
+                TrangThaiLichLamViec.XuLyTrangThaiLichLamViec(schedule, request, caKip, currentEmployees);
 
                 schedule.TrangThai = request.TrangThaiCapNhap;
+
+                if (!string.IsNullOrEmpty(request.GhiChu))
+                {
+                    schedule.GhiChu = request.GhiChu;
+                }
+
                 _db.Update(schedule);
                 await _db.SaveChangesAsync();
 
@@ -303,6 +322,32 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
 
             return response;
         }
+        #endregion
+
+        #region [SUB METHOD] 
+        public async Task<ResponseAPI<List<UserIdDTO>>> GetAllUserIdAsync()
+        {
+            ResponseAPI<List<UserIdDTO>> response = new();
+            try
+            {
+                var data = await _db.Nhanviens
+                    .Where(nv => nv.IsDelete == false)
+                    .Select(nv => new UserIdDTO() { MaNv = nv.MaNv, HoTen = nv.HoTen })
+                    .ToListAsync();
+
+                response.SetSuccessResponse("Ok");
+                response.SetData(data);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, response);
+            }
+            return response;
+        }
+
+        #endregion
+
+        #endregion
 
         public async Task<ResponseAPI<List<ScheduleDTO>>> GetScheduleOfUser(int? userId)
         {
@@ -342,6 +387,8 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
             }
             return response;
         }
+
+
         #region [PRIVATE METHOD]
         private async Task<List<ScheduleDTO>> GetSchedulesActiveOfShift(int shiftId)
         {
