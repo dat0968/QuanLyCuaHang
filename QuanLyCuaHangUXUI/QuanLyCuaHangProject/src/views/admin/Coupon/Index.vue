@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 import Swal from 'sweetalert2';
 import { ReadToken, ValidateToken } from '../../../Authentication_Authorization/auth.js'
 import Cookies from 'js-cookie'
+import { GetApiUrl } from '@constants/api'
 const coupons = ref([]);
 const showModal = ref(false);
 const isEdit = ref(false);
@@ -20,7 +21,7 @@ const couponForm = ref({
   soLuongDaDung: 0
 });
 
-const baseUrl = 'https://localhost:7139/api/Coupon';
+const baseUrl = GetApiUrl()+'/api/Coupon';
 
 // Fetch all coupons
 const fetchCoupons = async () => {

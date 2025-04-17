@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue'
 import Swal from 'sweetalert2'
+import { GetApiUrl } from '@constants/api'
 const props = defineProps({
   ListProduct: Object,
   Combo: Object,
@@ -164,7 +165,7 @@ async function UpdateCombo() {
       formData.append(`chitietcombos[${index}].soLuongSp`, detail.soLuongSp)
     })
     //Gửi resquest
-    const response = await fetch(`https://localhost:7139/api/Combos/${props.Combo.maCombo}`, {
+    const response = await fetch(GetApiUrl()+`/api/Combos/${props.Combo.maCombo}`, {
       method: 'PUT',
       body: formData,
     })
@@ -324,7 +325,7 @@ async function UpdateCombo() {
                 accept="image/*"
               />
               <img
-                :src="`https://localhost:7139/HinhAnh/Food_Drink/${comboEdit.hinh}`"
+                :src="GetApiUrl()+`/HinhAnh/Food_Drink/${comboEdit.hinh}`"
                 alt="Ảnh combo"
                 class="img-fluid mt-2"
                 style="max-width: 100px; height: auto"

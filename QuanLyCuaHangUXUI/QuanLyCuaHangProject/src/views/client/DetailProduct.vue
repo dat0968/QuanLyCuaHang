@@ -4,7 +4,8 @@ import { useRoute, useRouter } from 'vue-router'
 import 'animate.css'
 import Swal from 'sweetalert2'
 import Cookies from 'js-cookie'
-import { ReadToken, ValidateToken } from '../../Authentication_Authorization/auth.js'
+import { ReadToken, ValidateToken } from '../../Authentication_Authorization/auth.js' 
+import { GetApiUrl } from '@constants/api'
 const route = useRoute()
 const router = useRouter()
 const product = ref(null)
@@ -73,7 +74,7 @@ const handleQuantityChange = (event) => {
 // Lấy chi tiết sản phẩm
 async function fetchProductDetail() {
   try {
-    const response = await fetch(`https://localhost:7139/api/Home/products/${route.params.id}`, {
+    const response = await fetch(GetApiUrl()+`/api/Home/products/${route.params.id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -146,7 +147,7 @@ const addToCart = async () => {
     soLuong: quantity.value,
   }
   try {
-    const response = await fetch(`https://localhost:7139/api/Cart`, {
+    const response = await fetch(GetApiUrl()+`/api/Cart`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -199,7 +200,7 @@ onMounted(() => {
               <img
                 :src="
                   selectedVariant?.hinhanhs?.[0]?.tenHinhAnh
-                    ? `https://localhost:7139/HinhAnh/Food_Drink/${selectedVariant.hinhanhs[0].tenHinhAnh}`
+                    ? GetApiUrl()+`/HinhAnh/Food_Drink/${selectedVariant.hinhanhs[0].tenHinhAnh}`
                     : '../assets/client/img/food_menu/chicken_default.png'
                 "
                 :alt="product.tenSanPham"
@@ -217,7 +218,7 @@ onMounted(() => {
                 <img
                   :src="
                     variant.hinhanhs?.[0]?.tenHinhAnh
-                      ? `https://localhost:7139/HinhAnh/Food_Drink/${variant.hinhanhs[0].tenHinhAnh}`
+                      ? GetApiUrl()+`/HinhAnh/Food_Drink/${variant.hinhanhs[0].tenHinhAnh}`
                       : '../assets/client/img/food_menu/chicken_default.png'
                   "
                   :alt="variant.tenSanPham"

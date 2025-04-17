@@ -4,6 +4,7 @@ import CreateProductModal from '../Product/Create.vue'
 import DetailProductModal from '../Product/Details.vue'
 import EditProductModal from '../Product/Edit.vue'
 import Swal from 'sweetalert2'
+import { GetApiUrl } from '@constants/api'
 const ListProduct = ref([])
 const TotalPages = ref(0)
 const CurrentPage = ref(1)
@@ -14,7 +15,7 @@ const valuePrices = ref('')
 async function fetchProducts() {
   try {
     const response = await fetch(
-      `https://localhost:7139/api/Products?page=${CurrentPage.value}&search=${valueSearch.value}&filterCatories=${valueCategory.value}&sort=${valueSort.value}&filterPrices=${valuePrices.value}`,
+      GetApiUrl()+`/api/Products?page=${CurrentPage.value}&search=${valueSearch.value}&filterCatories=${valueCategory.value}&sort=${valueSort.value}&filterPrices=${valuePrices.value}`,
       {
         method: 'GET',
         headers: {
@@ -48,7 +49,7 @@ const ReturnProduct = () => {
 // Danh sách danh mục (tĩnh)
 const categories = ref([])
 async function fetchCategory() {
-  const response = await fetch('https://localhost:7139/api/Categories', {
+  const response = await fetch(GetApiUrl()+'/api/Categories', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -77,7 +78,7 @@ const RemoveProduct = async (id) => {
       denyButtonText: `Không`,
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const response = await fetch(`https://localhost:7139/api/Products/${id}/Cancel`, {
+        const response = await fetch(GetApiUrl()+`/api/Products/${id}/Cancel`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',

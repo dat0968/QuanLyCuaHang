@@ -28,7 +28,7 @@ const handleRegister = async () => {
       MatKhau: matKhau.value,
     };
 
-    const response = await fetch('https://localhost:7139/api/Account/Register', {
+    const response = await fetch(GetApiUrl()+'/api/Account/Register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

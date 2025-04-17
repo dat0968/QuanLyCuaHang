@@ -4,6 +4,7 @@ import { onMounted, ref, watch } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Navigation, Pagination } from 'swiper/modules'
 import Swal from 'sweetalert2'
+import { GetApiUrl } from '@constants/api'
 const Props = defineProps({
   Product: Object,
   categories: Object,
@@ -51,7 +52,7 @@ const uploadImage = async (file) => {
   try {
     const formData = new FormData()
     formData.append('file', file)
-    const response = await fetch('https://localhost:7139/api/UploadImage', {
+    const response = await fetch(GetApiUrl()+'/api/UploadImage', {
       method: 'POST',
       body: formData,
     })
@@ -258,7 +259,7 @@ async function UpdateProduct() {
     }
     console.log(content)
     const response = await fetch(
-      `https://localhost:7139/api/Products/${editedProduct.value.maSp}`,
+      GetApiUrl()+`/api/Products/${editedProduct.value.maSp}`,
       {
         method: 'PUT',
         headers: {
@@ -385,7 +386,7 @@ const modules = [Navigation, Pagination]
                           class="position-relative"
                         >
                           <img
-                            :src="`https://localhost:7139/HinhAnh/Food_Drink/${image.tenHinhAnh}`"
+                            :src="GetApiUrl()+`/HinhAnh/Food_Drink/${image.tenHinhAnh}`"
                             alt="Ảnh biến thể"
                             class="img-fluid rounded"
                             style="max-width: 100px; height: auto"

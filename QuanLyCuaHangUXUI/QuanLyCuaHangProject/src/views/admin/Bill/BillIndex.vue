@@ -3,6 +3,7 @@ import { ref, onMounted, watch } from 'vue'
 import Swal from 'sweetalert2'
 import { jwtDecode } from 'jwt-decode'
 import Cookies from 'js-cookie'
+import { GetApiUrl } from '@constants/api'
 const immutableStatuses = ['Đã hủy', 'Hoàn trả/Hoàn tiền']
 
 const orders = ref([])
@@ -48,7 +49,7 @@ const fetchOrders = async () => {
     })
 
     const response = await fetch(
-      `https://localhost:7139/api/Bill/GetFiltered/search?${params.toString()}`
+      GetApiUrl()+`/api/Bill/GetFiltered/search?${params.toString()}`
     )
     if (!response.ok) throw new Error('Không thể tải dữ liệu')
     const data = await response.json()
@@ -75,7 +76,7 @@ const updateStatus = async (order, newStatus) => {
     }
     const maNv = parseInt(userInfo.value.sub) // Chuyển sub thành số nguyên (100)
     const response = await fetch(
-      `https://localhost:7139/api/Bill/UpdateStatus/update-status/${order.maHd}`,
+      GetApiUrl()+`/api/Bill/UpdateStatus/update-status/${order.maHd}`,
       {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -122,7 +123,7 @@ const updateStatus = async (order, newStatus) => {
 const viewDetails = async (order) => {
   try {
     const response = await fetch(
-      `https://localhost:7139/api/Bill/GetBillDetails/details/${order.maHd}`
+      GetApiUrl()+`/api/Bill/GetBillDetails/details/${order.maHd}`
     )
     if (!response.ok) {
       throw new Error(`Lỗi: ${response.status}`)
@@ -394,7 +395,7 @@ onMounted(() => {
                   <td>
                     <img
                       v-if="item.hinhAnh"
-                      :src="'https://localhost:7139/HinhAnh/Food_Drink/' + item.hinhAnh"
+                      :src="GetApiUrl()+'/HinhAnh/Food_Drink/' + item.hinhAnh"
                       alt="Ảnh sản phẩm"
                       width="60"
                     />

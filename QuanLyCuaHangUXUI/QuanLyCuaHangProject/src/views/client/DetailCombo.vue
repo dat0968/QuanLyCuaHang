@@ -6,6 +6,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import Swal from 'sweetalert2'
 import Cookies from 'js-cookie'
 import { ReadToken, ValidateToken } from '../../Authentication_Authorization/auth.js'
+import { GetApiUrl } from '@constants/api'
 const route = useRoute()
 const combo = ref(null)
 const selectedVariant = ref(null)
@@ -81,7 +82,7 @@ const scrollToTop = () => {
 // Lấy chi tiết combo
 async function fetchComboDetail() {
   try {
-    const response = await fetch(`https://localhost:7139/api/Home/Combos/${route.params.id}`, {
+    const response = await fetch(GetApiUrl()+`/api/Home/Combos/${route.params.id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -200,7 +201,7 @@ const addToCart = async () => {
       cartDetailRequestCombos: chiTietCombo,
     }
 
-    const response = await fetch('https://localhost:7139/api/Cart', {
+    const response = await fetch(GetApiUrl()+'/api/Cart', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -253,7 +254,7 @@ onMounted(() => {
             <img
               :src="
                 combo.hinh
-                  ? `https://localhost:7139/HinhAnh/Food_Drink/${combo.hinh}`
+                  ? GetApiUrl()+`/HinhAnh/Food_Drink/${combo.hinh}`
                   : '../assets/client/img/food_menu/combo_default.png'
               "
               :alt="combo.tenCombo"
@@ -318,7 +319,7 @@ onMounted(() => {
                           <img
                             :src="
                               variant.anhDaiDien
-                                ? `https://localhost:7139/HinhAnh/Food_Drink/${variant.anhDaiDien}`
+                                ? GetApiUrl()+`/HinhAnh/Food_Drink/${variant.anhDaiDien}`
                                 : '../assets/client/img/food_menu/chicken_default.png'
                             "
                             :alt="variant.tenSanPham"

@@ -6,10 +6,10 @@ import ConfigsRequest from '@/models/ConfigsRequest'
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
 import router from '@/router/index'
-
+import { GetApiUrl } from '@constants/api'
 // Base Axios Client
 const axiosClient = axios.create({
-  baseURL: 'https://localhost:7139/api', // Thay bằng base URL của API bạn
+  baseURL: GetApiUrl()+'/api', // Thay bằng base URL của API bạn
   timeout: 500000, // Giới hạn timeout (ms)
   headers: {
     'Content-Type': 'application/json',

@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
 import Cookies from 'js-cookie';
 import Swal from 'sweetalert2';
+import { GetApiUrl } from '@constants/api'
 const emailOrUsername = ref('');
 const password = ref('');
 const errorMessage = ref('');
@@ -15,7 +16,7 @@ const handleLogin = async () => {
       Email_TenTaiKhoan: emailOrUsername.value.trim(),
       MatKhau: password.value,
     };
-    const response = await fetch('https://localhost:7139/api/Account/LoginStaff', {
+    const response = await fetch(GetApiUrl()+'/api/Account/LoginStaff', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

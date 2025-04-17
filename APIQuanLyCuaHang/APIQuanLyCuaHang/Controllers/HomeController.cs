@@ -642,7 +642,7 @@ namespace APIQuanLyCuaHang.Controllers
                 ? totalPrice * (decimal)(1 - combo.PhanTramGiam.Value / 100)
                 : totalPrice - (combo.SoTienGiam ?? 0);
         }
-
+        [Authorize(Roles = "Customer")]
         // Thêm combo vào giỏ hàng
         private async Task<string> AddComboToCart(HttpClient client, string maCombo, string options, string maKhachHang)
         {
@@ -701,7 +701,7 @@ namespace APIQuanLyCuaHang.Controllers
                 return $"Lỗi khi thêm combo vào giỏ: {ex.Message}";
             }
         }
-
+        [Authorize(Roles = "Customer")]
         // Thêm sản phẩm vào giỏ hàng (giữ nguyên)
         private async Task<string> AddToCart(HttpClient client, string maSanPham, string maKhachHang)
         {
@@ -723,6 +723,16 @@ namespace APIQuanLyCuaHang.Controllers
                     SoLuong = 1,
                     DonGia = ctsp.DonGia
                 };
+
+                // Lấy token từ HttpContext của yêu cầu hiện tại
+                var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+                if (string.IsNullOrEmpty(token))
+                {
+                    return "Không tìm thấy token xác thực!";
+                }
+
+                // Thêm token vào HttpClient
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
                 var addToCartResponse = await client.PostAsync("https://localhost:7139/api/Cart", new StringContent(
                     JsonConvert.SerializeObject(payload),
@@ -748,16 +758,143 @@ namespace APIQuanLyCuaHang.Controllers
             }
         }
 
-        // Thanh toán (cập nhật với CheckoutController)
         private async Task<string> ProcessCheckout(HttpClient client, string maKhachHang)
         {
             try
             {
+                // Lấy thông tin khách hàng
+                var khachHang = await db.Khachhangs
+                    .FirstOrDefaultAsync(kh => kh.MaKh == int.Parse(maKhachHang));
+
+                if (khachHang == null)
+                {
+                    return "Không tìm thấy thông tin khách hàng!";
+                }
+
+                // Kiểm tra thông tin bắt buộc
+                if (string.IsNullOrEmpty(khachHang.HoTen) || string.IsNullOrEmpty(khachHang.Sdt))
+                {
+                    return "Vui lòng cập nhật họ tên và số điện thoại trước khi thanh toán!";
+                }
+
+                // Lấy giỏ hàng của khách hàng
+                var cartItems = await db.Giohangs
+                    .Include(g => g.MaCtspNavigation)
+                    .Include(g => g.MaComboNavigation)
+                    .ThenInclude(c => c!.Chitietcombos)
+                    .ThenInclude(ct => ct.MaSpNavigation)
+                    .ThenInclude(sp => sp!.Chitietsanphams)
+                    .Where(g => g.MaKh == int.Parse(maKhachHang))
+                    .ToListAsync();
+
+                if (!cartItems.Any())
+                {
+                    return "Giỏ hàng của bạn đang trống!";
+                }
+
+                // Tính toán TienGoc và tạo danh sách Cthoadons
+                decimal tienGoc = 0;
+                var cthoadons = new List<OrderDetailRequestDTO>();
+                var detailComboRequests = new List<DetailCombo_OrderResquest>();
+
+                foreach (var item in cartItems)
+                {
+                    if (item.MaCtsp.HasValue)
+                    {
+                        // Sản phẩm đơn lẻ
+                        var ctsp = item.MaCtspNavigation;
+                        if (ctsp == null || ctsp.IsDelete || ctsp.SoLuongTon < item.SoLuong)
+                        {
+                            return $"Sản phẩm {ctsp?.MaCtsp} không khả dụng hoặc không đủ hàng!";
+                        }
+                        if (!ctsp.DonGia.HasValue)
+                        {
+                            return $"Sản phẩm {ctsp.MaCtsp} không có giá hợp lệ!";
+                        }
+                        decimal donGia = ctsp.DonGia.Value;
+                        tienGoc += donGia * item.SoLuong;
+
+                        cthoadons.Add(new OrderDetailRequestDTO
+                        {
+                            MaCtsp = item.MaCtsp.Value,
+                            SoLuong = item.SoLuong,
+                            DonGia = donGia,
+                            GiamGia = 0
+                        });
+                    }
+                    else if (item.MaCombo.HasValue)
+                    {
+                        // Combo
+                        var combo = item.MaComboNavigation;
+                        if (combo == null || combo.SoLuong < item.SoLuong)
+                        {
+                            return $"Combo {item.MaCombo} không khả dụng hoặc không đủ hàng!";
+                        }
+
+                        decimal donGiaCombo = CalculateComboPrice(combo);
+                        tienGoc += donGiaCombo * item.SoLuong;
+
+                        cthoadons.Add(new OrderDetailRequestDTO
+                        {
+                            MaCombo = item.MaCombo.Value,
+                            SoLuong = item.SoLuong,
+                            DonGia = donGiaCombo,
+                            GiamGia = 0
+                        });
+
+                        // Thêm chi tiết combo
+                        foreach (var detail in combo.Chitietcombos)
+                        {
+                            var variant = detail.MaSpNavigation.Chitietsanphams
+                                .FirstOrDefault(ct => ct.IsDelete == false && ct.SoLuongTon >= detail.SoLuongSp);
+                            if (variant == null)
+                            {
+                                return $"Không đủ hàng cho sản phẩm trong combo {combo.MaCombo}!";
+                            }
+                            if (!variant.DonGia.HasValue)
+                            {
+                                return $"Sản phẩm trong combo {combo.MaCombo} không có giá hợp lệ!";
+                            }
+
+                            detailComboRequests.Add(new DetailCombo_OrderResquest
+                            {
+                                MaCombo = combo.MaCombo, // Đã đảm bảo combo không null
+                                MaCTSp = variant.MaCtsp, // Đã đảm bảo variant không null
+                                SoLuong = detail.SoLuongSp.Value,
+                                DonGia = variant.DonGia.Value
+                            });
+                        }
+                    }
+                }
+
+                // Lấy token
+                var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+                if (string.IsNullOrEmpty(token))
+                {
+                    return "Không tìm thấy token xác thực!";
+                }
+
+                // Thêm token vào HttpClient
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+                // Tạo payload cho OrderRequestDTO
                 var payload = new
                 {
-                    MaKhachHang = maKhachHang,
-                    HinhThucTt = "COD"
+                    MaKh = int.Parse(maKhachHang),
+                    HoTen = khachHang.HoTen,
+                    Sdt = khachHang.Sdt,
+                    DiaChiNhanHang = khachHang.DiaChi ?? "Không cung cấp",
+                    HinhThucTt = "COD",
+                    MoTa = "Thanh toán qua chatbot",
+                    PhiVanChuyen = 30000m,
+                    TienGoc = tienGoc,
+                    MaCoupon = (string?)null,
+                    GiamGiaCoupon = 0m,
+                    DetailCombo_OrderResquests = detailComboRequests,
+                    Cthoadons = cthoadons
                 };
+
+                _logger.LogInformation("Payload gửi đến Checkout: {Payload}", JsonConvert.SerializeObject(payload));
 
                 var checkoutResponse = await client.PostAsync("https://localhost:7139/api/Checkout", new StringContent(
                     JsonConvert.SerializeObject(payload),

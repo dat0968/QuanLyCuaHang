@@ -147,7 +147,7 @@ onMounted(() => {
             <div>
               <label class="form-label">Hình ảnh</label>
               <img
-                :src="`https://localhost:7139/HinhAnh/Food_Drink/${comboEdit.hinh}`"
+                :src="GetApiUrl()+`/HinhAnh/Food_Drink/${comboEdit.hinh}`"
                 alt="Ảnh combo"
                 class="img-fluid mt-2"
                 style="max-width: 100px; height: auto"

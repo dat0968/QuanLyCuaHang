@@ -18,7 +18,7 @@
   import { computed } from 'vue';
   import Cookies from 'js-cookie';
   import Swal from 'sweetalert2';
-  
+  import { GetApiUrl } from '@constants/api'
   export default {
     name: 'LoginButton',
     setup() {
@@ -56,7 +56,7 @@
           }
   
           // Gọi API Logout
-          const response = await fetch('https://localhost:7139/api/Account/Logout', {
+          const response = await fetch(GetApiUrl()+'/api/Account/Logout', {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',

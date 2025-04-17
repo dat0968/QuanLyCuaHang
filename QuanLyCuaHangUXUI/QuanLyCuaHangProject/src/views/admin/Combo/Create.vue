@@ -135,7 +135,7 @@ const addCombo = async () => {
     })
 
     //Gửi resquest
-    const response = await fetch('https://localhost:7139/api/Combos', {
+    const response = await fetch(GetApiUrl()+'/api/Combos', {
       method: 'POST',
       body: formData,
     })

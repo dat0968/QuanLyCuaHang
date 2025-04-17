@@ -13,7 +13,7 @@ const handleForgotPassword = async () => {
   success.value = false;
 
   try {
-    const response = await fetch(`https://localhost:7139/api/Account/ForgotPasswordStaff?email=${encodeURIComponent(email.value.trim())}`, {
+    const response = await fetch(GetApiUrl()+`/api/Account/ForgotPasswordStaff?email=${encodeURIComponent(email.value.trim())}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

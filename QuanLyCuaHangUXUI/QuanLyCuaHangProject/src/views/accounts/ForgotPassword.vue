@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import Swal from 'sweetalert2';
-
+import { GetApiUrl } from '@constants/api'
 const email = ref('');
 const message = ref('');
 const success = ref(false);
@@ -13,7 +13,7 @@ const handleForgotPassword = async () => {
   success.value = false;
 
   try {
-    const response = await fetch(`https://localhost:7139/api/Account/ForgotPasswordCustomer?email=${encodeURIComponent(email.value.trim())}`, {
+    const response = await fetch(GetApiUrl()+`/api/Account/ForgotPasswordCustomer?email=${encodeURIComponent(email.value.trim())}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

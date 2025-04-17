@@ -13,7 +13,7 @@
     import Cookies from 'js-cookie';
     import Swal from 'sweetalert2';
     import { ReadToken } from '../Authentication_Authorization/auth.js';
-
+import { GetApiUrl } from '@constants/api'
     // Kiểm tra trạng thái đăng nhập
     const isLoggedIn = computed(() => {
     return !!Cookies.get('accessToken');
@@ -45,7 +45,7 @@
       }
   
       // Gọi API Logout
-      const response = await fetch('https://localhost:7139/api/Account/Logout', {
+      const response = await fetch(GetApiUrl()+'/api/Account/Logout', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

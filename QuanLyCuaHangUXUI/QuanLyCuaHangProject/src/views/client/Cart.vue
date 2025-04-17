@@ -140,6 +140,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Swal from 'sweetalert2'
 import Cookies from 'js-cookie'
+import { GetApiUrl } from '@constants/api'
 const router = useRouter()
 let accesstoken = Cookies.get('accessToken')
 let refreshtoken = Cookies.get('refreshToken')
@@ -159,8 +160,8 @@ const FetchCart = async () => {
         router.push('/Login')
         return
       }
-    }
-    const response = await fetch(`https://localhost:7139/api/Cart/${IdUser}`, {
+    }GetApiUrl()
+    const response = await fetch(GetApiUrl()+`/api/Cart/${IdUser}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -220,7 +221,7 @@ const RemoveCart = async (maGioHang) => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         console.log('Dữ liệu hợp lệ, chuẩn bị gửi request')
-        const response = await fetch(`https://localhost:7139/api/Cart/${maGioHang}/${IdUser}`, {
+        const response = await fetch(GetApiUrl()+`/api/Cart/${maGioHang}/${IdUser}`, {
           method: 'DELETE',
           headers: {
             'Content-type': 'application/json',
@@ -268,7 +269,7 @@ const UpdateCart = async (data, quantity) => {
       soLuong: quantity,
       donGia: data.donGia,
     }
-    const response = await fetch(`https://localhost:7139/api/Cart/${data.id}`, {
+    const response = await fetch(GetApiUrl()+`/api/Cart/${data.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -315,7 +316,7 @@ const subtotal = computed(() => {
 
 // Lấy URL hình ảnh
 const getImageUrl = (imageName) => {
-  return `https://localhost:7139/HinhAnh/Food_Drink/${imageName}`
+  return GetApiUrl()+`/HinhAnh/Food_Drink/${imageName}`
 }
 
 const proceedToCheckout = () => {

@@ -15,6 +15,7 @@ import { useRouter } from 'vue-router'
 import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { GetApiUrl } from '@constants/api'
 const router = useRouter()
 const cartItems = ref([])
 let accesstoken = Cookies.get('accessToken')
@@ -38,7 +39,7 @@ const FetchCart = async () => {
     if(readtoken){
       IdUser = readtoken.IdUser
     }
-    const response = await fetch(`https://localhost:7139/api/Cart/${IdUser}`, {
+    const response = await fetch(`GetApiUrl()+/api/Cart/${IdUser}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${accesstoken}`,

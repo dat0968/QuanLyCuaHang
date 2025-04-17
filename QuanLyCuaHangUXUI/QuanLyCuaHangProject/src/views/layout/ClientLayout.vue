@@ -27,7 +27,7 @@ import Footer from '../../../src/components/Footer.vue'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
-
+import { GetApiUrl } from '@constants/api'
 const router = useRouter()
 const toast = useToast()
 const showCartModal = ref(false)
@@ -49,7 +49,7 @@ const closeCartModal = () => {
 // Lấy dữ liệu giỏ hàng
 const FetchCart = async () => {
   try {
-    const response = await fetch(`https://localhost:7139/api/Cart/120`, {
+    const response = await fetch(GetApiUrl()+`/api/Cart/120`, {
       method: 'GET',
       Headers: {
         'Content-Type': 'application/json',
@@ -145,7 +145,7 @@ const handleQuantityChange = async (event, item) => {
 
 const removeItem = async (item) => {
   try {
-    const response = await fetch(`https://localhost:7139/api/Cart/delete/${item.maCtsp}`, {
+    const response = await fetch(GetApiUrl()+`/api/Cart/delete/${item.maCtsp}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -166,7 +166,7 @@ const removeItem = async (item) => {
 
 const updateCartItem = async (item) => {
   try {
-    const response = await fetch(`https://localhost:7139/api/Cart/update/${item.maCtsp}`, {
+    const response = await fetch(GetApiUrl()+`/api/Cart/update/${item.maCtsp}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

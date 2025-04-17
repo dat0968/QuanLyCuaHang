@@ -203,7 +203,7 @@
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2';
-
+import { GetApiUrl } from '@constants/api'
 export default {
   data() {
     return {
@@ -237,8 +237,8 @@ export default {
         isDelete: false,
       },
       selectedStaff: {},
-      apiBaseUrl: 'https://localhost:7139/api', // URL API backend
-      imageBaseUrl: 'https://localhost:7139', // URL để truy cập hình ảnh
+      apiBaseUrl: GetApiUrl()+'/api', // URL API backend
+      imageBaseUrl: GetApiUrl(), // URL để truy cập hình ảnh
       defaultImagePath: '/uploads/default-image.jpg', // Đường dẫn mặc định nếu không có ảnh
     };
   },

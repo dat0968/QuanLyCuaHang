@@ -3,6 +3,7 @@ using APIQuanLyCuaHang.Models;
 using APIQuanLyCuaHang.Repositories.Bill;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace APIQuanLyCuaHang.Controllers
 {
@@ -27,11 +28,24 @@ namespace APIQuanLyCuaHang.Controllers
 
             try
             {
+                // Lấy mã nhân viên từ access token
+                var maNvClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value; // Hoặc tên claim khác như "sub"
+                if (string.IsNullOrEmpty(maNvClaim))
+                {
+                    return Unauthorized(new { Success = false, Message = "Không tìm thấy thông tin nhân viên trong token." });
+                }
+
+                // Chuyển đổi sang kiểu int nếu MaNv là số
+                if (!int.TryParse(maNvClaim, out var maNv))
+                {
+                    return BadRequest(new { Success = false, Message = "Mã nhân viên không hợp lệ." });
+                }
+
                 // Tạo hóa đơn
                 var hoaDon = new Hoadon
                 {
                     MaKh = 122,
-                    MaNv = hoaDonDTO.MaNv,
+                    MaNv = maNv, // Sử dụng MaNv từ token
                     TinhTrang = hoaDonDTO.TinhTrang,
                     NgayTao = hoaDonDTO.NgayTao,
                     HinhThucTt = hoaDonDTO.HinhThucTt,

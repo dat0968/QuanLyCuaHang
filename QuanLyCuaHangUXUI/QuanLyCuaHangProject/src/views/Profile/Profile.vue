@@ -16,7 +16,7 @@
           <div class="col-md-6 text-center">
             <img
               v-if="profile.hinhDaiDien"
-              :src="'https://localhost:7139' + profile.hinhDaiDien"
+              :src="GetApiUrl()+ profile.hinhDaiDien"
               alt="Hình đại diện"
               class="avatar-img mb-3"
             />
@@ -69,7 +69,7 @@
                   <div class="avatar-container">
                     <img
                       v-if="editProfile.hinhDaiDien && !editProfile.anh"
-                      :src="'https://localhost:7139' + editProfile.hinhDaiDien"
+                      :src="GetApiUrl()+ editProfile.hinhDaiDien"
                       alt="Hình đại diện"
                       class="avatar-img"
                     />
@@ -150,7 +150,7 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { Modal } from 'bootstrap';
 import Swal from 'sweetalert2';
-
+import { GetApiUrl } from '@constants/api'
 export default {
   name: 'ProfilePage',
   setup() {
@@ -162,7 +162,7 @@ export default {
 
     const fetchProfile = async () => {
       try {
-        const response = await axios.get('https://localhost:7139/api/Profile/GetProfile');
+        const response = await axios.get(GetApiUrl()+'/api/Profile/GetProfile');
         console.log('API Response:', response.data);
 
         if (response.data.success) {
@@ -245,7 +245,7 @@ export default {
       }
 
       try {
-        const response = await axios.put('https://localhost:7139/api/Profile/UpdateProfile', formData, {
+        const response = await axios.put(GetApiUrl()+'/api/Profile/UpdateProfile', formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
         if (response.data.success) {

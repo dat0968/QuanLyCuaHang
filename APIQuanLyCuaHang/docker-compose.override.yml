@@ -1,0 +1,27 @@
+﻿services:
+  productdb:
+    container_name: productdb
+    environment:
+      - SA_PASSWORD=123Pa$$$$word!
+      - ACCEPT_EULA=Y
+    restart: always
+    volumes:
+      - sqlserver_data:/var/lib/sqlserver/data
+    ports:
+      - "1435:1433"
+
+  jollibee.API:
+    container_name: jollibee.API
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings:QuanLyCuaHangContext=Server=productdb,1433;Database=QuanLyCuaHang;User Id=sa;Password=123Pa$$$$word!;TrustServerCertificate=True
+    depends_on:
+      - productdb
+    ports:
+      - "5136:80"
+    restart: always
+
+volumes:
+  sqlserver_data:
+    name: sqlserver_data
