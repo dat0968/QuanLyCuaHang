@@ -178,6 +178,22 @@ export default {
             },
           },
           {
+            data: null,
+            title: 'Số người chờ xác nhận',
+            className: 'text-center',
+            render: (data, type, row) => {
+              return `${row.schedules.filter((s) => s.trangThai === 'Chờ xác nhận').length} / ${row.soNguoiToiDa}`
+            },
+          },
+          {
+            data: 'isDelete',
+            title: 'Trạng thái',
+            className: 'text-center',
+            render: (data) => {
+              return `<span class="badge ${data ? 'bg-danger' : 'bg-success'}">${data ? 'Ngừng hoạt động' : 'Hoạt động'}</span>`
+            },
+          },
+          {
             data: 'gioBatDau',
             title: 'Thời gian làm',
             className: 'text-center',
@@ -209,7 +225,7 @@ export default {
             },
           },
         ],
-        order: [[1, 'asc']],
+        order: [],
         language: {
           ...configsDt.defaultLanguageDatatable,
           info: 'Hiển thị _START_ đến _END_ ca trong số _TOTAL_ ca',
@@ -482,19 +498,24 @@ export default {
           ConfigsRequest.takeAuth(),
         )
         if (ResponseAPI.handleNotification(response)) {
+          console.log(response)
           return
         }
         // Nếu cập nhật thành công, cập nhật danh sách nhân viên trong ca
         if (response && response.success) {
-          const updatedShift = response.data
+          /* const updatedShift = response.data
           const existingShiftIndex = this.listShifts.findIndex(
             (shift) => shift.maCaKip === updatedShift.maCaKip,
           )
           if (existingShiftIndex !== -1) {
             this.listShifts[existingShiftIndex] = updatedShift
           }
-          this.listShifts = [...this.listShifts] // Đảm bảo reactivity
-          Swal.fire('Thành công', 'Trạng thái đã được cập nhật.', 'success')
+          this.listShifts = [...this.listShifts] // Đảm bảo reactivity */
+          Swal.fire(
+            'Thành công',
+            'Trạng thái đã được cập nhật. Vui lòng load lại trang để được hiển thị cập nhập',
+            'success',
+          )
         }
       } catch (error) {
         console.error('Lỗi khi cập nhật trạng thái:', error)

@@ -204,9 +204,12 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
                 // Kiểm tra số lượng nhân viên trong CaKip
                 int currentEmployees = caKip.SoNguoiHienTai;
 
-                if (currentEmployees + request.MaNvs.Length > caKip.SoNguoiToiDa)
+                if (request.TrangThaiCapNhap == TrangThaiLichLamViec.DiLam)
                 {
-                    throw new InvalidOperationException($"Số lượng nhân viên vượt quá giới hạn {caKip.SoNguoiToiDa} của CaKip.");
+                    if (currentEmployees + request.MaNvs.Length > caKip.SoNguoiToiDa)
+                    {
+                        throw new InvalidOperationException($"Số lượng nhân viên vượt quá giới hạn {caKip.SoNguoiToiDa} của CaKip.");
+                    }
                 }
                 if (TrangThaiLichLamViec.TrangThaiBatThuong.Contains(request.TrangThaiCapNhap) && String.IsNullOrEmpty(request.GhiChu))
                 {
