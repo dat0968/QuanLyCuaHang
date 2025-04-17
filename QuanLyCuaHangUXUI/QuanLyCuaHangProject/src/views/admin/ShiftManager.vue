@@ -182,7 +182,9 @@ export default {
             title: 'Số người chờ xác nhận',
             className: 'text-center',
             render: (data, type, row) => {
-              return `${row.schedules.filter((s) => s.trangThai === 'Chờ xác nhận').length} / ${row.soNguoiToiDa}`
+              return `${row.schedules.filter((s) => s.trangThai === 'Chờ xác nhận').length} / ${
+                row.soNguoiToiDa
+              }`
             },
           },
           {
@@ -190,7 +192,9 @@ export default {
             title: 'Trạng thái',
             className: 'text-center',
             render: (data) => {
-              return `<span class="badge ${data ? 'bg-danger' : 'bg-success'}">${data ? 'Ngừng hoạt động' : 'Hoạt động'}</span>`
+              return `<span class="badge ${data ? 'bg-danger' : 'bg-success'}">${
+                data ? 'Ngừng hoạt động' : 'Hoạt động'
+              }</span>`
             },
           },
           {
@@ -210,17 +214,21 @@ export default {
             render: (data, type, row) => {
               const isActive = row.isDelete
               return `
-                <div class="d-flex gap-1 justify-content-between">
-                  <span class="text-danger edit-shift" data-id="${data}" title="Sửa" style="cursor: pointer;">
-                    <i class="bi icon-pencil"></i>
-                  </span>
-                  <span class="text-info change-status" data-id="${row.maCaKip}" title="Kích hoạt" style="cursor: pointer;">
-                    <i class="bi ${isActive ? 'icon-close' : 'icon-check'}"></i>
-                  </span>
-                  <span class="text-primary generate-qr" data-id="${data}" title="Tải QR" style="cursor: pointer;">
-                    <i class="bi icon-pin"></i>
-                  </span>
-                </div>
+                  <div class="d-flex gap-1 justify-content-between flex-column">
+                    <span class="btn btn-outline-warning edit-shift" data-id="${data}" title="Sửa" style="cursor: pointer;">
+                      <i class="bi icon-pencil"></i>Sửa
+                    </span>
+                    <span class="btn btn-outline-danger change-status" data-id="${
+                      row.maCaKip
+                    }" title="Kích hoạt" style="cursor: pointer;">
+                      <i class="bi ${isActive ? 'icon-close' : 'icon-check'}"></i> ${
+                        isActive ? 'Hủy' : 'Mở'
+                      }
+                    </span>
+                    <span class="btn btn-outline-primary generate-qr" data-id="${data}" title="Tải QR" style="cursor: pointer;">
+                      <i class="bi icon-pin"></i>QR
+                    </span>
+                  </div>
               `
             },
           },
@@ -273,7 +281,9 @@ export default {
                   <label for="status-filter"><strong>Lọc theo trạng thái:</strong></label>
                   <select id="status-filter" class="status-filter form-select">
                     <option value="">Tất cả</option>
-                    ${validStatuses.map((status) => `<option value="${status}">${status}</option>`).join('')}
+                    ${validStatuses
+                      .map((status) => `<option value="${status}">${status}</option>`)
+                      .join('')}
                   </select>
                 </div>
 
@@ -299,37 +309,59 @@ export default {
               </div>
 
               <div class="row border-left border-right justify-content-center" style="max-height: 400px; overflow-y: auto">
-                  <div class="col-12 mb-3 border rounded d-flex align-items-start p-1">
-                      <input type="checkbox" class="select-all-checkbox" />
-                      <label class="ml-2">Chọn tất cả</label>
+                  <div class="col-12 mb-3 d-flex align-items-start p-1">
+                      <div class="border rounded p-1 m-1 w-100">
+                        <input type="checkbox" class="select-all-checkbox" />
+                        <label class="ml-2">Chọn tất cả</label>
+                      </div>
                   </div>
                   ${currentShift.schedules
                     .map(
                       (employee) => `
-                      <div class="employee-item col-6 mb-3 border rounded d-flex align-items-start p-1">
-                          <input type="checkbox" class="employee-checkbox" data-ma-nv="${employee.maNv}" />
-                          <div class="ml-2">
-                              <p><strong>${employee.tenNhanVien} <span class="text-secondary">[${employee.maNv}]</span></strong></p>
-                              <p class="text-muted"><strong>Trạng thái:</strong> <span class="status-screw">${employee.trangThai}</span></p>
-                              <p><strong>Ngày làm:</strong> <span class="date-screw">${formatDatetime.formatDate(employee.ngayThangNam) || 'Không có'}</span></p>
-                              <div class="additional-info d-none">
-                                  <div class="row mb-2">
-                                      <div class="col-4">
-                                          <p><strong>Giờ vào:</strong> ${formatDatetime.formatTime(employee.gioVao) || 'Không có'}</p>
-                                      </div>
-                                      <div class="col-4">
-                                          <p><strong>Giờ ra:</strong> ${formatDatetime.formatTime(employee.gioRa) || 'Không có'}</p>
-                                      </div>
-                                      <div class="col-4">
-                                          <p><strong>Số giờ làm:</strong> ${employee.soGioLam || 0}h</p>
-                                      </div>
-                                  </div>
-                                  <div class="row">
-                                      <div class="col-12">
-                                          <p><strong>Lý do nghỉ:</strong> ${employee.lyDoNghi || 'Không có'}</p>
-                                      </div>
-                                  </div>
-                              </div>
+                      <div class="employee-item col-6 mb-3 d-flex align-items-start p-1">
+                        <div class=" border rounded w-100 p-1">
+                            <input type="checkbox" class="employee-checkbox" data-ma-nv="${
+                              employee.maNv
+                            }" />
+                            <div class="ml-2">
+                                <p><strong>${employee.tenNhanVien} <span class="text-secondary">[${
+                                  employee.maNv
+                                }]</span></strong></p>
+                                <p class="text-muted"><strong>Trạng thái:</strong> <span class="status-screw">${
+                                  employee.trangThai
+                                }</span></p>
+                                <p><strong>Ngày làm:</strong> <span class="date-screw">${
+                                  formatDatetime.formatDate(employee.ngayThangNam) || 'Không có'
+                                }</span></p>
+                                <div class="additional-info d-none">
+                                    <div class="row mb-2">
+                                        <div class="col-4">
+                                            <p><strong>Giờ vào:</strong> ${
+                                              formatDatetime.formatTime(employee.gioVao) ||
+                                              'Không có'
+                                            }</p>
+                                        </div>
+                                        <div class="col-4">
+                                            <p><strong>Giờ ra:</strong> ${
+                                              formatDatetime.formatTime(employee.gioRa) ||
+                                              'Không có'
+                                            }</p>
+                                        </div>
+                                        <div class="col-4">
+                                            <p><strong>Số giờ làm:</strong> ${
+                                              employee.soGioLam || 0
+                                            }h</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <p><strong>Lý do nghỉ:</strong> ${
+                                              employee.lyDoNghi || 'Không có'
+                                            }</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                           </div>
                       </div>
                       `,
@@ -566,10 +598,10 @@ export default {
         .then((response) => {
           if (response.success) {
             toastr.success('Lưu thành công')
-            // Thêm logic để cập nhật danh sách nhân viên trong ca
+            /* // Thêm logic để cập nhật danh sách nhân viên trong ca
             const updatedShift = response.data
             const existingShiftIndex = this.listShifts.findIndex(
-              (shift) => shift.maCaKip === updatedShift.maCaKip,
+              (shift) => shift.maCaKip === updatedShift.maCaKip
             )
             if (existingShiftIndex !== -1) {
               this.listShifts[existingShiftIndex] = updatedShift
@@ -583,7 +615,8 @@ export default {
               soNguoiToiDa: 0,
               gioBatDau: '',
               gioKetThuc: '',
-            }
+            } */
+            this.loadShifts()
           } else {
             toastr.error('Lỗi khi lưu:' + response.message)
           }
