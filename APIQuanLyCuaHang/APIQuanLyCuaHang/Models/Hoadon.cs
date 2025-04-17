@@ -29,7 +29,7 @@ public partial class Hoadon
 
     public string? HoTen { get; set; } = null!;
 
-    public string? Sdt { get; set; } 
+    public string? Sdt { get; set; }
 
     public string? LyDoHuy { get; set; }
 

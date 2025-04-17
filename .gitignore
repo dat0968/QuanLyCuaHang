@@ -33,3 +33,10 @@ APIQuanLyCuaHang/APIQuanLyCuaHang/Repositories/OrderManager/OrderManagerReposito
 APIQuanLyCuaHang/APIQuanLyCuaHang/Controllers/OrderManagerController.cs
 QuanLyCuaHangUXUI/QuanLyCuaHangProject/src/views/admin/OrderManager.vue
 .vscode
+APIQuanLyCuaHang/APIQuanLyCuaHang/obj
+# git rm -rf APIQuanLyCuaHang\APIQuanLyCuaHang\obj
+APIQuanLyCuaHang/APIQuanLyCuaHang/obj
+APIQuanLyCuaHang/APIQuanLyCuaHang/bin
+
+QuanLyCuaHangUXUI/QuanLyCuaHangProject/obj
+QuanLyCuaHangUXUI/QuanLyCuaHangProject/bin

@@ -40,11 +40,6 @@ import '../../assets/admin/plugins/datepicker/datepicker.min.js'
 import '../../assets/admin/plugins/datepicker/i18n/datepicker.en.js'
 //import '../../assets/admin/js/init/dashborad.js'
 import '../../assets/admin/js/main.js'
-import QrScanAndShiftManagerModal from '@/components/shift/QrScanAndShiftManagerModal.vue'
-
-components: {
-  QrScanAndShiftManagerModal
-}
 </script>
 <template>
   <div class="xp-vertical">
@@ -111,6 +106,11 @@ components: {
                 </router-link>
               </li>
               <li>
+                <router-link to="/admin/shift-manager">
+                  <i class="icon-shield"></i><span>CA LÀM VIỆC</span>
+                </router-link>
+              </li>
+              <li>
                 <a href="javaScript:void();">
                   <i class="icon-social-dropbox"></i><span>Danh sách mục</span
                   ><i class="icon-arrow-right pull-right"></i>
@@ -149,7 +149,6 @@ components: {
             <div class="col-10 col-md-11 col-lg-11 order-1 order-md-2">
               <div class="xp-profilebar text-right">
                 <ul class="list-inline mb-0">
-                  
                   <li class="list-inline-item mr-0">
                     <div class="dropdown xp-userprofile">
                       <a
@@ -179,7 +178,6 @@ components: {
                         <a class="dropdown-item" href="#"
                           ><i class="icon-wallet text-success mr-2"></i> Thanh toán</a
                         >
-                        <QrScanAndShiftManagerModal />
                         <a class="dropdown-item" href="#"
                           ><i class="icon-settings text-warning mr-2"></i> Cài đặt</a
                         >
@@ -190,8 +188,7 @@ components: {
                           ><i class="icon-power text-danger mr-2"></i> Đăng xuất</a
                         > -->
                         <!-- Đăng xuất -->
-                        <LogoutAdmin/>
-                        
+                        <LogoutAdmin />
                       </div>
                     </div>
                   </li>

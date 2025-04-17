@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using APIQuanLyCuaHang.Constants;
 using APIQuanLyCuaHang.DTO;
+using APIQuanLyCuaHang.Helpers.Handlers;
 using APIQuanLyCuaHang.Helpers.Utils;
 using APIQuanLyCuaHang.Models;
 using APIQuanLyCuaHang.Repositories.Repository;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace APIQuanLyCuaHang.Repositories.CaKip
@@ -22,13 +24,13 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
             {
                 if (!id.HasValue)
                 {
-                    throw new Exception("Dữ liệu không nhận được để xử lí.");
+                    throw new BadHttpRequestException("Dữ liệu không nhận được để xử lí.");
                 }
                 var caKip = await _db.Cakips.FindAsync(id);
 
                 if (caKip == null)
                 {
-                    throw new Exception("Dữ liệu không tìm thấy trong hệ thống.");
+                    throw new KeyNotFoundException("Dữ liệu không tìm thấy trong hệ thống.");
                 }
 
                 caKip.IsDelete = !caKip.IsDelete;
@@ -41,7 +43,7 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
             return response;
         }
@@ -60,7 +62,7 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
 
             return response;
@@ -134,17 +136,9 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
                 response.SetSuccessResponse("Lấy danh sách Ca thành công!");
                 response.SetData(dataFormatted);
             }
-            catch (KeyNotFoundException ex)
-            {
-                response.SetMessageResponseWithException(404, ex);
-            }
-            catch (ArgumentException ex)
-            {
-                response.SetMessageResponseWithException(400, ex);
-            }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
 
             return response;
@@ -175,7 +169,7 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
             return response;
         }
@@ -236,7 +230,7 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
             return response;
         }

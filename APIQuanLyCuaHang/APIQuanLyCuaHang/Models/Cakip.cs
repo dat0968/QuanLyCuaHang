@@ -13,8 +13,10 @@ public partial class Cakip
     public int SoNguoiToiDa { get; set; }
 
     public int SoNguoiHienTai { get; set; }
+    [Column(TypeName = "time(7)")]
 
     public TimeOnly GioBatDau { get; set; }
+    [Column(TypeName = "time(7)")]
 
     public TimeOnly GioKetThuc { get; set; }
     [Column(TypeName = "decimal(18,2)")]

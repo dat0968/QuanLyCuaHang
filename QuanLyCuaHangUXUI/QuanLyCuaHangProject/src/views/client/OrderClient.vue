@@ -171,7 +171,18 @@
                   <div class="row mb-3">
                     <!-- Tiêu đề cùng nút in hóa đơn-->
                     <div class="d-flex justify-content-between">
-                      <h5>Chi tiết hóa đơn</h5>
+                      <h5>
+                        Chi tiết hóa đơn
+                        <select
+                          class="form-select"
+                          id="selectTypeObject"
+                          @change="filterTypeObjectInDetailOrder"
+                        >
+                          <option value="">Chọn loại đối tượng</option>
+                          <option value="product">Sản phẩm</option>
+                          <option value="combo">Combo</option>
+                        </select>
+                      </h5>
                       <div class="d-flex gap-4">
                         <i
                           class="icon-printer text-primary"
@@ -188,38 +199,45 @@
                       </div>
                     </div>
                     <div class="col-12 table-responsive">
-                      <table class="table">
+                      <table class="overflow-auto-y table" style="max-height: 300px">
                         <thead>
                           <tr>
                             <th>Tên Sản Phẩm</th>
-                            <th>Số Lượng</th>
+                            <th class="text-center">Số Lượng</th>
                             <th>Đơn Giá</th>
                             <th>Thành Tiền</th>
                           </tr>
                         </thead>
-                        <tbody class="overflow-auto-y">
+                        <tbody>
+                          <tr v-if="selectedOrder.chiTietHoaDonKhachs.length === 0">
+                            <td colspan="4" class="text-center">
+                              Không có sản phẩm nào trong hóa đơn này.
+                            </td>
+                          </tr>
                           <tr
                             v-for="item in selectedOrder.chiTietHoaDonKhachs"
                             :key="item.maDoiTuong"
                           >
                             <td>
                               <div class="row align-items-center">
-                                <div class="col">
+                                <div class="col-3">
                                   <img
                                     :src="getImageUrl(item.hinhAnh, `/HinhAnh/Food_Drink`)"
                                     :alt="item.tenDoiTuong"
-                                    class="img-fluid rounded"
+                                    class="img-fluid rounded border"
+                                    style="width: 100px; height: 100px; object-fit: cover"
                                   />
                                 </div>
-
-                                <div class="col-8">
+                                <div class="col-9">
                                   {{ item.tenDoiTuong }}<br />
                                   <p>Loại: {{ item.loaiDoiTuong }}</p>
-                                  <p>Kích thước: {{ item.kichThuoc || 'N/A' }}</p>
+                                  <p v-if="item.kichThuoc">
+                                    Kích thước: {{ item.kichThuoc || 'N/A' }}
+                                  </p>
                                 </div>
                               </div>
                             </td>
-                            <td>{{ item.soLuong }}</td>
+                            <td class="text-center">{{ item.soLuong }}</td>
                             <td>{{ formatCurrency(item.donGia) }}</td>
                             <td>{{ formatCurrency(item.soLuong * item.donGia) }}</td>
                           </tr>
@@ -227,55 +245,55 @@
                       </table>
                     </div>
                     <div class="col-12">
-                      <h5>Tổng cộng</h5>
+                      <h4><strong>Tổng cộng</strong></h4>
                       <div class="row">
                         <div class="col-md-6">
-                          <p><strong>Hình thức thanh toán:</strong></p>
+                          <h5>Hình thức thanh toán:</h5>
                         </div>
                         <div class="col-md-6 text-end">
-                          <p>{{ selectedOrder.hinhThucTt }}</p>
+                          <h5>{{ selectedOrder.hinhThucTt }}</h5>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-md-6">
-                          <p><strong>Tổng tiền hàng:</strong></p>
+                          <h5>Tổng tiền hàng:</h5>
                         </div>
                         <div class="col-md-6 text-end">
-                          <p>{{ formatCurrency(selectedOrder.tienGoc) }}</p>
+                          <h5>{{ formatCurrency(selectedOrder.tienGoc) }}</h5>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-md-6">
-                          <p><strong>Phí vận chuyển:</strong></p>
+                          <h5>Phí vận chuyển:</h5>
                         </div>
                         <div class="col-md-6 text-end">
-                          <p>{{ formatCurrency(selectedOrder.phiVanChuyen) }}</p>
+                          <h5>{{ formatCurrency(selectedOrder.phiVanChuyen) }}</h5>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-md-6">
-                          <p><strong>Giảm giá:</strong></p>
+                          <h5>Giảm giá:</h5>
                         </div>
                         <div class="col-md-6 text-end">
-                          <p>{{ formatCurrency(selectedOrder.giamGiaCoupon) }}</p>
+                          <h5>{{ formatCurrency(selectedOrder.giamGiaCoupon) }}</h5>
                         </div>
                       </div>
                       <hr />
                       <div class="row">
                         <div class="col-md-6">
-                          <p><strong>Tổng tiền thanh toán:</strong></p>
+                          <h5>Tổng tiền thanh toán:</h5>
                         </div>
                         <div class="col-md-6 text-end">
-                          <p class="fw-bold text-danger">
+                          <h5 class="fw-bold text-danger">
                             {{ formatCurrency(selectedOrder.tongTien) }}
-                          </p>
+                          </h5>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-md-12 text-end">
-                          <p>
+                          <h5>
                             <em>(Bằng chữ: {{ convertNumberToWords(selectedOrder.tongTien) }})</em>
-                          </p>
+                          </h5>
                         </div>
                       </div>
                     </div>
@@ -762,7 +780,7 @@ export default {
               let buttonHtml = `<button class="btn btn-primary btn-sm btn-view mx-2" data-id="${row.maHd}"> <i class="icon-doc"></i> Chi tiết</button>`
 
               // Chỉ hiển thị một nút "Hủy đơn"
-              if (TrangThaiDonHang.TrangThaiCoTheDoi.includes(status)) {
+              if (!TrangThaiDonHang.TrangThaiKhongBinhThuong.includes(status)) {
                 buttonHtml += `<button class="btn btn-danger btn-sm btn-change-status" data-id="${row.maHd}" data-status="${status}"> <i class="icon-close"></i> Hủy đơn</button>`
               }
               return buttonHtml
@@ -776,6 +794,24 @@ export default {
         },
       })
     },
+    filterTypeObjectInDetailOrder() {
+      // Lọc theo loại đối tượng trong chi tiết hóa đơn
+      const typeObject = $('#selectTypeObject').val()
+      console.log(typeObject)
+      this.selectedOrder = this.orders.find((order) => order.maHd == this.selectedOrder.maHd) // Hiển thị tất cả nếu không có loại nào được chọn
+
+      if (typeObject != '') {
+        if (typeObject === 'product') {
+          this.selectedOrder.chiTietHoaDonKhachs = this.selectedOrder.chiTietHoaDonKhachs.filter(
+            (item) => item.loaiDoiTuong !== 'Combo',
+          )
+        } else if (typeObject === 'combo') {
+          this.selectedOrder.chiTietHoaDonKhachs = this.selectedOrder.chiTietHoaDonKhachs.filter(
+            (item) => item.loaiDoiTuong === 'Combo',
+          )
+        }
+      }
+    },
     handleTableActions() {
       // Xử lý nút "Xem chi tiết"
       $('#dt-orderClient').on('click', '.btn-view', (event) => {
@@ -787,24 +823,12 @@ export default {
       $('#dt-orderClient').on('click', '.btn-change-status', async (event) => {
         const target = $(event.target)
         const orderId = target.data('id')
-        const currentStatus = target.data('status')
-
-        // Lấy các trạng thái hủy được từ cấu hình
-        const availableCancelStatuses = TrangThaiDonHang.isCancelable(currentStatus) || []
-        if (availableCancelStatuses.length === 0) {
-          Swal.fire({
-            icon: 'info',
-            title: 'Không thể hủy đơn',
-            text: `Trạng thái hiện tại: "${currentStatus}" không cho phép hủy.`,
-          })
-          return
-        }
 
         // Hiển thị Swal để chọn trạng thái muốn hủy
         const { value: selectedStatus } = await Swal.fire({
           title: 'Chọn trạng thái hủy',
           input: 'select',
-          inputOptions: availableCancelStatuses.reduce((options, status) => {
+          inputOptions: TrangThaiDonHang.TrangThaiKhongBinhThuong.reduce((options, status) => {
             options[status] = status
             return options
           }, {}),
@@ -840,8 +864,15 @@ export default {
         // Gửi yêu cầu API hủy đơn
         axiosClient
           .postToApi(
-            `/OrderClient/ChangeStatusOrder?orderId=${orderId}&statusChange=${selectedStatus}${'&reasonCancel=' + cancellationReason}`,
+            `/OrderClient/ChangeStatusOrder?orderId=${orderId}&statusChange=${selectedStatus}&reasonCancel=${cancellationReason}`,
+            {
+              orderId: orderId,
+              statusChange: selectedStatus,
+              reasonCancel: cancellationReason,
+            },
+            ConfigsRequest.takeAuth(),
           )
+
           .then((response) => {
             if (response.success) {
               Swal.fire({

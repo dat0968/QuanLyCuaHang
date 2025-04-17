@@ -53,8 +53,8 @@ namespace APIQuanLyCuaHang.Constants
             bool isReturn = false;
 
             // Kiểm tra trạng thái muốn đổi có nằm trong danh sách trạng thái không bình thường hay không
-            bool isCanChange = TrangThaiKhongBinhThuong.Select(x => x.ToLower()).Contains(statusChange.ToLower());
-            if (isCanChange)
+            bool canChange = TrangThaiKhongBinhThuong.Select(x => x.ToLower()).Contains(statusChange.ToLower());
+            if (canChange)
             {
                 switch (originHoadon.TinhTrang)
                 {

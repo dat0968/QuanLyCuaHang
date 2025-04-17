@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using APIQuanLyCuaHang.Constants;
 using APIQuanLyCuaHang.DTO;
+using APIQuanLyCuaHang.Helpers.Handlers;
 using APIQuanLyCuaHang.Models;
 using APIQuanLyCuaHang.Repositories.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,7 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                 }
 
                 // Lấy danh sách hóa đơn của người dùng
-                var listOrigin = await base.GetAllAsync(x => x.MaKh == userId, "Cthoadons,Cthoadons.MaCtspNavigation,Cthoadons.MaCtspNavigation.MaSpNavigation,Chitietcombohoadons,Chitietcombohoadons.MaComboNavigation");
+                var listOrigin = await base.GetAllAsync(x => x.MaKh == userId, "Cthoadons,Cthoadons.MaCtspNavigation,Cthoadons.MaCtspNavigation.MaSpNavigation,Chitietcombohoadons,Chitietcombohoadons.MaComboNavigation,MaCouponNavigation");
 
                 List<HoaDonKhachDTO> listDTO = new();
 
@@ -41,6 +42,15 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                 {
                     foreach (var aOrder in listOrigin)
                     {
+                        if (aOrder == null) continue; // Kiểm tra xem aOrder có null không
+
+                        decimal tienGoc = aOrder?.TienGoc ?? 0m;
+                        decimal giamGiaCoupon = 0m;
+                        if (aOrder?.MaCouponNavigation != null)
+                        {
+                            giamGiaCoupon = aOrder.MaCouponNavigation.SoTienGiam ?? (1 - aOrder.MaCouponNavigation.PhanTramGiam / 100) * tienGoc ?? 0m;
+                        }
+                        // Kiểm tra xem hóa đơn có tồn tại không
                         HoaDonKhachDTO configDataDTO = new HoaDonKhachDTO
                         {
                             MaHd = aOrder.MaHd,
@@ -54,18 +64,18 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                             HinhThucTt = aOrder.HinhThucTt,
                             TinhTrang = aOrder.TinhTrang,
                             MoTa = aOrder.MoTa,
-                            HoTen = aOrder.HoTen,
-                            Sdt = aOrder.Sdt,
-                            LyDoHuy = aOrder.LyDoHuy,
-                            IsDelete = aOrder.IsDelete,
-                            PhiVanChuyen = aOrder.PhiVanChuyen,
-                            TienGoc = aOrder.TienGoc,
-                            //GiamGiaCoupon = aOrder.GiamGiaCoupon,
+                            HoTen = aOrder?.HoTen ?? "Tên khách hàng",
+                            Sdt = aOrder?.Sdt ?? "xxx-xxx-xxx",
+                            LyDoHuy = aOrder?.LyDoHuy ?? "Không có lý do",
+                            IsDelete = aOrder?.IsDelete,
+                            PhiVanChuyen = aOrder?.PhiVanChuyen ?? 0m,
+                            TienGoc = tienGoc,
+                            GiamGiaCoupon = giamGiaCoupon,
                             ChiTietHoaDonKhachs = new List<ChiTietHoaDonKhachDTO>() // Khởi tạo danh sách chi tiết hóa đơn
                         };
 
                         // Thêm chi tiết sản phẩm vào hóa đơn
-                        if (aOrder.Cthoadons.Count != 0)
+                        if (aOrder!.Cthoadons.Count != 0)
                         {
                             foreach (var aDetailProductOrder in aOrder.Cthoadons)
                             {
@@ -77,10 +87,10 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                                     LoaiDoiTuong = "Sản phẩm",
                                     SoLuong = aDetailProductOrder.SoLuong,
                                     KichThuoc = testInfo == null ? "" : testInfo?.KichThuoc ?? "Không có",
-                                    HuongVi = testInfo == null ? "" :testInfo?.HuongVi ?? "Không có",
-                                    DonGia = testInfo == null ? 1m :aDetailProductOrder.DonGia,
-                                    TenDoiTuong = testInfo == null ? "" :testInfo?.MaSpNavigation?.TenSanPham ?? "Noname",
-                                    HinhAnh = testInfo == null ? "" :testInfo?.Hinhanhs.FirstOrDefault()?.TenHinhAnh ?? "",
+                                    HuongVi = testInfo == null ? "" : testInfo?.HuongVi ?? "Không có",
+                                    DonGia = testInfo == null ? 1m : aDetailProductOrder.DonGia,
+                                    TenDoiTuong = testInfo == null ? "" : testInfo?.MaSpNavigation?.TenSanPham ?? "Noname",
+                                    HinhAnh = testInfo == null ? "" : testInfo?.Hinhanhs.FirstOrDefault()?.TenHinhAnh ?? "",
                                     MoTa = testInfo == null ? "" : testInfo?.MaSpNavigation.MoTa
                                 };
                                 configDataDTO.ChiTietHoaDonKhachs.Add(configDetailDTO); // Thêm chi tiết vào danh sách Hmmm
@@ -113,17 +123,9 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                 response.SetSuccessResponse("Lấy danh sách thành công.");
                 response.SetData(listDTO);
             }
-            catch (ArgumentNullException argEx)
-            {
-                response.SetMessageResponseWithException(400, argEx);
-            }
-            catch (EntryPointNotFoundException userEx)
-            {
-                response.SetMessageResponseWithException(404, userEx);
-            }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
             return response;
         }
@@ -148,7 +150,7 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                 if (TrangThaiDonHang.ValidateAndCancelOrderForCustomer(originData, statusChange, reasonCancel))
                 {
                     // Nếu trạng thái là hủy đơn hàng thì trả lại sản phẩm về kho
-                    await ReturnProductAndComboWhenCancel((int)orderId);
+                    await ReturnProductAndComboWhenCancel((int)orderId, originData.MaCoupon);
                 }
 
                 _db.Update(originData);
@@ -158,7 +160,7 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500,ex);
+                ExceptionHandler.HandleException(ex, response);
             }
 
             return response;
@@ -167,7 +169,7 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
 
         #region [Private Method]
         // ? Trả về lại sản phẩm về kho khi bị hủy, bruh
-        private async Task ReturnProductAndComboWhenCancel(int orderId)
+        private async Task ReturnProductAndComboWhenCancel(int orderId, string? couponId)
         {
             var listDetailProductInOrder = await _db.Cthoadons.Where(x => x.MaHd == orderId).ToListAsync();
             var listDetailsProducts = await _db.Chitietsanphams.ToListAsync();
@@ -184,6 +186,15 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                 var increaseDtCombo = listDetailsCombos.FirstOrDefault(x => x.MaCombo == aCombo.MaCombo);
                 if (increaseDtCombo == null) continue;
                 increaseDtCombo.SoLuong += aCombo.SoLuong;
+            }
+            if (!string.IsNullOrEmpty(couponId))
+            {
+                var coupon = await _db.MaCoupons.FirstOrDefaultAsync(x => x.MaCode == couponId);
+                if (coupon != null)
+                {
+                    coupon.SoLuongDaDung -= 1;
+                    _db.MaCoupons.Update(coupon);
+                }
             }
             _db.UpdateRange(listDetailsProducts);
             _db.UpdateRange(listDetailsCombos);

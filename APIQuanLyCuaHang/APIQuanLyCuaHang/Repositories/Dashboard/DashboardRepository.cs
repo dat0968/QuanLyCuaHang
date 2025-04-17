@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using APIQuanLyCuaHang.Helpers.Utils;
 using APIQuanLyCuaHang.Helpers.Constants;
+using APIQuanLyCuaHang.Helpers.Handlers;
 
 namespace APIQuanLyCuaHang.Repositories.Dashboard
 {
@@ -28,6 +29,10 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
             try
             {
                 var invoices = await GetAllInvoiceDataStatisticsAsync();
+                if (invoices == null || !invoices.Any())
+                {
+                    throw new Exception("Không có dữ liệu hóa đơn để thống kê.");
+                }
                 var earningData = CalculateEarningData(invoices, timeRange);
                 response.SetSuccessResponse("Doanh thu theo thời gian đã được lấy.");
                 response.SetData(earningData);
@@ -43,64 +48,76 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
         #region [Dữ liệu thống kê đơn hàng trên mọi dòng thời gian] 
         public async Task<ResponseAPI<OrderData>> GetAllOrderDataAsync()
         {
+            ResponseAPI<OrderData> response = new();
             try
             {
-                var invoices = await GetAllInvoiceStatisticsAsync();
+                var invoices = await GetAllInvoiceDataStatisticsAsync();
                 var orderData = CalculateOrderData(invoices);
-                return new ResponseAPI<OrderData> { Data = orderData, Success = true };
+                response.SetSuccessResponse("Dữ liệu thống kê đơn hàng đã được lấy.");
+                response.SetData(orderData);
             }
             catch (Exception ex)
             {
-                return new ResponseAPI<OrderData> { Success = false, Message = ex.Message };
+                response.SetMessageResponseWithException(400, ex);
             }
+            return response;
         }
         #endregion
 
         #region [Lấy dữ liệu thống kê số lượng đơn hàng theo thời gian] 
         public async Task<ResponseAPI<OrderStatusData>> GetOrderStatusDataAsync(string timeRange)
         {
+            ResponseAPI<OrderStatusData> response = new();
             try
             {
                 var invoices = await GetAllInvoiceStatisticsAsync(timeRange);
                 var orderStatusData = CalculateOrderStatusData(invoices);
-                return new ResponseAPI<OrderStatusData> { Data = orderStatusData, Success = true };
+                response.SetSuccessResponse("Dữ liệu thống kê trạng thái đơn hàng đã được lấy.");
+                response.SetData(orderStatusData);
             }
             catch (Exception ex)
             {
-                return new ResponseAPI<OrderStatusData> { Success = false, Message = ex.Message };
+                response.SetMessageResponseWithException(400, ex);
             }
+            return response;
         }
         #endregion
 
         #region [Lấy dữ liệu thống kê đơn hàng theo thời gian (ps: Hình như cái này không có dùng (.___.))] 
         public async Task<ResponseAPI<OrderOverviewData>> GetOrderOverviewDataAsync(string timeRange)
         {
+            ResponseAPI<OrderOverviewData> response = new();
             try
             {
-                var invoices = await GetAllInvoiceDataStatisticsAsync();
+                var invoices = await GetAllInvoiceStatisticsAsync();
                 var orderOverviewData = CalculateOrderOverviewData(invoices, timeRange);
-                return new ResponseAPI<OrderOverviewData> { Data = orderOverviewData, Success = true };
+                response.SetSuccessResponse("Dữ liệu thống kê đơn hàng đã được lấy.");
+                response.SetData(orderOverviewData);
             }
             catch (Exception ex)
             {
-                return new ResponseAPI<OrderOverviewData> { Success = false, Message = ex.Message };
+                response.SetMessageResponseWithException(400, ex);
             }
+            return response;
         }
         #endregion
 
         #region [Lấy dữ liệu danh sách sản phẩm được mua nhiều nhất] 
         public async Task<ResponseAPI<TopSellingProductsData>> GetTopSellingProductsAsync()
         {
+            ResponseAPI<TopSellingProductsData> response = new();
             try
             {
                 var products = await GetAllInvoiceDetailData();
                 var topSellingProductsData = CalculateTopSellingProductsData(products);
-                return new ResponseAPI<TopSellingProductsData> { Data = topSellingProductsData, Success = true };
+                response.SetSuccessResponse("Dữ liệu thống kê sản phẩm đã lấy thành công.");
+                response.SetData(topSellingProductsData);
             }
             catch (Exception ex)
             {
-                return new ResponseAPI<TopSellingProductsData> { Success = false, Message = ex.Message };
+                response.SetMessageResponseWithException(400, ex);
             }
+            return response;
         }
         #endregion
 
@@ -174,7 +191,7 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
             return response;
         }
@@ -186,31 +203,37 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
         #region [Lấy dữ liệu danh sách nhân viên đáng nể nhất] 
         public async Task<ResponseAPI<List<StaffDC>>> GetEmployeeOrderStatisticsAsync()
         {
+            ResponseAPI<List<StaffDC>> response = new();
             try
             {
                 var employeeStats = await CalculateEmployeeOrderStatisticsAsync();
-                return new ResponseAPI<List<StaffDC>> { Data = employeeStats, Success = true };
+                response.SetSuccessResponse("Dữ liệu thống kê nhân viên đã lấy thành công.");
+                response.SetData(employeeStats);
             }
             catch (Exception ex)
             {
-                return new ResponseAPI<List<StaffDC>> { Success = false, Message = ex.Message };
+                response.SetMessageResponseWithException(400, ex);
             }
+            return response;
         }
         #endregion
 
         #region [Lấy dữ liệu thống kê trạng thái người dùng] 
         public async Task<ResponseAPI<UserStatisticsData>> GetUserStatisticsAsync()
         {
+            ResponseAPI<UserStatisticsData> response = new();
             try
             {
                 var userStats = await CalculateUserStatisticsAsync();
                 UserStatisticsData userStatisticsData = new() { Users = userStats };
-                return new ResponseAPI<UserStatisticsData> { Data = userStatisticsData, Success = true };
+                response.SetSuccessResponse("Dữ liệu thống kê người dùng đã lấy thành công.");
+                response.SetData(userStatisticsData);
             }
             catch (Exception ex)
             {
-                return new ResponseAPI<UserStatisticsData> { Success = false, Message = ex.Message };
+                response.SetMessageResponseWithException(400, ex);
             }
+            return response;
         }
         #endregion
 
@@ -253,9 +276,9 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
 
 
         #region [Lấy dữ liệu danh sách lịch sử làm việc (ps: like above)] 
-        public async Task<ResponseAPI<WorkHistoryDC>> GetTopEmployeeRegistShift()
+        public async Task<ResponseAPI<List<WorkHistoryDC>>> GetTopEmployeeRegistShift()
         {
-            ResponseAPI<WorkHistoryDC> response = new();
+            ResponseAPI<List<WorkHistoryDC>> response = new();
             try
             {
                 var dictionaryNameEmployee = await _db.Nhanviens.ToDictionaryAsync(nv => nv.MaNv, nv => nv.HoTen);
@@ -268,10 +291,12 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
                     TongSoGioLam = ls.Sum(tg => tg.SoGioLam),
                     TongLuong = ls.Sum(tl => tl.TongLuong),
                 }).OrderByDescending(wh => wh.TongLuong).ToListAsync();
+                response.SetSuccessResponse("Lịch sử làm việc đã được lấy thành công.");
+                response.SetData(allWorkHistory);
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
             return response;
         }
@@ -307,7 +332,7 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
             return response;
         }
@@ -316,7 +341,13 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
         #region [Private Methods]
         private async Task<List<InvoiceDC>> GetAllInvoiceDataStatisticsAsync()
         {
+
             var hoadonList = await _db.Hoadons.ToListAsync();
+            if (hoadonList == null || hoadonList.Count == 0)
+            {
+                return new List<InvoiceDC>();
+            }
+            // Lấy danh sách hóa đơn và ánh xạ dữ liệu vào InvoiceDC
             var result = hoadonList.Select(hoadon => new InvoiceDC
             {
                 MaHd = hoadon.MaHd,
@@ -326,8 +357,8 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
                 MaNv = hoadon.MaNv,
                 MaKh = hoadon.MaKh,
                 MoTa = hoadon.MoTa,
-                HoTen = hoadon.HoTen,
-                Sdt = hoadon.Sdt,
+                HoTen = hoadon.HoTen ?? "N/A",
+                Sdt = hoadon.Sdt ?? "N/A",
                 NgayTao = hoadon.NgayTao,
                 NgayNhan = hoadon.NgayNhan,
                 NgayThanhToan = hoadon.NgayThanhToan,
@@ -342,7 +373,14 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
             {
                 foreach (var invoice in result)
                 {
-                    invoice.SanPhamHoaDons = listInvoiceDetails.Where(dt => dt.MaHd == invoice.MaHd).ToList();
+                    if (invoice == null)
+                    {
+                        continue;
+                    }
+
+                    invoice.SanPhamHoaDons = listInvoiceDetails
+                        .Where(dt => dt.MaHd == invoice.MaHd)
+                        .ToList();
                 }
             }
 
@@ -361,14 +399,14 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
                 return new DetailInvoiceDC
                 {
                     MaHd = chitiet.MaHd,
-                    MaSp = sp!.MaSp,
-                    TenSanPham = sp?.MaSpNavigation.TenSanPham ?? "N/A",
+                    MaSp = sp?.MaSp ?? 0,
+                    TenSanPham = sp?.MaSpNavigation?.TenSanPham ?? "N/A",
                     KichThuoc = sp?.KichThuoc ?? "N/A",
                     SoLuong = chitiet.SoLuong,
                     DonGia = sp?.DonGia ?? 0,
-                    TongTien = chitiet.SoLuong * sp?.DonGia ?? 0,
-                    MoTa = sp?.MaSpNavigation.MoTa ?? "N/A",
-                    LinkAnhDau = sp?.Hinhanhs.FirstOrDefault()?.TenHinhAnh ?? "null.png"
+                    TongTien = chitiet.SoLuong * (sp?.DonGia ?? 0),
+                    MoTa = sp?.MaSpNavigation?.MoTa ?? "N/A",
+                    LinkAnhDau = sp?.Hinhanhs?.FirstOrDefault()?.TenHinhAnh ?? "null.png"
                 };
             }).ToList();
             return result;

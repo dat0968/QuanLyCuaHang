@@ -25,11 +25,12 @@ import DetailCombo from '@/views/client/DetailCombo.vue'
 import OrderClient from '@/views/client/OrderClient.vue'
 import Cart from '@/views/client/Cart.vue'
 import TableIndex from '@/views/admin/Table/TableIndex.vue'
-import Profile from '../views/Profile/Profile.vue';
+import Profile from '../views/Profile/Profile.vue'
 import VNPAYresponse from '../views/client/VNPaySuccess.vue'
 import { ReadToken, ValidateToken } from '../Authentication_Authorization/auth.js'
 import Cookies from 'js-cookie'
 import Swal from 'sweetalert2'
+import ShiftManager from '@/views/admin/ShiftManager.vue'
 const routes = [
   {
     path: '/',
@@ -82,42 +83,54 @@ const routes = [
   {
     path: '/admin',
     component: AdminLayout,
-    children:
-      [
-        { path: '', component: dashboard },
-        { path: '/admin/Product', component: ProductIndex },
-        { path: '/admin/Bill', component: BillIndex },
-        { path: 'customer', name: 'CustomerIndex', component: CustomerIndex },
-        { path: 'combo', component: ComboIndex },
-        { path: '/admin/Coupon', name: 'Coupon', component: Coupon },
-        { path: '/admin/Table', component: TableIndex },
-        { path: 'staff', name: 'Staff', component: Staff },
-      ]
+    children: [
+      { path: '', component: dashboard },
+      { path: '/admin/Product', component: ProductIndex },
+      { path: '/admin/Bill', component: BillIndex },
+      { path: 'customer', name: 'CustomerIndex', component: CustomerIndex },
+      { path: 'combo', component: ComboIndex },
+      { path: '/admin/Coupon', name: 'Coupon', component: Coupon },
+      { path: '/admin/Table', component: TableIndex },
+      { path: 'staff', name: 'Staff', component: Staff },
+      { path: '/admin/shift-manager', component: ShiftManager },
+    ],
   },
   {
-    path: '/Login', name: 'Login', component: Login
+    path: '/Login',
+    name: 'Login',
+    component: Login,
   },
   {
-    path: '/LoginStaff', name: 'LoginStaff', component: LoginStaff
+    path: '/LoginStaff',
+    name: 'LoginStaff',
+    component: LoginStaff,
   },
   {
-    path: '/Register', name: 'Register', component: Register
+    path: '/Register',
+    name: 'Register',
+    component: Register,
   },
   {
-    path: '/ForgotPassword', name: 'ForgotPassword', component: ForgotPassword
+    path: '/ForgotPassword',
+    name: 'ForgotPassword',
+    component: ForgotPassword,
   },
   {
-    path: '/ForgotPasswordStaff', name: 'ForgotPasswordStaff', component: ForgotPasswordStaff
+    path: '/ForgotPasswordStaff',
+    name: 'ForgotPasswordStaff',
+    component: ForgotPasswordStaff,
   },
   {
-    path: '/Error/:status', name: 'Error', component: Error
+    path: '/Error/:status',
+    name: 'Error',
+    component: Error,
   },
   {
     path: '/GoogleLoginSuccess',
     name: 'GoogleLoginSuccess',
     component: GoogleLoginSuccess,
   },
-  {path: `/VNPAYresponse/:OderId/:Total`, name: 'VNPAYresponse', component: VNPAYresponse}
+  { path: `/VNPAYresponse/:OderId/:Total`, name: 'VNPAYresponse', component: VNPAYresponse },
 ]
 
 const router = createRouter({

@@ -1,6 +1,7 @@
 using APIQuanLyCuaHang.Constants;
 using APIQuanLyCuaHang.DTO;
 using APIQuanLyCuaHang.DTO.Requests;
+using APIQuanLyCuaHang.Helpers.Handlers;
 using APIQuanLyCuaHang.Helpers.Utils;
 using APIQuanLyCuaHang.Models;
 using APIQuanLyCuaHang.Repositories.Repository;
@@ -75,7 +76,7 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
 
             return response;
@@ -141,7 +142,7 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
 
             return response;
@@ -158,7 +159,7 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
             return response;
         }
@@ -201,8 +202,7 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
                 }
 
                 // Kiểm tra số lượng nhân viên trong CaKip
-                int currentEmployees = await _db.Lichsulamviecs
-                    .CountAsync(ls => ls.MaCaKip == request.MaCaKip);
+                int currentEmployees = caKip.SoNguoiHienTai;
 
                 if (currentEmployees + request.MaNvs.Length > caKip.SoNguoiToiDa)
                 {
@@ -230,21 +230,9 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
 
                 response.SetSuccessResponse($"Đã cập nhật trạng thái {request.TrangThaiCapNhap} cho {schedules.Count} nhân viên.");
             }
-            catch (ArgumentException ex)
-            {
-                response.SetMessageResponseWithException(400, ex);
-            }
-            catch (KeyNotFoundException ex)
-            {
-                response.SetMessageResponseWithException(404, ex);
-            }
-            catch (InvalidOperationException ex)
-            {
-                response.SetMessageResponseWithException(409, ex);
-            }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
 
             return response;
@@ -305,17 +293,9 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
 
                 response.SetSuccessResponse($"Đã cập nhật trạng thái {request.TrangThaiCapNhap} cho nhân viên {request.MaNv}.");
             }
-            catch (ArgumentException ex)
-            {
-                response.SetMessageResponseWithException(400, ex);
-            }
-            catch (KeyNotFoundException ex)
-            {
-                response.SetMessageResponseWithException(404, ex);
-            }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
 
             return response;
@@ -337,7 +317,7 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
             return response;
         }
@@ -355,7 +335,7 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
             }
             catch (Exception ex)
             {
-                response.SetMessageResponseWithException(500, ex);
+                ExceptionHandler.HandleException(ex, response);
             }
             return response;
         }
