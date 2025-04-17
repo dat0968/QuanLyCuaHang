@@ -6,6 +6,8 @@ const modules = [Navigation, Pagination]
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
+import { GetApiUrl } from '@constants/api'
+let getApiUrl = GetApiUrl()
 const ListProduct = ref([])
 const Props = defineProps({
   Product: Object,
@@ -107,7 +109,7 @@ ListProduct.value = Props.Product?.chitietsanphams
                       >
                         <swiper-slide v-for="(image, index) in variant.hinhanhs" :key="index">
                           <img
-                            :src="`https://localhost:7139/HinhAnh/Food_Drink/${
+                            :src="getApiUrl+`/HinhAnh/Food_Drink/${
                               image.tenHinhAnh
                             }`"
                             alt="Ảnh biến thể"

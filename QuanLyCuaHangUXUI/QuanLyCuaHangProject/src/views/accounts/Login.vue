@@ -1,21 +1,22 @@
 <script setup>
-import { ref } from 'vue'
-import { RouterLink, useRouter } from 'vue-router'
-import Swal from 'sweetalert2'
-import Cookies from 'js-cookie'
-const emailOrUsername = ref('')
-const password = ref('')
-const errorMessage = ref('')
-const router = useRouter()
-
+import { ref } from 'vue';
+import { RouterLink, useRouter } from 'vue-router';
+import Swal from 'sweetalert2';
+import Cookies from 'js-cookie';
+import { GetApiUrl } from '@constants/api'
+const emailOrUsername = ref('');
+const password = ref('');
+const errorMessage = ref('');
+const router = useRouter();
+let getApiUrl = GetApiUrl()
 const handleLogin = async () => {
   errorMessage.value = ''
   try {
     const payload = {
       Email_TenTaiKhoan: emailOrUsername.value.trim(),
       MatKhau: password.value,
-    }
-    const response = await fetch('https://localhost:7139/api/Account/LoginCustomer', {
+    };
+    const response = await fetch(getApiUrl+'/api/Account/LoginCustomer', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -58,9 +59,10 @@ const handleLogin = async () => {
   }
 }
 const handleGoogleLogin = () => {
-  console.log('Chuyển hướng đến endpoint LoginGoogle...')
-  window.location.href = 'https://localhost:7139/api/Account/LoginGoogle'
-}
+
+  console.log('Chuyển hướng đến endpoint LoginGoogle...');
+  window.location.href = getApiUrl+'/api/Account/LoginGoogle';
+};
 </script>
 
 <template>

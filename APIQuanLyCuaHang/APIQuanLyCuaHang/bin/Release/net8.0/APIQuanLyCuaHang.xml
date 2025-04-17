@@ -1,0 +1,331 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>APIQuanLyCuaHang</name>
+    </assembly>
+    <members>
+        <member name="M:APIQuanLyCuaHang.Controllers.DashboardController.GetEarningData(System.String)">
+            <summary>
+            Dữ liệu thống kê tổng tiền đơn hàng đã xác nhận theo thời gian
+            </summary>
+            <param name="timeRange">Nhập thời gian day/week/month/year</param>
+            <returns></returns>
+        </member>
+        <member name="M:APIQuanLyCuaHang.Controllers.DashboardController.GetAllOrderData">
+            <summary>
+            Dữ liệu thống kê theo tổng các đơn hàng chờ xác nhận và đã nhận
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:APIQuanLyCuaHang.Controllers.DashboardController.GetOrderStatusData(System.String)">
+            <summary>
+            Dữ liệu thống kê đơn hàng theo trạng thái
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:APIQuanLyCuaHang.Controllers.DashboardController.GetOrderOverViewData(System.String)">
+            <summary>
+            Dữ liệu thống kê đơn hàng theo thời gian, cung cấp cho dạng column + sparkline
+            </summary>
+            <param name="timeRange">Nhập thời gian day/week/month/year</param>
+            <returns></returns>
+        </member>
+        <member name="M:APIQuanLyCuaHang.Controllers.DashboardController.GetTopSellingProducts">
+            <summary>
+            Dữ liệu thống kê sản phẩm theo được chọn nhiều nhất,...
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:APIQuanLyCuaHang.Controllers.DashboardController.GetDetailProduct(System.Int32)">
+            <summary>
+            Lấy thông tin chi tiết cho sản phẩm trong Datatable
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:APIQuanLyCuaHang.Controllers.DashboardController.GetEmployeeOrderStats">
+            <summary>
+            Dữ liệu thống kê danh sách nhân viên mang lại doanh thu nhiều nhất trong day/week/month/year
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:APIQuanLyCuaHang.Controllers.DashboardController.GetUserStatisticsAsync">
+            <summary>
+            Dữ liệu thống kê người dùng
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:APIQuanLyCuaHang.Controllers.DashboardController.GetListStatObject">
+            <summary>
+            Số liệu thống kê theo tình trạng người dùng
+            </summary>
+        </member>
+        <member name="T:APIQuanLyCuaHang.Migrations.InitStructureDb">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.InitStructureDb.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.InitStructureDb.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.InitStructureDb.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:APIQuanLyCuaHang.Migrations.ThemTruongHinhAnh">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.ThemTruongHinhAnh.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.ThemTruongHinhAnh.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.ThemTruongHinhAnh.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:APIQuanLyCuaHang.Migrations.CreateTableMaoupon">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.CreateTableMaoupon.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.CreateTableMaoupon.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.CreateTableMaoupon.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:APIQuanLyCuaHang.Migrations.updateLichSuLamViec_CaKip">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.updateLichSuLamViec_CaKip.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.updateLichSuLamViec_CaKip.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.updateLichSuLamViec_CaKip.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:APIQuanLyCuaHang.Migrations.deleteFKChiTietCombo">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.deleteFKChiTietCombo.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.deleteFKChiTietCombo.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.deleteFKChiTietCombo.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:APIQuanLyCuaHang.Migrations.addFKChitietCombo">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.addFKChitietCombo.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.addFKChitietCombo.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.addFKChitietCombo.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:APIQuanLyCuaHang.Migrations.addColumnSoLuongForCombo">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.addColumnSoLuongForCombo.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.addColumnSoLuongForCombo.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.addColumnSoLuongForCombo.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:APIQuanLyCuaHang.Migrations.deleteGiaCombo">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.deleteGiaCombo.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.deleteGiaCombo.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.deleteGiaCombo.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:APIQuanLyCuaHang.Migrations.SoTienGiam_PhanTramGiam">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.SoTienGiam_PhanTramGiam.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.SoTienGiam_PhanTramGiam.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.SoTienGiam_PhanTramGiam.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:APIQuanLyCuaHang.Migrations.addIsDeleteDetailProduct">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.addIsDeleteDetailProduct.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.addIsDeleteDetailProduct.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.addIsDeleteDetailProduct.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:APIQuanLyCuaHang.Migrations.AddTableBan">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.AddTableBan.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.AddTableBan.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.AddTableBan.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:APIQuanLyCuaHang.Migrations.addBanTable">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.addBanTable.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.addBanTable.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.addBanTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.createFkGioHang.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:APIQuanLyCuaHang.Migrations.nullableFkGioHangTable">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.nullableFkGioHangTable.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.nullableFkGioHangTable.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.nullableFkGioHangTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:APIQuanLyCuaHang.Migrations.CreateTableGioHangCTCombo">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.CreateTableGioHangCTCombo.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.CreateTableGioHangCTCombo.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.CreateTableGioHangCTCombo.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:APIQuanLyCuaHang.Migrations.RenameFK">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.RenameFK.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.RenameFK.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.RenameFK.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:APIQuanLyCuaHang.Migrations.fixFK">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.fixFK.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.fixFK.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.fixFK.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:APIQuanLyCuaHang.Migrations.addColumnCtHoaDon_HoaDon">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.addColumnCtHoaDon_HoaDon.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.addColumnCtHoaDon_HoaDon.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.addColumnCtHoaDon_HoaDon.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:APIQuanLyCuaHang.Migrations.AddMaComboToCthoadon">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.AddMaComboToCthoadon.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.AddMaComboToCthoadon.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.AddMaComboToCthoadon.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:APIQuanLyCuaHang.Migrations.AddCtMaCouponTable">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.AddCtMaCouponTable.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.AddCtMaCouponTable.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.AddCtMaCouponTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:APIQuanLyCuaHang.Migrations.createChitietcombohoadon">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.createChitietcombohoadon.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.createChitietcombohoadon.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.createChitietcombohoadon.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:APIQuanLyCuaHang.Migrations.MakeMaCtspNullable">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.MakeMaCtspNullable.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.MakeMaCtspNullable.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.MakeMaCtspNullable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:APIQuanLyCuaHang.Migrations.nullableforHinhAnhNhanVien">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.nullableforHinhAnhNhanVien.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.nullableforHinhAnhNhanVien.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:APIQuanLyCuaHang.Migrations.nullableforHinhAnhNhanVien.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

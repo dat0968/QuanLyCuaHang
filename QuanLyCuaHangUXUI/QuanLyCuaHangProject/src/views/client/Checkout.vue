@@ -226,7 +226,7 @@ import { useRouter } from 'vue-router'
 import Swal from 'sweetalert2'
 import { ReadToken, ValidateToken } from '../../Authentication_Authorization/auth.js'
 import Cookies from 'js-cookie'
-
+import { GetApiUrl } from '@constants/api'
 const router = useRouter()
 const cartItems = ref([])
 const provinces = ref([])
@@ -242,7 +242,7 @@ const couponCode = ref('')
 let accesstoken = Cookies.get('accessToken')
 let refreshtoken = Cookies.get('refreshToken')
 let IdUser = ''
-
+let getApiUrl = GetApiUrl()
 // Validation errors
 const errors = ref({
   hoTen: '',
@@ -306,7 +306,7 @@ const userInfo = ref({
 })
 
 const getImageUrl = (imageName) => {
-  return `https://localhost:7139/HinhAnh/Food_Drink/${imageName}`
+  return getApiUrl+`/HinhAnh/Food_Drink/${imageName}`
 }
 
 //Lấy thông tin cá nhân dựa trên tài khoản đăng nhập
@@ -322,7 +322,7 @@ const fetchCustomer = async () => {
       return
     }
   }
-  const responseCustomer = await fetch(`https://localhost:7139/api/Customer/${IdUser}`, {
+  const responseCustomer = await fetch(getApiUrl+`/api/Customer/${IdUser}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -363,7 +363,7 @@ const FetchCart = async () => {
         return
       }
     }
-    const response = await fetch(`https://localhost:7139/api/Cart/${IdUser}`, {
+    const response = await fetch(getApiUrl+`/api/Cart/${IdUser}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -530,7 +530,7 @@ const fetchCoupon = async () => {
       }
     }
     const response = await fetch(
-      `https://localhost:7139/api/Checkout/GetDiscountCoupon?maUser=${IdUser}&&couponcode=${couponCode.value}&&originalPrice=${SumCart.value}`,
+      getApiUrl+`/api/Checkout/GetDiscountCoupon?maUser=${IdUser}&&couponcode=${couponCode.value}&&originalPrice=${SumCart.value}`,
       {
         headers: {
           'Content-type': 'application/json',
@@ -637,7 +637,12 @@ const proceedToCheckout = async () => {
           cthoadons: cthoadons,
         }
         if (orderData.hinhThucTt.toLowerCase() == 'vnpay') {
-          const CreatePaymentUrl = await fetch(`https://localhost:7139/api/VNPAY`, {
+
+          //const CreatePaymentUrl = await fetch(`https://localhost:7139/api/VNPAY`, {
+
+          const total = orderData.tienGoc + orderData.phiVanChuyen - orderData.giamGiaCoupon
+          const CreatePaymentUrl = await fetch(getApiUrl+`/api/VNPAY`, {
+
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -647,7 +652,7 @@ const proceedToCheckout = async () => {
           const responseVNPAY = await CreatePaymentUrl.text()
           window.location.href = responseVNPAY
         } else {
-          const response = await fetch(`https://localhost:7139/api/Checkout`, {
+          const response = await fetch( getApiUrl+`/api/Checkout`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

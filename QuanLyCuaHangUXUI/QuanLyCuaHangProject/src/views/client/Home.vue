@@ -3,14 +3,14 @@ import DeliciousFoodMenu from '../../components/DeliciousFoodMenu.vue';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import Cookies from 'js-cookie';
-
+import { GetApiUrl } from '@constants/api'
 const router = useRouter();
 const isChatOpen = ref(false);
 const userInput = ref('');
 const messages = ref([]);
 const isTyping = ref(false);
 const previousAnswer = ref('');
-
+let getApiUrl = GetApiUrl()
 // Mở/đóng hộp chat
 const toggleChatBox = () => {
   isChatOpen.value = !isChatOpen.value;
@@ -55,7 +55,7 @@ const sendMessage = async (confirmation = null) => {
       headers['Authorization'] = `Bearer ${token}`;
     }
 
-    const response = await fetch('https://localhost:7139/api/Home/TraLoi', {
+    const response = await fetch(getApiUrl+'/api/Home/TraLoi', {
       method: 'POST',
       headers,
       body: JSON.stringify(payload),
@@ -263,7 +263,7 @@ window.navigateToCombo = navigateToCombo;
             class="tawk-icon tawk-icon-close tawk-icon-small"
           ></i>
           <img
-            src=".../assets/client/img/Remove-bg.ai_1731571250485.png"
+            src=""
             alt="Thu hút chú ý đến tính năng trò chuyện"
             style="max-width: 50px; height: 50px; border-radius: 50%;"
           />

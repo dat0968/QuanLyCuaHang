@@ -1,7 +1,10 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import Swal from 'sweetalert2';
-
+import { ReadToken, ValidateToken } from '../../../Authentication_Authorization/auth.js'
+import Cookies from 'js-cookie'
+import { GetApiUrl } from '@constants/api'
+let getApiUrl = GetApiUrl()
 const coupons = ref([]);
 const showModal = ref(false);
 const isEdit = ref(false);
@@ -17,6 +20,7 @@ const couponForm = ref({
   soLuongDaDung: 0
 });
 
+
 // Thêm các biến cho bộ lọc
 const searchQuery = ref('');
 const sortField = ref('maCode');
@@ -25,7 +29,8 @@ const filterStatus = ref('all');
 const currentPage = ref(1);
 const itemsPerPage = ref(10);
 
-const baseUrl = 'https://localhost:7139/api/Coupon';
+
+const baseUrl = getApiUrl+'/api/Coupon';
 
 // Fetch all coupons
 const fetchCoupons = async () => {
@@ -260,7 +265,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <br>
+  <div>
+    <br>
   <br>
   <div class="container mt-4">
     <h1>Quản lý mã Coupon</h1>
@@ -447,6 +453,7 @@ onMounted(() => {
         </div>
       </div>
     </div>
+  </div>
   </div>
 </template>
 

@@ -4,6 +4,8 @@ import CreateCombo from '../Combo/Create.vue'
 import EditCombo from '../Combo/Edit.vue'
 import DetailCombo from '../Combo/Details.vue'
 import Swal from 'sweetalert2'
+import { GetApiUrl } from '@constants/api'
+let getApiUrl = GetApiUrl()
 const listCombo = ref([])
 const ListProduct = ref([])
 const TotalPages = ref(0)
@@ -11,7 +13,7 @@ const CurrentPage = ref(1)
 const valueSearch = ref('')
 async function fetchCombo() {
   try {
-    const response = await fetch(`https://localhost:7139/api/Combos?page=${CurrentPage.value}&search=${valueSearch.value}`, {
+    const response = await fetch(getApiUrl+`/api/Combos?page=${CurrentPage.value}&search=${valueSearch.value}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -31,7 +33,7 @@ async function fetchCombo() {
 
 async function fetchProducts() {
   try {
-    const response = await fetch(`https://localhost:7139/api/Products/GetAll`, {
+    const response = await fetch(getApiUrl+`/api/Products/GetAll`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -66,7 +68,7 @@ async function removeCombo(id) {
       denyButtonText: `Không`,
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const response = await fetch(`https://localhost:7139/api/Combos/${id}/Cancel`, {
+        const response = await fetch(getApiUrl+`/api/Combos/${id}/Cancel`, {
           method: 'PUT',
         })
 
@@ -145,7 +147,7 @@ onMounted(() => {
             <td class="text-center">{{ combo.tenCombo }}</td>
             <td class="text-center">
               <img
-                :src="'https://localhost:7139/HinhAnh/Food_Drink/' + combo.hinh"
+                :src="getApiUrl+'/HinhAnh/Food_Drink/' + combo.hinh"
                 alt="Combo Image"
                 width="50"
                 height="50"

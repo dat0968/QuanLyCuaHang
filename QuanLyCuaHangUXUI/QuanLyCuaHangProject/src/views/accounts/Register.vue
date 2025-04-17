@@ -3,7 +3,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import Swal from 'sweetalert2';
-
+import { GetApiUrl } from '@constants/api'
 const hoTen = ref('');
 const tenTaiKhoan = ref('');
 const email = ref('');
@@ -11,7 +11,7 @@ const matKhau = ref('');
 const termsAccepted = ref(false);
 const errorMessage = ref('');
 const router = useRouter();
-
+let getApiUrl = GetApiUrl()
 const handleRegister = async () => {
   errorMessage.value = '';
   
@@ -28,7 +28,7 @@ const handleRegister = async () => {
       MatKhau: matKhau.value,
     };
 
-    const response = await fetch('https://localhost:7139/api/Account/Register', {
+    const response = await fetch(getApiUrl+'/api/Account/Register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

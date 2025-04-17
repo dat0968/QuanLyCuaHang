@@ -1,15 +1,17 @@
 <script setup>
 import { ref, watch } from 'vue'
 import Swal from 'sweetalert2'
+import { GetApiUrl } from '@constants/api'
 const props = defineProps({
   categories: Object,
 })
+let getApiUrl = GetApiUrl()
 // Upload file lên server
 const uploadImage = async (file) => {
   try {
     const formData = new FormData()
     formData.append('file', file)
-    const response = await fetch('https://localhost:7139/api/UploadImage', {
+    const response = await fetch(getApiUrl+'/api/UploadImage', {
       method: 'POST',
       body: formData,
     })
@@ -166,7 +168,7 @@ const submitForm = async () => {
           })),
         }
 
-        const response = await fetch('https://localhost:7139/api/Products', {
+        const response = await fetch(getApiUrl+'/api/Products', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

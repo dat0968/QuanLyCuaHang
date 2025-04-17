@@ -1,24 +1,27 @@
 <template>
-  <a class="dropdown-item py-3 text-white text-center font-16" href="#"
-    >Chào mừng, {{ userName }}</a
-  >
-  <!-- dán link sang trang cập nhật vào dòng hồ sơ -->
-  <a class="dropdown-item" href="#"><i class="icon-user text-primary mr-2"></i> Hồ sơ</a>
+  <div>
+    <a class="dropdown-item py-3 text-white text-center font-16" href="#"
+      >Chào mừng, {{ userName }}</a
+    >
+    <!-- dán link sang trang cập nhật vào dòng hồ sơ -->
+    <a class="dropdown-item" href="#"><i class="icon-user text-primary mr-2"></i> Hồ sơ</a>
 
-  <QrScanAndShiftManagerModal />
-  <a v-if="isLoggedIn" class="dropdown-item" @click.prevent="handleLogout">
-    <i class="icon-power text-danger mr-2"></i> Đăng xuất
-  </a>
+    <QrScanAndShiftManagerModal />
+    <a v-if="isLoggedIn" class="dropdown-item" @click.prevent="handleLogout">
+      <i class="icon-power text-danger mr-2"></i> Đăng xuất
+    </a>
+  </div>
 </template>
 
-<script setup>
+  
+  <script setup>
 import { ref, computed, onMounted } from 'vue'
 import Cookies from 'js-cookie'
 import Swal from 'sweetalert2'
 import { ReadToken } from '../Authentication_Authorization/auth.js'
-
+import { GetApiUrl } from '@constants/api'
 import QrScanAndShiftManagerModal from '@/components/shift/QrScanAndShiftManagerModal.vue'
-
+let getApiUrl = GetApiUrl()
 components: {
   QrScanAndShiftManagerModal
 }
@@ -42,18 +45,18 @@ onMounted(() => {
 const handleLogout = async () => {
   try {
     const refreshToken = Cookies.get('refreshToken')
-    if (!refreshToken) {
+    if (!refreshToken || typeof refreshToken !== 'string' || refreshToken.trim() === '') {
       await Swal.fire({
         icon: 'warning',
         title: 'Cảnh báo',
-        text: 'Không tìm thấy refresh token trong cookies',
+        text: 'Refresh token không hợp lệ',
         confirmButtonText: 'OK',
       })
       return
     }
 
     // Gọi API Logout
-    const response = await fetch('https://localhost:7139/api/Account/Logout', {
+    const response = await fetch(`${getApiUrl}/api/Account/Logout`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -67,15 +70,14 @@ const handleLogout = async () => {
     let data = null
     let errorMessage = 'Lỗi không xác định'
 
-    // Xử lý phản hồi
     if (contentType && contentType.includes('application/problem+json')) {
       data = await response.json()
       console.log('Problem details:', data)
-      if (data.errors && data.errors.RefreshToken) {
-        errorMessage = data.errors.RefreshToken.join(', ')
-      } else {
-        errorMessage = data.detail || data.title || `Lỗi HTTP ${response.status}`
-      }
+      errorMessage =
+        data.errors?.RefreshToken?.join(', ') ||
+        data.detail ||
+        data.title ||
+        `Lỗi HTTP ${response.status}`
     } else if (contentType && contentType.includes('application/json')) {
       data = await response.json()
       console.log('Response data:', data)
@@ -85,7 +87,6 @@ const handleLogout = async () => {
     }
 
     if (response.ok && data?.success) {
-      // Xóa thông tin đăng nhập
       Cookies.remove('accessToken')
       Cookies.remove('refreshToken')
       await Swal.fire({
@@ -105,10 +106,13 @@ const handleLogout = async () => {
     }
   } catch (error) {
     console.error('Lỗi khi đăng xuất:', error)
+    const errorText = error.message.includes('NetworkError')
+      ? 'Lỗi kết nối mạng, vui lòng kiểm tra kết nối'
+      : error.message || 'Vui lòng kiểm tra console'
     await Swal.fire({
       icon: 'error',
       title: 'Lỗi',
-      text: `Đã xảy ra lỗi khi đăng xuất: ${error.message || 'Vui lòng kiểm tra console'}`,
+      text: `Đã xảy ra lỗi khi đăng xuất: ${errorText}`,
       confirmButtonText: 'OK',
     })
   }

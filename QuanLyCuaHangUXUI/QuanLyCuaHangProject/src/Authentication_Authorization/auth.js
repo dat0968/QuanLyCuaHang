@@ -1,5 +1,7 @@
 import { jwtDecode } from "jwt-decode";
 import Cookies from 'js-cookie';
+import { GetApiUrl } from '@constants/api'
+let getApiUrl = GetApiUrl()
 // Hàm đọc accesstoken
 export function ReadToken(token) {
     if (token) {
@@ -33,7 +35,7 @@ export async function ValidateToken(accessToken, refreshToken) {
                     vaiTro: readtoken.Role,
                     refreshToken: refreshToken,
                 }
-                const response = await fetch(`https://localhost:7139/api/Account/RenewAccessToken`, {
+                const response = await fetch(getApiUrl+`/api/Account/RenewAccessToken`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

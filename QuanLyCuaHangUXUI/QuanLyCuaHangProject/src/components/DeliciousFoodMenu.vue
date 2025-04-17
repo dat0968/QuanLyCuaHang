@@ -1,13 +1,13 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
 // import 'animate.css'
-
+import { GetApiUrl } from '@constants/api'
 const selectedCategory = ref(-1)
 const products = ref([])
 const combos = ref([])
 const bestSellers = ref([])
 const sortOption = ref('default')
-
+let getApiUrl = GetApiUrl()
 const selectCategory = (categorySelected) => {
   selectedCategory.value = categorySelected
 }
@@ -15,7 +15,7 @@ const selectCategory = (categorySelected) => {
 // Danh sách danh mục
 const categories = ref([])
 async function fetchCategory() {
-  const response = await fetch('https://localhost:7139/api/Categories', {
+  const response = await fetch(getApiUrl+'/api/Categories', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ async function fetchCategory() {
 // Lấy danh sách sản phẩm
 async function fetchProducts() {
   try {
-    const response = await fetch('https://localhost:7139/api/Home/all-products', {
+    const response = await fetch(getApiUrl+'/api/Home/all-products', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ async function fetchProducts() {
 // Lấy danh sách combo
 async function fetchCombos() {
   try {
-    const response = await fetch('https://localhost:7139/api/Home/combos', {
+    const response = await fetch(getApiUrl+'/api/Home/combos', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ async function fetchCombos() {
 // Lấy danh sách món bán chạy
 async function fetchBestSellers() {
   try {
-    const response = await fetch('https://localhost:7139/api/Home/best-sellers', {
+    const response = await fetch(getApiUrl+'/api/Home/best-sellers', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ async function fetchBestSellers() {
 async function fetchProductsByCategory(categoryId) {
   try {
     const response = await fetch(
-      `https://localhost:7139/api/Home/all-products?filterCategories=${categoryId}`,
+      getApiUrl+`/api/Home/all-products?filterCategories=${categoryId}`,
       {
         method: 'GET',
         headers: {
@@ -263,7 +263,7 @@ onMounted(() => {
           <div class="category-item animate__animated animate__fadeIn">
             <button :class="{ active: selectedCategory === -3 }" @click="selectCategory(-3)">
               <div class="category-image">
-                <img src="../assets/client/img/food_menu/chicken_combo.png" alt="combo" />
+                <img src="" alt="combo" /> 
               </div>
               <span>Món ngon phải thử</span>
             </button>
@@ -271,7 +271,7 @@ onMounted(() => {
           <div class="category-item animate__animated animate__fadeIn">
             <button :class="{ active: selectedCategory === -1 }" @click="selectCategory(-1)">
               <div class="category-image">
-                <img src="../assets/client/img/food_menu/chicken_default.png" alt="all-food" />
+                <img src="" alt="all-food" />
               </div>
               <span>Tất cả đồ ăn</span>
             </button>
@@ -280,7 +280,7 @@ onMounted(() => {
             <button :class="{ active: selectedCategory === -2 }" @click="selectCategory(-2)">
               <div class="category-image">
                 <img
-                  src="../assets/client/img/food_menu/chicken_best_seller.png"
+                  src=""
                   alt="best-seller"
                 />
               </div>
@@ -297,7 +297,7 @@ onMounted(() => {
               @click="selectCategory(category.maDanhMuc)"
             >
               <div class="category-image">
-                <img src="../assets/client/img/food_menu/chicken_default.png" alt="category" />
+                <img src="" alt="category" />
               </div>
               <span>{{ category.tenDanhMuc }}</span>
             </button>
@@ -326,7 +326,7 @@ onMounted(() => {
                     <img
                       :src="
                         product.chitietsanphams?.[0]?.hinhanhs?.[0]?.tenHinhAnh
-                          ? `https://localhost:7139/HinhAnh/Food_Drink/${product.chitietsanphams[0].hinhanhs[0].tenHinhAnh}`
+                          ? getApiUrl+`/HinhAnh/Food_Drink/${product.chitietsanphams[0].hinhanhs[0].tenHinhAnh}`
                           : '../assets/client/img/food_menu/chicken_default.png'
                       "
                       alt="product"
@@ -364,7 +364,7 @@ onMounted(() => {
                     <img
                       :src="
                         combo.hinh
-                          ? `https://localhost:7139/HinhAnh/Food_Drink/${combo.hinh}`
+                          ? getApiUrl+`/HinhAnh/Food_Drink/${combo.hinh}`
                           : '../assets/client/img/food_menu/combo_default.png'
                       "
                       alt="combo"
@@ -402,7 +402,7 @@ onMounted(() => {
                     <img
                       :src="
                         product.chitietsanphams?.[0]?.hinhanhs?.[0]?.tenHinhAnh
-                          ? `https://localhost:7139/HinhAnh/Food_Drink/${product.chitietsanphams[0].hinhanhs[0].tenHinhAnh}`
+                          ? getApiUrl+`/HinhAnh/Food_Drink/${product.chitietsanphams[0].hinhanhs[0].tenHinhAnh}`
                           : '../assets/client/img/food_menu/chicken_default.png'
                       "
                       alt="product"
