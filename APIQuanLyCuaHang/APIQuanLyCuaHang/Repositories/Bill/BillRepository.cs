@@ -116,7 +116,7 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                 }).ToList()
             };
         }
-        
+
         public async Task<(IEnumerable<HoaDonDTO>, int)> GetFilteredBill(string? maHD, string? hinhThucTt, string? tinhTrang, int page, int pageSize)
         {
             var query = db.Hoadons
@@ -164,7 +164,7 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                     TinhTrang = hd.TinhTrang,
                     TienGoc = hd.TienGoc,
                     PhiVanChuyen = hd.PhiVanChuyen,
-                    GiamGiaCoupon = hd.MaCouponNavigation.SoTienGiam.Value == null ? 
+                    GiamGiaCoupon = hd.MaCouponNavigation.SoTienGiam.Value == null ?
                     (hd.MaCouponNavigation.PhanTramGiam.Value == null ? 0 : hd.TienGoc - hd.TienGoc * hd.MaCouponNavigation.PhanTramGiam.Value / 100) : 0,
                     Tongtien = hd.TienGoc + hd.PhiVanChuyen - (hd.MaCouponNavigation.SoTienGiam.Value == null ?
                     (hd.MaCouponNavigation.PhanTramGiam.Value == null ? 0 : hd.TienGoc - hd.TienGoc * hd.MaCouponNavigation.PhanTramGiam.Value / 100) : 0),
@@ -206,11 +206,11 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                 existingHoaDon.MaNv = maNv;
                 existingHoaDon.TinhTrang = tinhTrang;
             }
-            if((tinhTrang.ToLower() == "Đã hủy".ToLower() || tinhTrang.ToLower() == "Hoàn trả/Hoàn tiền".ToLower()) && !string.IsNullOrEmpty(lydohuy))
+            if ((tinhTrang.ToLower() == "Đã hủy".ToLower() || tinhTrang.ToLower() == "Hoàn trả/Hoàn tiền".ToLower()) && !string.IsNullOrEmpty(lydohuy))
             {
                 await CancelOrder(existingHoaDon.MaHd, tinhTrang, lydohuy);
             }
-            
+
             await db.SaveChangesAsync();
         }
         public async Task<HoaDonDTOWithDetails?> GetBillDetails(int maHd)
@@ -309,10 +309,10 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                 };
                 return HoaDonDTOWithDetails;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("Lỗi", ex);
-            }          
+            }
         }
 
         public async Task CancelOrder(int oderId, string selectedCancelStatus, string reasonCancel)
@@ -331,16 +331,16 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                 db.Hoadons.Update(existingHoaDon);
                 // Hoàn lại số lượng sản phẩm mua lẻ trong hóa đơn
                 var checkDetailOrder = db.Cthoadons.Where(p => p.MaHd == existingHoaDon.MaHd).ToList();
-                if(!checkDetailOrder.Any())
+                if (!checkDetailOrder.Any())
                 {
                     throw new Exception($"Không tìm thấy CTHoadon với Id {existingHoaDon.MaHd}");
                 }
-                foreach(var detail in checkDetailOrder)
+                foreach (var detail in checkDetailOrder)
                 {
-                    if(detail.MaCombo == null)
+                    if (detail.MaCombo == null)
                     {
                         var findDetailproduct = db.Chitietsanphams.Local.FirstOrDefault(p => p.MaCtsp == detail.MaCtsp) ?? await db.Chitietsanphams.FindAsync(detail.MaCtsp);
-                        if(findDetailproduct == null)
+                        if (findDetailproduct == null)
                         {
                             throw new Exception($"Không tìm thấy CTSP với Id {detail.MaCtsp}");
                         }
@@ -351,7 +351,7 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                     {
                         //Hoàn lại số lượng sản phẩm mua trong combo trong hóa đơn
                         var checkDetailOrderCombo = db.Chitietcombohoadons.Where(p => p.MaHd == existingHoaDon.MaHd && p.MaCombo == detail.MaCombo).ToList();
-                        foreach(var detailComboOder in checkDetailOrderCombo)
+                        foreach (var detailComboOder in checkDetailOrderCombo)
                         {
                             var findDetailproduct = db.Chitietsanphams.Local.FirstOrDefault(p => p.MaCtsp == detailComboOder.MaCTSp) ?? await db.Chitietsanphams.FindAsync(detailComboOder.MaCTSp);
                             if (findDetailproduct == null)
@@ -363,13 +363,13 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                         }
                         //Hoàn lại số lượng combo
                         var findCombo = db.Combos.Local.FirstOrDefault(p => p.MaCombo == detail.MaCombo) ?? await db.Combos.FindAsync(detail.MaCombo);
-                        if(findCombo == null)
+                        if (findCombo == null)
                         {
                             throw new Exception($"Không tìm thấy combo với Id {detail.MaCombo}");
                         }
                         findCombo.SoLuong += detail.SoLuong;
                         db.Combos.Update(findCombo);
-                    }                  
+                    }
                 }
                 //Hoàn lại mã coupon
                 if (!string.IsNullOrEmpty(existingHoaDon.MaCoupon))

@@ -632,7 +632,7 @@ const proceedToCheckout = async () => {
           sdt: userInfo.value.soDienThoai,
           phiVanChuyen: shippingFee.value,
           tienGoc: SumCart.value,
-          maCoupon: couponCode.value,
+          maCoupon: couponCode.value == '' ? null : couponCode.value,
           detailCombo_OrderResquests: detailComboOrderRequests,
           cthoadons: cthoadons,
         }
