@@ -612,6 +612,7 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
                 {
                     case "day":
                         var daysOfWeek = new[] { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
+                        var daysOfWeekVerse = new[] { "Chủ nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7" };
                         orderData.Data = daysOfWeek.Select(day =>
                         {
                             var filteredOrders = invoices
@@ -622,7 +623,7 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
                                 Revenue = filteredOrders.Sum(x => x.TongTien)
                             };
                         }).ToList();
-                        orderOverviewData.Categories = daysOfWeek.ToList();
+                        orderOverviewData.Categories = daysOfWeekVerse.ToList();
                         break;
 
                     case "week":
@@ -672,7 +673,7 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
                         break;
 
                     default:
-                        throw new ArgumentException("Invalid time range specified.");
+                        throw new ArgumentException("Dữ liệu thời gian được chọn nằm ngoài xử lí của hệ thống.");
                 }
 
                 orderOverviewData.Overview.Add(orderData);
