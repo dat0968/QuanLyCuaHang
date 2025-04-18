@@ -1,10 +1,5 @@
 <template>
-  <div>
-    <!-- Dropdown Item -->
-  <a class="dropdown-item" href="#">
-    <i class="icon-bell text-primary mr-2"></i>
-    <span @click="openModal">Chấm công bằng QR</span>
-  </a>
+  <span @click="openModal">Chấm công bằng QR</span>
 
   <div>
     <!-- Modal -->
@@ -56,7 +51,6 @@
         </div>
       </div>
     </teleport>
-  </div>
   </div>
 </template>
 

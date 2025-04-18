@@ -6,15 +6,17 @@
     <!-- dán link sang trang cập nhật vào dòng hồ sơ -->
     <a class="dropdown-item" href="#"><i class="icon-user text-primary mr-2"></i> Hồ sơ</a>
 
-    <QrScanAndShiftManagerModal />
+    <a class="dropdown-item" href="#">
+      <i class="icon-bell text-primary mr-2"></i>
+      <QrScanAndShiftManagerModal />
+    </a>
     <a v-if="isLoggedIn" class="dropdown-item" @click.prevent="handleLogout">
       <i class="icon-power text-danger mr-2"></i> Đăng xuất
     </a>
   </div>
 </template>
 
-  
-  <script setup>
+<script setup>
 import { ref, computed, onMounted } from 'vue'
 import Cookies from 'js-cookie'
 import Swal from 'sweetalert2'
