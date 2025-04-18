@@ -7,10 +7,11 @@ import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
 import router from '@/router/index'
 import Cookies from 'js-cookie' // Import js-cookie
-
+import { GetApiUrl } from '@constants/api'
+let getApiUrl = GetApiUrl()
 // Base Axios Client
 const axiosClient = axios.create({
-  baseURL: 'https://localhost:7139/api', // Thay bằng base URL của API bạn
+  baseURL: getApiUrl+'/api', // Thay bằng base URL của API bạn
   timeout: 500000, // Giới hạn timeout (ms)
   headers: {
     'Content-Type': 'application/json',

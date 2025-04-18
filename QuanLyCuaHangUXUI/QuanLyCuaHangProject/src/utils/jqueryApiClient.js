@@ -2,8 +2,9 @@ import { jwtDecode } from 'jwt-decode'
 import $ from 'jquery'
 import toastr from 'toastr'
 import Cookies from 'js-cookie' // Import js-cookie
-
-const apiBaseUrl = 'https://localhost:7139/api'
+import { GetApiUrl } from '@constants/api'
+let getApiUrl = GetApiUrl()
+const apiBaseUrl = getApiUrl+'/api'
 
 // Kiểm tra token hết hạn
 function isTokenExpired(token) {

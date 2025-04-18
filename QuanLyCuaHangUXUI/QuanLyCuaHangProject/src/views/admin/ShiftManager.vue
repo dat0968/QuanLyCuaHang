@@ -380,6 +380,9 @@ export default {
                     ${validStatuses
                       .map((status) => `<option value="${status}">${status}</option>`)
                       .join('')}
+                    ${validStatuses
+                      .map((status) => `<option value="${status}">${status}</option>`)
+                      .join('')}
                   </select>
                 </div>
 
@@ -405,6 +408,11 @@ export default {
               </div>
 
               <div class="row border-left border-right justify-content-center" style="max-height: 400px; overflow-y: auto">
+                  <div class="col-12 mb-3 d-flex align-items-start p-1">
+                      <div class="border rounded p-1 m-1 w-100">
+                        <input type="checkbox" class="select-all-checkbox" />
+                        <label class="ml-2">Chọn tất cả</label>
+                      </div>
                   <div class="col-12 mb-3 d-flex align-items-start p-1">
                       <div class="border rounded p-1 m-1 w-100">
                         <input type="checkbox" class="select-all-checkbox" />
@@ -701,8 +709,10 @@ export default {
           if (response.success) {
             toastr.success('Lưu thành công')
             /* // Thêm logic để cập nhật danh sách nhân viên trong ca
+            /* // Thêm logic để cập nhật danh sách nhân viên trong ca
             const updatedShift = response.data
             const existingShiftIndex = this.listShifts.findIndex(
+              (shift) => shift.maCaKip === updatedShift.maCaKip
               (shift) => shift.maCaKip === updatedShift.maCaKip
             )
             if (existingShiftIndex !== -1) {

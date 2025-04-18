@@ -1,10 +1,12 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import Swal from 'sweetalert2'
+import { GetApiUrl } from '@constants/api'
 const props = defineProps({
   ListProduct: Object,
   Combo: Object,
 })
+let getApiUrl = GetApiUrl()
 const initialCombo = ref(null)
 const comboEdit = ref({
   tenCombo: '',
@@ -147,7 +149,7 @@ onMounted(() => {
             <div>
               <label class="form-label">Hình ảnh</label>
               <img
-                :src="`https://localhost:7139/HinhAnh/Food_Drink/${comboEdit.hinh}`"
+                :src="getApiUrl+`/HinhAnh/Food_Drink/${comboEdit.hinh}`"
                 alt="Ảnh combo"
                 class="img-fluid mt-2"
                 style="max-width: 100px; height: auto"

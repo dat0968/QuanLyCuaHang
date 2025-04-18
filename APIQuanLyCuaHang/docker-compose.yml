@@ -1,0 +1,21 @@
+﻿
+services:
+    productdb:
+        image: mcr.microsoft.com/mssql/server:2019-latest
+            
+    jollibee.API:
+        image: ${DOCKER_REGISTRY-}jollibee-api:${PLATFORM:-linux}-${TAG:-latest}
+        build: 
+            context: .
+            dockerfile: APIQuanLyCuaHang/Dockerfile
+
+networks:
+    default:
+        name: jollibee
+        driver: bridge
+      
+volumes:
+    sqlserver_data:
+        name: sqlserver_data
+        
+            

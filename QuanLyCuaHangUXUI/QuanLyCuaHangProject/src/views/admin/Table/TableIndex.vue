@@ -45,14 +45,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="resetOrder"></button>
           </div>
           <div class="modal-body">
-            <div class="row mb-3">
-              <div class="col-md-6">
-                <label for="staffId" class="form-label">Mã nhân viên</label>
-                <input v-model="staffId" type="number" class="form-control" id="staffId" placeholder="Nhập mã nhân viên" required />
-              </div>
-            </div>
-
-            <div v-if="staffId" class="menu-container">
+            <div class="menu-container">
               <!-- Bộ lọc và sắp xếp -->
               <div class="menu-controls row mb-3">
                 <div class="col-md-4">
@@ -85,7 +78,7 @@
                     <div class="menu-card-image">
                       <img
                         :src="product.chitietsanphams[0]?.hinhanhs?.[0]?.tenHinhAnh
-                          ? `https://localhost:7139/HinhAnh/Food_Drink/${product.chitietsanphams[0].hinhanhs[0].tenHinhAnh}`
+                          ? getApiUrl+`/HinhAnh/Food_Drink/${product.chitietsanphams[0].hinhanhs[0].tenHinhAnh}`
                           : 'https://via.placeholder.com/150'"
                         :alt="product.tenSanPham"
                         class="img-fluid"
@@ -129,7 +122,7 @@
                     <div class="menu-card-image">
                       <img
                         :src="combo.hinh
-                          ? `https://localhost:7139/HinhAnh/Food_Drink/${combo.hinh}`
+                          ? getApiUrl+`/HinhAnh/Food_Drink/${combo.hinh}`
                           : 'https://via.placeholder.com/150'"
                         :alt="combo.tenCombo"
                         class="img-fluid"
@@ -199,7 +192,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-success" @click="checkout" :disabled="!orderItems.length || !staffId">Thanh toán</button>
+            <button class="btn btn-success" @click="checkout" :disabled="!orderItems.length">Thanh toán</button>
             <button class="btn btn-secondary" data-bs-dismiss="modal" @click="resetOrder">Hủy</button>
           </div>
         </div>
@@ -250,7 +243,9 @@
 import { ref, onMounted, watch, computed, nextTick } from 'vue';
 import Swal from 'sweetalert2';
 import QRCode from 'qrcode';
-
+import { GetApiUrl } from '@constants/api'
+import {jwtDecode} from 'jwt-decode';
+import Cookies from 'js-cookie'
 const immutableStatuses = ["Đang sử dụng", "Đang sửa chữa"];
 const tables = ref([]);
 const searchQuery = ref('');
@@ -274,11 +269,24 @@ const menuSearch = ref('');
 const categoryFilter = ref('');
 const sortOption = ref('');
 const qrCodeCanvas = ref(null); // Ref để tham chiếu canvas
-
+const maNv = ref(null);
 const totalAmount = computed(() => {
   return orderItems.value.reduce((sum, item) => sum + item.quantity * item.price, 0);
 });
-
+let getApiUrl = GetApiUrl()
+// Hàm lấy token và giải mã để lấy MaNv
+const getTokenAndDecode = () => {
+  token.value = localStorage.getItem('accessToken') || Cookies.get('accessToken') || '';
+  if (token.value) {
+    try {
+      const decoded = jwtDecode(token.value); // Giải mã token
+      maNv.value = decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'] || decoded.sub; // Lấy MaNv từ claim
+    } catch (error) {
+      console.error('Lỗi giải mã token:', error);
+      Swal.fire({ icon: 'error', title: 'Lỗi!', text: 'Không thể giải mã token.' });
+    }
+  }
+};
 // Lọc và sắp xếp sản phẩm
 const filteredProducts = computed(() => {
   let filtered = [...products.value];
@@ -328,8 +336,8 @@ const fetchTables = async () => {
   isLoading.value = true;
   try {
     const url = statusFilter.value
-      ? `https://localhost:7139/api/Table/filter?tinhTrang=${encodeURIComponent(statusFilter.value)}`
-      : `https://localhost:7139/api/Table`;
+      ? getApiUrl+`/api/Table/filter?tinhTrang=${encodeURIComponent(statusFilter.value)}`
+      : getApiUrl+`/api/Table`;
     const response = await fetch(url, {
       headers: { Authorization: `Bearer ${token.value}` }
     });
@@ -349,7 +357,7 @@ const fetchTables = async () => {
 
 const fetchCategories = async () => {
   try {
-    const response = await fetch('https://localhost:7139/api/Home/categories', {
+    const response = await fetch(getApiUrl+'/api/Home/categories', {
       headers: { Authorization: `Bearer ${token.value}` }
     });
     if (!response.ok) throw new Error(await response.text());
@@ -362,7 +370,7 @@ const fetchCategories = async () => {
 const updateStatus = async (table, newStatus) => {
   const previousStatus = table.tinhTrang;
   try {
-    const response = await fetch(`https://localhost:7139/api/Table/${table.id}`, {
+    const response = await fetch(getApiUrl+`/api/Table/${table.id}`, {
       method: "PUT",
       headers: { 
         "Content-Type": "application/json",
@@ -381,7 +389,7 @@ const updateStatus = async (table, newStatus) => {
 
 const addTable = async () => {
   try {
-    const response = await fetch(`https://localhost:7139/api/Table`, {
+    const response = await fetch(getApiUrl+`/api/Table`, {
       method: "POST",
       headers: { 
         "Content-Type": "application/json",
@@ -412,7 +420,7 @@ const deleteTable = async (tableId) => {
   });
   if (!confirm.isConfirmed) return;
   try {
-    const response = await fetch(`https://localhost:7139/api/Table/${tableId}`, {
+    const response = await fetch(getApiUrl+`/api/Table/${tableId}`, {
       method: "DELETE",
       headers: { 
         "Content-Type": "application/json",
@@ -430,7 +438,7 @@ const deleteTable = async (tableId) => {
 const openOrderModal = async (table) => {
   selectedTable.value = table;
   try {
-    const response = await fetch(`https://localhost:7139/api/Table/${table.id}/menu`, {
+    const response = await fetch(getApiUrl+`/api/Table/${table.id}/menu`, {
       headers: { "Authorization": `Bearer ${token.value}` }
     });
     if (!response.ok) throw new Error(await response.text());
@@ -552,13 +560,14 @@ const removeFromOrder = (index) => {
 
 const checkout = async () => {
   try {
-    // Kiểm tra dữ liệu trước khi gửi
-    if (!staffId.value || isNaN(staffId.value)) {
-      throw new Error("Mã nhân viên không hợp lệ.");
+    // Kiểm tra MaNv từ token
+    if (!maNv.value || isNaN(maNv.value)) {
+      throw new Error("Không tìm thấy mã nhân viên trong token.");
     }
+
     const orderData = {
       maKh: customerId.value && !isNaN(customerId.value) ? parseInt(customerId.value) : null,
-      maNv: parseInt(staffId.value),
+      maNv: parseInt(maNv.value), // Sử dụng MaNv từ token
       tinhTrang: 'Đã thanh toán',
       ngayTao: new Date().toISOString(),
       hinhThucTt: 'Tại quầy',
@@ -571,27 +580,30 @@ const checkout = async () => {
         return {
           maCtsp: parseInt(item.maCtsp),
           soLuong: item.quantity,
-          donGia: item.price // Gửi để frontend đồng bộ, backend không dùng trực tiếp
+          donGia: item.price
         };
       }),
     };
-    const response = await fetch('https://localhost:7139/api/CounterBill', {
+
+    const response = await fetch(getApiUrl + '/api/CounterBill', {
       method: 'POST',
-      headers: { 
+      headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token.value}`
       },
       body: JSON.stringify(orderData),
     });
+
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(`Lỗi từ server: ${response.status} - ${errorText}`);
     }
+
     bill.value = await response.json();
 
-    await fetch(`https://localhost:7139/api/Table/${selectedTable.value.id}`, {
+    await fetch(getApiUrl + `/api/Table/${selectedTable.value.id}`, {
       method: 'PUT',
-      headers: { 
+      headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token.value}`
       },
@@ -600,7 +612,7 @@ const checkout = async () => {
 
     // Tạo mã QR
     const qrData = `https://localhost:7139/api/Bill/GetBillDetails/details/${bill.value.maHd}`;
-    await nextTick(); // Đảm bảo DOM đã render trước khi tạo QR
+    await nextTick();
     if (qrCodeCanvas.value) {
       QRCode.toCanvas(qrCodeCanvas.value, qrData, { width: 200 }, (error) => {
         if (error) {
@@ -612,7 +624,6 @@ const checkout = async () => {
       console.error('QR code canvas element not found.');
     }
 
-    // Đóng/mở modal
     const orderModal = document.getElementById('orderAtCounterModal');
     const billModal = document.getElementById('billModal');
     const orderModalInstance = window.bootstrap.Modal.getInstance(orderModal);
@@ -652,6 +663,7 @@ watch([searchQuery, statusFilter], fetchTables, { debounce: 300 });
 onMounted(() => {
   getToken();
   fetchTables();
+  getTokenAndDecode();
 });
 </script>
 

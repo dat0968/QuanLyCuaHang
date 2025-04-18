@@ -66,7 +66,7 @@
               <td>
                 <img
                   v-if="customer.hinhDaiDien"
-                  :src="'https://localhost:7139' + customer.hinhDaiDien"
+                  :src="getApiUrl + `/Hinh/AnhKhachHang/` + customer.hinhDaiDien"
                   alt="Hình đại diện"
                   class="avatar-table-img"
                   @click="openDetailModal(customer)"
@@ -144,7 +144,7 @@
                     <div class="avatar-container">
                       <img
                         v-if="currentCustomer.hinhDaiDien"
-                        :src="isEditMode && !currentCustomer.anh ? 'https://localhost:7139' + currentCustomer.hinhDaiDien : currentCustomer.hinhDaiDien"
+                        :src="isEditMode && !currentCustomer.anh ? getApiUrl+`/Hinh/AnhKhachHang/`+currentCustomer.hinhDaiDien : currentCustomer.hinhDaiDien"
                         alt="Hình đại diện"
                         class="avatar-img"
                       />
@@ -264,7 +264,7 @@
                   <div class="avatar-container">
                     <img
                       v-if="selectedCustomer.hinhDaiDien"
-                      :src="'https://localhost:7139' + selectedCustomer.hinhDaiDien"
+                      :src= "getApiUrl + `/Hinh/AnhKhachHang/` + selectedCustomer.hinhDaiDien"
                       alt="Hình đại diện"
                       class="avatar-img"
                     />
@@ -336,10 +336,12 @@
 import axios from 'axios'
 import { Modal } from 'bootstrap'
 import Swal from 'sweetalert2'
-
+import { GetApiUrl } from '@constants/api'
+let getApiUrl = GetApiUrl()
 export default {
   data() {
     return {
+      getApiUrl: GetApiUrl(),
       customers: [],
       searchTerm: '',
       sortBy: '',
@@ -377,7 +379,7 @@ export default {
   methods: {
     async fetchCustomers() {
       try {
-        const response = await axios.get('https://localhost:7139/api/customer', {
+        const response = await axios.get(getApiUrl+'/api/customer', {
           params: {
             pageNumber: this.currentPage,
             pageSize: this.pageSize,
@@ -522,7 +524,7 @@ export default {
           formData.append('anh', this.currentCustomer.anh)
         }
 
-        const response = await axios.post('https://localhost:7139/api/customer', formData, {
+        const response = await axios.post(getApiUrl+'/api/customer', formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         })
         Swal.fire('Thành công!', response.data.message, 'success')
@@ -610,7 +612,7 @@ export default {
           formData.append('anh', this.currentCustomer.anh)
         }
 
-        const response = await axios.put(`https://localhost:7139/api/customer/${this.currentCustomer.maKh}`, formData, {
+        const response = await axios.put(getApiUrl+`/api/customer/${this.currentCustomer.maKh}`, formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         })
         Swal.fire('Thành công!', response.data.message, 'success')
@@ -636,7 +638,7 @@ export default {
     async hideCustomer(id) {
       if (!confirm('Bạn có chắc chắn muốn ẩn khách hàng này?')) return
       try {
-        const response = await axios.put(`https://localhost:7139/api/customer/Hide/${id}`)
+        const response = await axios.put(getApiUrl+`/api/customer/Hide/${id}`)
         Swal.fire('Thành công!', response.data.message, 'success')
         this.fetchCustomers()
       } catch (error) {
@@ -650,7 +652,7 @@ export default {
     },
     async exportToExcel() {
       try {
-        const response = await axios.get('https://localhost:7139/api/customer/ExportExcel', {
+        const response = await axios.get(getApiUrl+'/api/customer/ExportExcel', {
           params: {
             searchTerm: this.searchTerm,
             sortBy: this.sortBy
@@ -677,7 +679,7 @@ export default {
       try {
         const formData = new FormData()
         formData.append('file', file)
-        const response = await axios.post('https://localhost:7139/api/customer/ImportExcel', formData, {
+        const response = await axios.post(getApiUrl+'/api/customer/ImportExcel', formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         })
         Swal.fire(

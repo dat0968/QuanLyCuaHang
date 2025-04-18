@@ -1,6 +1,8 @@
 <script setup>
 import { ref, watch } from 'vue'
 import Swal from 'sweetalert2'
+import { GetApiUrl } from '@constants/api'
+let getApiUrl = GetApiUrl()
 const props = defineProps({
   ListProduct: Object,
 })
@@ -67,22 +69,22 @@ function handleFileChange(combo, event) {
 // Xóa chi tiết combo
 function removeDetailCombo(index) {
   if (combo.value.chitietcombos.length > 1) {
-    combo.value.chitietcombos.splice(index, 1);
-  } 
+    combo.value.chitietcombos.splice(index, 1)
+  }
 }
 // Xử lú gửi data về server
 const addCombo = async () => {
   console.log(combo.value)
   try {
-    let isValid = true;
+    let isValid = true
 
     // Check trùng lặp chi tiết combo
-    const hasDuplicates = combo.value.chitietcombos.some((detail, index, arr) =>
-      arr.findIndex(d => d.maSp === detail.maSp) !== index
-    );
+    const hasDuplicates = combo.value.chitietcombos.some(
+      (detail, index, arr) => arr.findIndex((d) => d.maSp === detail.maSp) !== index
+    )
     if (hasDuplicates) {
-      isValid = false;
-      Swal.fire('Không được để trùng lặp sản phẩm trong chi tiết combo!', '', 'error');
+      isValid = false
+      Swal.fire('Không được để trùng lặp sản phẩm trong chi tiết combo!', '', 'error')
     }
 
     const form_input_combo = document.querySelectorAll('.data-createCombo .mb-3')
@@ -135,7 +137,7 @@ const addCombo = async () => {
     })
 
     //Gửi resquest
-    const response = await fetch('https://localhost:7139/api/Combos', {
+    const response = await fetch(getApiUrl + '/api/Combos', {
       method: 'POST',
       body: formData,
     })
@@ -249,7 +251,7 @@ const addCombo = async () => {
                       />
                     </div>
                     <!-- Xóa chi tiết combo -->
-                    <div style="margin-top: 10px;" class="col-md-2 d-flex align-items-end">
+                    <div style="margin-top: 10px" class="col-md-2 d-flex align-items-end">
                       <button
                         type="button"
                         class="btn btn-danger btn-sm"
