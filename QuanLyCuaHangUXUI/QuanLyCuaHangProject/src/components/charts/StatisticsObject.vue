@@ -32,7 +32,7 @@ export default {
         maintainAspectRatio: false,
         plugins: {
           legend: {
-            position: 'top',
+            position: 'right',
             labels: { color: '#333' },
           },
           tooltip: {
@@ -69,17 +69,12 @@ export default {
       if (this.userChart) this.userChart.destroy()
 
       // Chuẩn bị dữ liệu cho biểu đồ
-      const labels = ['Khách hàng', 'Nhân viên']
-      const legendLabels = ['🟢 Hoạt động', '🔴 Không hoạt động']
-      this.chartOptions.plugins.legend.labels.generateLabels = (chart) => {
-        const datasets = chart.data.datasets[0].data
-        return legendLabels.map((label, index) => ({
-          text: `${label} (${datasets[index] || 0})`,
-          fillStyle: chart.data.datasets[0].backgroundColor[index],
-          hidden: false,
-          index,
-        }))
-      }
+      const labels = [
+        'Khách hàng - Hoạt động',
+        'Khách hàng - Không hoạt động',
+        'Nhân viên - Hoạt động',
+        'Nhân viên - Không hoạt động',
+      ]
       const chartData = []
 
       const customerData = data.find((item) => item.nameObject === 'Khách hàng')

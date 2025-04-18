@@ -4,6 +4,7 @@ import GetAllOrderData from '@/components/charts/AllOrderChart.vue'
 import OrderOverViewChart from '@/components/charts/OrderOverViewChart.vue'
 import TopDashboardEntitiesDt from '@/components/charts/TopDashboardEntitiesDt.vue'
 import StatisticsObject from '@/components/charts/StatisticsObject.vue'
+import ListRecentOrders from '@/components/charts/ListRecentOrders.vue'
 export default {
   name: 'DashboardAdmin',
   components: {
@@ -12,6 +13,7 @@ export default {
     OrderOverViewChart,
     TopDashboardEntitiesDt,
     StatisticsObject,
+    ListRecentOrders,
   },
   props: {},
   data() {
@@ -109,16 +111,7 @@ export default {
           <!-- End XP Col -->
 
           <!-- Start XP Col -->
-          <div class="row">
-            <div class="card m-b-30">
-              <div class="card-header bg-white">
-                <h5 class="card-title text-black mb-0">Lịch làm việc</h5>
-              </div>
-              <div class="card-body">
-                <div data-language="en" class="datepicker-here"></div>
-              </div>
-            </div>
-          </div>
+          <ListRecentOrders />
           <!-- End XP Col -->
         </div>
       </div>

@@ -174,5 +174,23 @@ namespace APIQuanLyCuaHang.Controllers
             }
             return Ok(response);
         }
+        /// <summary>
+        /// Lấy danh sách 5 đơn hàng gần nhất
+        /// </summary>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        /// <remarks>
+        ///     GET: api/Dashboard/GetRecentOrders/5
+        /// </remarks>
+        [HttpGet("{count}")]
+        public async Task<IActionResult> GetRecentOrders(int count = 5)
+        {
+            var response = await _dash.GetRecentOrdersAsync(count);
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
     }
 }
