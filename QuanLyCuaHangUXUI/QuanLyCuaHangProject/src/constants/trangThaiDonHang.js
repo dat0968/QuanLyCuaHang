@@ -56,4 +56,32 @@ export default class TrangThaiDonHang {
     }
     return TrangThaiDonHang.TrangThaiCoTheHuy[currentStatus]
   }
+
+  // Phương thức để nhập vào trạng thái và trả về mã màu
+  static getColorCode(status) {
+    switch (status) {
+      case TrangThaiDonHang.DangXuLy:
+        return '#FFA500' // Cam
+      case TrangThaiDonHang.DaXacNhan:
+        return '#008000' // Xanh lục
+      case TrangThaiDonHang.DaGiaoChoDonViVanChuyen:
+        return '#0000FF' // Xanh dương
+      case TrangThaiDonHang.DangGiaoHang:
+        return '#FFFF00' // Vàng
+      case TrangThaiDonHang.ChoThanhToan:
+        return '#FF0000' // Đỏ
+      case TrangThaiDonHang.DaThanhToan:
+        return '#800080' // Tím
+      case TrangThaiDonHang.HoanTra_HoanTien:
+        return '#FFC0CB' // Hồng
+      case TrangThaiDonHang.DaHuy:
+        return '#808080' // Xám
+      case TrangThaiDonHang.ChoXacNhan:
+        return '#FFD700' // Vàng đồng
+      case TrangThaiDonHang.DaNhan:
+        return '#32CD32' // Xanh lá sáng
+      default:
+        return '#000000' // Mặc định là đen nếu không có trạng thái
+    }
+  }
 }

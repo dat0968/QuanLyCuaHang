@@ -1,116 +1,124 @@
 <script setup>
-import DeliciousFoodMenu from '../../components/DeliciousFoodMenu.vue';
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import Cookies from 'js-cookie';
+import DeliciousFoodMenu from '../../components/DeliciousFoodMenu.vue'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import Cookies from 'js-cookie'
 import { GetApiUrl } from '@constants/api'
-const router = useRouter();
-const isChatOpen = ref(false);
-const userInput = ref('');
-const messages = ref([]);
-const isTyping = ref(false);
-const previousAnswer = ref('');
+const router = useRouter()
+const isChatOpen = ref(false)
+const userInput = ref('')
+const messages = ref([])
+const isTyping = ref(false)
+const previousAnswer = ref('')
 let getApiUrl = GetApiUrl()
 // Mở/đóng hộp chat
 const toggleChatBox = () => {
-  isChatOpen.value = !isChatOpen.value;
-};
+  isChatOpen.value = !isChatOpen.value
+}
 
 // Hàm điều hướng đến trang chi tiết sản phẩm
 const navigateToProduct = (maSp) => {
-  router.push(`/detail/product/${maSp}`);
-};
+  router.push(`/detail/product/${maSp}`)
+}
 
 // Hàm điều hướng đến trang chi tiết combo
 const navigateToCombo = (maCombo) => {
-  router.push(`/detail/combo/${maCombo}`);
-};
+  router.push(`/detail/combo/${maCombo}`)
+}
 
 // Gửi tin nhắn
 const sendMessage = async (confirmation = null) => {
   // Chỉ yêu cầu userInput nếu không phải đang xác nhận Yes/No
-  if (!userInput.value && confirmation === null) return;
+  if (!userInput.value && confirmation === null) return
 
   if (userInput.value) {
-    messages.value.push({ type: 'user', text: userInput.value });
+    messages.value.push({ type: 'user', text: userInput.value })
   }
 
-  isTyping.value = true;
-  scrollToBottom();
+  isTyping.value = true
+  scrollToBottom()
 
   try {
-    const token = Cookies.get('accessToken');
+    const token = Cookies.get('accessToken')
     const payload = {
-      userInput: userInput.value || "", // Gửi chuỗi rỗng nếu không có userInput
+      userInput: userInput.value || '', // Gửi chuỗi rỗng nếu không có userInput
       previousAnswer: previousAnswer.value || null,
       confirmation: confirmation === true ? true : confirmation === false ? false : null, // Đảm bảo giá trị là true, false, hoặc null
-    };
+    }
 
     const headers = {
       'Content-Type': 'application/json',
-    };
-    if (token && (payload.userInput.toLowerCase().includes('thêm') || 
-                  payload.userInput.toLowerCase().includes('thanh toán') || 
-                  confirmation !== null)) {
-      headers['Authorization'] = `Bearer ${token}`;
+    }
+    if (
+      token &&
+      (payload.userInput.toLowerCase().includes('thêm') ||
+        payload.userInput.toLowerCase().includes('thanh toán') ||
+        confirmation !== null)
+    ) {
+      headers['Authorization'] = `Bearer ${token}`
     }
 
-    const response = await fetch(getApiUrl+'/api/Home/TraLoi', {
+    const response = await fetch(getApiUrl + '/api/Home/TraLoi', {
       method: 'POST',
       headers,
       body: JSON.stringify(payload),
-    });
+    })
 
     if (!response.ok) {
       if (response.status === 401) {
-        messages.value.push({ type: 'bot', text: 'Token hết hạn hoặc không hợp lệ. Vui lòng đăng nhập lại!' });
-        Cookies.remove('accessToken');
-        Cookies.remove('refreshToken');
-        router.push({ path: '/login', query: { redirect: router.currentRoute.value.fullPath } });
-        return;
+        messages.value.push({
+          type: 'bot',
+          text: 'Token hết hạn hoặc không hợp lệ. Vui lòng đăng nhập lại!',
+        })
+        Cookies.remove('accessToken')
+        Cookies.remove('refreshToken')
+        router.push({ path: '/login', query: { redirect: router.currentRoute.value.fullPath } })
+        return
       }
-      const errorData = await response.json();
-      throw new Error(`Lỗi HTTP! trạng thái: ${response.status} - ${errorData.response || 'Không có thông tin lỗi'}`);
+      const errorData = await response.json()
+      throw new Error(
+        `Lỗi HTTP! trạng thái: ${response.status} - ${errorData.response || 'Không có thông tin lỗi'}`,
+      )
     }
 
-    const data = await response.json();
-    isTyping.value = false;
+    const data = await response.json()
+    isTyping.value = false
 
-    let botMessage = { type: 'bot', text: data.response, hasButtons: false };
+    let botMessage = { type: 'bot', text: data.response, hasButtons: false }
     if (data.response.includes('[Yes/No]')) {
-      botMessage.text = data.response.replace(' [Yes/No]', '');
-      botMessage.hasButtons = true;
+      botMessage.text = data.response.replace(' [Yes/No]', '')
+      botMessage.hasButtons = true
     } else if (data.response.includes('[Continue/Checkout]')) {
-      botMessage.text = data.response.replace(' [Continue/Checkout]', '');
-      botMessage.hasButtons = true;
-      botMessage.buttonType = 'continue-checkout';
+      botMessage.text = data.response.replace(' [Continue/Checkout]', '')
+      botMessage.hasButtons = true
+      botMessage.buttonType = 'continue-checkout'
     } else if (data.response.includes('Đăng nhập')) {
-      botMessage.text = `${data.response} <br><button class="login-btn" onclick="window.location.href='/login?redirect=${encodeURIComponent(router.currentRoute.value.fullPath)}'">Đăng nhập ngay</button>`;
+      botMessage.text = `${data.response} <br><button class="login-btn" onclick="window.location.href='/login?redirect=${encodeURIComponent(router.currentRoute.value.fullPath)}'">Đăng nhập ngay</button>`
     }
-    messages.value.push(botMessage);
-    previousAnswer.value = data.response;
+    messages.value.push(botMessage)
+    previousAnswer.value = data.response
 
-    scrollToBottom();
+    scrollToBottom()
   } catch (error) {
-    isTyping.value = false;
-    messages.value.push({ type: 'bot', text: `Lỗi: ${error.message}` });
-    scrollToBottom();
+    isTyping.value = false
+    messages.value.push({ type: 'bot', text: `Lỗi: ${error.message}` })
+    scrollToBottom()
   }
 
-  userInput.value = '';
-};
+  userInput.value = ''
+}
 
 // Cuộn xuống cuối hộp chat
-const chatBody = ref(null);
+const chatBody = ref(null)
 const scrollToBottom = () => {
   if (chatBody.value) {
-    chatBody.value.scrollTop = chatBody.value.scrollHeight;
+    chatBody.value.scrollTop = chatBody.value.scrollHeight
   }
-};
+}
 
 // Đăng ký các hàm điều hướng vào window để gọi từ HTML
-window.navigateToProduct = navigateToProduct;
-window.navigateToCombo = navigateToCombo;
+window.navigateToProduct = navigateToProduct
+window.navigateToCombo = navigateToCombo
 </script>
 
 <template>
@@ -199,7 +207,7 @@ window.navigateToCombo = navigateToCombo;
               <div class="single_blog_text">
                 <h3>COMBO GÀ GIÒN</h3>
                 <p>Sự kết hợp giữa mì và gà giòn</p>
-                <a href="http://localhost:5173/detail/combo/1" class="btn_3">
+                <a href="http://localhost:5173/combo/1" class="btn_3">
                   Đặt ngay <img src="@/assets/client/img/icon/left_2.svg" alt="" />
                 </a>
               </div>
@@ -229,7 +237,7 @@ window.navigateToCombo = navigateToCombo;
                 thưởng thức, chẳng gì sánh bằng khi cắn vào lớp vỏ ngon tuyệt, chấm thêm sốt nữa thì
                 đúng là đỉnh cao mỗi bữa ăn.
               </p>
-              <a href="http://localhost:5173/detail/product/1001" class="btn_3">
+              <a href="http://localhost:5173/product/1001" class="btn_3">
                 Đặt ngay <img src="@/assets/client/img/icon/left_2.svg" alt="" />
               </a>
             </div>
@@ -244,14 +252,25 @@ window.navigateToCombo = navigateToCombo;
     <!-- food_menu part end-->
 
     <!-- Chatbot -->
-    <div style="position: fixed; bottom: 20px; right: 20px; width: 700px; z-index: 1000; display: flex; flex-direction: column; align-items: flex-end;">
+    <div
+      style="
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 700px;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+      "
+    >
       <div
         id="tawk-bubble-container"
         role="button"
         tabindex="0"
         class="tawk-bubble-container"
         @click="toggleChatBox"
-        style="cursor: pointer; margin-bottom: 10px;"
+        style="cursor: pointer; margin-bottom: 10px"
       >
         <div class="tawk-icon-right">
           <i
@@ -265,7 +284,7 @@ window.navigateToCombo = navigateToCombo;
           <img
             src=""
             alt="Thu hút chú ý đến tính năng trò chuyện"
-            style="max-width: 50px; height: 50px; border-radius: 50%;"
+            style="max-width: 50px; height: 50px; border-radius: 50%"
           />
         </div>
       </div>
@@ -273,11 +292,27 @@ window.navigateToCombo = navigateToCombo;
         v-show="isChatOpen"
         id="chat-box"
         class="chat-box"
-        style="border: 1px solid #ccc; border-radius: 10px; background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); width: 700px;"
+        style="
+          border: 1px solid #ccc;
+          border-radius: 10px;
+          background-color: #f9f9f9;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          width: 700px;
+        "
       >
         <div
           class="chat-header"
-          style="padding: 10px; background-color: #007bff; color: white; font-weight: bold; border-top-left-radius: 10px; border-top-right-radius: 10px; display: flex; justify-content: space-between; align-items: center;"
+          style="
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
         >
           Hộp Thoại Hỗ Trợ
           <i
@@ -285,25 +320,30 @@ window.navigateToCombo = navigateToCombo;
             tabindex="0"
             @click="toggleChatBox"
             class="tawk-icon tawk-icon-close tawk-icon-small"
-            style="cursor: pointer;"
-          >X</i>
+            style="cursor: pointer"
+            >X</i
+          >
         </div>
         <div
           ref="chatBody"
           class="chat-body"
-          style="padding: 10px; max-height: 300px; overflow-y: auto; width: 700px;"
+          style="padding: 10px; max-height: 300px; overflow-y: auto; width: 700px"
         >
-          <div class="chat-message bot-message" style="text-align: left; margin-bottom: 10px;">
+          <div class="chat-message bot-message" style="text-align: left; margin-bottom: 10px">
             Chào bạn! Tôi có thể giúp gì cho bạn hôm nay?
           </div>
           <div
             v-for="(message, index) in messages"
             :key="index"
             :class="['chat-message', message.type === 'user' ? 'user-message' : 'bot-message']"
-            :style="message.type === 'user' ? 'text-align: right; margin-bottom: 10px; color: #007bff;' : 'text-align: left; margin-bottom: 10px;'"
+            :style="
+              message.type === 'user'
+                ? 'text-align: right; margin-bottom: 10px; color: #007bff;'
+                : 'text-align: left; margin-bottom: 10px;'
+            "
           >
             <span v-html="message.text"></span>
-            <div v-if="message.hasButtons" style="margin-top: 5px;">
+            <div v-if="message.hasButtons" style="margin-top: 5px">
               <template v-if="message.buttonType === 'continue-checkout'">
                 <button class="continue-btn" @click="sendMessage(true)">Continue</button>
                 <button class="checkout-btn" @click="sendMessage(false)">Checkout</button>
@@ -314,30 +354,30 @@ window.navigateToCombo = navigateToCombo;
               </template>
             </div>
           </div>
-          <div
-            v-show="isTyping"
-            class="chat-message typing-indicator"
-            style="text-align: left;"
-          >
+          <div v-show="isTyping" class="chat-message typing-indicator" style="text-align: left">
             <span>...</span>
           </div>
         </div>
-        <div
-          class="chat-input-container"
-          style="display: flex; padding: 10px; width: 700px;"
-        >
+        <div class="chat-input-container" style="display: flex; padding: 10px; width: 700px">
           <input
             v-model="userInput"
             @keypress.enter="sendMessage"
             type="text"
             placeholder="Nhập câu hỏi..."
             class="chat-input"
-            style="flex: 1; padding: 8px; border-radius: 5px; border: 1px solid #ccc;"
+            style="flex: 1; padding: 8px; border-radius: 5px; border: 1px solid #ccc"
           />
           <button
             @click="sendMessage"
             class="chat-send-button"
-            style="margin-left: 5px; padding: 8px 12px; border-radius: 5px; background-color: #007bff; color: white; border: none;"
+            style="
+              margin-left: 5px;
+              padding: 8px 12px;
+              border-radius: 5px;
+              background-color: #007bff;
+              color: white;
+              border: none;
+            "
           >
             Gửi
           </button>

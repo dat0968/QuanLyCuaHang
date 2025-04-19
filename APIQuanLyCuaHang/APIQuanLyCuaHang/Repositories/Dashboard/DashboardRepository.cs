@@ -274,7 +274,6 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
         }
         #endregion
 
-
         #region [Lấy dữ liệu danh sách lịch sử làm việc (ps: like above)] 
         public async Task<ResponseAPI<List<WorkHistoryDC>>> GetTopEmployeeRegistShift()
         {
@@ -338,6 +337,47 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
         }
         #endregion
 
+        #region [Lấy danh sách đơn hàng gần đây nhất]
+        public async Task<ResponseAPI<List<InvoiceDC>>> GetRecentOrdersAsync(int count = 5)
+        {
+            ResponseAPI<List<InvoiceDC>> response = new();
+            try
+            {
+                var recentOrders = await _db.Hoadons.OrderByDescending(x => x.NgayTao).Take(count).ToListAsync();
+                if (recentOrders == null || !recentOrders.Any())
+                {
+                    throw new Exception("Không có đơn hàng nào gần đây.");
+                }
+                var invoiceData = recentOrders.Select(hoadon => new InvoiceDC
+                {
+                    MaHd = hoadon.MaHd,
+                    DiaChiNhanHang = hoadon.DiaChiNhanHang,
+                    HinhThucTt = hoadon.HinhThucTt,
+                    TinhTrang = hoadon.TinhTrang,
+                    MaNv = hoadon.MaNv,
+                    MaKh = hoadon.MaKh,
+                    MoTa = hoadon.MoTa,
+                    HoTen = hoadon.HoTen ?? "N/A",
+                    Sdt = hoadon.Sdt ?? "N/A",
+                    NgayTao = hoadon.NgayTao,
+                    NgayNhan = hoadon.NgayNhan,
+                    NgayThanhToan = hoadon.NgayThanhToan,
+                    LyDoHuy = hoadon.LyDoHuy,
+                    PhiVanChuyen = hoadon.PhiVanChuyen,
+                    TienGoc = hoadon.TienGoc,
+                    TongTien = hoadon.TienGoc - hoadon.PhiVanChuyen
+                }).ToList();
+
+                response.SetSuccessResponse("Lấy danh sách đơn hàng gần đây thành công.");
+                response.SetData(invoiceData);
+            }
+            catch (Exception ex)
+            {
+                response.SetMessageResponseWithException(400, ex);
+            }
+            return response;
+        }
+        #endregion
         #region [Private Methods]
         private async Task<List<InvoiceDC>> GetAllInvoiceDataStatisticsAsync()
         {
@@ -612,6 +652,7 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
                 {
                     case "day":
                         var daysOfWeek = new[] { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
+                        var daysOfWeekVerse = new[] { "Chủ nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7" };
                         orderData.Data = daysOfWeek.Select(day =>
                         {
                             var filteredOrders = invoices
@@ -622,7 +663,7 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
                                 Revenue = filteredOrders.Sum(x => x.TongTien)
                             };
                         }).ToList();
-                        orderOverviewData.Categories = daysOfWeek.ToList();
+                        orderOverviewData.Categories = daysOfWeekVerse.ToList();
                         break;
 
                     case "week":
@@ -672,7 +713,7 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
                         break;
 
                     default:
-                        throw new ArgumentException("Invalid time range specified.");
+                        throw new ArgumentException("Dữ liệu thời gian được chọn nằm ngoài xử lí của hệ thống.");
                 }
 
                 orderOverviewData.Overview.Add(orderData);

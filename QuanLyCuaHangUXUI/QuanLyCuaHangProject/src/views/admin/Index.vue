@@ -4,6 +4,7 @@ import GetAllOrderData from '@/components/charts/AllOrderChart.vue'
 import OrderOverViewChart from '@/components/charts/OrderOverViewChart.vue'
 import TopDashboardEntitiesDt from '@/components/charts/TopDashboardEntitiesDt.vue'
 import StatisticsObject from '@/components/charts/StatisticsObject.vue'
+import ListRecentOrders from '@/components/charts/ListRecentOrders.vue'
 export default {
   name: 'DashboardAdmin',
   components: {
@@ -12,6 +13,7 @@ export default {
     OrderOverViewChart,
     TopDashboardEntitiesDt,
     StatisticsObject,
+    ListRecentOrders,
   },
   props: {},
   data() {
@@ -108,7 +110,11 @@ export default {
           <StatisticsObject />
           <!-- End XP Col -->
 
-         
+
+          <!-- Start XP Col -->
+          <ListRecentOrders />
+          <!-- End XP Col -->
+
         </div>
       </div>
       <!-- End XP Row -->

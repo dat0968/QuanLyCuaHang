@@ -14,57 +14,134 @@
       <div class="row">
         <!-- Form Thông Tin Ca Kíp -->
         <div class="col-4 border-right">
-          <h5 class="mb-3">Thông Tin Ca Kíp</h5>
-          <hr />
-          <form @submit.prevent="saveShift">
-            <div class="mb-2">
-              <label>Mã Ca:</label>
-              <input v-model="shift.maCaKip" type="number" class="form-control" disabled />
-            </div>
-            <div class="mb-2">
-              <label>Tên Ca:</label>
-              <input v-model="shift.tenCa" type="text" class="form-control" required />
-              <div v-if="errors && errors.tenCa" class="text-danger">{{ errors.tenCa }}</div>
-            </div>
-            <div class="mb-2">
-              <label>Số Người Tối Đa:</label>
-              <input v-model="shift.soNguoiToiDa" type="number" class="form-control" required />
-              <div v-if="errors && errors.soNguoiToiDa" class="text-danger">
-                {{ errors.soNguoiToiDa }}
+          <div class="row border-bottom">
+            <h5 class="mb-3">Thông Tin Ca Kíp</h5>
+            <hr />
+            <form @submit.prevent="saveShift">
+              <div class="mb-2">
+                <label>Mã Ca:</label>
+                <input v-model="shift.maCaKip" type="number" class="form-control" disabled />
               </div>
-            </div>
-            <div class="row mb-2">
-              <div class="col-6">
-                <label>Bắt Đầu:</label>
-                <input
-                  v-model="shift.gioBatDau"
-                  :max="shift.gioKetThuc"
-                  type="time"
-                  class="form-control"
-                  required
-                />
-                <div v-if="errors && errors.gioBatDau" class="text-danger">
-                  {{ errors.gioBatDau }}
+              <div class="mb-2">
+                <label>Tên Ca:</label>
+                <input v-model="shift.tenCa" type="text" class="form-control" required />
+                <div v-if="errors && errors.tenCa" class="text-danger">{{ errors.tenCa }}</div>
+              </div>
+              <div class="mb-2">
+                <label>Số Người Tối Đa:</label>
+                <input v-model="shift.soNguoiToiDa" type="number" class="form-control" required />
+                <div v-if="errors && errors.soNguoiToiDa" class="text-danger">
+                  {{ errors.soNguoiToiDa }}
                 </div>
               </div>
-              <div class="col-6">
-                <label>Kết Thúc:</label>
-                <input
-                  v-model="shift.gioKetThuc"
-                  :min="shift.gioBatDau"
-                  type="time"
-                  class="form-control"
-                  required
-                />
-                <div v-if="errors && errors.gioKetThuc" class="text-danger">
-                  {{ errors.gioKetThuc }}
+              <div class="row mb-2">
+                <div class="col-6">
+                  <label>Bắt Đầu:</label>
+                  <input
+                    v-model="shift.gioBatDau"
+                    :max="shift.gioKetThuc"
+                    type="time"
+                    class="form-control"
+                    required
+                  />
+                  <div v-if="errors && errors.gioBatDau" class="text-danger">
+                    {{ errors.gioBatDau }}
+                  </div>
+                </div>
+                <div class="col-6">
+                  <label>Kết Thúc:</label>
+                  <input
+                    v-model="shift.gioKetThuc"
+                    :min="shift.gioBatDau"
+                    type="time"
+                    class="form-control"
+                    required
+                  />
+                  <div v-if="errors && errors.gioKetThuc" class="text-danger">
+                    {{ errors.gioKetThuc }}
+                  </div>
                 </div>
               </div>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">
-              {{ shift.maCaKip ? 'Cập nhật' : 'Thêm mới' }}
-            </button>
-          </form>
+              <button type="submit" class="btn btn-primary w-100">
+                {{ shift.maCaKip ? 'Cập nhật' : 'Thêm mới' }}
+              </button>
+            </form>
+          </div>
+          <div class="row border-top mt-5">
+            <h5 class="my-3">Tạo Lịch Làm Việc</h5>
+            <hr style="width: 95%" />
+            <form @submit.prevent="createSchedule">
+              <div class="mb-2">
+                <label>Chọn Ca Kíp:</label>
+                <select v-model="createScheduleObject.maCaKip" class="form-control" required>
+                  <option
+                    v-for="shift in listShifts.filter((x) => !x.isDelete)"
+                    :key="shift.maCaKip"
+                    :value="shift.maCaKip"
+                    :disabled="shift.soNguoiHienTai >= shift.soNguoiToiDa"
+                    :title="shift.soNguoiHienTai >= shift.soNguoiToiDa ? 'Ca đã đủ người' : ''"
+                    placeholder="Chọn ca làm việc"
+                  >
+                    [ {{ shift.maCaKip }} ] {{ shift.tenCa ?? 'N/A' }}
+                  </option>
+                </select>
+              </div>
+              <div class="mb-2">
+                <div class="row mr-2" style="max-height: 300px">
+                  <label class="col-12">Chọn Nhân Viên:</label>
+
+                  <div class="col-6">
+                    <select
+                      v-model="createScheduleObject.maNvs"
+                      multiple
+                      class="form-control"
+                      placeholder="Chọn nhân viên đang hoạt động"
+                      required
+                      style="height: 200px"
+                    >
+                      <option v-for="user in userIds" :key="user.maNv" :value="user.maNv">
+                        {{ user.hoTen }}
+                      </option>
+                    </select>
+                  </div>
+                  <div
+                    class="col-6 border border-success rounded p-1 overflow-auto"
+                    style="height: 200px"
+                  >
+                    <span
+                      v-for="userId in createScheduleObject.maNvs"
+                      :key="userId"
+                      class="badge bg-primary me-1"
+                    >
+                      {{ userIds.find((x) => x.maNv === userId)?.hoTen || 'Không xác định' }} [
+                      {{ userId }} ]
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-2">
+                <label>Trạng Thái:</label>
+                <select v-model="createScheduleObject.trangThaiCapNhap" class="form-control">
+                  <option
+                    v-for="(status, index) in TrangThaiLichLamViec.TatCaTrangThai"
+                    :key="index"
+                  >
+                    {{ status }}
+                  </option>
+                </select>
+              </div>
+              <div class="mb-2">
+                <label>Ghi Chú:</label>
+                <input
+                  v-model="createScheduleObject.ghiChu"
+                  type="text"
+                  class="form-control"
+                  placeholder="Viết ghi chú..."
+                />
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Tạo lịch làm việc</button>
+            </form>
+          </div>
         </div>
 
         <!-- Danh Sách Ca Kíp -->
@@ -94,6 +171,7 @@ import * as axiosConfig from '@/utils/axiosClient'
 import ConfigsRequest from '@/models/ConfigsRequest'
 import ResponseAPI from '@/models/ResponseAPI'
 import * as formatDatetime from '@/constants/formatDatetime'
+import TrangThaiLichLamViec from '@/constants/trangThaiLichLamViec'
 // import validate from '@/utils/validateYup'
 import * as validate from 'yup'
 
@@ -124,12 +202,22 @@ export default {
   data() {
     return {
       shift: { maCaKip: null, tenCa: '', soNguoiToiDa: 0, gioBatDau: '', gioKetThuc: '' },
+      userIds: [],
+      messageFormCreateNewShedule: '',
+      createScheduleObject: {
+        maCaKip: null,
+        maNvs: [],
+        trangThaiCapNhap: 'Chờ xác nhận',
+        ghiChu: '',
+      },
       listShifts: [],
       datatable: null, // Thêm biến để lưu trữ DataTable
       errors: null,
+      TrangThaiLichLamViec: TrangThaiLichLamViec,
     }
   },
   methods: {
+    // #region [Tải danh sách ca làm việc]
     async loadShifts() {
       console.log('Loading shifts...')
 
@@ -147,7 +235,8 @@ export default {
           console.error('Error loading data:', error)
         })
     },
-
+    // #endregion
+    // #region [Khởi tạo DataTable]
     initDataTable() {
       console.log('Initializing DataTable...')
       // Xóa DataTable cũ nếu đã tồn tại
@@ -222,8 +311,8 @@ export default {
                       row.maCaKip
                     }" title="Kích hoạt" style="cursor: pointer;">
                       <i class="bi ${isActive ? 'icon-close' : 'icon-check'}"></i> ${
-                isActive ? 'Hủy' : 'Mở'
-              }
+                        isActive ? 'Hủy' : 'Mở'
+                      }
                     </span>
                     <span class="btn btn-outline-primary generate-qr" data-id="${data}" title="Tải QR" style="cursor: pointer;">
                       <i class="bi icon-pin"></i>QR
@@ -260,6 +349,13 @@ export default {
       // Gắn sự kiện hiển thị chi tiết
       configsDt.attachDetailsControl('#dt-listShiftsPage', this.formatDetails)
     },
+    // #endregion
+    // #region [Hiển thị chi tiết nhân viên]
+    /**
+     * Hàm hiển thị chi tiết nhân viên trong ca làm việc
+     * @param {Object} rowData - Dữ liệu của hàng hiện tại
+     * @returns {jQuery} - HTML chứa thông tin chi tiết nhân viên
+     */
     formatDetails(rowData) {
       const currentShift = this.listShifts.find((shift) => shift.maCaKip === rowData.maCaKip)
       const validStatuses = [
@@ -281,6 +377,9 @@ export default {
                   <label for="status-filter"><strong>Lọc theo trạng thái:</strong></label>
                   <select id="status-filter" class="status-filter form-select">
                     <option value="">Tất cả</option>
+                    ${validStatuses
+                      .map((status) => `<option value="${status}">${status}</option>`)
+                      .join('')}
                     ${validStatuses
                       .map((status) => `<option value="${status}">${status}</option>`)
                       .join('')}
@@ -314,6 +413,11 @@ export default {
                         <input type="checkbox" class="select-all-checkbox" />
                         <label class="ml-2">Chọn tất cả</label>
                       </div>
+                  <div class="col-12 mb-3 d-flex align-items-start p-1">
+                      <div class="border rounded p-1 m-1 w-100">
+                        <input type="checkbox" class="select-all-checkbox" />
+                        <label class="ml-2">Chọn tất cả</label>
+                      </div>
                   </div>
                   ${currentShift.schedules
                     .map(
@@ -325,8 +429,8 @@ export default {
                             }" />
                             <div class="ml-2">
                                 <p><strong>${employee.tenNhanVien} <span class="text-secondary">[${
-                        employee.maNv
-                      }]</span></strong></p>
+                                  employee.maNv
+                                }]</span></strong></p>
                                 <p class="text-muted"><strong>Trạng thái:</strong> <span class="status-screw">${
                                   employee.trangThai
                                 }</span></p>
@@ -364,7 +468,7 @@ export default {
                             </div>
                           </div>
                       </div>
-                      `
+                      `,
                     )
                     .join('')}
               </div>
@@ -490,6 +594,8 @@ export default {
 
       return $('<div>Không có thông tin chi tiết nhân viên trong ca này.</div>')
     },
+    // #endregion
+    // #region [Cập nhật trạng thái nhân viên]
     async updateEmployeeStatus(selectedEmployees, newStatus, rowData) {
       // Hiển thị SweetAlert để người dùng nhập hoặc bỏ qua ghi chú
       const { value: ghiChu } = await Swal.fire({
@@ -527,7 +633,7 @@ export default {
         const response = await axiosConfig.postToApi(
           apiEndpoint,
           requestBody,
-          ConfigsRequest.takeAuth()
+          ConfigsRequest.takeAuth(),
         )
         if (ResponseAPI.handleNotification(response)) {
           console.log(response)
@@ -546,7 +652,7 @@ export default {
           Swal.fire(
             'Thành công',
             'Trạng thái đã được cập nhật. Vui lòng load lại trang để được hiển thị cập nhập',
-            'success'
+            'success',
           )
         }
       } catch (error) {
@@ -554,12 +660,14 @@ export default {
         Swal.fire('Thất bại', 'Không thể cập nhật trạng thái.', 'error')
       }
     },
+    // #endregion
+    // #region [Lấy thông tin CaKip]
     async fetchAndUpdateShift(maCaKip) {
       try {
         // Gọi API lấy thông tin cập nhật của CaKip
         const updatedShiftResponse = await axiosConfig.getFromApi(
           `/Shift/Employees/${maCaKip}`,
-          ConfigsRequest.takeAuth()
+          ConfigsRequest.takeAuth(),
         )
 
         if (updatedShiftResponse && updatedShiftResponse.success) {
@@ -577,6 +685,8 @@ export default {
         Swal.fire('Thất bại', 'Không thể tải lại thông tin CaKip.', 'error')
       }
     },
+    // #endregion
+    // #region [Thêm mới hoặc cập nhật ca làm việc]
     saveShift() {
       // Thêm đoạn mã validate tại đây
       const errors = validateShift(this.shift)
@@ -599,8 +709,10 @@ export default {
           if (response.success) {
             toastr.success('Lưu thành công')
             /* // Thêm logic để cập nhật danh sách nhân viên trong ca
+            /* // Thêm logic để cập nhật danh sách nhân viên trong ca
             const updatedShift = response.data
             const existingShiftIndex = this.listShifts.findIndex(
+              (shift) => shift.maCaKip === updatedShift.maCaKip
               (shift) => shift.maCaKip === updatedShift.maCaKip
             )
             if (existingShiftIndex !== -1) {
@@ -626,6 +738,8 @@ export default {
           toastr.error('Lỗi không xác định khi lưu thông tin ca làm việc.')
         })
     },
+    // #endregion
+    // #region [Thay đổi trạng thái ca làm việc]
     async changeStatusShift(maCaKip) {
       // Hiển thị hộp thoại với 3 lựa chọn
       const { value: action } = await Swal.fire({
@@ -682,6 +796,8 @@ export default {
         }
       }
     },
+    // #endregion
+    // #region [Tải QR Code]
     async generateQRCode(maCaKip) {
       try {
         const shift = this.listShifts.find((s) => s.maCaKip === maCaKip)
@@ -701,9 +817,55 @@ export default {
         toastr.error('Đã xảy ra lỗi khi tải QR Code: ' + error.message)
       }
     },
+    // #endregion
+    loadUserIds() {
+      console.log('Loading user IDs...')
+      axiosConfig
+        .getFromApi('/Schedule/GetAllUserId', ConfigsRequest.takeAuth())
+        .then((response) => {
+          if (response.success) {
+            this.userIds = response.data
+            console.log('User IDs loaded:', this.userIds)
+          } else {
+            this.messageFormCreateNewShedule = 'Hiện tại chức năng này không khả dụng'
+            console.error('API Error:', response.message)
+          }
+        })
+        .catch((error) => {
+          this.messageFormCreateNewShedule = 'Lỗi không xác định khi tải danh sách nhân viên'
+          console.error('Error loading data:', error)
+        })
+    },
+    async createSchedule() {
+      // Logic để tạo lịch làm việc mới
+      console.log('Creating schedule...')
+      try {
+        const response = await axiosConfig.postToApi(
+          '/Schedule/CreateSchedules',
+          this.createScheduleObject,
+          ConfigsRequest.takeAuth(),
+        )
+        if (response.success) {
+          toastr.success('Tạo lịch làm việc thành công')
+          this.createScheduleObject = {
+            maCaKip: null,
+            maNvs: [],
+            trangThaiCapNhap: 'Chờ xác nhận',
+            ghiChu: '',
+          }
+          this.loadShifts()
+        } else {
+          toastr.error('Lỗi khi tạo lịch làm việc: ' + response.message)
+        }
+      } catch (err) {
+        console.error('Error creating schedule:', err)
+        toastr.error('Lỗi không xác định khi tạo lịch làm việc.')
+      }
+    },
   },
   async mounted() {
     await this.loadShifts()
+    await this.loadUserIds()
   },
 }
 </script>

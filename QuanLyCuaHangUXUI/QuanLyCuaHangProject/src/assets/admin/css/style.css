@@ -3603,11 +3603,11 @@ a.text-dark:hover {
   cursor: default;
 }
 .br-theme-bars-square .br-readonly a.br-active {
-  border: 2px solid #primary;
+  border: 2px solid;
   color: #4c7cf3;
 }
 .br-theme-bars-square .br-readonly a.br-selected {
-  border: 2px solid #primary;
+  border: 2px solid;
   color: #4c7cf3;
 }
 

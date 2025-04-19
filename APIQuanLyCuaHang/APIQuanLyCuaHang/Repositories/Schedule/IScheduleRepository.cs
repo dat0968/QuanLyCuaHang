@@ -15,8 +15,9 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
         Task<ResponseAPI<List<ScheduleDTO>>> SignUpScheduleWorkAsync(int? maNv, int maCaKip, DateOnly? ngayLam);
         Task<ResponseAPI<List<ScheduleDTO>>> TimeKeepingAsync(int maNv, string qrCodeData);
         Task<ResponseAPI<dynamic>> SetStatusOne(SetStatusOneRequest request, int? managerUserId);
-        Task<ResponseAPI<dynamic>> SetStatusList(SetStatusListRequest request, int? managerUserId);
+        Task<ResponseAPI<dynamic>> SetStatusList(SetStatusListRequest request, int? managerUserId, bool? isCreate);
         Task<ResponseAPI<List<ScheduleDTO>>> GetScheduleOfUser(int? userId);
         Task<ResponseAPI<List<ScheduleDTO>>> GetScheduleActiveOfShift(int? shiftId);
+        Task<ResponseAPI<List<UserIdDTO>>> GetAllUserIdAsync();
     }
 }
