@@ -32,7 +32,7 @@ export default {
     <div class="xp-breadcrumbbar">
       <div class="row">
         <div class="col-md-6 col-lg-6">
-          <h4 class="xp-page-title">Bảng điều khiển</h4>
+          <h4 class="xp-page-title">THỐNG KÊ</h4>
         </div>
       </div>
     </div>
@@ -108,18 +108,7 @@ export default {
           <StatisticsObject />
           <!-- End XP Col -->
 
-          <!-- Start XP Col -->
-          <div class="row">
-            <div class="card m-b-30">
-              <div class="card-header bg-white">
-                <h5 class="card-title text-black mb-0">Lịch làm việc</h5>
-              </div>
-              <div class="card-body">
-                <div data-language="en" class="datepicker-here"></div>
-              </div>
-            </div>
-          </div>
-          <!-- End XP Col -->
+         
         </div>
       </div>
       <!-- End XP Row -->
