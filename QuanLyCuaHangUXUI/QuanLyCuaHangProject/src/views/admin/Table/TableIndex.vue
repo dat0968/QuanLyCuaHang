@@ -14,6 +14,9 @@
         </select>
       </div>
     </div>
+    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addTableModal">Thêm bàn mới</button>
+    <br>
+    <br>
 
     <!-- Modal thêm bàn -->
     <div class="modal fade" id="addTableModal" tabindex="-1" aria-labelledby="addTableModalLabel" aria-hidden="true">
@@ -235,7 +238,6 @@
           <h5 class="card-title">Bàn {{ table.id }}</h5>
           <p class="card-text">{{ table.tinhTrang }}</p>
           <div class="card-actions">
-            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addTableModal">Thêm</button>
             <button class="btn btn-success btn-sm" @click="openOrderModal(table)">Đặt hàng</button>
             <button class="btn btn-danger btn-sm" @click="deleteTable(table.id)">Xóa</button>
           </div>
@@ -251,7 +253,7 @@ import { ref, onMounted, watch, computed, nextTick } from 'vue';
 import Swal from 'sweetalert2';
 import QRCode from 'qrcode';
 
-const immutableStatuses = ["Đang sử dụng", "Đang sửa chữa"];
+// const immutableStatuses = ["Đang sử dụng", "Đang sửa chữa"];
 const tables = ref([]);
 const searchQuery = ref('');
 const statusFilter = ref('');
@@ -282,7 +284,7 @@ const totalAmount = computed(() => {
 // Lọc và sắp xếp sản phẩm
 const filteredProducts = computed(() => {
   let filtered = [...products.value];
-  
+
   if (menuSearch.value) {
     filtered = filtered.filter(p => p.tenSanPham.toLowerCase().includes(menuSearch.value.toLowerCase()));
   }
@@ -312,7 +314,7 @@ const filteredProducts = computed(() => {
 // Lọc combo
 const filteredCombos = computed(() => {
   let filtered = [...combos.value];
-  
+
   if (menuSearch.value) {
     filtered = filtered.filter(c => c.tenCombo.toLowerCase().includes(menuSearch.value.toLowerCase()));
   }
@@ -359,31 +361,31 @@ const fetchCategories = async () => {
   }
 };
 
-const updateStatus = async (table, newStatus) => {
-  const previousStatus = table.tinhTrang;
-  try {
-    const response = await fetch(`https://localhost:7139/api/Table/${table.id}`, {
-      method: "PUT",
-      headers: { 
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token.value}`
-      },
-      body: JSON.stringify({ id: table.id, tinhTrang: newStatus }),
-    });
-    if (!response.ok) throw new Error(await response.text() || "Cập nhật thất bại");
-    table.tinhTrang = (await response.json()).tinhTrang;
-    Swal.fire({ icon: 'success', title: 'Thành công!', text: 'Cập nhật trạng thái thành công', timer: 1500 });
-  } catch (error) {
-    table.tinhTrang = previousStatus;
-    Swal.fire({ icon: 'error', title: 'Lỗi!', text: error.message });
-  }
-};
+// const updateStatus = async (table, newStatus) => {
+//   const previousStatus = table.tinhTrang;
+//   try {
+//     const response = await fetch(`https://localhost:7139/api/Table/${table.id}`, {
+//       method: "PUT",
+//       headers: {
+//         "Content-Type": "application/json",
+//         "Authorization": `Bearer ${token.value}`
+//       },
+//       body: JSON.stringify({ id: table.id, tinhTrang: newStatus }),
+//     });
+//     if (!response.ok) throw new Error(await response.text() || "Cập nhật thất bại");
+//     table.tinhTrang = (await response.json()).tinhTrang;
+//     Swal.fire({ icon: 'success', title: 'Thành công!', text: 'Cập nhật trạng thái thành công', timer: 1500 });
+//   } catch (error) {
+//     table.tinhTrang = previousStatus;
+//     Swal.fire({ icon: 'error', title: 'Lỗi!', text: error.message });
+//   }
+// };
 
 const addTable = async () => {
   try {
     const response = await fetch(`https://localhost:7139/api/Table`, {
       method: "POST",
-      headers: { 
+      headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token.value}`
       },
@@ -414,7 +416,7 @@ const deleteTable = async (tableId) => {
   try {
     const response = await fetch(`https://localhost:7139/api/Table/${tableId}`, {
       method: "DELETE",
-      headers: { 
+      headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token.value}`
       },
@@ -577,7 +579,7 @@ const checkout = async () => {
     };
     const response = await fetch('https://localhost:7139/api/CounterBill', {
       method: 'POST',
-      headers: { 
+      headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token.value}`
       },
@@ -591,7 +593,7 @@ const checkout = async () => {
 
     await fetch(`https://localhost:7139/api/Table/${selectedTable.value.id}`, {
       method: 'PUT',
-      headers: { 
+      headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token.value}`
       },
