@@ -15,18 +15,21 @@
   </template>
   
   <script>
-  import { computed } from 'vue';
+  import { ref, computed, onMounted } from 'vue';
   import Cookies from 'js-cookie';
   import Swal from 'sweetalert2';
   import { GetApiUrl } from '@constants/api'
+  import { ReadToken, ValidateToken } from '../Authentication_Authorization/auth.js'
   let getApiUrl = GetApiUrl()
   export default {
     name: 'LoginButton',
     setup() {
-      const isLoggedIn = computed(() => {
-        return !!Cookies.get('accessToken');
+      // Kiểm tra token khi component được mount
+      const isLoggedIn = ref(false);
+      onMounted(async () => {
+        const validateToken = await ValidateToken(Cookies.get('accessToken'), Cookies.get('refreshToken'));
+        isLoggedIn.value = validateToken;
       });
-  
       const handleSelection = async (event) => {
         const value = event.target.value;
         if (!value) return; // Không làm gì nếu không chọn giá trị

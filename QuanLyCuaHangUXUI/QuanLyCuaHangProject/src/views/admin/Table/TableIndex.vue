@@ -228,7 +228,7 @@
     <div class="table-grid" v-else>
       <div v-for="table in tables" :key="table.id" :class="getTableClass(table.tinhTrang)" class="table-card">
         <div class="card-body">
-          <h5 class="card-title">Bàn {{ table.id }}</h5>
+          <h5 class="card-title">Bàn {{ table.id }} (id: {{ table.id }}) </h5>
           <p class="card-text">{{ table.tinhTrang }}</p>
           <div class="card-actions">
             <button class="btn btn-success btn-sm" @click="openOrderModal(table)">Đặt hàng</button>

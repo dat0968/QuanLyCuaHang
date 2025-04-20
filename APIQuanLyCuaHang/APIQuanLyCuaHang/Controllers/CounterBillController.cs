@@ -44,8 +44,8 @@ namespace APIQuanLyCuaHang.Controllers
                 // Tạo hóa đơn
                 var hoaDon = new Hoadon
                 {
-                    MaKh = 122,
-                    MaNv = maNv, // Sử dụng MaNv từ token
+                    MaKh = (int)hoaDonDTO.MaKh,
+                    MaNv = hoaDonDTO.MaNv,
                     TinhTrang = hoaDonDTO.TinhTrang,
                     NgayTao = hoaDonDTO.NgayTao,
                     HinhThucTt = hoaDonDTO.HinhThucTt,
