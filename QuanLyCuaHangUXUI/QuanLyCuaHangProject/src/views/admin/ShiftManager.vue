@@ -68,9 +68,21 @@
             </form>
           </div>
           <div class="row border-top mt-5">
-            <h5 class="my-3">Tạo Lịch Làm Việc</h5>
+            <h5 class="col-12 my-3">
+              <div class="d-flex justify-content-between">
+                Tạo Lịch Làm Việc
+                <span
+                  :class="
+                    isShowFormAddSchedule ? 'btn btn-danger rounded' : 'btn btn-success rounded'
+                  "
+                  @click="isShowFormAddSchedule = !isShowFormAddSchedule"
+                  title="Mở hoặc ẩn form tạo lịch làm việc"
+                  >{{ isShowFormAddSchedule ? '-' : '+' }}</span
+                >
+              </div>
+            </h5>
             <hr style="width: 95%" />
-            <form @submit.prevent="createSchedule">
+            <form @submit.prevent="createSchedule" v-show="isShowFormAddSchedule">
               <div class="mb-2">
                 <label>Chọn Ca Kíp:</label>
                 <select v-model="createScheduleObject.maCaKip" class="form-control" required>
@@ -204,6 +216,7 @@ export default {
       shift: { maCaKip: null, tenCa: '', soNguoiToiDa: 0, gioBatDau: '', gioKetThuc: '' },
       userIds: [],
       messageFormCreateNewShedule: '',
+      isShowFormAddSchedule: false,
       createScheduleObject: {
         maCaKip: null,
         maNvs: [],
@@ -380,9 +393,6 @@ export default {
                     ${validStatuses
                       .map((status) => `<option value="${status}">${status}</option>`)
                       .join('')}
-                    ${validStatuses
-                      .map((status) => `<option value="${status}">${status}</option>`)
-                      .join('')}
                   </select>
                 </div>
 
@@ -413,12 +423,7 @@ export default {
                         <input type="checkbox" class="select-all-checkbox" />
                         <label class="ml-2">Chọn tất cả</label>
                       </div>
-                  <div class="col-12 mb-3 d-flex align-items-start p-1">
-                      <div class="border rounded p-1 m-1 w-100">
-                        <input type="checkbox" class="select-all-checkbox" />
-                        <label class="ml-2">Chọn tất cả</label>
-                      </div>
-                  </div>
+                    </div>
                   ${currentShift.schedules
                     .map(
                       (employee) => `
@@ -453,7 +458,7 @@ export default {
                                         </div>
                                         <div class="col-4">
                                             <p><strong>Số giờ làm:</strong> ${
-                                              employee.soGioLam || 0
+                                              employee.soGioLam.toFixed(2) || 0
                                             }h</p>
                                         </div>
                                     </div>
