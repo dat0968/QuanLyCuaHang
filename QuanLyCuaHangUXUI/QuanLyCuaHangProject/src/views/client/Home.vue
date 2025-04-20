@@ -1,16 +1,31 @@
 <script setup>
 import DeliciousFoodMenu from '../../components/DeliciousFoodMenu.vue';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import Cookies from 'js-cookie';
-import { GetApiUrl } from '@constants/api'
+import { GetApiUrl } from '@constants/api';
+
 const router = useRouter();
 const isChatOpen = ref(false);
 const userInput = ref('');
 const messages = ref([]);
 const isTyping = ref(false);
 const previousAnswer = ref('');
-let getApiUrl = GetApiUrl()
+const getApiUrl = GetApiUrl();
+
+// Khôi phục tin nhắn từ localStorage khi tải trang
+onMounted(() => {
+  const savedMessages = localStorage.getItem('chatMessages');
+  if (savedMessages) {
+    messages.value = JSON.parse(savedMessages);
+  } else {
+    // Nếu không có tin nhắn nào trong localStorage, hiển thị tin nhắn chào mặc định
+    messages.value = [
+      { type: 'bot', text: 'Chào bạn! Tôi có thể giúp gì cho bạn hôm nay? Ví dụ: "Danh sách sản phẩm", "Tư vấn món ăn", "Thêm [tên món] vào giỏ", "Thanh toán".' }
+    ];
+  }
+});
+
 // Mở/đóng hộp chat
 const toggleChatBox = () => {
   isChatOpen.value = !isChatOpen.value;
@@ -18,12 +33,21 @@ const toggleChatBox = () => {
 
 // Hàm điều hướng đến trang chi tiết sản phẩm
 const navigateToProduct = (maSp) => {
-  router.push(`/detail/product/${maSp}`);
+  router.push(`/product/${maSp}`);
 };
 
 // Hàm điều hướng đến trang chi tiết combo
 const navigateToCombo = (maCombo) => {
-  router.push(`/detail/combo/${maCombo}`);
+  router.push(`/combo/${maCombo}`);
+};
+
+// Xóa lịch sử tin nhắn
+const clearChatHistory = () => {
+  messages.value = [
+    { type: 'bot', text: 'Lịch sử tin nhắn đã được xóa. Tôi có thể giúp gì cho bạn? Ví dụ: "Danh sách sản phẩm", "Tư vấn món ăn", "Thêm [tên món] vào giỏ", "Thanh toán".' }
+  ];
+  localStorage.setItem('chatMessages', JSON.stringify(messages.value));
+  scrollToBottom();
 };
 
 // Gửi tin nhắn
@@ -41,9 +65,9 @@ const sendMessage = async (confirmation = null) => {
   try {
     const token = Cookies.get('accessToken');
     const payload = {
-      userInput: userInput.value || "", // Gửi chuỗi rỗng nếu không có userInput
+      userInput: userInput.value || "",
       previousAnswer: previousAnswer.value || null,
-      confirmation: confirmation === true ? true : confirmation === false ? false : null, // Đảm bảo giá trị là true, false, hoặc null
+      confirmation: confirmation === true ? true : confirmation === false ? false : null,
     };
 
     const headers = {
@@ -55,7 +79,7 @@ const sendMessage = async (confirmation = null) => {
       headers['Authorization'] = `Bearer ${token}`;
     }
 
-    const response = await fetch(getApiUrl+'/api/Home/TraLoi', {
+    const response = await fetch(getApiUrl + '/api/Home/TraLoi', {
       method: 'POST',
       headers,
       body: JSON.stringify(payload),
@@ -67,6 +91,8 @@ const sendMessage = async (confirmation = null) => {
         Cookies.remove('accessToken');
         Cookies.remove('refreshToken');
         router.push({ path: '/login', query: { redirect: router.currentRoute.value.fullPath } });
+        // Lưu tin nhắn trước khi chuyển hướng
+        localStorage.setItem('chatMessages', JSON.stringify(messages.value));
         return;
       }
       const errorData = await response.json();
@@ -80,20 +106,22 @@ const sendMessage = async (confirmation = null) => {
     if (data.response.includes('[Yes/No]')) {
       botMessage.text = data.response.replace(' [Yes/No]', '');
       botMessage.hasButtons = true;
-    } else if (data.response.includes('[Continue/Checkout]')) {
-      botMessage.text = data.response.replace(' [Continue/Checkout]', '');
-      botMessage.hasButtons = true;
-      botMessage.buttonType = 'continue-checkout';
+      botMessage.buttonType = 'yes-no';
     } else if (data.response.includes('Đăng nhập')) {
       botMessage.text = `${data.response} <br><button class="login-btn" onclick="window.location.href='/login?redirect=${encodeURIComponent(router.currentRoute.value.fullPath)}'">Đăng nhập ngay</button>`;
     }
     messages.value.push(botMessage);
     previousAnswer.value = data.response;
 
+    // Lưu tin nhắn vào localStorage sau mỗi lần gửi/thêm tin nhắn
+    localStorage.setItem('chatMessages', JSON.stringify(messages.value));
+
     scrollToBottom();
   } catch (error) {
     isTyping.value = false;
     messages.value.push({ type: 'bot', text: `Lỗi: ${error.message}` });
+    // Lưu tin nhắn vào localStorage ngay cả khi có lỗi
+    localStorage.setItem('chatMessages', JSON.stringify(messages.value));
     scrollToBottom();
   }
 
@@ -171,7 +199,7 @@ window.navigateToCombo = navigateToCombo;
               <div class="single_blog_text">
                 <h3>GÀ GIÒN VUI VẺ</h3>
                 <p>Trải nghiệm hương vị gà thơm ngon, giòn rụm</p>
-                <a href="#" class="btn_3">
+                <a href="/combo/3" class="btn_3">
                   Đặt ngay <img src="@/assets/client/img/icon/left_1.svg" alt="" />
                 </a>
               </div>
@@ -185,7 +213,7 @@ window.navigateToCombo = navigateToCombo;
               <div class="single_blog_text">
                 <h3>GÀ GIÒN HƯƠNG VỊ CAY</h3>
                 <p>2 Gà Sốt Cay + 1 Khoai tây chiên vừa + 1 Nước ngọt</p>
-                <a href="#" class="btn_3">
+                <a href="/combo/2" class="btn_3">
                   Đặt ngay <img src="@/assets/client/img/icon/left_2.svg" alt="" />
                 </a>
               </div>
@@ -199,7 +227,7 @@ window.navigateToCombo = navigateToCombo;
               <div class="single_blog_text">
                 <h3>COMBO GÀ GIÒN</h3>
                 <p>Sự kết hợp giữa mì và gà giòn</p>
-                <a href="http://localhost:5173/detail/combo/1" class="btn_3">
+                <a href="/combo/1" class="btn_3">
                   Đặt ngay <img src="@/assets/client/img/icon/left_2.svg" alt="" />
                 </a>
               </div>
@@ -263,7 +291,7 @@ window.navigateToCombo = navigateToCombo;
             class="tawk-icon tawk-icon-close tawk-icon-small"
           ></i>
           <img
-            src=""
+            src="/src/assets/client/img/Red and Yellow Illustrative Fried Chicken Logo.png"
             alt="Thu hút chú ý đến tính năng trò chuyện"
             style="max-width: 50px; height: 50px; border-radius: 50%;"
           />
@@ -279,23 +307,28 @@ window.navigateToCombo = navigateToCombo;
           class="chat-header"
           style="padding: 10px; background-color: #007bff; color: white; font-weight: bold; border-top-left-radius: 10px; border-top-right-radius: 10px; display: flex; justify-content: space-between; align-items: center;"
         >
-          Hộp Thoại Hỗ Trợ
-          <i
-            role="button"
-            tabindex="0"
-            @click="toggleChatBox"
-            class="tawk-icon tawk-icon-close tawk-icon-small"
-            style="cursor: pointer;"
-          >X</i>
+          <span>Hộp Thoại Hỗ Trợ</span>
+          <div>
+            <button
+              @click="clearChatHistory"
+              style="margin-right: 10px; padding: 5px 10px; border-radius: 5px; background-color: #dc3545; color: white; border: none; cursor: pointer;"
+            >
+              Xóa lịch sử
+            </button>
+            <i
+              role="button"
+              tabindex="0"
+              @click="toggleChatBox"
+              class="tawk-icon tawk-icon-close tawk-icon-small"
+              style="cursor: pointer;"
+            >X</i>
+          </div>
         </div>
         <div
           ref="chatBody"
           class="chat-body"
           style="padding: 10px; max-height: 300px; overflow-y: auto; width: 700px;"
         >
-          <div class="chat-message bot-message" style="text-align: left; margin-bottom: 10px;">
-            Chào bạn! Tôi có thể giúp gì cho bạn hôm nay?
-          </div>
           <div
             v-for="(message, index) in messages"
             :key="index"
@@ -304,14 +337,8 @@ window.navigateToCombo = navigateToCombo;
           >
             <span v-html="message.text"></span>
             <div v-if="message.hasButtons" style="margin-top: 5px;">
-              <template v-if="message.buttonType === 'continue-checkout'">
-                <button class="continue-btn" @click="sendMessage(true)">Continue</button>
-                <button class="checkout-btn" @click="sendMessage(false)">Checkout</button>
-              </template>
-              <template v-else>
-                <button class="yes-btn" @click="sendMessage(true)">Yes</button>
-                <button class="no-btn" @click="sendMessage(false)">No</button>
-              </template>
+              <button class="yes-btn" @click="sendMessage(true)">Yes</button>
+              <button class="no-btn" @click="sendMessage(false)">No</button>
             </div>
           </div>
           <div
@@ -382,8 +409,7 @@ window.navigateToCombo = navigateToCombo;
   color: white;
 }
 
-.yes-btn,
-.continue-btn {
+.yes-btn {
   margin-right: 5px;
   padding: 5px 10px;
   border-radius: 5px;
@@ -393,8 +419,7 @@ window.navigateToCombo = navigateToCombo;
   cursor: pointer;
 }
 
-.no-btn,
-.checkout-btn {
+.no-btn {
   padding: 5px 10px;
   border-radius: 5px;
   background-color: #dc3545;

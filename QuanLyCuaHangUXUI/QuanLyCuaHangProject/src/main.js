@@ -12,6 +12,9 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as bootstrap from 'bootstrap';
+import 'jquery'
+import 'popper.js'
+import 'bootstrap'
 window.bootstrap = bootstrap;
 const app = createApp(App)
 
