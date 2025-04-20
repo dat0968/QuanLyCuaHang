@@ -12,11 +12,7 @@ import DeliciousFoodMenu from '../../components/DeliciousFoodMenu.vue'
             <div class="col-lg-12">
               <div class="breadcrumb_iner text-center">
                 <div class="breadcrumb_iner_item">
-<<<<<<< HEAD
-                  <h2>  Thực đơn món ăn</h2>
-=======
                   <h2>Thực đơn đồ ăn</h2>
->>>>>>> origin/TTT-feat-Qr_Shift-OrderClient-Manager
                 </div>
               </div>
             </div>

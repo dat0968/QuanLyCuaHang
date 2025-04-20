@@ -181,8 +181,7 @@
               "RelativeToolTip": "APIQuanLyCuaHang\\Controllers\\TableController.cs",
               "ViewState": "AgIAAEIAAAAAAAAAAAAowFAAAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-20T02:58:53.729Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-20T02:58:53.729Z"
             },
             {
               "$type": "Document",
@@ -422,8 +421,7 @@
               "RelativeToolTip": "APIQuanLyCuaHang\\Repositories\\CounterBill\\AtCounterBillRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAEkAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-13T13:13:10.576Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-13T13:13:10.576Z"
             },
             {
               "$type": "Document",
@@ -433,7 +431,7 @@
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Controllers\\CounterBillController.cs",
               "ToolTip": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Controllers\\CounterBillController.cs*",
               "RelativeToolTip": "APIQuanLyCuaHang\\Controllers\\CounterBillController.cs*",
-              "ViewState": "AgIAABMAAAAAAAAAAAAQwC8AAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAYwDcAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-13T13:12:49.871Z",
               "EditorCaption": ""
@@ -460,8 +458,7 @@
               "RelativeToolTip": "APIQuanLyCuaHang\\Repositories\\Bill\\IBillRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-13T12:18:06.017Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-13T12:18:06.017Z"
             },
             {
               "$type": "Document",
@@ -485,8 +482,7 @@
               "RelativeToolTip": "APIQuanLyCuaHang\\Repositories\\Bill\\BillRepository.cs",
               "ViewState": "AgIAAPgAAAAAAAAAAAD4v/8AAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-13T11:26:40.34Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-13T11:26:40.34Z"
             },
             {
               "$type": "Document",
@@ -556,8 +552,7 @@
               "RelativeToolTip": "APIQuanLyCuaHang\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-04-12T15:56:10.229Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-12T15:56:10.229Z"
             }
           ]
         },

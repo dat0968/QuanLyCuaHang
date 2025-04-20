@@ -95,7 +95,6 @@ namespace APIQuanLyCuaHang.Controllers
         }
 
         [HttpGet("{id}/menu")]
-        //[Authorize(Roles = "Staff")] 
         public async Task<IActionResult> GetMenuForTable(int id)
         {
             var table = await _tableRepository.GetTableById(id);
@@ -117,23 +116,29 @@ namespace APIQuanLyCuaHang.Controllers
                     SoLuong = c.SoLuong,
                     MoTa = c.MoTa,
                     IsDelete = c.IsDelete,
-                    Chitietcombos = c.Chitietcombos.Select(ct => new DetaisComboResponseDTO
-                    {
-                        MaSp = ct.MaSp,
-                        TenSp = ct.MaSpNavigation.TenSanPham,
-                        SoLuongSp = ct.SoLuongSp,
-                        Chitietsanphams = ct.MaSpNavigation.Chitietsanphams.Select(ctsp => new DetailProductResponseDTO
+                    Chitietcombos = c.Chitietcombos
+                        .Where(ct => ct.MaSpNavigation != null && ct.MaSpNavigation.Chitietsanphams.Any())
+                        .Select(ct => new DetaisComboResponseDTO
                         {
-                            MaCtsp = ctsp.MaCtsp,
-                            MaSp = ctsp.MaSp,
-                            KichThuoc = ctsp.KichThuoc,
-                            HuongVi = ctsp.HuongVi,
-                            SoLuongTon = ctsp.SoLuongTon,
-                            DonGia = ctsp.DonGia,
-                            AnhDaiDien = ctsp.Hinhanhs.OrderBy(img => img.MaHinhAnh).Select(img => img.TenHinhAnh).FirstOrDefault(),
-                        }).ToList()
-                    }).ToList()
+                            MaSp = ct.MaSp,
+                            TenSp = ct.MaSpNavigation.TenSanPham,
+                            SoLuongSp = ct.SoLuongSp,
+                            Chitietsanphams = ct.MaSpNavigation.Chitietsanphams
+                                .Select(ctsp => new DetailProductResponseDTO
+                                {
+                                    MaCtsp = ctsp.MaCtsp,
+                                    MaSp = ctsp.MaSp,
+                                    KichThuoc = ctsp.KichThuoc,
+                                    HuongVi = ctsp.HuongVi,
+                                    SoLuongTon = ctsp.SoLuongTon,
+                                    DonGia = ctsp.DonGia,
+                                    AnhDaiDien = ctsp.Hinhanhs.OrderBy(img => img.MaHinhAnh).Select(img => img.TenHinhAnh).FirstOrDefault()
+                                })
+                                .ToList()
+                        })
+                        .ToList()
                 })
+                .Where(c => c.Chitietcombos.Any()) // Chỉ trả về combo có chitietcombos hợp lệ
                 .ToListAsync();
 
             return Ok(new

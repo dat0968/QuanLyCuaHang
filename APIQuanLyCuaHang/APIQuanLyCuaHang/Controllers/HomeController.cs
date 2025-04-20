@@ -1,5 +1,4 @@
-﻿
-using APIQuanLyCuaHang.DTO;
+﻿using APIQuanLyCuaHang.DTO;
 using APIQuanLyCuaHang.Models;
 using APIQuanLyCuaHang.Repositories.Product;
 using Microsoft.AspNetCore.Http;
@@ -13,6 +12,7 @@ using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+
 namespace APIQuanLyCuaHang.Controllers
 {
     [Route("api/[controller]")]
@@ -23,6 +23,10 @@ namespace APIQuanLyCuaHang.Controllers
         private readonly QuanLyCuaHangContext db;
         private readonly ILogger<HomeController> _logger;
         private readonly AuthSettings _authSettings;
+
+        // Dictionary để lưu ngữ cảnh của phiên chat (theo user)
+        private static readonly Dictionary<string, ChatContext> ChatContexts = new Dictionary<string, ChatContext>();
+
         public HomeController(IProduct productRepository, QuanLyCuaHangContext db, ILogger<HomeController> logger, IOptions<AuthSettings> authSettings)
         {
             this.productRepository = productRepository;
@@ -31,19 +35,14 @@ namespace APIQuanLyCuaHang.Controllers
             this._authSettings = authSettings.Value;
         }
 
-        // Lấy tất cả sản phẩm
+        // Các endpoint hiện có (giữ nguyên)
         [HttpGet("all-products")]
         public async Task<IActionResult> GetAllProducts([FromQuery] string? search, int? filterCategories, string? sort, string? filterPrices)
         {
             var products = await productRepository.GetAll(search, filterCategories, sort, filterPrices);
-
-            return Ok(new
-            {
-                Data = products,
-            });
+            return Ok(new { Data = products });
         }
 
-        // Lấy chi tiết sản phẩm theo ID
         [HttpGet("products/{id}")]
         public async Task<IActionResult> GetProductById(int id)
         {
@@ -55,7 +54,6 @@ namespace APIQuanLyCuaHang.Controllers
             return Ok(product);
         }
 
-        // Lấy tất cả combo
         [HttpGet("combos")]
         public async Task<IActionResult> GetAllCombos()
         {
@@ -92,7 +90,6 @@ namespace APIQuanLyCuaHang.Controllers
                     }).ToList()
                 })
                 .ToListAsync();
-
             return Ok(combos);
         }
 
@@ -102,79 +99,44 @@ namespace APIQuanLyCuaHang.Controllers
             try
             {
                 var comboQuery = await db.Combos
-                .Include(c => c.Chitietcombos)
-                .ThenInclude(ct => ct.MaSpNavigation)
-                .ThenInclude(sp => sp.Chitietsanphams)
-                .ThenInclude(ctsp => ctsp.Hinhanhs)
-                .Select(c => new ComboResponseDTO
-                {
-                    MaCombo = c.MaCombo,
-                    TenCombo = c.TenCombo,
-                    Hinh = c.Hinh,
-                    SoTienGiam = c.SoTienGiam,
-                    PhanTramGiam = c.PhanTramGiam,
-                    SoLuong = c.SoLuong,
-                    MoTa = c.MoTa,
-                    IsDelete = c.IsDelete,
-                    Chitietcombos = c.Chitietcombos.Select(ct => new DetaisComboResponseDTO
+                    .Include(c => c.Chitietcombos)
+                    .ThenInclude(ct => ct.MaSpNavigation)
+                    .ThenInclude(sp => sp.Chitietsanphams)
+                    .ThenInclude(ctsp => ctsp.Hinhanhs)
+                    .Select(c => new ComboResponseDTO
                     {
-                        MaSp = ct.MaSp,
-                        TenSp = ct.MaSpNavigation.TenSanPham,
-                        SoLuongSp = ct.SoLuongSp,
-                        Chitietsanphams = ct.MaSpNavigation.Chitietsanphams.Select(ctsp => new DetailProductResponseDTO
+                        MaCombo = c.MaCombo,
+                        TenCombo = c.TenCombo,
+                        Hinh = c.Hinh,
+                        SoTienGiam = c.SoTienGiam,
+                        PhanTramGiam = c.PhanTramGiam,
+                        SoLuong = c.SoLuong,
+                        MoTa = c.MoTa,
+                        IsDelete = c.IsDelete,
+                        Chitietcombos = c.Chitietcombos.Select(ct => new DetaisComboResponseDTO
                         {
-                            MaCtsp = ctsp.MaCtsp,
-                            TenSanPham = ct.MaSpNavigation.TenSanPham,
-                            MaSp = ctsp.MaSp,
-                            KichThuoc = ctsp.KichThuoc,
-                            HuongVi = ctsp.HuongVi,
-                            SoLuongTon = ctsp.SoLuongTon,
-                            DonGia = ctsp.DonGia,
-                            AnhDaiDien = ctsp.Hinhanhs.OrderBy(img => img.MaHinhAnh).Select(img => img.TenHinhAnh).FirstOrDefault(),
+                            MaSp = ct.MaSp,
+                            TenSp = ct.MaSpNavigation.TenSanPham,
+                            SoLuongSp = ct.SoLuongSp,
+                            Chitietsanphams = ct.MaSpNavigation.Chitietsanphams.Select(ctsp => new DetailProductResponseDTO
+                            {
+                                MaCtsp = ctsp.MaCtsp,
+                                TenSanPham = ct.MaSpNavigation.TenSanPham,
+                                MaSp = ctsp.MaSp,
+                                KichThuoc = ctsp.KichThuoc,
+                                HuongVi = ctsp.HuongVi,
+                                SoLuongTon = ctsp.SoLuongTon,
+                                DonGia = ctsp.DonGia,
+                                AnhDaiDien = ctsp.Hinhanhs.OrderBy(img => img.MaHinhAnh).Select(img => img.TenHinhAnh).FirstOrDefault(),
+                            }).ToList()
                         }).ToList()
-                    }).ToList()
-                })
-                .FirstOrDefaultAsync(p => p.MaCombo == id);
+                    })
+                    .FirstOrDefaultAsync(p => p.MaCombo == id);
 
                 if (comboQuery == null)
                 {
                     return NotFound(new { message = $"Không tìm thấy combo với ID {id}." });
                 }
-
-                //var combo = comboQuery.Combo;
-                //var chitietcombos = comboQuery.Chitietcombos;
-
-                //// Tính số lượng miếng gà (giả sử danh mục "Gà" có MaDanhMuc = 1)
-                //var chickenCategoryId = 1; // Thay đổi theo danh mục thực tế
-                //var soLuongMiengGa = chitietcombos
-                //    .Where(ct => ct.MaDanhMuc == chickenCategoryId)
-                //    .Sum(ct => ct.SoLuongSp ?? 0);
-
-                //var totalPrice = chitietcombos.Any()
-                //    ? chitietcombos.Sum(ct => (ct.DonGia ?? 0) * (ct.SoLuongSp ?? 0))
-                //    : 0;
-
-                //var comboResponse = new ComboResponseDTO
-                //{
-                //    MaCombo = combo.MaCombo,
-                //    TenCombo = combo.TenCombo,
-                //    Hinh = combo.Hinh,
-                //    SoTienGiam = combo.SoTienGiam,
-                //    PhanTramGiam = combo.PhanTramGiam,
-                //    SoLuong = combo.SoLuong,
-                //    MoTa = combo.MoTa,
-                //    IsDelete = combo.IsDelete,
-                //    SoLuongMiengGa = soLuongMiengGa, // Thêm trường này
-                //    TotalPrice = totalPrice,
-                //    DiscountedPrice = combo.SoTienGiam.HasValue ? totalPrice - combo.SoTienGiam : totalPrice,
-                //    Chitietcombos = chitietcombos.Select(ct => new DetaisComboResponseDTO
-                //    {
-                //        MaSp = ct.MaSp,
-                //        TenSp = ct.MaSpNavigation != null ? ct.MaSpNavigation.TenSanPham : "Không xác định",
-                //        SoLuongSp = ct.SoLuongSp
-                //    }).ToList()
-                //};
-
                 return Ok(comboQuery);
             }
             catch (Exception ex)
@@ -184,121 +146,61 @@ namespace APIQuanLyCuaHang.Controllers
             }
         }
 
-        //Lấy sản phẩm bán chạy
         [HttpGet("best-sellers")]
         public async Task<IActionResult> GetBestSellers()
         {
-            //var bestSellers = await db.Cthoadons
-            //    .GroupBy(ct => ct.MaCtsp)
-            //    .Select(g => new
-            //    {
-            //        MaCtsp = g.Key,
-            //        TotalSold = g.Sum(ct => ct.SoLuong)
-            //    })
-            //    .OrderByDescending(x => x.TotalSold)
-            //    .Take(5)
-            //    .Join(db.Chitietsanphams
-            //        .Include(ct => ct.MaSpNavigation)
-            //        .Include(ct => ct.Hinhanhs),
-            //        ct => ct.MaCtsp,
-            //        sp => sp.MaCtsp,
-            //        (ct, sp) => new DetailProductResponseDTO
-            //        {
-            //            MaCtsp = sp.MaCtsp,
-            //            MaSp = sp.MaSp,
-            //            TenSanPham = sp.MaSpNavigation.TenSanPham,
-            //            KichThuoc = sp.KichThuoc ?? "NO",
-            //            HuongVi = sp.HuongVi ?? "NO",
-            //            DonGia = sp.DonGia,
-            //            SoLuongTon = ct.TotalSold,
-            //            AnhDaiDien = sp.Hinhanhs.FirstOrDefault() != null ? sp.Hinhanhs.FirstOrDefault().TenHinhAnh : null,
-            //            Hinhanhs = sp.Hinhanhs.Select(img => new ImageProductResponseDTO
-            //            {
-            //                MaHinhAnh = img.MaHinhAnh,
-            //                TenHinhAnh = img.TenHinhAnh,
-            //                MaCtsp = img.MaCtsp,
-            //            }).ToList(),
-            //        })
-            //    .ToListAsync();
-            var bestSellers = await db.Cthoadons.GroupBy(cthd => cthd.MaCtsp)
-                                .Select(g => new
-                                {
-                                    MaCtsp = g.Key,
-                                    SoLuongBan = g.Sum(ct => ct.SoLuong)
-                                })
-                                .OrderByDescending(x => x.SoLuongBan)
-                                .Take(5)
-                                .ToListAsync();
+            var bestSellers = await db.Cthoadons
+                .GroupBy(cthd => cthd.MaCtsp)
+                .Select(g => new
+                {
+                    MaCtsp = g.Key,
+                    SoLuongBan = g.Sum(ct => ct.SoLuong)
+                })
+                .OrderByDescending(x => x.SoLuongBan)
+                .Take(5)
+                .ToListAsync();
+
             var bestSellerIds = bestSellers.Select(bs => bs.MaCtsp).ToList();
             var detailproductSellers = await db.Sanphams
-            .Include(p => p.Chitietsanphams)  // Load danh sách chi tiết sản phẩm
-            .ThenInclude(img => img.Hinhanhs)
-            .Where(p => p.Chitietsanphams.Any(ct => bestSellerIds.Contains(ct.MaCtsp)))
-            .Select(product => new ProductResponseDTO
-            {
-                MaSp = product.MaSp,
-                TenSanPham = product.TenSanPham,
-                KhoangGia = product.Chitietsanphams.Where(p => p.IsDelete == false).Any()
-                    ? (product.Chitietsanphams.Where(p => p.IsDelete == false).Min(p => p.DonGia) == product.Chitietsanphams.Where(p => p.IsDelete == false).Max(p => p.DonGia)
-                        ? $"{product.Chitietsanphams.Where(p => p.IsDelete == false).Min(p => p.DonGia)} VNĐ"
-                        : $"{product.Chitietsanphams.Where(p => p.IsDelete == false).Min(p => p.DonGia)} VNĐ - {product.Chitietsanphams.Where(p => p.IsDelete == false).Max(p => p.DonGia)} VNĐ")
-                    : "Chưa có giá",
-                MaDanhMuc = product.MaDanhMuc,
-                TenDanhMuc = product.MaDanhMucNavigation != null ? product.MaDanhMucNavigation.TenDanhMuc : "Không xác định",
-                MoTa = product.MoTa,
-                IsDelete = product.IsDelete,
-                Chitietsanphams = product.Chitietsanphams
-                    .Where(p => p.IsDelete == false)
-                    .Select(details => new DetailProductResponseDTO
-                    {
-                        MaCtsp = details.MaCtsp,
-                        MaSp = details.MaSp,
-                        TenSanPham = details.MaSpNavigation.TenSanPham,
-                        KichThuoc = details.KichThuoc ?? "NO",
-                        HuongVi = details.HuongVi ?? "NO",
-                        SoLuongTon = details.SoLuongTon,
-                        DonGia = details.DonGia,
-                        AnhDaiDien = details.Hinhanhs
-                            .OrderBy(img => img.MaHinhAnh)
-                            .Select(img => img.TenHinhAnh)
-                            .FirstOrDefault() ?? "no_image.png"
-                    })
-                    .ToList()
-            })
-            .ToListAsync();
+                .Include(p => p.Chitietsanphams)
+                .ThenInclude(img => img.Hinhanhs)
+                .Where(p => p.Chitietsanphams.Any(ct => bestSellerIds.Contains(ct.MaCtsp)))
+                .Select(product => new ProductResponseDTO
+                {
+                    MaSp = product.MaSp,
+                    TenSanPham = product.TenSanPham,
+                    KhoangGia = product.Chitietsanphams.Where(p => p.IsDelete == false).Any()
+                        ? (product.Chitietsanphams.Where(p => p.IsDelete == false).Min(p => p.DonGia) == product.Chitietsanphams.Where(p => p.IsDelete == false).Max(p => p.DonGia)
+                            ? $"{product.Chitietsanphams.Where(p => p.IsDelete == false).Min(p => p.DonGia)} VNĐ"
+                            : $"{product.Chitietsanphams.Where(p => p.IsDelete == false).Min(p => p.DonGia)} VNĐ - {product.Chitietsanphams.Where(p => p.IsDelete == false).Max(p => p.DonGia)} VNĐ")
+                        : "Chưa có giá",
+                    MaDanhMuc = product.MaDanhMuc,
+                    TenDanhMuc = product.MaDanhMucNavigation != null ? product.MaDanhMucNavigation.TenDanhMuc : "Không xác định",
+                    MoTa = product.MoTa,
+                    IsDelete = product.IsDelete,
+                    Chitietsanphams = product.Chitietsanphams
+                        .Where(p => p.IsDelete == false)
+                        .Select(details => new DetailProductResponseDTO
+                        {
+                            MaCtsp = details.MaCtsp,
+                            MaSp = details.MaSp,
+                            TenSanPham = details.MaSpNavigation.TenSanPham,
+                            KichThuoc = details.KichThuoc ?? "NO",
+                            HuongVi = details.HuongVi ?? "NO",
+                            SoLuongTon = details.SoLuongTon,
+                            DonGia = details.DonGia,
+                            AnhDaiDien = details.Hinhanhs
+                                .OrderBy(img => img.MaHinhAnh)
+                                .Select(img => img.TenHinhAnh)
+                                .FirstOrDefault() ?? "no_image.png"
+                        })
+                        .ToList()
+                })
+                .ToListAsync();
 
             return Ok(detailproductSellers);
         }
 
-        // Lấy chi tiết sản phẩm bán chạy theo ID
-        //[HttpGet("best-sellers/{id}")]
-        //public async Task<IActionResult> GetBestSellerById(int id)
-        //{
-        //    var bestSeller = await db.Chitietsanphams
-        //        .Where(ct => ct.MaCtsp == id && ct.IsDelete == false)
-        //        .Include(ct => ct.MaSpNavigation)
-        //        .Include(ct => ct.Hinhanhs)
-        //        .Select(sp => new ProductBestSellerDTO
-        //        {
-        //            MaCtsp = sp.MaCtsp,
-        //            MaSp = sp.MaSp,
-        //            TenSanPham = sp.MaSpNavigation.TenSanPham,
-        //            KichThuoc = sp.KichThuoc ?? "NO",
-        //            HuongVi = sp.HuongVi ?? "NO",
-        //            DonGia = sp.DonGia,
-        //            Hinh = sp.Hinhanhs.FirstOrDefault() != null ? sp.Hinhanhs.FirstOrDefault().TenHinhAnh : null
-        //        })
-        //        .FirstOrDefaultAsync();
-
-        //    if (bestSeller == null)
-        //    {
-        //        return NotFound(new { message = $"Không tìm thấy sản phẩm bán chạy với ID {id}." });
-        //    }
-
-        //    return Ok(bestSeller);
-        //}
-
-        // Lấy danh sách danh mục
         [HttpGet("categories")]
         public async Task<IActionResult> GetCategories()
         {
@@ -308,7 +210,6 @@ namespace APIQuanLyCuaHang.Controllers
                 {
                     MaDanhMuc = d.MaDanhMuc,
                     TenDanhMuc = d.TenDanhMuc,
-
                     HinhDaiDien = db.Sanphams
                         .Where(s => s.MaDanhMuc == d.MaDanhMuc && s.IsDelete == false)
                         .Include(s => s.Chitietsanphams)
@@ -382,15 +283,24 @@ namespace APIQuanLyCuaHang.Controllers
             categories.InsertRange(0, specialCategories);
             return Ok(categories);
         }
+
         [HttpPost("TraLoi")]
         public async Task<IActionResult> TraLoi([FromBody] ChatRequestDTO request)
         {
             try
             {
-                _logger.LogInformation("Bắt đầu TraLoi với input: {UserInput}, Confirmation: {Confirmation}", request.UserInput, request.Confirmation);
+                _logger.LogInformation("Bắt đầu TraLoi với input: {UserInput}, Confirmation: {Confirmation}, PreviousAnswer: {PreviousAnswer}", request.UserInput, request.Confirmation, request.PreviousAnswer);
 
                 var maKhachHang = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 bool isLoggedIn = !string.IsNullOrEmpty(maKhachHang);
+                string sessionId = maKhachHang ?? Guid.NewGuid().ToString(); // Tạo sessionId nếu không đăng nhập
+
+                // Lấy hoặc tạo ngữ cảnh cho phiên chat
+                if (!ChatContexts.ContainsKey(sessionId))
+                {
+                    ChatContexts[sessionId] = new ChatContext();
+                }
+                var context = ChatContexts[sessionId];
 
                 // Product list as HTML table
                 string productList = "<table style='width:100%; border-collapse: collapse;'><tr><th>Mã</th><th>Tên</th><th>Giá</th><th>Còn</th><th>Chi Tiết</th></tr>";
@@ -440,15 +350,15 @@ namespace APIQuanLyCuaHang.Controllers
                 }
                 comboList += "</table>";
 
-                string instructions = "Hỏi 'Thêm [mã sản phẩm] vào giỏ' hoặc 'Thêm combo [mã combo] [tùy chọn: cay/thường]' để thêm, 'Thanh toán' để thanh toán.";
+                string instructions = "Hỏi 'Thêm [tên sản phẩm] vào giỏ' hoặc 'Thêm combo [tên combo] [tùy chọn: cay/thường]' để thêm, 'Thanh toán' để thanh toán.";
                 string answer = "";
 
-                // Xử lý xác nhận từ lần trước (ưu tiên)
-                if (!string.IsNullOrEmpty(request.PreviousAnswer) && request.Confirmation.HasValue)
+                // Xử lý xác nhận Yes/No (ưu tiên)
+                if (request.Confirmation.HasValue && !string.IsNullOrEmpty(request.PreviousAnswer))
                 {
-                    if (request.PreviousAnswer.Contains("Bạn có muốn đưa sản phẩm này vào giỏ hàng không?"))
+                    if (context.Action == "AddProductToCart")
                     {
-                        if (request.Confirmation.Value)
+                        if (request.Confirmation.Value) // Yes
                         {
                             if (!isLoggedIn)
                             {
@@ -456,130 +366,335 @@ namespace APIQuanLyCuaHang.Controllers
                             }
                             else
                             {
-                                var maSanPham = ExtractMaSanPhamFromRecommendation(request.PreviousAnswer);
-                                if (maSanPham != null && products.Any(p => p.MaSp == int.Parse(maSanPham)))
+                                using (var client = new HttpClient())
                                 {
-                                    using (var client = new HttpClient())
+                                    answer = await AddToCart(client, context.ProductId, maKhachHang);
+                                    if (answer == "Đã thêm vào giỏ!")
                                     {
-                                        answer = await AddToCart(client, maSanPham, maKhachHang);
-                                        if (answer == "Đã thêm vào giỏ!")
-                                        {
-                                            answer += "<br>Bạn muốn mua tiếp hay thanh toán? [Continue/Checkout]";
-                                        }
+                                        answer += "<br>Bạn muốn thêm món khác không? [Yes/No]";
+                                        context.Action = "AskAddMore";
+                                    }
+                                }
+                            }
+                        }
+                        else // No
+                        {
+                            answer = "Đã hủy thêm sản phẩm vào giỏ.<br>Bạn muốn xem danh sách sản phẩm không? [Yes/No]";
+                            context.Action = "AskProductList";
+                        }
+                        context.ProductId = null;
+                    }
+                    else if (context.Action == "AddComboToCart")
+                    {
+                        if (request.Confirmation.Value) // Yes
+                        {
+                            if (!isLoggedIn)
+                            {
+                                answer = "Vui lòng đăng nhập để thêm combo vào giỏ hàng!";
+                            }
+                            else
+                            {
+                                using (var client = new HttpClient())
+                                {
+                                    answer = await AddComboToCart(client, context.ComboId, context.ComboOptions, maKhachHang);
+                                    if (answer == "Đã thêm combo vào giỏ!")
+                                    {
+                                        answer += "<br>Bạn muốn thêm món khác không? [Yes/No]";
+                                        context.Action = "AskAddMore";
+                                    }
+                                }
+                            }
+                        }
+                        else // No
+                        {
+                            answer = "Đã hủy thêm combo vào giỏ.<br>Bạn muốn xem danh sách combo không? [Yes/No]";
+                            context.Action = "AskComboList";
+                        }
+                        context.ComboId = null;
+                        context.ComboOptions = null;
+                    }
+                    else if (context.Action == "Checkout")
+                    {
+                        if (request.Confirmation.Value) // Yes
+                        {
+                            if (!isLoggedIn)
+                            {
+                                answer = "Vui lòng đăng nhập để thanh toán!";
+                            }
+                            else
+                            {
+                                using (var client = new HttpClient())
+                                {
+                                    answer = await ProcessCheckout(client, maKhachHang);
+                                    context.Clear(); // Xóa ngữ cảnh sau khi thanh toán
+                                }
+                            }
+                        }
+                        else // No
+                        {
+                            answer = "Đã hủy thanh toán.<br>Bạn muốn tiếp tục mua sắm không? [Yes/No]";
+                            context.Action = "AskContinueShopping";
+                        }
+                    }
+                    else if (context.Action == "AskAddMore")
+                    {
+                        if (request.Confirmation.Value) // Yes
+                        {
+                            answer = productList + "<br>" + comboList + "<br>" + instructions;
+                            context.Clear();
+                        }
+                        else // No
+                        {
+                            answer = "Bạn muốn thanh toán ngay không? [Yes/No]";
+                            context.Action = "Checkout";
+                        }
+                    }
+                    else if (context.Action == "AskProductList")
+                    {
+                        if (request.Confirmation.Value) // Yes
+                        {
+                            answer = $"Dưới đây là danh sách sản phẩm:<br>{productList}<br>{instructions}";
+                            context.Clear();
+                        }
+                        else // No
+                        {
+                            answer = "Bạn muốn tôi tư vấn món ăn không? [Yes/No]";
+                            context.Action = "AskRecommendProduct";
+                        }
+                    }
+                    else if (context.Action == "AskComboList")
+                    {
+                        if (request.Confirmation.Value) // Yes
+                        {
+                            answer = $"Dưới đây là danh sách combo:<br>{comboList}<br>{instructions}";
+                            context.Clear();
+                        }
+                        else // No
+                        {
+                            answer = "Bạn muốn tôi tư vấn món ăn không? [Yes/No]";
+                            context.Action = "AskRecommendProduct";
+                        }
+                    }
+                    else if (context.Action == "AskContinueShopping")
+                    {
+                        if (request.Confirmation.Value) // Yes
+                        {
+                            answer = productList + "<br>" + comboList + "<br>" + instructions;
+                            context.Clear();
+                        }
+                        else // No
+                        {
+                            answer = "Cảm ơn bạn đã mua sắm! Hẹn gặp lại.";
+                            context.Clear();
+                        }
+                    }
+                    else if (context.Action == "AskRecommendProduct")
+                    {
+                        if (request.Confirmation.Value) // Yes
+                        {
+                            var bestSellers = await GetBestSellers();
+                            var recommendedProduct = ((List<ProductResponseDTO>)((ObjectResult)bestSellers).Value).FirstOrDefault();
+                            if (recommendedProduct != null)
+                            {
+                                var ctsp = recommendedProduct.Chitietsanphams.FirstOrDefault();
+                                answer = $"Tôi khuyên bạn nên thử sản phẩm:<br>" +
+                                         $"<strong>Mã:</strong> {recommendedProduct.MaSp}<br>" +
+                                         $"<strong>Tên:</strong> {recommendedProduct.TenSanPham}<br>" +
+                                         $"<strong>Giá:</strong> {ctsp?.DonGia ?? 0} VNĐ<br>" +
+                                         $"<button class='btn btn-primary' onclick='navigateToProduct({recommendedProduct.MaSp})'>Xem Chi Tiết</button><br>" +
+                                         $"Bạn có muốn đưa sản phẩm này vào giỏ hàng không? [Yes/No]";
+                                context.Action = "AddProductToCart";
+                                context.ProductId = recommendedProduct.MaSp.ToString();
+                            }
+                            else
+                            {
+                                answer = "Hiện tại không có sản phẩm nào để gợi ý.";
+                                context.Clear();
+                            }
+                        }
+                        else // No
+                        {
+                            answer = "Bạn cần tôi giúp gì khác không?";
+                            context.Clear();
+                        }
+                    }
+                }
+                // Xử lý yêu cầu mới
+                else
+                {
+                    if (string.IsNullOrEmpty(request.UserInput))
+                    {
+                        return BadRequest(new { response = "Vui lòng nhập câu hỏi!" });
+                    }
+
+                    var userInputLower = request.UserInput.ToLower();
+
+                    // Xử lý yêu cầu "Danh sách sản phẩm"
+                    if (userInputLower.Contains("danh sách sản phẩm"))
+                    {
+                        if (context.LastAction == "ShowProductList")
+                        {
+                            answer = "Bạn đã xem danh sách sản phẩm rồi. Bạn muốn lọc theo danh mục hoặc giá không? [Yes/No]";
+                            context.Action = "AskFilterProducts";
+                        }
+                        else
+                        {
+                            answer = $"Dưới đây là danh sách sản phẩm:<br>{productList}<br>{instructions}";
+                            context.LastAction = "ShowProductList";
+                        }
+                    }
+                    // Xử lý yêu cầu "Danh sách combo"
+                    else if (userInputLower.Contains("danh sách combo"))
+                    {
+                        if (context.LastAction == "ShowComboList")
+                        {
+                            answer = "Bạn đã xem danh sách combo rồi. Bạn muốn tôi gợi ý combo không? [Yes/No]";
+                            context.Action = "AskRecommendCombo";
+                        }
+                        else
+                        {
+                            answer = $"Dưới đây là danh sách combo:<br>{comboList}<br>{instructions}";
+                            context.LastAction = "ShowComboList";
+                        }
+                    }
+                    // Xử lý yêu cầu "Tư vấn sản phẩm" hoặc "Có món nào ngon không?"
+                    else if (userInputLower.Contains("tư vấn") || userInputLower.Contains("món nào ngon"))
+                    {
+                        var bestSellers = await GetBestSellers();
+                        var recommendedProduct = ((List<ProductResponseDTO>)((ObjectResult)bestSellers).Value).FirstOrDefault();
+                        if (recommendedProduct != null)
+                        {
+                            var ctsp = recommendedProduct.Chitietsanphams.FirstOrDefault();
+                            answer = $"Tôi khuyên bạn nên thử sản phẩm:<br>" +
+                                     $"<strong>Mã:</strong> {recommendedProduct.MaSp}<br>" +
+                                     $"<strong>Tên:</strong> {recommendedProduct.TenSanPham}<br>" +
+                                     $"<strong>Giá:</strong> {ctsp?.DonGia ?? 0} VNĐ<br>" +
+                                     $"<button class='btn btn-primary' onclick='navigateToProduct({recommendedProduct.MaSp})'>Xem Chi Tiết</button><br>" +
+                                     $"Bạn có muốn đưa sản phẩm này vào giỏ hàng không? [Yes/No]";
+                            context.Action = "AddProductToCart";
+                            context.ProductId = recommendedProduct.MaSp.ToString();
+                        }
+                        else
+                        {
+                            answer = "Hiện tại không có sản phẩm nào để gợi ý.";
+                        }
+                    }
+                    // Xử lý yêu cầu "Thêm sản phẩm vào giỏ"
+                    else if (userInputLower.Contains("thêm") && userInputLower.Contains("vào giỏ"))
+                    {
+                        // Thử tìm theo mã sản phẩm
+                        var maSanPham = ExtractMaSanPham(userInputLower);
+                        if (maSanPham != null && products.Any(p => p.MaSp == int.Parse(maSanPham)))
+                        {
+                            answer = $"Bạn muốn thêm sản phẩm mã {maSanPham} vào giỏ không? [Yes/No]";
+                            context.Action = "AddProductToCart";
+                            context.ProductId = maSanPham;
+                        }
+                        // Thử tìm theo tên sản phẩm
+                        else
+                        {
+                            var productName = ExtractProductName(userInputLower);
+                            if (!string.IsNullOrEmpty(productName))
+                            {
+                                var product = products.FirstOrDefault(p => p.TenSanPham.ToLower() == productName);
+                                if (product != null)
+                                {
+                                    answer = $"Bạn muốn thêm sản phẩm {product.TenSanPham} (Mã: {product.MaSp}) vào giỏ không? [Yes/No]";
+                                    context.Action = "AddProductToCart";
+                                    context.ProductId = product.MaSp.ToString();
+                                }
+                                else
+                                {
+                                    answer = $"Không tìm thấy sản phẩm {productName}. Bạn có muốn xem danh sách sản phẩm không? [Yes/No]";
+                                    context.Action = "AskProductList";
+                                }
+                            }
+                            // Thử tìm combo
+                            else
+                            {
+                                var comboName = ExtractComboName(userInputLower);
+                                if (!string.IsNullOrEmpty(comboName))
+                                {
+                                    var combo = combos.FirstOrDefault(c => c.TenCombo.ToLower() == comboName);
+                                    if (combo != null)
+                                    {
+                                        var optionsMatch = Regex.Match(userInputLower, @"\[(.*?)\]");
+                                        string options = optionsMatch.Success ? optionsMatch.Groups[1].Value : "thường";
+                                        answer = $"Bạn muốn thêm combo {combo.TenCombo} (Mã: {combo.MaCombo}) với tùy chọn {options} vào giỏ không? [Yes/No]";
+                                        context.Action = "AddComboToCart";
+                                        context.ComboId = combo.MaCombo.ToString();
+                                        context.ComboOptions = options;
+                                    }
+                                    else
+                                    {
+                                        answer = $"Không tìm thấy combo {comboName}. Bạn có muốn xem danh sách combo không? [Yes/No]";
+                                        context.Action = "AskComboList";
                                     }
                                 }
                                 else
                                 {
-                                    answer = "Sản phẩm không hợp lệ!";
+                                    answer = "Không hiểu yêu cầu thêm vào giỏ. Vui lòng nhập lại, ví dụ: 'Thêm Gà Giòn Vui Vẻ vào giỏ' hoặc 'Thêm combo Gà Giòn Hương Vị Cay [cay]'.";
                                 }
                             }
+                        }
+                    }
+                    // Xử lý yêu cầu "Thanh toán"
+                    else if (userInputLower.Contains("thanh toán"))
+                    {
+                        if (!isLoggedIn)
+                        {
+                            answer = "Vui lòng đăng nhập để thanh toán!";
                         }
                         else
                         {
-                            answer = "Đã hủy thêm sản phẩm vào giỏ.";
-                        }
-                    }
-                    else if (request.PreviousAnswer.Contains("Bạn muốn mua tiếp hay thanh toán?"))
-                    {
-                        if (request.Confirmation.Value) // Continue
-                        {
-                            answer = productList + "<br>" + instructions;
-                        }
-                        else // Checkout
-                        {
-                            using (var client = new HttpClient())
+                            var cartItems = await db.Giohangs
+                                .Where(g => g.MaKh == int.Parse(maKhachHang))
+                                .ToListAsync();
+                            if (!cartItems.Any())
                             {
-                                answer = await ProcessCheckout(client, maKhachHang);
-                            }
-                        }
-                    }
-                    // ... (các logic xác nhận khác)
-                }
-                // Xử lý yêu cầu "Danh sách sản phẩm"
-                else if (!string.IsNullOrEmpty(request.UserInput) && request.UserInput.ToLower().Contains("danh sách sản phẩm"))
-                {
-                    answer = $"Dưới đây là danh sách sản phẩm:<br>{productList}<br>{instructions}";
-                }
-                // Xử lý yêu cầu "Tư vấn sản phẩm"
-                else if (!string.IsNullOrEmpty(request.UserInput) && request.UserInput.ToLower().Contains("tư vấn cho tôi sản phẩm"))
-                {
-                    var recommendedProduct = products.FirstOrDefault(p => p.MaSp == 1001); // Tư vấn sản phẩm 1001
-                    if (recommendedProduct != null)
-                    {
-                        var ctsp = recommendedProduct.Chitietsanphams.FirstOrDefault(ct => ct.SoLuongTon > 0 && ct.IsDelete == false);
-                        answer = $"Tôi khuyên bạn nên thử sản phẩm:<br>" +
-                                 $"<strong>Mã:</strong> {recommendedProduct.MaSp}<br>" +
-                                 $"<strong>Tên:</strong> {recommendedProduct.TenSanPham}<br>" +
-                                 $"<strong>Giá:</strong> {ctsp?.DonGia ?? 0} VNĐ<br>" +
-                                 $"<button class='btn btn-primary' onclick='navigateToProduct({recommendedProduct.MaSp})'>Xem Chi Tiết</button><br>" +
-                                 $"Bạn có muốn đưa sản phẩm này vào giỏ hàng không? [Yes/No]";
-                    }
-                    else
-                    {
-                        answer = "Sản phẩm với mã 1001 không tồn tại hoặc đã hết hàng.";
-                    }
-                }
-                else if (string.IsNullOrEmpty(request.UserInput) && !request.Confirmation.HasValue)
-                {
-                    return BadRequest(new { response = "Vui lòng nhập câu hỏi hoặc xác nhận!" });
-                }
-                else
-                {
-                    // Gửi yêu cầu tới Gemini API cho các câu hỏi khác
-                    var requestBody = new
-                    {
-                        contents = new[]
-                        {
-                    new
-                    {
-                        parts = new[]
-                        {
-                            new
-                            {
-                                text = $"{productList}<br>{comboList}<br>{instructions}<br>" +
-                                       "Yêu cầu: Trả lời ngắn gọn, dùng <br> để xuống dòng. Nếu cần xác nhận, thêm [Yes/No] vào cuối câu trả lời.<br>" +
-                                       "Hỗ trợ: Trả lời câu hỏi về cửa hàng, thêm sản phẩm/combo vào giỏ nếu yêu cầu, thanh toán khi yêu cầu.<br>" +
-                                       "Câu hỏi: " + request.UserInput
-                            }
-                        }
-                    }
-                }
-                    };
-
-                    var jsonRequestBody = JsonConvert.SerializeObject(requestBody);
-                    var content = new StringContent(jsonRequestBody, Encoding.UTF8, "application/json");
-
-                    using (var client = new HttpClient())
-                    {
-                        var response = await client.PostAsync($"{_authSettings.Google.GoogleAPIUrl}?key={_authSettings.Google.GoogleAPIKey}", content);
-                        response.EnsureSuccessStatusCode();
-                        var responseString = await response.Content.ReadAsStringAsync();
-                        var responseObject = JsonConvert.DeserializeObject<dynamic>(responseString);
-                        answer = responseObject?.candidates[0].content?.parts[0]?.text ?? "Xin lỗi, không nhận được phản hồi từ API!";
-
-                        // Kiểm tra các yêu cầu khác (Thêm vào giỏ, Thanh toán)
-                        if (answer.Contains("Thêm") && answer.Contains("vào giỏ") && !request.Confirmation.HasValue)
-                        {
-                            if (answer.Contains("combo"))
-                            {
-                                var (maCombo, _) = ExtractComboDetails(answer);
-                                if (combos.Any(c => c.MaCombo == int.Parse(maCombo)))
-                                {
-                                    answer += " [Yes/No]";
-                                }
+                                answer = "Giỏ hàng của bạn đang trống! Bạn muốn mua sắm không? [Yes/No]";
+                                context.Action = "AskContinueShopping";
                             }
                             else
                             {
-                                var maSanPham = ExtractMaSanPham(answer);
-                                if (products.Any(p => p.MaSp == int.Parse(maSanPham)))
-                                {
-                                    answer += " [Yes/No]";
-                                }
+                                answer = "Bạn có chắc muốn thanh toán giỏ hàng không? [Yes/No]";
+                                context.Action = "Checkout";
                             }
                         }
-                        else if (answer.Contains("Thanh toán") && !request.Confirmation.HasValue)
+                    }
+                    // Gửi yêu cầu tới Gemini API cho các câu hỏi khác
+                    else
+                    {
+                        var requestBody = new
                         {
-                            answer += " [Yes/No]";
+                            contents = new[]
+                            {
+                                new
+                                {
+                                    parts = new[]
+                                    {
+                                        new
+                                        {
+                                            text = $"{productList}<br>{comboList}<br>{instructions}<br>" +
+                                                   "Yêu cầu: Trả lời ngắn gọn, dùng <br> để xuống dòng. Nếu cần xác nhận, thêm [Yes/No] vào cuối câu trả lời.<br>" +
+                                                   "Hỗ trợ: Trả lời câu hỏi về cửa hàng, thêm sản phẩm/combo vào giỏ nếu yêu cầu, thanh toán khi yêu cầu.<br>" +
+                                                   "Câu hỏi: " + request.UserInput
+                                        }
+                                    }
+                                }
+                            }
+                        };
+
+                        var jsonRequestBody = JsonConvert.SerializeObject(requestBody);
+                        var content = new StringContent(jsonRequestBody, Encoding.UTF8, "application/json");
+
+                        using (var client = new HttpClient())
+                        {
+                            var response = await client.PostAsync($"{_authSettings.Google.GoogleAPIUrl}?key={_authSettings.Google.GoogleAPIKey}", content);
+                            response.EnsureSuccessStatusCode();
+                            var responseString = await response.Content.ReadAsStringAsync();
+                            var responseObject = JsonConvert.DeserializeObject<dynamic>(responseString);
+                            answer = responseObject?.candidates[0].content?.parts[0]?.text ?? "Xin lỗi, không nhận được phản hồi từ API!";
                         }
                     }
                 }
@@ -599,7 +714,6 @@ namespace APIQuanLyCuaHang.Controllers
             return match.Success ? match.Groups[1].Value : null;
         }
 
-        // Hàm trích xuất tên sản phẩm
         private string ExtractProductName(string text)
         {
             var match = Regex.Match(text, @"Thêm\s+(.+?)(?:\s+vào\s+giỏ|giỏ\s+hàng)", RegexOptions.IgnoreCase);
@@ -610,28 +724,30 @@ namespace APIQuanLyCuaHang.Controllers
             return null;
         }
 
-        // Hàm trích xuất tên combo
         private string ExtractComboName(string text)
         {
             var match = Regex.Match(text, @"Thêm\s+combo\s+(.+?)(?:\s+vào\s+giỏ|giỏ\s+hàng)", RegexOptions.IgnoreCase);
             if (match.Success)
             {
                 var name = match.Groups[1].Value.Trim().ToLower();
-                // Loại bỏ phần "(mã X)" nếu có
                 var cleanedName = Regex.Replace(name, @"\s*\(mã\s+\d+\)\s*", "").Trim();
                 return cleanedName;
             }
             return null;
         }
 
-        // Hàm trích xuất mã combo từ tên nếu có
-        private string ExtractMaFromComboName(string text)
+        private string ExtractMaSanPham(string text)
         {
-            var match = Regex.Match(text, @"\(mã\s+(\d+)\)", RegexOptions.IgnoreCase);
+            var match = Regex.Match(text, @"Thêm\s+(\d+)\s+vào giỏ");
             return match.Success ? match.Groups[1].Value : null;
         }
 
-        // Phương thức tính giá combo dựa trên Chitietcombo
+        private (string maCombo, string options) ExtractComboDetails(string text)
+        {
+            var match = Regex.Match(text, @"Thêm combo\s+(\d+)\s+\[(.*?)\]\s+vào giỏ", RegexOptions.IgnoreCase);
+            return match.Success ? (match.Groups[1].Value, match.Groups[2].Value) : (null, null);
+        }
+
         private decimal CalculateComboPrice(Combo combo)
         {
             var totalPrice = combo.Chitietcombos
@@ -642,8 +758,8 @@ namespace APIQuanLyCuaHang.Controllers
                 ? totalPrice * (decimal)(1 - combo.PhanTramGiam.Value / 100)
                 : totalPrice - (combo.SoTienGiam ?? 0);
         }
+
         [Authorize(Roles = "Customer")]
-        // Thêm combo vào giỏ hàng
         private async Task<string> AddComboToCart(HttpClient client, string maCombo, string options, string maKhachHang)
         {
             var combo = await db.Combos
@@ -701,8 +817,8 @@ namespace APIQuanLyCuaHang.Controllers
                 return $"Lỗi khi thêm combo vào giỏ: {ex.Message}";
             }
         }
+
         [Authorize(Roles = "Customer")]
-        // Thêm sản phẩm vào giỏ hàng (giữ nguyên)
         private async Task<string> AddToCart(HttpClient client, string maSanPham, string maKhachHang)
         {
             var product = await db.Sanphams
@@ -724,14 +840,12 @@ namespace APIQuanLyCuaHang.Controllers
                     DonGia = ctsp.DonGia
                 };
 
-                // Lấy token từ HttpContext của yêu cầu hiện tại
                 var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
                 if (string.IsNullOrEmpty(token))
                 {
                     return "Không tìm thấy token xác thực!";
                 }
 
-                // Thêm token vào HttpClient
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
                 var addToCartResponse = await client.PostAsync("https://localhost:7139/api/Cart", new StringContent(
@@ -762,7 +876,6 @@ namespace APIQuanLyCuaHang.Controllers
         {
             try
             {
-                // Lấy thông tin khách hàng
                 var khachHang = await db.Khachhangs
                     .FirstOrDefaultAsync(kh => kh.MaKh == int.Parse(maKhachHang));
 
@@ -771,13 +884,11 @@ namespace APIQuanLyCuaHang.Controllers
                     return "Không tìm thấy thông tin khách hàng!";
                 }
 
-                // Kiểm tra thông tin bắt buộc
                 if (string.IsNullOrEmpty(khachHang.HoTen) || string.IsNullOrEmpty(khachHang.Sdt))
                 {
                     return "Vui lòng cập nhật họ tên và số điện thoại trước khi thanh toán!";
                 }
 
-                // Lấy giỏ hàng của khách hàng
                 var cartItems = await db.Giohangs
                     .Include(g => g.MaCtspNavigation)
                     .Include(g => g.MaComboNavigation)
@@ -792,7 +903,6 @@ namespace APIQuanLyCuaHang.Controllers
                     return "Giỏ hàng của bạn đang trống!";
                 }
 
-                // Tính toán TienGoc và tạo danh sách Cthoadons
                 decimal tienGoc = 0;
                 var cthoadons = new List<OrderDetailRequestDTO>();
                 var detailComboRequests = new List<DetailCombo_OrderResquest>();
@@ -801,7 +911,6 @@ namespace APIQuanLyCuaHang.Controllers
                 {
                     if (item.MaCtsp.HasValue)
                     {
-                        // Sản phẩm đơn lẻ
                         var ctsp = item.MaCtspNavigation;
                         if (ctsp == null || ctsp.IsDelete || ctsp.SoLuongTon < item.SoLuong)
                         {
@@ -824,7 +933,6 @@ namespace APIQuanLyCuaHang.Controllers
                     }
                     else if (item.MaCombo.HasValue)
                     {
-                        // Combo
                         var combo = item.MaComboNavigation;
                         if (combo == null || combo.SoLuong < item.SoLuong)
                         {
@@ -842,7 +950,6 @@ namespace APIQuanLyCuaHang.Controllers
                             GiamGia = 0
                         });
 
-                        // Thêm chi tiết combo
                         foreach (var detail in combo.Chitietcombos)
                         {
                             var variant = detail.MaSpNavigation.Chitietsanphams
@@ -858,8 +965,8 @@ namespace APIQuanLyCuaHang.Controllers
 
                             detailComboRequests.Add(new DetailCombo_OrderResquest
                             {
-                                MaCombo = combo.MaCombo, // Đã đảm bảo combo không null
-                                MaCTSp = variant.MaCtsp, // Đã đảm bảo variant không null
+                                MaCombo = combo.MaCombo,
+                                MaCTSp = variant.MaCtsp,
                                 SoLuong = detail.SoLuongSp.Value,
                                 DonGia = variant.DonGia.Value
                             });
@@ -867,17 +974,14 @@ namespace APIQuanLyCuaHang.Controllers
                     }
                 }
 
-                // Lấy token
                 var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
                 if (string.IsNullOrEmpty(token))
                 {
                     return "Không tìm thấy token xác thực!";
                 }
 
-                // Thêm token vào HttpClient
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
-                // Tạo payload cho OrderRequestDTO
                 var payload = new
                 {
                     MaKh = int.Parse(maKhachHang),
@@ -920,19 +1024,24 @@ namespace APIQuanLyCuaHang.Controllers
             }
         }
 
-        // Trích xuất mã sản phẩm và combo (giữ nguyên)
-        private string ExtractMaSanPham(string text)
+        // Lớp để lưu ngữ cảnh phiên chat
+        private class ChatContext
         {
-            var match = Regex.Match(text, @"Thêm\s+(\d+)\s+vào giỏ");
-            return match.Success ? match.Groups[1].Value : null;
+            public string Action { get; set; }
+            public string LastAction { get; set; }
+            public string ProductId { get; set; }
+            public string ComboId { get; set; }
+            public string ComboOptions { get; set; }
+
+            public void Clear()
+            {
+                Action = null;
+                ProductId = null;
+                ComboId = null;
+                ComboOptions = null;
+            }
         }
 
-        private (string maCombo, string options) ExtractComboDetails(string text)
-        {
-            var match = Regex.Match(text, @"Thêm combo\s+(\d+)\s+\[(.*?)\]\s+vào giỏ", RegexOptions.IgnoreCase);
-            return match.Success ? (match.Groups[1].Value, match.Groups[2].Value) : (null, null);
-        }
-        // Định nghĩa ChatRequestDTO
         public class ChatRequestDTO
         {
             public string UserInput { get; set; }
@@ -940,7 +1049,6 @@ namespace APIQuanLyCuaHang.Controllers
             public bool? Confirmation { get; set; }
         }
 
-        // Định nghĩa AuthSettings
         public class AuthSettings
         {
             public GoogleSettings Google { get; set; }
@@ -951,6 +1059,5 @@ namespace APIQuanLyCuaHang.Controllers
             public string GoogleAPIUrl { get; set; }
             public string GoogleAPIKey { get; set; }
         }
-
     }
 }
