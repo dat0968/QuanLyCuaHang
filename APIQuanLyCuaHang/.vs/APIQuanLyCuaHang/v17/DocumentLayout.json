@@ -177,8 +177,7 @@
               "RelativeToolTip": "APIQuanLyCuaHang\\package.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-04-19T01:29:08.963Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-19T01:29:08.963Z"
             },
             {
               "$type": "Document",
@@ -478,8 +477,7 @@
               "RelativeToolTip": "APIQuanLyCuaHang\\Controllers\\HomeController.cs",
               "ViewState": "AgIAABwAAAAAAAAAAAAQwCwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-13T05:35:09.271Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-13T05:35:09.271Z"
             },
             {
               "$type": "Document",
@@ -533,9 +531,9 @@
               "Title": "appsettings.json",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\appsettings.json",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\appsettings.json",
-              "ToolTip": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\appsettings.json",
-              "RelativeToolTip": "APIQuanLyCuaHang\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAADbAAAAAAAAAA==",
+              "ToolTip": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\appsettings.json*",
+              "RelativeToolTip": "APIQuanLyCuaHang\\appsettings.json*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2025-04-12T15:56:10.229Z",
               "EditorCaption": ""

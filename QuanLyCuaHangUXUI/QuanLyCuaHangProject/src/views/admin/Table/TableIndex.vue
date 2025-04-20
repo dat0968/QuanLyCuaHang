@@ -14,6 +14,9 @@
         </select>
       </div>
     </div>
+    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addTableModal">Thêm bàn mới</button>
+    <br>
+    <br>
 
     <!-- Modal thêm bàn -->
     <div class="modal fade" id="addTableModal" tabindex="-1" aria-labelledby="addTableModalLabel" aria-hidden="true">
@@ -228,7 +231,6 @@
           <h5 class="card-title">Bàn {{ table.id }}</h5>
           <p class="card-text">{{ table.tinhTrang }}</p>
           <div class="card-actions">
-            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addTableModal">Thêm</button>
             <button class="btn btn-success btn-sm" @click="openOrderModal(table)">Đặt hàng</button>
             <button class="btn btn-danger btn-sm" @click="deleteTable(table.id)">Xóa</button>
           </div>
@@ -246,7 +248,7 @@ import QRCode from 'qrcode';
 import { GetApiUrl } from '@constants/api'
 import {jwtDecode} from 'jwt-decode';
 import Cookies from 'js-cookie'
-const immutableStatuses = ["Đang sử dụng", "Đang sửa chữa"];
+// const immutableStatuses = ["Đang sử dụng", "Đang sửa chữa"];
 const tables = ref([]);
 const searchQuery = ref('');
 const statusFilter = ref('');
@@ -290,7 +292,7 @@ const getTokenAndDecode = () => {
 // Lọc và sắp xếp sản phẩm
 const filteredProducts = computed(() => {
   let filtered = [...products.value];
-  
+
   if (menuSearch.value) {
     filtered = filtered.filter(p => p.tenSanPham.toLowerCase().includes(menuSearch.value.toLowerCase()));
   }
@@ -320,7 +322,7 @@ const filteredProducts = computed(() => {
 // Lọc combo
 const filteredCombos = computed(() => {
   let filtered = [...combos.value];
-  
+
   if (menuSearch.value) {
     filtered = filtered.filter(c => c.tenCombo.toLowerCase().includes(menuSearch.value.toLowerCase()));
   }
@@ -367,6 +369,7 @@ const fetchCategories = async () => {
   }
 };
 
+
 const updateStatus = async (table, newStatus) => {
   const previousStatus = table.tinhTrang;
   try {
@@ -387,11 +390,12 @@ const updateStatus = async (table, newStatus) => {
   }
 };
 
+
 const addTable = async () => {
   try {
     const response = await fetch(getApiUrl+`/api/Table`, {
       method: "POST",
-      headers: { 
+      headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token.value}`
       },
@@ -422,7 +426,7 @@ const deleteTable = async (tableId) => {
   try {
     const response = await fetch(getApiUrl+`/api/Table/${tableId}`, {
       method: "DELETE",
-      headers: { 
+      headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token.value}`
       },
