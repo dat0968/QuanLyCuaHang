@@ -311,7 +311,7 @@ export default {
                       row.maCaKip
                     }" title="Kích hoạt" style="cursor: pointer;">
                       <i class="bi ${isActive ? 'icon-close' : 'icon-check'}"></i> ${
-                        isActive ? 'Hủy' : 'Mở'
+                        isActive ? 'Hủy' : 'Sửa'
                       }
                     </span>
                     <span class="btn btn-outline-primary generate-qr" data-id="${data}" title="Tải QR" style="cursor: pointer;">
@@ -380,9 +380,6 @@ export default {
                     ${validStatuses
                       .map((status) => `<option value="${status}">${status}</option>`)
                       .join('')}
-                    ${validStatuses
-                      .map((status) => `<option value="${status}">${status}</option>`)
-                      .join('')}
                   </select>
                 </div>
 
@@ -408,11 +405,6 @@ export default {
               </div>
 
               <div class="row border-left border-right justify-content-center" style="max-height: 400px; overflow-y: auto">
-                  <div class="col-12 mb-3 d-flex align-items-start p-1">
-                      <div class="border rounded p-1 m-1 w-100">
-                        <input type="checkbox" class="select-all-checkbox" />
-                        <label class="ml-2">Chọn tất cả</label>
-                      </div>
                   <div class="col-12 mb-3 d-flex align-items-start p-1">
                       <div class="border rounded p-1 m-1 w-100">
                         <input type="checkbox" class="select-all-checkbox" />

@@ -41,12 +41,12 @@
                 <ShiftManager v-else />
               </div>
             </div>
-            <!-- <div class="modal-footer" v-if="!isNotification">
+            <div class="modal-footer" v-if="!isNotification">
               <button @click="toggleMode" class="btn btn-secondary">
                 {{ isScanning ? 'Chuyển sang tạo QR' : 'Chuyển sang quét QR' }}
               </button>
               <button @click="isModalOpen = false" class="btn btn-danger">Đóng</button>
-            </div> -->
+            </div>
           </div>
         </div>
       </div>

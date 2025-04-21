@@ -140,7 +140,7 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
 
                 await _db.SaveChangesAsync();
 
-                response.SetSuccessResponse("Fine");
+                response.SetSuccessResponse("Đã đăng kí ca làm việc thành công.");
                 response.SetData(scheduleData);
             }
             catch (Exception ex)
