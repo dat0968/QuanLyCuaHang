@@ -4,7 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import 'animate.css'
 import Swal from 'sweetalert2'
 import Cookies from 'js-cookie'
-import { ReadToken, ValidateToken } from '../../Authentication_Authorization/auth.js' 
+import { ReadToken, ValidateToken } from '../../Authentication_Authorization/auth.js'
 import { GetApiUrl } from '@constants/api'
 const route = useRoute()
 const router = useRouter()
@@ -75,7 +75,7 @@ const handleQuantityChange = (event) => {
 // Lấy chi tiết sản phẩm
 async function fetchProductDetail() {
   try {
-    const response = await fetch(getApiUrl+`/api/Home/products/${route.params.id}`, {
+    const response = await fetch(getApiUrl + `/api/Home/products/${route.params.id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -98,6 +98,7 @@ async function fetchProductDetail() {
 // Xử lý khi chọn variant
 const selectVariant = (variant) => {
   selectedVariant.value = variant
+  quantity.value = 1
 }
 
 // Xử lý tăng/giảm số lượng
@@ -120,6 +121,7 @@ const addToCart = async () => {
   if (!validateQuantity(quantity.value)) {
     return
   }
+
   if (!selectedVariant.value) return
 
   let IdUser = ''
@@ -127,18 +129,18 @@ const addToCart = async () => {
   if (validateToken == true) {
     accesstoken = Cookies.get('accessToken')
     const readtoken = ReadToken(accesstoken)
-    if(readtoken){
+    if (readtoken) {
       IdUser = readtoken.IdUser
     }
   } else {
     Swal.fire({
-        icon: 'error',
-        title: 'Phiên của bạn đã hết hoặc bạn chưa đăng nhập, vui lòng đăng nhập lại!',
-        timer: 2000,
-        showConfirmButton: false,
-      })
-      router.push('/Login')
-      return;
+      icon: 'error',
+      title: 'Phiên của bạn đã hết hoặc bạn chưa đăng nhập, vui lòng đăng nhập lại!',
+      timer: 2000,
+      showConfirmButton: false,
+    })
+    router.push('/Login')
+    return
   }
   const cartItem = {
     maKh: IdUser,
@@ -148,15 +150,15 @@ const addToCart = async () => {
     soLuong: quantity.value,
   }
   try {
-    const response = await fetch(getApiUrl+`/api/Cart`, {
+    const response = await fetch(getApiUrl + `/api/Cart`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`,
+        Authorization: `Bearer ${accesstoken}`,
       },
       body: JSON.stringify(cartItem),
     })
-    if(response.status === 401){
+    if (response.status === 401) {
       Swal.fire({
         icon: 'error',
         title: 'Phiên của bạn đã hết hoặc bạn chưa đăng nhập, vui lòng đăng nhập lại!',
@@ -164,7 +166,7 @@ const addToCart = async () => {
         showConfirmButton: false,
       })
       router.push('/Login')
-      return;
+      return
     }
     const result = await response.json()
     if (result.success) {
@@ -201,7 +203,7 @@ onMounted(() => {
               <img
                 :src="
                   selectedVariant?.hinhanhs?.[0]?.tenHinhAnh
-                    ? getApiUrl+`/HinhAnh/Food_Drink/${selectedVariant.hinhanhs[0].tenHinhAnh}`
+                    ? getApiUrl + `/HinhAnh/Food_Drink/${selectedVariant.hinhanhs[0].tenHinhAnh}`
                     : '../assets/client/img/food_menu/chicken_default.png'
                 "
                 :alt="product.tenSanPham"
@@ -219,7 +221,7 @@ onMounted(() => {
                 <img
                   :src="
                     variant.hinhanhs?.[0]?.tenHinhAnh
-                      ? getApiUrl+`/HinhAnh/Food_Drink/${variant.hinhanhs[0].tenHinhAnh}`
+                      ? getApiUrl + `/HinhAnh/Food_Drink/${variant.hinhanhs[0].tenHinhAnh}`
                       : '../assets/client/img/food_menu/chicken_default.png'
                   "
                   :alt="variant.tenSanPham"

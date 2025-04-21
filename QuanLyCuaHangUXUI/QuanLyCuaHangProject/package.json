@@ -31,6 +31,7 @@
     "jwt-decode": "^4.0.0",
     "pdfmake": "^0.2.18",
     "pinia": "^3.0.1",
+    "popper.js": "^1.16.1",
     "qrcode": "^1.5.4",
     "qrcode.vue": "^3.6.0",
     "sweetalert2": "^11.6.13",

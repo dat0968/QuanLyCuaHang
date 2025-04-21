@@ -125,6 +125,7 @@ namespace APIQuanLyCuaHang.Repositories
                 .Include(gh => gh.MaCtspNavigation)
                     .ThenInclude(ctsp => ctsp.Hinhanhs)
                 .Include(gh => gh.MaComboNavigation)
+                .ThenInclude(combo => combo.Chitietcombos)
                 .Include(gh => gh.GioHangCTCombos)
                     .ThenInclude(ghct => ghct.MaCTSpNavigation)
                         .ThenInclude(ctsp => ctsp.MaSpNavigation)
@@ -153,7 +154,8 @@ namespace APIQuanLyCuaHang.Repositories
                             {
                                 Id = ghct.Id,
                                 MaCTSp = ghct.MaCTSp,
-                                SoLuong = ghct.SoLuong,
+                                SoLuongGocSpTrongCombo = gh.MaComboNavigation?.Chitietcombos?.FirstOrDefault(p => p.MaCombo == gh.MaCombo && p.MaSp == ghct.MaCTSpNavigation.MaSp)?.SoLuongSp.Value ?? 0,
+                                SoLuongTrongGio = ghct.SoLuong,
                                 DonGia = ghct.DonGia,
                                 MaGioHang = ghct.MaGioHang,
                                 MaSp = ghct.MaCTSpNavigation.MaSp,

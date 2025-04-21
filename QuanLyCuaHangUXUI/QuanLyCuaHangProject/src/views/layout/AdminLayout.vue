@@ -67,7 +67,7 @@ import '../../assets/admin/js/main.js'
               <li class="xp-vertical-header">Chức năng quản lý</li>
               <li>
                 <RouterLink to="/Admin">
-                  <i class="icon-speedometer"></i><span>Bảng điều khiển</span>
+                  <i class="icon-speedometer"></i><span>THỐNG KÊ</span>
                 </RouterLink>
               </li>
               <li>

@@ -529,6 +529,11 @@ const fetchCoupon = async () => {
         return
       }
     }
+    if(couponCode.value == ''){
+      discount.value = 0
+      couponCode.value = ''
+      return;
+    }
     const response = await fetch(
       getApiUrl+`/api/Checkout/GetDiscountCoupon?maUser=${IdUser}&&couponcode=${couponCode.value}&&originalPrice=${SumCart.value}`,
       {

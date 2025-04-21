@@ -54,7 +54,7 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                         HoaDonKhachDTO configDataDTO = new HoaDonKhachDTO
                         {
                             MaHd = aOrder.MaHd,
-                            MaKh = aOrder.MaKh,
+                            MaKh = aOrder.MaKh.Value,
                             MaNv = aOrder.MaNv,
                             NgayTao = aOrder.NgayTao,
                             BatDauGiao = aOrder.BatDauGiao,

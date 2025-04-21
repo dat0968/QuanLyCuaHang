@@ -263,15 +263,15 @@ onMounted(() => {
           <div class="category-item animate__animated animate__fadeIn">
             <button :class="{ active: selectedCategory === -3 }" @click="selectCategory(-3)">
               <div class="category-image">
-                <img src="" alt="combo" /> 
+                <img src="/src/assets/client/img/Food_Drink/CapDoiAnY-2Mi-1Dui-1Uc-2Nuoc-1Khoai.png" alt="combo" /> 
               </div>
-              <span>Món ngon phải thử</span>
+              <span>Combo đang hot</span>
             </button>
           </div>
           <div class="category-item animate__animated animate__fadeIn">
             <button :class="{ active: selectedCategory === -1 }" @click="selectCategory(-1)">
               <div class="category-image">
-                <img src="" alt="all-food" />
+                <img src="/src/assets/client/img/Food_Drink/Dui.png" alt="all-food" />
               </div>
               <span>Tất cả đồ ăn</span>
             </button>
@@ -280,7 +280,7 @@ onMounted(() => {
             <button :class="{ active: selectedCategory === -2 }" @click="selectCategory(-2)">
               <div class="category-image">
                 <img
-                  src=""
+                  src="/src/assets/client/img/Food_Drink/GaMiNuocKhoai.jpg"
                   alt="best-seller"
                 />
               </div>
@@ -297,7 +297,7 @@ onMounted(() => {
               @click="selectCategory(category.maDanhMuc)"
             >
               <div class="category-image">
-                <img src="" alt="category" />
+                <img src="/src/assets/client/img/Food_Drink/th_c_u_ng_-_11_12_1-removebg-preview - Copy.png" alt="category" />
               </div>
               <span>{{ category.tenDanhMuc }}</span>
             </button>

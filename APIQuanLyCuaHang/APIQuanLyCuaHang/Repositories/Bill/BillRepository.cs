@@ -37,7 +37,7 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                 .Select(hd => new HoaDonDTO
                 {
                     MaHd = hd.MaHd,
-                    MaKh = hd.MaKh,
+                    MaKh = hd.MaKh.Value,
                     MaNv = hd.MaNv,
                     DiaChiNhanHang = hd.DiaChiNhanHang,
                     NgayTao = hd.NgayTao,
@@ -85,7 +85,7 @@ namespace APIQuanLyCuaHang.Repositories.Bill
             return new HoaDonDTO
             {
                 MaHd = hd.MaHd,
-                MaKh = hd.MaKh,
+                MaKh = hd.MaKh.Value,
                 MaNv = hd.MaNv,
                 DiaChiNhanHang = hd.DiaChiNhanHang,
                 NgayTao = hd.NgayTao,
@@ -151,7 +151,7 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                 .Select(hd => new HoaDonDTO
                 {
                     MaHd = hd.MaHd,
-                    MaKh = hd.MaKh,
+                    MaKh = hd.MaKh.Value,
                     MaNv = hd.MaNv,
                     HoTenNguoiNhan = hd.HoTen,
                     HoTenNguoiDat = hd.MaKhNavigation.HoTen,
@@ -257,7 +257,7 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                 var HoaDonDTOWithDetails = new HoaDonDTOWithDetails
                 {
                     MaHd = bill.MaHd,
-                    MaKh = bill.MaKh,
+                    MaKh = bill.MaKh.Value,
                     MaNv = bill.MaNv,
                     HoTenNv = bill.MaNvNavigation != null ? bill.MaNvNavigation.HoTen : null,
                     DiaChiNhanHang = bill.DiaChiNhanHang,

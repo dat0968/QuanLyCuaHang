@@ -441,7 +441,7 @@ namespace APIQuanLyCuaHang.Migrations
                     b.Property<string>("MaCoupon")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("MaKh")
+                    b.Property<int?>("MaKh")
                         .HasColumnType("int")
                         .HasColumnName("MaKH");
 
@@ -992,7 +992,6 @@ namespace APIQuanLyCuaHang.Migrations
                     b.HasOne("APIQuanLyCuaHang.Models.Khachhang", "MaKhNavigation")
                         .WithMany("Hoadons")
                         .HasForeignKey("MaKh")
-                        .IsRequired()
                         .HasConstraintName("FK__HOADON__MaKH__59063A47");
 
                     b.HasOne("APIQuanLyCuaHang.Models.Nhanvien", "MaNvNavigation")

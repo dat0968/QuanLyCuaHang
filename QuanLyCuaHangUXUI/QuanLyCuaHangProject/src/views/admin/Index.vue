@@ -34,7 +34,7 @@ export default {
     <div class="xp-breadcrumbbar">
       <div class="row">
         <div class="col-md-6 col-lg-6">
-          <h4 class="xp-page-title">Bảng điều khiển</h4>
+          <h4 class="xp-page-title">THỐNG KÊ</h4>
         </div>
       </div>
     </div>
@@ -110,9 +110,11 @@ export default {
           <StatisticsObject />
           <!-- End XP Col -->
 
+
           <!-- Start XP Col -->
           <ListRecentOrders />
           <!-- End XP Col -->
+
         </div>
       </div>
       <!-- End XP Row -->

@@ -95,9 +95,6 @@
                   +
                 </button>
               </div>
-              <div v-if="quantityError[combo.maCtsp]" class="error-message">
-                {{ quantityError[combo.maCtsp] }}
-              </div>
               <div class="combo-details" v-if="combo.cartDetailCombos.length > 0">
                 <div class="combo-items">
                   <div
@@ -105,7 +102,7 @@
                     :key="detail.id"
                     class="combo-item-detail"
                   >
-                    <span>{{ detail.soLuong }}x {{ detail.tenSanPham }}</span>
+                    <span>{{ detail.soLuongGocSpTrongCombo }}x {{ detail.tenSanPham }}</span>
                     <span v-if="detail.kichThuoc">({{ detail.kichThuoc }})</span>
                     <span v-if="detail.huongVi">({{ detail.huongVi }})</span>
                   </div>
@@ -238,7 +235,7 @@ const RemoveCart = async (maGioHang) => {
         }
         const result = await response.json()
         if (result.success) {
-          FetchCart()
+          window.location.reload()
           Swal.fire(result.message, '', 'success')
         } else {
           Swal.fire(result.message, '', 'error')
@@ -288,7 +285,6 @@ const UpdateCart = async (data, quantity) => {
       FetchCart()
     } else {
       Swal.fire(result.message, '', 'error')
-      // Cập nhật giá trị cũ sau khi thay đổi thành công
       data.soLuong = oldQuantities.value[data.maCtsp]
     }
   } catch (error) {
