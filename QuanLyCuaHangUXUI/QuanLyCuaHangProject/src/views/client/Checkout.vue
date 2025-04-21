@@ -68,7 +68,7 @@
                                 :key="detail.id"
                                 class="combo-item-detail"
                               >
-                                <span>{{ detail.soLuong }}x {{ detail.tenSanPham }}</span>
+                                <span>{{ detail.soLuongGocSpTrongCombo }}x {{ detail.tenSanPham }}</span>
                                 <span v-if="detail.kichThuoc">({{ detail.kichThuoc }})</span>
                                 <span v-if="detail.huongVi">({{ detail.huongVi }})</span>
                               </div>
@@ -590,7 +590,7 @@ const proceedToCheckout = async () => {
         detailComboOrderRequests.push({
           maCombo: p.maCombo,
           maCTSp: detailcombo.maCTSp,
-          soLuong: detailcombo.soLuong,
+          soLuong: detailcombo.soLuongTrongGio,
           donGia: detailcombo.donGia,
         })
       })
