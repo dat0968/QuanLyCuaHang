@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\repositories\\cart\\cartrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\repositories\\cart\\cartrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -17,10 +21,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\repositories\\bill\\billrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\repositories\\bill\\billrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\repositories\\dashboard\\dashboardrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -136,8 +136,8 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 152,
-          "SelectedChildIndex": 11,
+          "DockedWidth": 174,
+          "SelectedChildIndex": 23,
           "Children": [
             {
               "$type": "Bookmark",
@@ -265,7 +265,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "CartRepository.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Cart\\CartRepository.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\Cart\\CartRepository.cs",
@@ -398,7 +398,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "CartController.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Controllers\\CartController.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Controllers\\CartController.cs",
@@ -410,20 +410,21 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "appsettings.json",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\appsettings.json",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\appsettings.json",
               "ToolTip": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\appsettings.json",
               "RelativeToolTip": "APIQuanLyCuaHang\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAARAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-04-12T15:56:10.229Z"
+              "WhenOpened": "2025-04-12T15:56:10.229Z",
+              "EditorCaption": ""
             }
           ]
         },
         {
-          "DockedWidth": 132,
+          "DockedWidth": 110,
           "SelectedChildIndex": 9,
           "Children": [
             {
@@ -452,7 +453,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "BillRepository.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Bill\\BillRepository.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\Bill\\BillRepository.cs",
@@ -512,7 +513,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "CartItemDTO.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\DTO\\CartItemDTO.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\DTO\\CartItemDTO.cs",

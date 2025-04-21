@@ -84,8 +84,14 @@ builder.Services.AddCors(options =>
         ops.AllowAnyHeader();
         ops.AllowAnyMethod();
         ops.WithOrigins("http://localhost:5173");
+        ops.SetPreflightMaxAge(TimeSpan.FromMinutes(10));
     });
 });
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.Limits.MaxRequestBodySize = 50 * 1024 * 1024; 
+});
+
 builder.Services.AddScoped<IProduct, Product>();
 builder.Services.AddScoped<IDetailProduct, DetailProduct>();
 builder.Services.AddScoped<IimageProduct, imageProduct>();

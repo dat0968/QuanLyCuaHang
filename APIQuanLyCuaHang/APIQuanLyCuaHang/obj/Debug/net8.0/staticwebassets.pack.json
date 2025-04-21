@@ -353,8 +353,24 @@
       "PackagePath": "staticwebassets\\Hinh\\AnhKhachHang\\e0bfe1f7-3b6c-477c-a525-17b3fcda633a.png"
     },
     {
+      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\Hinh\\AnhKhachHang\\e5958316-b64a-4cf4-84e6-72bc71ffc32f.jpg",
+      "PackagePath": "staticwebassets\\Hinh\\AnhKhachHang\\e5958316-b64a-4cf4-84e6-72bc71ffc32f.jpg"
+    },
+    {
       "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\Hinh\\AnhKhachHang\\edc59c27-c659-4018-acb1-44429474d9c3.png",
       "PackagePath": "staticwebassets\\Hinh\\AnhKhachHang\\edc59c27-c659-4018-acb1-44429474d9c3.png"
+    },
+    {
+      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\images\\4cd88d87-614c-4b1d-bae9-77c33c1b5420_domixi.jpg",
+      "PackagePath": "staticwebassets\\images\\4cd88d87-614c-4b1d-bae9-77c33c1b5420_domixi.jpg"
+    },
+    {
+      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\images\\61d171bc-0346-4038-a28a-d8cb39e5a4ff_natra-3.jpg",
+      "PackagePath": "staticwebassets\\images\\61d171bc-0346-4038-a28a-d8cb39e5a4ff_natra-3.jpg"
+    },
+    {
+      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\images\\c0c05a8a-b860-48f7-a77e-16f9a90e3e4e_One-Piece-Gear-5.jpg",
+      "PackagePath": "staticwebassets\\images\\c0c05a8a-b860-48f7-a77e-16f9a90e3e4e_One-Piece-Gear-5.jpg"
     },
     {
       "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\uploads\\258a308d-26af-4b85-8620-6f59d301542a_natra-3.jpg",

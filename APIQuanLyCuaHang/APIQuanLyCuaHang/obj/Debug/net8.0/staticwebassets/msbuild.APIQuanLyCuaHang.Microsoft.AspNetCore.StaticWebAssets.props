@@ -414,6 +414,24 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Hinh\AnhKhachHang\e0bfe1f7-3b6c-477c-a525-17b3fcda633a.png'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Hinh\AnhKhachHang\e5958316-b64a-4cf4-84e6-72bc71ffc32f.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>APIQuanLyCuaHang</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/APIQuanLyCuaHang</BasePath>
+      <RelativePath>Hinh/AnhKhachHang/e5958316-b64a-4cf4-84e6-72bc71ffc32f.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>hh1ow1ovod</Fingerprint>
+      <Integrity>e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Hinh\AnhKhachHang\e5958316-b64a-4cf4-84e6-72bc71ffc32f.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Hinh\AnhKhachHang\edc59c27-c659-4018-acb1-44429474d9c3.png'))">
       <SourceType>Package</SourceType>
       <SourceId>APIQuanLyCuaHang</SourceId>
@@ -1601,6 +1619,60 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\HinhAnh\NhanVien\NhanVien9.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\4cd88d87-614c-4b1d-bae9-77c33c1b5420_domixi.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>APIQuanLyCuaHang</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/APIQuanLyCuaHang</BasePath>
+      <RelativePath>images/4cd88d87-614c-4b1d-bae9-77c33c1b5420_domixi.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>fvv0z8a7wu</Fingerprint>
+      <Integrity>WySJOYNw1WxXDocNfiv26At05vSsbIjafaxfwzbGyPU=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\4cd88d87-614c-4b1d-bae9-77c33c1b5420_domixi.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\61d171bc-0346-4038-a28a-d8cb39e5a4ff_natra-3.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>APIQuanLyCuaHang</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/APIQuanLyCuaHang</BasePath>
+      <RelativePath>images/61d171bc-0346-4038-a28a-d8cb39e5a4ff_natra-3.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>hh1ow1ovod</Fingerprint>
+      <Integrity>e94AHUd9rfyoPG4N7sf9AMd+lwMHRIo3clmVYAcc54I=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\61d171bc-0346-4038-a28a-d8cb39e5a4ff_natra-3.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\c0c05a8a-b860-48f7-a77e-16f9a90e3e4e_One-Piece-Gear-5.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>APIQuanLyCuaHang</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/APIQuanLyCuaHang</BasePath>
+      <RelativePath>images/c0c05a8a-b860-48f7-a77e-16f9a90e3e4e_One-Piece-Gear-5.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>qt7cvm3wgc</Fingerprint>
+      <Integrity>Yoa9vKavTGjAJMw6MYP/WMHqsnHLmaWw4j2CvvfPuAk=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\c0c05a8a-b860-48f7-a77e-16f9a90e3e4e_One-Piece-Gear-5.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\258a308d-26af-4b85-8620-6f59d301542a_natra-3.jpg'))">
       <SourceType>Package</SourceType>

@@ -23,6 +23,7 @@ namespace APIQuanLyCuaHang.Respositoies.Token
             {
                 Subject = new ClaimsIdentity(new List<Claim>
                 {
+                   // new Claim("Id", model.Id.ToString()),
                     new Claim(JwtRegisteredClaimNames.Sub, model.Id.ToString()),
                     new Claim(JwtRegisteredClaimNames.Jti, radomIDToken.ToString()),
                     new Claim("PhoneNumber", model.SDT ?? ""),
