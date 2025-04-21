@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
+using APIQuanLyCuaHang.Services;
 namespace APIQuanLyCuaHang.Controllers
 {
     [Route("api/[controller]")]
@@ -13,99 +14,43 @@ namespace APIQuanLyCuaHang.Controllers
     {
         private readonly IBillRepository _billRepository;
         private readonly QuanLyCuaHangContext _db;
+        private readonly OrderService orderService;
 
-    
 
-        public CounterBillController(IBillRepository billRepository, QuanLyCuaHangContext db)
+        public CounterBillController(IBillRepository billRepository, QuanLyCuaHangContext db, OrderService orderService)
         {
+            this.orderService = orderService;
             _billRepository = billRepository;
             _db = db;
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCounterBill([FromBody] CounterBillCreateDTO hoaDonDTO)
+        public async Task<IActionResult> CreateCounterBill(OrderRequestDTO NewOrder)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-
             try
             {
-                // Lấy mã nhân viên từ access token
-                var maNvClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                if (string.IsNullOrEmpty(maNvClaim))
+                var data = await orderService.AddOrder(NewOrder);
+                var response = new
                 {
-                    return Unauthorized(new { Success = false, Message = "Không tìm thấy thông tin nhân viên trong token." });
-                }
-
-                if (!int.TryParse(maNvClaim, out var maNv))
-                {
-                    return BadRequest(new { Success = false, Message = "Mã nhân viên không hợp lệ." });
-                }
-
-                // Lấy tên nhân viên từ MaNv
-                var nhanVien = await _db.Nhanviens
-                    .Where(nv => nv.MaNv == maNv)
-                    .FirstOrDefaultAsync();
-
-                if (nhanVien == null)
-                {
-                    return NotFound("Không tìm thấy nhân viên.");
-                }
-
-                // Tạo hóa đơn
-                var hoaDon = new Hoadon
-                {
-                    MaKh = (int)hoaDonDTO.MaKh,
-                    MaNv = hoaDonDTO.MaNv,
-                    TinhTrang = hoaDonDTO.TinhTrang,
-                    NgayTao = hoaDonDTO.NgayTao,
-                    HinhThucTt = hoaDonDTO.HinhThucTt,
-                    TienGoc = hoaDonDTO.TienGoc,
-                    PhiVanChuyen = hoaDonDTO.PhiVanChuyen,
-                    DiaChiNhanHang = $"Tại Quầy ", 
-                    HoTen = "Khách tại quầy",
-                    Sdt = "",
-                    //MaCoupon = hoaDonDTO. // Thêm MaCoupon
+                    MaHd = data.MaHd,
+                    MaNv = data.MaNv,
+                    NgayTao = data.NgayTao,
+                    HoTenNv = data.MaNvNavigation?.HoTen
                 };
-
-                var createdBill = await _billRepository.CreateOrder(hoaDon);
-
-                // Thêm chi tiết hóa đơn
-                foreach (var ct in hoaDonDTO.Cthoadons)
+                return Ok(new
                 {
-                    if (ct.DonGia <= 0)
-                    {
-                        return BadRequest(new { Success = false, Message = $"Đơn giá của sản phẩm (MaCtsp: {ct.MaCtsp}) không hợp lệ." });
-                    }
-
-                    var chiTiet = new Cthoadon
-                    {
-                        MaHd = createdBill.MaHd,
-                        MaCtsp = ct.MaCtsp.HasValue ? ct.MaCtsp.Value : 0,
-                        SoLuong = ct.SoLuong,
-                        DonGia = ct.DonGia // Thêm ánh xạ DonGia
-                    };
-                    _db.Cthoadons.Add(chiTiet);
-                }
-                await _db.SaveChangesAsync();
-
-                return Ok(new HoaDonDTO
-                {
-                    MaHd = createdBill.MaHd,
-                    MaKh = createdBill.MaKh,
-                    MaNv = createdBill.MaNv,
-                    HoTenNv = nhanVien.HoTen,
-                    TinhTrang = createdBill.TinhTrang,
-                    NgayTao = createdBill.NgayTao,
-                    HinhThucTt = createdBill.HinhThucTt,
-                    TienGoc = createdBill.TienGoc,
-                    PhiVanChuyen = createdBill.PhiVanChuyen,
-                    HoTenNguoiNhan = "Khách tại quầy",
-                    Sdt = "0000000000"
+                    Success = true,
+                    Message = "Đặt món thành công",
+                    Data = response
                 });
             }
             catch (Exception ex)
             {
-                return BadRequest(new { Success = false, Message = ex.Message });
+                return Ok(new
+                {
+                    Success = false,
+                    Message = ex.InnerException,
+                });
             }
         }
 

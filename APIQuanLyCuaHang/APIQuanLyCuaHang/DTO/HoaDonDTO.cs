@@ -8,7 +8,7 @@ namespace APIQuanLyCuaHang.DTO
     {
         public int MaHd { get; set; }
 
-        public int MaKh { get; set; }
+        public int? MaKh { get; set; }
 
         public int? MaNv { get; set; }
 

@@ -14,7 +14,9 @@ namespace APIQuanLyCuaHang.Repositories.DetailProduct
         }
         public async Task<Chitietsanpham?> GetDetailByMaCTSp(int MaCTSp)
         {
-            var findDetailProduct = await db.Chitietsanphams.AsNoTracking().FirstOrDefaultAsync(p => p.MaCtsp == MaCTSp);
+            var findDetailProduct = await db.Chitietsanphams.AsNoTracking()
+                .Include(p => p.MaSpNavigation)
+                .FirstOrDefaultAsync(p => p.MaCtsp == MaCTSp);
             return findDetailProduct;
         }
         public async Task<Chitietsanpham> AddDetailProduct(Chitietsanpham model)
@@ -43,6 +45,18 @@ namespace APIQuanLyCuaHang.Repositories.DetailProduct
                 if (trackedEntity != null)
                 {
                     db.Entry(trackedEntity.Entity).State = EntityState.Detached;
+                }
+                // Ngắt theo dõi thực thể Sanpham trùng MaSp nếu có
+                if (model.MaSp != null)
+                {
+                    var trackedSanpham = db.ChangeTracker
+                        .Entries<Sanpham>()
+                        .FirstOrDefault(e => e.Entity.MaSp == model.MaSp);
+
+                    if (trackedSanpham != null)
+                    {
+                        db.Entry(trackedSanpham.Entity).State = EntityState.Detached;
+                    }
                 }
                 db.Chitietsanphams.Update(model);
                 await db.SaveChangesAsync();

@@ -4,7 +4,8 @@ namespace APIQuanLyCuaHang.DTO
 {
     public class OrderRequestDTO
     {
-        public int MaKh { get; set; }
+        public int? MaKh { get; set; }
+        public int? MaNv { get; set; }
 
         public string? DiaChiNhanHang { get; set; }
 

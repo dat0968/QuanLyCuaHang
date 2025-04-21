@@ -1,7 +1,7 @@
 <template>
     <div class="login-container">
       <!-- Hiển thị dropdown khi chưa đăng nhập -->
-      <select v-if="!isLoggedIn" class="login-dropdown" @change="handleSelection($event)">
+      <select v-if="isLoggedIn == false" class="login-dropdown" @change="handleSelection($event)">
         <!-- Tùy chọn mặc định -->
         <option value="" disabled selected hidden>Đăng nhập</option>
         <!-- Tùy chọn khi chưa đăng nhập -->

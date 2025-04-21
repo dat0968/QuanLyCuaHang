@@ -73,7 +73,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="orderAtCounterModalLabel">
-              Đặt hàng - Bàn {{ selectedTable?.id }}
+              Đặt món - Bàn {{ selectedTable?.id }}
             </h5>
             <button
               type="button"
@@ -122,7 +122,7 @@
 
                 <!-- Sản phẩm -->
                 <div class="menu-section">
-                  <h3>Sản phẩm</h3>
+                  <h3 v-if="filteredProducts != ''">Sản phẩm</h3>
                   <div class="menu-grid">
                     <div v-for="product in filteredProducts" :key="product.maSp" class="menu-card">
                       <div class="menu-card-image">
@@ -308,7 +308,15 @@
                       <span class="item-name">{{ item.name }}</span>
                       <div class="item-controls">
                         <span class="item-quantity">{{ item.quantity }}</span>
-                        <span class="item-price">{{ item.quantity * item.price }} VNĐ</span>
+                        <span class="item-price"
+                          >{{ item.quantity * item.price }} VNĐ <br />
+                          <span
+                            v-if="item.maCombo"
+                            class="item-price text-danger text-decoration-line-through"
+                            >{{ item.original_price }} VNĐ</span
+                          >
+                        </span>
+
                         <button class="btn btn-danger btn-sm" @click="removeFromOrder(index)">
                           X
                         </button>
@@ -318,26 +326,26 @@
                   </div>
                   <!-- Ô nhập mã coupon -->
                   <!-- <div class="coupon-section">
-      <div class="coupon-input-group">
-        <input
-          v-model="couponCode"
-          type="text"
-          class="form-control"
-          placeholder="Nhập mã coupon..."
-        />
-        <button
-          class="btn btn-primary"
-          @click="applyCoupon"
-          :disabled="!couponCode || isApplyingCoupon"
-        >
-          {{ isApplyingCoupon ? 'Đang áp dụng...' : 'Áp dụng' }}
-        </button>
-      </div>
-      <p v-if="couponError" class="coupon-error">{{ couponError }}</p>
-      <p v-if="discountAmount > 0" class="coupon-discount">
-        Giảm giá: -{{ discountAmount }} VNĐ
-      </p>
-    </div> -->
+                  <div class="coupon-input-group">
+                    <input
+                      v-model="couponCode"
+                      type="text"
+                      class="form-control"
+                      placeholder="Nhập mã coupon..."
+                    />
+                    <button
+                      class="btn btn-primary"
+                      @click="applyCoupon"
+                      :disabled="!couponCode || isApplyingCoupon"
+                    >
+                      {{ isApplyingCoupon ? 'Đang áp dụng...' : 'Áp dụng' }}
+                    </button>
+                  </div>
+                  <p v-if="couponError" class="coupon-error">{{ couponError }}</p>
+                  <p v-if="discountAmount > 0" class="coupon-discount">
+                    Giảm giá: -{{ discountAmount }} VNĐ
+                  </p>
+                </div> -->
                   <div class="order-total">
                     <strong>Tổng tiền: {{ finalAmount }} VNĐ</strong>
                   </div>
@@ -396,10 +404,6 @@
                 <span class="bill-value">{{ bill?.hoTenNv || 'N/A' }}</span>
               </div>
               <div class="bill-info-row">
-                <span class="bill-label"><strong>Khách hàng:</strong></span>
-                <span class="bill-value">Khách tại quầy</span>
-              </div>
-              <div class="bill-info-row">
                 <span class="bill-label"><strong>Ngày tạo:</strong></span>
                 <span class="bill-value">{{
                   bill?.ngayTao ? new Date(bill.ngayTao).toLocaleString('vi-VN') : 'N/A'
@@ -437,7 +441,7 @@
           <div class="card-actions">
             <!-- Nút Đặt hàng: chỉ hiển thị khi trạng thái không phải "Đang sử dụng" -->
             <button
-              v-if="table.tinhTrang !== 'Đang sử dụng'"
+              v-if="table.tinhTrang !== 'Đang sử dụng' && table.tinhTrang !== 'Đang sửa chữa'"
               class="btn btn-success btn-sm"
               @click="openOrderModal(table)"
             >
@@ -449,10 +453,10 @@
               class="btn btn-warning btn-sm"
               @click="updateStatus(table, 'Trống')"
             >
-              Trả bàn	
+              Trả bàn
             </button>
             <!-- Nút Xóa: luôn hiển thị -->
-            <button class="btn btn-danger btn-sm" @click="deleteTable(table.id)">Xóa</button>
+            <button v-if="table.tinhTrang !== 'Đang sử dụng' " class="btn btn-danger btn-sm" @click="deleteTable(table.id)">Xóa</button>
           </div>
         </div>
       </div>
@@ -473,17 +477,7 @@
           {{ bill?.ngayTao ? new Date(bill.ngayTao).toLocaleString('vi-VN') : 'N/A' }}
         </p>
 
-        <h4 class="print-bill-section">THÔNG TIN KHÁCH HÀNG</h4>
-        <p class="print-bill-detail">
-          <strong>Tên Khách Hàng:</strong> {{ bill?.hoTenNguoiNhan || 'Khách tại quầy' }}
-        </p>
-        <p class="print-bill-detail">
-          <strong>Số Điện Thoại:</strong> {{ bill?.sdt || '0000000000' }}
-        </p>
-        <p class="print-bill-detail">
-          <strong>Địa Chỉ Nhận Hàng:</strong> Tại Quầy - Bàn {{ selectedTable?.id || 'N/A' }}
-        </p>
-        <p class="print-bill-detail"><strong>Lý Do Hủy:</strong> Không có lý do</p>
+       
 
         <h4 class="print-bill-section">CHI TIẾT HÓA ĐƠN</h4>
         <table class="print-bill-table">
@@ -542,465 +536,510 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, computed, nextTick } from 'vue';
-import Swal from 'sweetalert2';
-import QRCode from 'qrcode';
-import { GetApiUrl } from '@constants/api';
-import { jwtDecode } from 'jwt-decode';
-import Cookies from 'js-cookie';
-
-const immutableStatuses = ["Đang sử dụng", "Đang sửa chữa"];
-const tables = ref([]);
-const searchQuery = ref('');
-const statusFilter = ref('');
-const isLoading = ref(false);
-const newTableStatus = ref('Trống');
-const statusOptions = ["Trống", "Đang sử dụng", "Đã đặt trước", "Đang sửa chữa"];
-const selectedTable = ref(null);
-const products = ref([]);
-const combos = ref([]);
-const categories = ref([]);
-const selectedVariants = ref({});
-const quantities = ref({});
-const quantityErrors = ref({});
-const orderItems = ref([]);
-const bill = ref(null);
-const token = ref('');
-const menuSearch = ref('');
-const categoryFilter = ref('');
-const sortOption = ref('');
-const qrCodeCanvas = ref(null);
-const maNv = ref(null);
-const couponCode = ref(''); // Mã coupon người dùng nhập
-const discountAmount = ref(0); // Số tiền giảm giá
-const couponError = ref(''); // Thông báo lỗi khi áp dụng mã coupon
-const isApplyingCoupon = ref(false); // Trạng thái đang áp dụng mã coupon
-let getApiUrl = GetApiUrl();
-const printQrCodeCanvas = ref(null);
-const printHomeQrCodeCanvas = ref(null);
-const printQrCodeImg = ref(null);
-const printHomeQrCodeImg = ref(null);
+import { ref, onMounted, watch, computed, nextTick } from 'vue'
+import Swal from 'sweetalert2'
+import QRCode from 'qrcode'
+import { GetApiUrl } from '@constants/api'
+import { jwtDecode } from 'jwt-decode'
+import Cookies from 'js-cookie'
+import { ReadToken, ValidateToken } from '../../../Authentication_Authorization/auth.js'
+const immutableStatuses = ['Đang sử dụng', 'Đang sửa chữa']
+const tables = ref([])
+const searchQuery = ref('')
+const statusFilter = ref('')
+const isLoading = ref(false)
+const newTableStatus = ref('Trống')
+const statusOptions = ['Trống', 'Đang sử dụng', 'Đang sửa chữa']
+const selectedTable = ref(null)
+const products = ref([])
+const combos = ref([])
+const categories = ref([])
+const selectedVariants = ref({})
+const quantities = ref({})
+const quantityErrors = ref({})
+const orderItems = ref([])
+const bill = ref(null)
+const token = ref('')
+const menuSearch = ref('')
+const categoryFilter = ref('')
+const sortOption = ref('')
+const qrCodeCanvas = ref(null)
+const maNv = ref(null)
+const couponCode = ref('') // Mã coupon người dùng nhập
+const discountAmount = ref(0) // Số tiền giảm giá
+const couponError = ref('') // Thông báo lỗi khi áp dụng mã coupon
+const isApplyingCoupon = ref(false) // Trạng thái đang áp dụng mã coupon
+let getApiUrl = GetApiUrl()
+const printQrCodeCanvas = ref(null)
+const printHomeQrCodeCanvas = ref(null)
+const printQrCodeImg = ref(null)
+const printHomeQrCodeImg = ref(null)
 const generateQRCode = (canvas, data, size = 100) => {
   return new Promise((resolve, reject) => {
     QRCode.toCanvas(canvas, data, { width: size }, (error) => {
       if (error) {
-        reject(error);
+        reject(error)
       } else {
-        resolve(canvas.toDataURL('image/png'));
+        resolve(canvas.toDataURL('image/png'))
       }
-    });
-  });
-};
+    })
+  })
+}
 // Tổng tiền trước khi giảm giá
 const totalAmount = computed(() => {
-  return orderItems.value.reduce((sum, item) => sum + item.quantity * item.price, 0);
-});
+  return orderItems.value.reduce((sum, item) => sum + item.quantity * item.price, 0)
+})
 
 // Tổng tiền sau khi giảm giá
 const finalAmount = computed(() => {
-  return Math.max(0, totalAmount.value - discountAmount.value);
-});
+  return Math.max(0, totalAmount.value - discountAmount.value)
+})
 
 const calculateComboPrice = (combo) => {
-  let price = 0;
+  let price = 0
   if (combo.soTienGiam !== null && combo.soTienGiam > 0) {
-    price = combo.soTienGiam;
+    price = combo.soTienGiam
   } else {
     price = combo.chitietcombos.reduce((total, ct) => {
-      const variant = ct.chitietsanphams.find(v => v.maCtsp === selectedVariants.value[ct.maSp]);
-      return total + (variant ? variant.donGia * ct.soLuongSp : 0);
-    }, 0);
+      const variant = ct.chitietsanphams.find((v) => v.maCtsp === selectedVariants.value[ct.maSp])
+      return total + (variant ? variant.donGia * ct.soLuongSp : 0)
+    }, 0)
     if (combo.phanTramGiam !== null && combo.phanTramGiam > 0) {
-      price = price * (1 - combo.phanTramGiam / 100);
+      price = price * (1 - combo.phanTramGiam / 100)
     }
   }
-  return Math.round(price);
-};
+  return Math.round(price)
+}
 
-const getTokenAndDecode = () => {
-  token.value = localStorage.getItem('accessToken') || Cookies.get('accessToken') || '';
-  if (token.value) {
-    try {
-      const decoded = jwtDecode(token.value);
-      maNv.value = decoded['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'] || decoded.sub;
-    } catch (error) {
-      console.error('Lỗi giải mã token:', error);
-      Swal.fire({ icon: 'error', title: 'Lỗi!', text: 'Không thể giải mã token.' });
+const getTokenAndDecode = async () => {
+  let accesstoken = Cookies.get('accessToken')
+  let refreshtoken = Cookies.get('refreshToken')
+  const validateToken = await ValidateToken(accesstoken, refreshtoken)
+  if(validateToken == true){
+    token.value = Cookies.get('accessToken') || ''
+    const readtoken = ReadToken(accesstoken)
+    if(readtoken){
+      maNv.value = readtoken.IdUser
+    }
+    else {
+      router.push('/Login')
+      return
     }
   }
-};
+}
 
 const filteredProducts = computed(() => {
-  let filtered = [...products.value];
+  let filtered = [...products.value]
   if (menuSearch.value) {
-    filtered = filtered.filter(p => p.tenSanPham.toLowerCase().includes(menuSearch.value.toLowerCase()));
+    filtered = filtered.filter((p) =>
+      p.tenSanPham.toLowerCase().includes(menuSearch.value.toLowerCase())
+    )
   }
   if (categoryFilter.value) {
-    filtered = filtered.filter(p => p.maDanhMuc === parseInt(categoryFilter.value));
+    filtered = filtered.filter((p) => p.maDanhMuc === parseInt(categoryFilter.value))
   }
   switch (sortOption.value) {
     case 'priceAsc':
-      filtered.sort((a, b) => a.chitietsanphams[0].donGia - b.chitietsanphams[0].donGia);
-      break;
+      filtered.sort((a, b) => a.chitietsanphams[0].donGia - b.chitietsanphams[0].donGia)
+      break
     case 'priceDesc':
-      filtered.sort((a, b) => b.chitietsanphams[0].donGia - a.chitietsanphams[0].donGia);
-      break;
+      filtered.sort((a, b) => b.chitietsanphams[0].donGia - a.chitietsanphams[0].donGia)
+      break
     case 'nameAsc':
-      filtered.sort((a, b) => a.tenSanPham.localeCompare(b.tenSanPham));
-      break;
+      filtered.sort((a, b) => a.tenSanPham.localeCompare(b.tenSanPham))
+      break
     case 'nameDesc':
-      filtered.sort((a, b) => b.tenSanPham.localeCompare(b.tenSanPham));
-      break;
+      filtered.sort((a, b) => b.tenSanPham.localeCompare(b.tenSanPham))
+      break
   }
-  return filtered;
-});
+  return filtered
+})
 
 const filteredCombos = computed(() => {
-  let filtered = [...combos.value];
+  let filtered = [...combos.value]
   if (menuSearch.value) {
-    filtered = filtered.filter(c => c.tenCombo.toLowerCase().includes(menuSearch.value.toLowerCase()));
+    filtered = filtered.filter((c) =>
+      c.tenCombo.toLowerCase().includes(menuSearch.value.toLowerCase())
+    )
   }
-  return filtered;
-});
+  return filtered
+})
 
 const fetchTables = async () => {
-  isLoading.value = true;
+  isLoading.value = true
   try {
     const url = statusFilter.value
       ? getApiUrl + `/api/Table/filter?tinhTrang=${encodeURIComponent(statusFilter.value)}`
-      : getApiUrl + `/api/Table`;
+      : getApiUrl + `/api/Table`
     const response = await fetch(url, {
-      headers: { Authorization: `Bearer ${token.value}` }
-    });
-    if (!response.ok) throw new Error(`Không thể tải dữ liệu: ${await response.text()}`);
-    const data = await response.json();
-    tables.value = Array.isArray(data) ? data : data.items || [];
+      headers: { Authorization: `Bearer ${token.value}` },
+    })
+    if (!response.ok) throw new Error(`Không thể tải dữ liệu: ${await response.text()}`)
+    const data = await response.json()
+    tables.value = Array.isArray(data) ? data : data.items || []
     if (searchQuery.value) {
-      const query = parseInt(searchQuery.value, 10);
-      if (!isNaN(query)) tables.value = tables.value.filter(table => table.id === query);
+      const query = parseInt(searchQuery.value, 10)
+      if (!isNaN(query)) tables.value = tables.value.filter((table) => table.id === query)
     }
   } catch (error) {
-    Swal.fire({ icon: 'error', title: 'Lỗi!', text: error.message });
+    Swal.fire({ icon: 'error', title: 'Lỗi!', text: error.message })
   } finally {
-    isLoading.value = false;
+    isLoading.value = false
   }
-};
+}
 
 const fetchCategories = async () => {
   try {
     const response = await fetch(getApiUrl + '/api/Home/categories', {
-      headers: { Authorization: `Bearer ${token.value}` }
-    });
-    if (!response.ok) throw new Error(await response.text());
-    categories.value = await response.json();
+      headers: { Authorization: `Bearer ${token.value}` },
+    })
+    if (!response.ok) throw new Error(await response.text())
+    categories.value = await response.json()
   } catch (error) {
-    Swal.fire({ icon: 'error', title: 'Lỗi!', text: 'Không thể tải danh mục: ' + error.message });
+    Swal.fire({ icon: 'error', title: 'Lỗi!', text: 'Không thể tải danh mục: ' + error.message })
   }
-};
-
+}
 
 const updateStatus = async (table, newStatus) => {
-  const previousStatus = table.tinhTrang;
+  const previousStatus = table.tinhTrang
   try {
     const response = await fetch(getApiUrl + `/api/Table/${table.id}`, {
-      method: "PUT",
+      method: 'PUT',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token.value}`
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token.value}`,
       },
       body: JSON.stringify({ id: table.id, tinhTrang: newStatus }),
-    });
-    if (!response.ok) throw new Error(await response.text() || "Cập nhật thất bại");
-    table.tinhTrang = (await response.json()).tinhTrang;
-    Swal.fire({ icon: 'success', title: 'Thành công!', text: 'Cập nhật trạng thái thành công', timer: 1500 });
+    })
+    if (!response.ok) throw new Error((await response.text()) || 'Cập nhật thất bại')
+    table.tinhTrang = (await response.json()).tinhTrang
+    Swal.fire({
+      icon: 'success',
+      title: 'Thành công!',
+      text: 'Cập nhật trạng thái thành công',
+      timer: 1500,
+    })
   } catch (error) {
-    table.tinhTrang = previousStatus;
-    Swal.fire({ icon: 'error', title: 'Lỗi!', text: error.message });
+    table.tinhTrang = previousStatus
+    Swal.fire({ icon: 'error', title: 'Lỗi!', text: error.message })
   }
-};
-
+}
 
 const addTable = async () => {
   try {
     const response = await fetch(getApiUrl + `/api/Table`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token.value}`
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token.value}`,
       },
       body: JSON.stringify({ tinhTrang: newTableStatus.value }),
-    });
-    if (!response.ok) throw new Error(await response.text());
-    tables.value.push(await response.json());
-    newTableStatus.value = 'Trống';
-    Swal.fire({ icon: 'success', title: 'Thành công!', text: 'Thêm bàn thành công', timer: 1500 });
-    const modalElement = document.getElementById('addTableModal');
-    const modal = window.bootstrap.Modal.getInstance(modalElement);
-    if (modal) modal.hide();
+    })
+    if (!response.ok) throw new Error(await response.text())
+    tables.value.push(await response.json())
+    newTableStatus.value = 'Trống'
+    Swal.fire({ icon: 'success', title: 'Thành công!', text: 'Thêm bàn thành công', timer: 1500 })
+    const modalElement = document.getElementById('addTableModal')
+    const modal = window.bootstrap.Modal.getInstance(modalElement)
+    if (modal) modal.hide()
   } catch (error) {
-    Swal.fire({ icon: 'error', title: 'Lỗi!', text: error.message });
+    Swal.fire({ icon: 'error', title: 'Lỗi!', text: error.message })
   }
-};
+}
 
 const deleteTable = async (tableId) => {
   const confirm = await Swal.fire({
     title: 'Bạn có chắc chắn?',
-    text: "Bạn sẽ không thể khôi phục bàn này!",
+    text: 'Bạn sẽ không thể khôi phục bàn này!',
     icon: 'warning',
     showCancelButton: true,
     confirmButtonText: 'Xóa',
     cancelButtonText: 'Hủy',
-  });
-  if (!confirm.isConfirmed) return;
+  })
+  if (!confirm.isConfirmed) return
   try {
     const response = await fetch(getApiUrl + `/api/Table/${tableId}`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token.value}`
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token.value}`,
       },
-    });
-    if (!response.ok) throw new Error(await response.text());
-    tables.value = tables.value.filter(table => table.id !== tableId);
-    Swal.fire({ icon: 'success', title: 'Thành công!', text: 'Xóa bàn thành công', timer: 1500 });
+    })
+    if (!response.ok) throw new Error(await response.text())
+    tables.value = tables.value.filter((table) => table.id !== tableId)
+    Swal.fire({ icon: 'success', title: 'Thành công!', text: 'Xóa bàn thành công', timer: 1500 })
   } catch (error) {
-    Swal.fire({ icon: 'error', title: 'Lỗi!', text: error.message });
+    Swal.fire({ icon: 'error', title: 'Lỗi!', text: error.message })
   }
-};
+}
 
 const openOrderModal = async (table) => {
-  selectedTable.value = table;
+  selectedTable.value = table
   try {
     const response = await fetch(getApiUrl + `/api/Table/${table.id}/menu`, {
-      headers: { "Authorization": `Bearer ${token.value}` }
-    });
-    if (!response.ok) throw new Error(await response.text());
-    const data = await response.json();
-    products.value = data.products || [];
-    combos.value = data.combos || [];
-    
+      headers: { Authorization: `Bearer ${token.value}` },
+    })
+    if (!response.ok) throw new Error(await response.text())
+    const data = await response.json()
+    products.value = data.products || []
+    combos.value = data.combos || []
+
     // Khởi tạo số lượng và biến thể mặc định
-    selectedVariants.value = {};
-    quantities.value = {};
+    selectedVariants.value = {}
+    quantities.value = {}
 
     // Khởi tạo cho sản phẩm
-    products.value.forEach(p => {
-      quantities.value[p.maSp] = 1;
+    products.value.forEach((p) => {
+      quantities.value[p.maSp] = 1
       if (p.chitietsanphams?.length > 0) {
-        selectedVariants.value[p.maSp] = p.chitietsanphams[0].maCtsp;
+        selectedVariants.value[p.maSp] = p.chitietsanphams[0].maCtsp
       }
-    });
+    })
 
     // Khởi tạo cho combo
-    combos.value.forEach(c => {
-      quantities.value[c.maCombo] = 1;
+    combos.value.forEach((c) => {
+      quantities.value[c.maCombo] = 1
       if (c.chitietcombos?.length > 0) {
-        c.chitietcombos.forEach(item => {
+        c.chitietcombos.forEach((item) => {
           if (item.chitietsanphams?.length > 0) {
-            selectedVariants.value[item.maSp] = item.chitietsanphams[0].maCtsp;
+            selectedVariants.value[item.maSp] = item.chitietsanphams[0].maCtsp
           } else {
-            console.warn(`Sản phẩm ${item.tenSp} (maSp: ${item.maSp}) trong combo ${c.tenCombo} không có biến thể.`);
+            console.warn(
+              `Sản phẩm ${item.tenSp} (maSp: ${item.maSp}) trong combo ${c.tenCombo} không có biến thể.`
+            )
           }
-        });
+        })
       }
-    });
+    })
 
-    await fetchCategories();
-    const modalElement = document.getElementById('orderAtCounterModal');
-    const modal = new window.bootstrap.Modal(modalElement);
-    modal.show();
+    await fetchCategories()
+    const modalElement = document.getElementById('orderAtCounterModal')
+    const modal = new window.bootstrap.Modal(modalElement)
+    modal.show()
   } catch (error) {
-    Swal.fire({ icon: 'error', title: 'Lỗi!', text: error.message });
+    Swal.fire({ icon: 'error', title: 'Lỗi!', text: error.message })
   }
-};
+}
 
 const getMaxQuantity = (id) => {
-  const product = products.value.find(p => p.maSp === id);
+  const product = products.value.find((p) => p.maSp === id)
   if (product) {
-    const variant = product.chitietsanphams.find(v => v.maCtsp === selectedVariants.value[id]);
-    return variant?.soLuongTon || 0;
+    const variant = product.chitietsanphams.find((v) => v.maCtsp === selectedVariants.value[id])
+    return variant?.soLuongTon || 0
   }
-  const combo = combos.value.find(c => c.maCombo === id);
-  return combo?.soLuong || 0;
-};
+  const combo = combos.value.find((c) => c.maCombo === id)
+  return combo?.soLuong || 0
+}
 
 const validateQuantity = (id, value) => {
   if (!value || isNaN(value) || value < 1) {
-    quantityErrors.value[id] = 'Số lượng phải là số lớn hơn 0';
-    return false;
+    quantityErrors.value[id] = 'Số lượng phải là số lớn hơn 0'
+    return false
   }
-  const max = getMaxQuantity(id);
+  const max = getMaxQuantity(id)
   if (value > max) {
-    quantityErrors.value[id] = `Số lượng tối đa là ${max}`;
-    return false;
+    quantityErrors.value[id] = `Số lượng tối đa là ${max}`
+    return false
   }
-  quantityErrors.value[id] = '';
-  return true;
-};
+  quantityErrors.value[id] = ''
+  return true
+}
 
 const handleQuantityChange = (id, event) => {
-  const value = parseInt(event.target.value) || 1;
+  const value = parseInt(event.target.value) || 1
   if (validateQuantity(id, value)) {
-    quantities.value[id] = value;
+    quantities.value[id] = value
   } else {
-    quantities.value[id] = Math.min(Math.max(value, 1), getMaxQuantity(id));
+    quantities.value[id] = Math.min(Math.max(value, 1), getMaxQuantity(id))
   }
-};
+}
 
 const increaseQuantity = (id) => {
   if (quantities.value[id] < getMaxQuantity(id)) {
-    quantities.value[id]++;
-    quantityErrors.value[id] = '';
+    quantities.value[id]++
+    quantityErrors.value[id] = ''
   }
-};
+}
 
 const decreaseQuantity = (id) => {
   if (quantities.value[id] > 1) {
-    quantities.value[id]--;
-    quantityErrors.value[id] = '';
+    quantities.value[id]--
+    quantityErrors.value[id] = ''
   }
-};
+}
 
 const updateSelectedVariant = (id, variantId) => {
-  selectedVariants.value[id] = parseInt(variantId);
-};
+  selectedVariants.value[id] = parseInt(variantId)
+}
 
 const addToOrder = (type, item) => {
   if (type === 'product') {
-    const variant = item.chitietsanphams.find(v => v.maCtsp === selectedVariants.value[item.maSp]);
+    const variant = item.chitietsanphams.find((v) => v.maCtsp === selectedVariants.value[item.maSp])
     if (!variant) {
-      Swal.fire({ icon: 'error', title: 'Lỗi!', text: 'Vui lòng chọn biến thể sản phẩm.' });
-      return;
+      Swal.fire({ icon: 'error', title: 'Lỗi!', text: 'Vui lòng chọn biến thể sản phẩm.' })
+      return
     }
     if (validateQuantity(item.maSp, quantities.value[item.maSp])) {
-      const variantName = [
-        variant.kichThuoc && variant.kichThuoc !== '' ? variant.kichThuoc : null,
-        variant.huongVi && variant.huongVi !== '' ? variant.huongVi : null
-      ].filter(Boolean).join(' - ') || '';
+      const variantName =
+        [
+          variant.kichThuoc && variant.kichThuoc !== '' ? variant.kichThuoc : null,
+          variant.huongVi && variant.huongVi !== '' ? variant.huongVi : null,
+        ]
+          .filter(Boolean)
+          .join(' - ') || ''
       // Kiểm tra donGia
-      const price = variant.donGia > 0 ? variant.donGia : null;
+      const price = variant.donGia > 0 ? variant.donGia : null
       if (!price) {
         Swal.fire({
           icon: 'error',
           title: 'Lỗi!',
-          text: `Sản phẩm ${item.tenSanPham} (Kích thước: ${variant.kichThuoc}) không có giá hợp lệ. Vui lòng kiểm tra dữ liệu.`
-        });
-        return;
+          text: `Sản phẩm ${item.tenSanPham} (Kích thước: ${variant.kichThuoc}) không có giá hợp lệ. Vui lòng kiểm tra dữ liệu.`,
+        })
+        return
       }
-      orderItems.value.push({
-        name: `${item.tenSanPham}${variantName ? ` (${variantName})` : ''}`,
-        quantity: quantities.value[item.maSp],
-        price: price,
-        maCtsp: variant.maCtsp,
-      });
-      quantities.value[item.maSp] = 1;
+      let sameItem = false
+      orderItems.value.forEach((e) => {
+        if (e.maCtsp == variant.maCtsp) {
+          e.quantity += quantities.value[item.maSp]
+          sameItem = true
+        }
+      })
+      if (sameItem == false) {
+        orderItems.value.push({
+          name: `${item.tenSanPham}${variantName ? ` (${variantName})` : ''}`,
+          quantity: quantities.value[item.maSp],
+          price: price,
+          maCtsp: variant.maCtsp,
+        })
+      }
+
+      quantities.value[item.maSp] = 1
     }
   } else if (type === 'combo') {
     if (validateQuantity(item.maCombo, quantities.value[item.maCombo])) {
-      const invalidItems = item.chitietcombos.filter(ct => !ct.chitietsanphams.find(v => v.maCtsp === selectedVariants.value[ct.maSp]));
+      const invalidItems = item.chitietcombos.filter(
+        (ct) => !ct.chitietsanphams.find((v) => v.maCtsp === selectedVariants.value[ct.maSp])
+      )
       if (invalidItems.length > 0) {
         Swal.fire({
           icon: 'error',
           title: 'Lỗi!',
-          text: `Vui lòng chọn biến thể cho: ${invalidItems.map(ct => ct.tenSp).join(', ')}.`
-        });
-        return;
+          text: `Vui lòng chọn biến thể cho: ${invalidItems.map((ct) => ct.tenSp).join(', ')}.`,
+        })
+        return
       }
 
-      const chiTietCombo = item.chitietcombos.map(ct => {
-        const variant = ct.chitietsanphams.find(v => v.maCtsp === selectedVariants.value[ct.maSp]);
-        const variantName = [
-          variant.kichThuoc && variant.kichThuoc !== '' ? variant.kichThuoc : null,
-          variant.huongVi && variant.huongVi !== '' ? variant.huongVi : null
-        ].filter(Boolean).join(' - ') || '';
-        return `${ct.tenSp}${variantName ? ` (${variantName})` : ''} x${ct.soLuongSp}`;
-      }).join(', ');
+      const chiTietCombo = item.chitietcombos
+        .map((ct) => {
+          const variant = ct.chitietsanphams.find(
+            (v) => v.maCtsp === selectedVariants.value[ct.maSp]
+          )
+          const variantName =
+            [
+              variant.kichThuoc && variant.kichThuoc !== '' ? variant.kichThuoc : null,
+              variant.huongVi && variant.huongVi !== '' ? variant.huongVi : null,
+            ]
+              .filter(Boolean)
+              .join(' - ') || ''
+          return `${ct.tenSp}${variantName ? ` (${variantName})` : ''} x${ct.soLuongSp}`
+        })
+        .join(', ')
 
-      let comboPrice = 0;
+      let comboPrice = 0
+      let originalprice = 0
       comboPrice = item.chitietcombos.reduce((total, ct) => {
-        const variant = ct.chitietsanphams.find(v => v.maCtsp === selectedVariants.value[ct.maSp]);
-        return total + (variant ? (variant.donGia > 0 ? variant.donGia : 0) * ct.soLuongSp : 0);
-      }, 0);
-
+        const variant = ct.chitietsanphams.find((v) => v.maCtsp === selectedVariants.value[ct.maSp])
+        return total + (variant ? (variant.donGia > 0 ? variant.donGia : 0) * ct.soLuongSp : 0)
+      }, 0)
+      originalprice = comboPrice
       if (item.phanTramGiam !== null && item.phanTramGiam > 0) {
-        comboPrice = comboPrice * (1 - item.phanTramGiam / 100);
+        comboPrice = comboPrice * (1 - item.phanTramGiam / 100)
       }
 
       if (item.soTienGiam !== null && item.soTienGiam > 0) {
-        comboPrice = item.soTienGiam;
+        comboPrice -= item.soTienGiam
       }
-
       if (comboPrice <= 0) {
         Swal.fire({
           icon: 'error',
           title: 'Lỗi!',
-          text: `Combo ${item.tenCombo} không có giá hợp lệ. Vui lòng kiểm tra dữ liệu.`
-        });
-        return;
+          text: `Combo ${item.tenCombo} không có giá hợp lệ. Vui lòng kiểm tra dữ liệu.`,
+        })
+        return
       }
-
-      orderItems.value.push({
-        name: `${item.tenCombo} (${chiTietCombo})`,
-        quantity: quantities.value[item.maCombo],
-        price: Math.round(comboPrice),
-        maCombo: item.maCombo,
-      });
-      quantities.value[item.maCombo] = 1;
+      let sameValue = false
+      orderItems.value.forEach((combo) => {
+        let name = combo.name.substring(combo.name.indexOf('(') + 1, combo.name.lastIndexOf(')'))
+        if (combo.maCombo == item.maCombo && name == chiTietCombo) {
+          combo.quantity += quantities.value[item.maCombo]
+          sameValue = true
+        }
+      })
+      if (sameValue == false) {
+        orderItems.value.push({
+          name: `${item.tenCombo} (${chiTietCombo})`,
+          quantity: quantities.value[item.maCombo],
+          price: Math.round(comboPrice),
+          maCombo: item.maCombo,
+          original_price: originalprice,
+        })
+      }
+      quantities.value[item.maCombo] = 1
     }
   }
-};
+}
 
 const removeFromOrder = (index) => {
-  orderItems.value.splice(index, 1);
+  orderItems.value.splice(index, 1)
   // Cập nhật lại giảm giá nếu tổng tiền thay đổi
   if (discountAmount.value > 0) {
-    applyCoupon();
+    applyCoupon()
   }
-};
+}
 
 // Hàm áp dụng mã coupon
 const applyCoupon = async () => {
   if (!couponCode.value) {
-    couponError.value = 'Vui lòng nhập mã coupon';
-    return;
+    couponError.value = 'Vui lòng nhập mã coupon'
+    return
   }
 
-  isApplyingCoupon.value = true;
-  couponError.value = '';
-  discountAmount.value = 0;
+  isApplyingCoupon.value = true
+  couponError.value = ''
+  discountAmount.value = 0
 
   try {
     const response = await fetch(`${getApiUrl}/api/Coupon/GetAll`, {
       headers: {
         Authorization: `Bearer ${token.value}`,
       },
-    });
+    })
 
     if (!response.ok) {
-      throw new Error('Không thể kiểm tra mã coupon. Vui lòng thử lại sau.');
+      throw new Error('Không thể kiểm tra mã coupon. Vui lòng thử lại sau.')
     }
 
-    const result = await response.json();
-    const coupons = result.data || [];
-    const coupon = coupons.find(c => c.maCode === couponCode.value.trim());
+    const result = await response.json()
+    const coupons = result.data || []
+    const coupon = coupons.find((c) => c.maCode === couponCode.value.trim())
 
     if (!coupon) {
-      throw new Error('Mã coupon không tồn tại. Vui lòng kiểm tra lại.');
+      throw new Error('Mã coupon không tồn tại. Vui lòng kiểm tra lại.')
     }
 
     // Kiểm tra điều kiện áp dụng mã coupon
-    const now = new Date();
+    const now = new Date()
     if (!coupon.trangThai) {
-      throw new Error('Mã coupon đã bị hủy');
+      throw new Error('Mã coupon đã bị hủy')
     }
     if (new Date(coupon.ngayKetThuc) < now) {
-      throw new Error('Mã coupon đã hết hạn');
+      throw new Error('Mã coupon đã hết hạn')
     }
     if (new Date(coupon.ngayBatDau) > now) {
-      throw new Error('Mã coupon chưa có hiệu lực');
+      throw new Error('Mã coupon chưa có hiệu lực')
     }
     if (coupon.soLuongDaDung >= coupon.soLuong) {
-      throw new Error('Mã coupon đã được sử dụng hết');
+      throw new Error('Mã coupon đã được sử dụng hết')
     }
     // if (totalAmount.value < coupon.donHangToiThieu) {
     //   throw new Error(
@@ -1009,174 +1048,184 @@ const applyCoupon = async () => {
     // }
 
     // Tính toán giảm giá
-    let discount = 0;
+    let discount = 0
     if (coupon.soTienGiam && coupon.soTienGiam > 0) {
-      discount = coupon.soTienGiam;
+      discount = coupon.soTienGiam
     } else if (coupon.phanTramGiam && coupon.phanTramGiam > 0) {
-      discount = (totalAmount.value * coupon.phanTramGiam) / 100;
+      discount = (totalAmount.value * coupon.phanTramGiam) / 100
     }
 
-    discountAmount.value = Math.round(discount);
+    discountAmount.value = Math.round(discount)
     Swal.fire({
       icon: 'success',
       title: 'Thành công!',
       text: `Áp dụng mã coupon thành công. Giảm giá: ${discountAmount.value} VNĐ`,
       timer: 1500,
-    });
+    })
   } catch (error) {
-    couponError.value = error.message;
+    couponError.value = error.message
     Swal.fire({
       icon: 'error',
       title: 'Lỗi!',
       text: error.message,
-    });
+    })
   } finally {
-    isApplyingCoupon.value = false;
+    isApplyingCoupon.value = false
   }
-};
+}
 
 // Hàm xóa mã coupon
 const removeCoupon = () => {
-  couponCode.value = '';
-  discountAmount.value = 0;
-  couponError.value = '';
+  couponCode.value = ''
+  discountAmount.value = 0
+  couponError.value = ''
   Swal.fire({
     icon: 'success',
     title: 'Thành công!',
     text: 'Đã xóa mã coupon.',
     timer: 1500,
-  });
-};
+  })
+}
 
 const checkout = async () => {
   try {
     if (!maNv.value || isNaN(maNv.value)) {
-      throw new Error("Không tìm thấy mã nhân viên trong token.");
+      throw new Error('Không tìm thấy mã nhân viên trong token.')
     }
-
-    const cthoadons = orderItems.value.flatMap(item => {
+    const detailComboOrderRequests = []
+    const cthoadons = orderItems.value.flatMap((item) => {
       if (item.maCtsp) {
         if (item.price <= 0) {
-          throw new Error(`Sản phẩm ${item.name} không có giá hợp lệ.`);
+          throw new Error(`Sản phẩm ${item.name} không có giá hợp lệ.`)
         }
-        return [{
-          maCtsp: parseInt(item.maCtsp),
-          soLuong: item.quantity,
-          donGia: item.price
-        }];
+        return [
+          {
+            maCtsp: parseInt(item.maCtsp),
+            soLuong: item.quantity,
+            donGia: item.price,
+          },
+        ]
       } else if (item.maCombo) {
-        const combo = combos.value.find(c => c.maCombo === item.maCombo);
+        const combo = combos.value.find((c) => c.maCombo === item.maCombo)
         if (!combo) {
-          throw new Error(`Combo ${item.name} không tồn tại.`);
+          throw new Error(`Combo ${item.name} không tồn tại.`)
         }
-        return combo.chitietcombos.map(ct => {
-          const variant = ct.chitietsanphams.find(v => v.maCtsp === selectedVariants.value[ct.maSp]);
+        combo.chitietcombos.map((ct) => {
+          const variant = ct.chitietsanphams.find(
+            (v) => v.maCtsp === selectedVariants.value[ct.maSp]
+          )
           if (!variant) {
-            throw new Error(`Biến thể không hợp lệ cho ${ct.tenSp} trong combo.`);
+            throw new Error(`Biến thể không hợp lệ cho ${ct.tenSp} trong combo.`)
           }
-          const donGia = variant.donGia > 0 ? variant.donGia : null;
-          if (!donGia) {
-            throw new Error(`Sản phẩm ${ct.tenSp} trong combo ${item.name} không có giá hợp lệ.`);
-          }
-          return {
-            maCtsp: parseInt(variant.maCtsp),
-            soLuong: item.quantity * ct.soLuongSp,
-            donGia: donGia
-          };
-        });
+          detailComboOrderRequests.push({
+            maCombo: item.maCombo,
+            maCTSp: variant.maCtsp,
+            soLuong: ct.soLuongSp * item.quantity,
+            donGia: variant.donGia,
+          })
+        })
+        return {
+          soLuong: item.quantity,
+          donGia: item.price,
+          maCombo: item.maCombo,
+        }
       }
-      return [];
-    });
+      return []
+    })
 
     const orderData = {
       maNv: parseInt(maNv.value),
       tinhTrang: 'Đã thanh toán',
       ngayTao: new Date().toISOString(),
+      diaChiNhanHang: 'Tại quầy',
       hinhThucTt: 'Tại quầy',
+      hoTen: 'Khách tại quầy',
+      sdt: 'N/A',
       tienGoc: totalAmount.value,
       phiVanChuyen: 0,
-      banId: selectedTable.value.id,
-      giamGiaCoupon: discountAmount.value,
+      //banId: selectedTable.value.id,
+      //giamGiaCoupon: discountAmount.value,
       maCoupon: couponCode.value || null,
-      cthoadons: cthoadons
-    };
-
+      detailCombo_OrderResquests: detailComboOrderRequests,
+      cthoadons: cthoadons,
+    }
+    // console.log(orderData)
+    // return
     const response = await fetch(getApiUrl + '/api/CounterBill', {
       method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token.value}`
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token.value}`,
       },
       body: JSON.stringify(orderData),
-    });
+    })
 
     if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`Lỗi từ server: ${response.status} - ${errorText}`);
+      const errorText = await response.text()
+      throw new Error(`Lỗi từ server: ${errorText}`)
     }
-
-    bill.value = await response.json();
-
+    var result = await response.json()
+    bill.value = result.data;
     await fetch(getApiUrl + `/api/Table/${selectedTable.value.id}`, {
       method: 'PUT',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token.value}`
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token.value}`,
       },
       body: JSON.stringify({ id: selectedTable.value.id, tinhTrang: 'Đang sử dụng' }),
-    });
+    })
 
-    const qrData = getApiUrl + `/api/CounterBill/GetBillDetails/details/${bill.value.maHd}`;
+    const qrData = getApiUrl + `/api/CounterBill/GetBillDetails/details/${bill.value.maHd}`
     // const homeQrData = 'https://jollibeefood.site'; // URL trang chủ
-    const homeQrData = '/'; // URL trang chủ
-    await nextTick();
+    const homeQrData = '/' // URL trang chủ
+    await nextTick()
 
     // Tạo mã QR cho modal hóa đơn
     if (qrCodeCanvas.value) {
-      await generateQRCode(qrCodeCanvas.value, qrData, 200);
+      await generateQRCode(qrCodeCanvas.value, qrData, 200)
     } else {
-      console.error('QR code canvas element for modal not found.');
+      console.error('QR code canvas element for modal not found.')
     }
 
     // Tạo mã QR cho chi tiết hóa đơn (template in)
-    let qrDetailsUrl = '';
-    let qrHomeUrl = '';
-    const tempCanvasDetails = document.createElement('canvas');
-    const tempCanvasHome = document.createElement('canvas');
+    let qrDetailsUrl = ''
+    let qrHomeUrl = ''
+    const tempCanvasDetails = document.createElement('canvas')
+    const tempCanvasHome = document.createElement('canvas')
 
     try {
-      qrDetailsUrl = await generateQRCode(tempCanvasDetails, qrData, 100);
+      qrDetailsUrl = await generateQRCode(tempCanvasDetails, qrData, 100)
       if (printQrCodeImg.value) {
-        printQrCodeImg.value.src = qrDetailsUrl;
+        printQrCodeImg.value.src = qrDetailsUrl
       }
     } catch (error) {
-      console.error('Error generating QR code for print (details):', error);
-      Swal.fire({ icon: 'error', title: 'Lỗi!', text: 'Không thể tạo mã QR chi tiết để in.' });
+      console.error('Error generating QR code for print (details):', error)
+      Swal.fire({ icon: 'error', title: 'Lỗi!', text: 'Không thể tạo mã QR chi tiết để in.' })
     }
 
     // Tạo mã QR cho trang chủ (template in)
     try {
-      qrHomeUrl = await generateQRCode(tempCanvasHome, homeQrData, 100);
+      qrHomeUrl = await generateQRCode(tempCanvasHome, homeQrData, 100)
       if (printHomeQrCodeImg.value) {
-        printHomeQrCodeImg.value.src = qrHomeUrl;
+        printHomeQrCodeImg.value.src = qrHomeUrl
       }
     } catch (error) {
-      console.error('Error generating QR code for print (home):', error);
-      Swal.fire({ icon: 'error', title: 'Lỗi!', text: 'Không thể tạo mã QR trang chủ để in.' });
+      console.error('Error generating QR code for print (home):', error)
+      Swal.fire({ icon: 'error', title: 'Lỗi!', text: 'Không thể tạo mã QR trang chủ để in.' })
     }
 
     // In hóa đơn
-    await nextTick();
-    const printWindow = window.open('', '_blank');
+    await nextTick()
+    const printWindow = window.open('', '_blank')
     if (!printWindow) {
       Swal.fire({
         icon: 'warning',
         title: 'Cảnh báo!',
         text: 'Trình duyệt đã chặn cửa sổ in. Vui lòng cho phép cửa sổ bật lên.',
-      });
-      return;
+      })
+      return
     }
-    const printContent = document.getElementById('print-bill').innerHTML;
+    const printContent = document.getElementById('print-bill').innerHTML
     printWindow.document.write(`
       <html>
         <head>
@@ -1190,119 +1239,147 @@ const checkout = async () => {
           <div id="print-bill">${printContent}</div>
         </body>
       </html>
-    `);
-    printWindow.document.close();
+    `)
+    printWindow.document.close()
 
     // Hiển thị modal hóa đơn
-    const orderModal = document.getElementById('orderAtCounterModal');
-    const billModal = document.getElementById('billModal');
-    const orderModalInstance = window.bootstrap.Modal.getInstance(orderModal);
-    if (orderModalInstance) orderModalInstance.hide();
-    const billModalInstance = new window.bootstrap.Modal(billModal);
-    billModalInstance.show();
+    const orderModal = document.getElementById('orderAtCounterModal')
+    const billModal = document.getElementById('billModal')
+    const orderModalInstance = window.bootstrap.Modal.getInstance(orderModal)
+    if (orderModalInstance) orderModalInstance.hide()
+    const billModalInstance = new window.bootstrap.Modal(billModal)
+    billModalInstance.show()
   } catch (error) {
-    Swal.fire({ icon: 'error', title: 'Lỗi!', text: error.message });
-    console.error('Checkout error:', error);
+    Swal.fire({ icon: 'error', title: 'Lỗi!', text: error.message })
+    console.error('Checkout error:', error)
   }
-};
+  fetchTables()
+}
 const numberToWords = (number) => {
-  const units = ['đồng', 'nghìn', 'triệu', 'tỷ'];
-  const digits = ['không', 'một', 'hai', 'ba', 'bốn', 'năm', 'sáu', 'bảy', 'tám', 'chín'];
-  const teens = ['mười', 'mười một', 'mười hai', 'mười ba', 'mười bốn', 'mười lăm', 'mười sáu', 'mười bảy', 'mười tám', 'mười chín'];
-  const tens = ['', '', 'hai mươi', 'ba mươi', 'bốn mươi', 'năm mươi', 'sáu mươi', 'bảy mươi', 'tám mươi', 'chín mươi'];
+  const units = ['đồng', 'nghìn', 'triệu', 'tỷ']
+  const digits = ['không', 'một', 'hai', 'ba', 'bốn', 'năm', 'sáu', 'bảy', 'tám', 'chín']
+  const teens = [
+    'mười',
+    'mười một',
+    'mười hai',
+    'mười ba',
+    'mười bốn',
+    'mười lăm',
+    'mười sáu',
+    'mười bảy',
+    'mười tám',
+    'mười chín',
+  ]
+  const tens = [
+    '',
+    '',
+    'hai mươi',
+    'ba mươi',
+    'bốn mươi',
+    'năm mươi',
+    'sáu mươi',
+    'bảy mươi',
+    'tám mươi',
+    'chín mươi',
+  ]
 
-  if (number === 0) return 'không đồng';
+  if (number === 0) return 'không đồng'
 
-  let result = '';
-  let unitIndex = 0;
+  let result = ''
+  let unitIndex = 0
 
   while (number > 0) {
-    let chunk = number % 1000;
-    let chunkStr = '';
+    let chunk = number % 1000
+    let chunkStr = ''
 
     if (chunk > 0) {
-      let hundreds = Math.floor(chunk / 100);
-      let tensUnits = chunk % 100;
-      let tensDigit = Math.floor(tensUnits / 10);
-      let unitsDigit = tensUnits % 10;
+      let hundreds = Math.floor(chunk / 100)
+      let tensUnits = chunk % 100
+      let tensDigit = Math.floor(tensUnits / 10)
+      let unitsDigit = tensUnits % 10
 
       if (hundreds > 0) {
-        chunkStr += digits[hundreds] + ' trăm';
+        chunkStr += digits[hundreds] + ' trăm'
       }
 
       if (tensUnits > 0) {
-        if (chunkStr) chunkStr += ' ';
+        if (chunkStr) chunkStr += ' '
         if (tensUnits < 10) {
           if (tensUnits === 5 && hundreds > 0) {
-            chunkStr += 'lăm';
+            chunkStr += 'lăm'
           } else {
-            chunkStr += digits[unitsDigit];
+            chunkStr += digits[unitsDigit]
           }
         } else if (tensUnits < 20) {
           if (tensUnits === 15) {
-            chunkStr += 'mười lăm';
+            chunkStr += 'mười lăm'
           } else {
-            chunkStr += teens[tensUnits - 10];
+            chunkStr += teens[tensUnits - 10]
           }
         } else {
-          chunkStr += tens[tensDigit];
+          chunkStr += tens[tensDigit]
           if (unitsDigit > 0) {
-            chunkStr += ' ';
+            chunkStr += ' '
             if (unitsDigit === 1) {
-              chunkStr += 'mốt';
+              chunkStr += 'mốt'
             } else if (unitsDigit === 5) {
-              chunkStr += 'lăm';
+              chunkStr += 'lăm'
             } else {
-              chunkStr += digits[unitsDigit];
+              chunkStr += digits[unitsDigit]
             }
           }
         }
       }
 
       if (chunkStr) {
-        if (result) result = chunkStr + ' ' + units[unitIndex] + ' ' + result;
-        else result = chunkStr + ' ' + units[unitIndex];
+        if (result) result = chunkStr + ' ' + units[unitIndex] + ' ' + result
+        else result = chunkStr + ' ' + units[unitIndex]
       }
     }
 
-    number = Math.floor(number / 1000);
-    unitIndex++;
+    number = Math.floor(number / 1000)
+    unitIndex++
   }
 
-  return result.trim();
-};
+  return result.trim()
+}
 const resetOrder = () => {
-  orderItems.value = [];
-  selectedVariants.value = {};
-  quantities.value = {};
-  quantityErrors.value = {};
-  bill.value = null;
-  menuSearch.value = '';
-  categoryFilter.value = '';
-  sortOption.value = '';
-  couponCode.value = ''; // Reset mã coupon
-  discountAmount.value = 0; // Reset giảm giá
-  couponError.value = ''; // Reset lỗi
-};
+  orderItems.value = []
+  selectedVariants.value = {}
+  quantities.value = {}
+  quantityErrors.value = {}
+  bill.value = null
+  menuSearch.value = ''
+  categoryFilter.value = ''
+  sortOption.value = ''
+  couponCode.value = '' // Reset mã coupon
+  discountAmount.value = 0 // Reset giảm giá
+  couponError.value = '' // Reset lỗi
+}
 
 const getTableClass = (status) => {
   switch (status) {
-    case 'Trống': return 'table-card-available';
-    case 'Đang sử dụng': return 'table-card-in-use';
-    case 'Đã đặt trước': return 'table-card-reserved';
-    case 'Đang sửa chữa': return 'table-card-maintenance';
-    default: return 'table-card-available';
+    case 'Trống':
+      return 'table-card-available'
+    case 'Đang sử dụng':
+      return 'table-card-in-use'
+    case 'Đã đặt trước':
+      return 'table-card-reserved'
+    case 'Đang sửa chữa':
+      return 'table-card-maintenance'
+    default:
+      return 'table-card-available'
   }
-};
+}
 
 // Theo dõi thay đổi để cập nhật danh sách bàn
-watch([searchQuery, statusFilter], fetchTables, { debounce: 300 });
+watch([searchQuery, statusFilter], fetchTables, { debounce: 300 })
 
 // Khởi tạo khi component được mount
 onMounted(() => {
-  getTokenAndDecode();
-  fetchTables();
-});
+  getTokenAndDecode()
+  fetchTables()
+})
 </script>
 
 <style scoped>

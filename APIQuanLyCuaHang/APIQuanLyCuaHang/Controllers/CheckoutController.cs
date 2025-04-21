@@ -60,12 +60,16 @@ namespace APIQuanLyCuaHang.Controllers
                 {
                     return Ok( new { Success = false, Message = "Mã không khả dụng" });
                 }
+                if(findCouponCode.DonHangToiThieu > originalPrice)
+                {
+                    return Ok(new { Success = false, Message = $"Mã chỉ áp dụng với đơn hàng có giá trị tối thiểu {findCouponCode.DonHangToiThieu} (không tính phí ship)" });
+                }
                 var check = await DetailMaCoupon.CheckUser_CouponCode(maUser, couponcode);
                 if(check == false)
                 {
                     return Ok( new { Success = false, Message = "Bạn đã sử dụng mã này rồi" });
                 }
-                var afterApplyCouponPrice = (decimal)(findCouponCode.PhanTramGiam != null ? (originalPrice * findCouponCode.PhanTramGiam / 100) : (findCouponCode.SoTienGiam != null ? originalPrice - findCouponCode.SoTienGiam : 0));
+                var afterApplyCouponPrice = (decimal)(findCouponCode.PhanTramGiam != null ? (originalPrice * findCouponCode.PhanTramGiam / 100) : (findCouponCode.SoTienGiam != null ? findCouponCode.SoTienGiam : 0));
                 return Ok(new
                 {
                     Success = true,

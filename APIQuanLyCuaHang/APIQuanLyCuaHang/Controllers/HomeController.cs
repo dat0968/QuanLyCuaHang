@@ -242,42 +242,13 @@ namespace APIQuanLyCuaHang.Controllers
             {
                 new CategoryResponseDTO
                 {
-                    MaDanhMuc = -3,
-                    TenDanhMuc = "Tất cả đồ ăn",
-                    HinhDaiDien = await db.Sanphams
-                        .Where(s => s.IsDelete == false)
-                        .Include(s => s.Chitietsanphams)
-                        .ThenInclude(ct => ct.Hinhanhs)
-                        .Select(s => s.Chitietsanphams.FirstOrDefault() != null
-                            ? (s.Chitietsanphams.FirstOrDefault().Hinhanhs.FirstOrDefault() != null
-                                ? s.Chitietsanphams.FirstOrDefault().Hinhanhs.FirstOrDefault().TenHinhAnh
-                                : null)
-                            : null)
-                        .FirstOrDefaultAsync()
-                },
-                new CategoryResponseDTO
-                {
                     MaDanhMuc = -1,
-                    TenDanhMuc = "Món ngon phải thử",
+                    TenDanhMuc = "Combo đang hot",
                     HinhDaiDien = await db.Combos
                         .Where(c => c.IsDelete == false)
                         .Select(c => c.Hinh)
                         .FirstOrDefaultAsync()
-                },
-                new CategoryResponseDTO
-                {
-                    MaDanhMuc = -2,
-                    TenDanhMuc = "Món bán chạy",
-                    HinhDaiDien = bestSellerData != null
-                        ? await db.Chitietsanphams
-                            .Include(ct => ct.Hinhanhs)
-                            .Where(ct => ct.MaCtsp == bestSellerData.MaCtsp)
-                            .Select(ct => ct.Hinhanhs.FirstOrDefault() != null
-                                ? ct.Hinhanhs.FirstOrDefault().TenHinhAnh
-                                : null)
-                            .FirstOrDefaultAsync()
-                        : null
-                }
+                },              
             };
 
             categories.InsertRange(0, specialCategories);

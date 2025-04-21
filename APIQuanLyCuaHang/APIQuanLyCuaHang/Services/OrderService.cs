@@ -47,7 +47,7 @@ namespace APIQuanLyCuaHang.Services
                 var ModelOrder = new Hoadon
                 {
                     MaKh = NewOrder.MaKh,
-                    MaNv = null,
+                    MaNv = NewOrder.MaNv ?? null,
                     NgayTao = DateTime.Now,
                     BatDauGiao = null,
                     NgayNhan = null,
@@ -90,7 +90,7 @@ namespace APIQuanLyCuaHang.Services
                            // UpdateCombo.TenCombo = FindCombo.TenCombo;
                             if(FindCombo.SoLuong < 0)
                             {
-                                throw new Exception("Số lượng còn lại của combo không đủ");
+                                throw new Exception($"Số lượng còn lại của combo {FindCombo.TenCombo} ({FindCombo.MaCombo}) không đủ");
                             }
                             await ComboRepository.EditCombo(FindCombo);
                             // Lọc DetailCombo_OrderResquests theo MaCombo của ModelDetailOrder
@@ -121,7 +121,7 @@ namespace APIQuanLyCuaHang.Services
                                     UpdateProduct.SoLuongTon = UpdateProduct.SoLuongTon - detailComboOrder.SoLuong;
                                     if (UpdateProduct.SoLuongTon < 0)
                                     {
-                                        throw new Exception($"Số lượng còn lại của sản phẩm không đủ để đáp ứng cho combo mã {NewModel.MaCombo}");
+                                        throw new Exception($"Số lượng còn lại của sản phẩm {UpdateProduct.MaSpNavigation.TenSanPham} ({UpdateProduct.MaSp}) không đủ để đáp ứng cho combo mã {NewModel.MaCombo}");
                                     }
                                     else
                                     {
@@ -140,7 +140,7 @@ namespace APIQuanLyCuaHang.Services
                         UpdateProduct.SoLuongTon = UpdateProduct.SoLuongTon - ModelDetailOrder.SoLuong;
                         if (UpdateProduct.SoLuongTon < 0)
                         {
-                            throw new Exception("Sản phẩm đã hết hàng");
+                            throw new Exception($"Sản phẩm {UpdateProduct.MaSpNavigation.TenSanPham} ({UpdateProduct.MaSp}) đã hết hàng");
                         }
                         else
                         {
@@ -156,16 +156,21 @@ namespace APIQuanLyCuaHang.Services
                     {
                         FindCoupon.SoLuongDaDung++;
                         MaCouponRepository.Update(FindCoupon);
-                        await DetailMaCouponRepository.AddDetailMacoupon(FindCoupon.MaCode, NewOrder.MaKh);
+                        await DetailMaCouponRepository.AddDetailMacoupon(FindCoupon.MaCode, NewOrder.MaKh.Value);
                     }
                     else
                     {
                         throw new Exception("CouponCode not Found");
                     }                  
                 }
-
-                await CartRepository.RemoveAllCart(NewOrder.MaKh);
-                await db.Database.CommitTransactionAsync();
+                if(NewOrder.MaKh != null)
+                {
+                    await CartRepository.RemoveAllCart(NewOrder.MaKh.Value);
+                    await db.Database.CommitTransactionAsync();
+                }
+                ModelOrder = await db.Hoadons
+                .Include(h => h.MaNvNavigation)
+                .FirstOrDefaultAsync(h => h.MaHd == ModelOrder.MaHd);
                 return ModelOrder;
             }
             catch(Exception ex)

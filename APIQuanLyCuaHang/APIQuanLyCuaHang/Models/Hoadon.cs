@@ -7,7 +7,7 @@ public partial class Hoadon
 {
     public int MaHd { get; set; }
 
-    public int MaKh { get; set; }
+    public int? MaKh { get; set; }
 
     public int? MaNv { get; set; }
 
@@ -41,7 +41,7 @@ public partial class Hoadon
     public string? MaCoupon { get; set; }
     public virtual ICollection<Cthoadon> Cthoadons { get; set; } = new List<Cthoadon>();
 
-    public virtual Khachhang MaKhNavigation { get; set; } = null!;
+    public virtual Khachhang? MaKhNavigation { get; set; }
 
     public virtual Nhanvien? MaNvNavigation { get; set; }
     public virtual MaCoupon? MaCouponNavigation { get; set; }

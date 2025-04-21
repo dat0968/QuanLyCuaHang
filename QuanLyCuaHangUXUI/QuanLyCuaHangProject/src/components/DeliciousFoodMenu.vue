@@ -265,7 +265,7 @@ onMounted(() => {
               <div class="category-image">
                 <img src="/src/assets/client/img/Food_Drink/CapDoiAnY-2Mi-1Dui-1Uc-2Nuoc-1Khoai.png" alt="combo" /> 
               </div>
-              <span>Món ngon phải thử</span>
+              <span>Combo đang hot</span>
             </button>
           </div>
           <div class="category-item animate__animated animate__fadeIn">
