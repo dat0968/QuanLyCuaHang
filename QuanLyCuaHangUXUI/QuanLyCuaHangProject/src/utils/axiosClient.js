@@ -77,13 +77,16 @@ async function refreshAccessToken() {
 // Middleware (interceptors) thêm Authorization header và xử lý refresh token
 axiosClient.interceptors.request.use(
   async (config) => {
-    const requiresAuth = !config.headers.skipAuth
+    const isRequiresAuth = !config.headers.skipAuth;
+    // console.log(isRequiresAuth)
+    const requiresAuth = isRequiresAuth
 
     if (!requiresAuth) {
       return config // Không yêu cầu xác thực, bỏ qua
     }
 
     const accessToken = Cookies.get('accessToken')
+    // console.log(accessToken)
 
     if (!accessToken) {
       // Yêu cầu xác thực nhưng không có token
@@ -109,6 +112,8 @@ axiosClient.interceptors.request.use(
       config.headers.Authorization = `Bearer ${accessToken}`
     }
 
+    // console.log(config)
+
     return config
   },
   (error) => {
@@ -119,11 +124,11 @@ axiosClient.interceptors.request.use(
 // Xử lý phản hồi với các lỗi
 axiosClient.interceptors.response.use(
   (response) => {
-    if (response.status >= 200 && response.status < 300) {
-      return response.data
-    }
-    toastr.info('Hiện không thể xử lí yêu cầu của bạn.')
-    router.push('/')
+    // if (response.status >= 200 && response.status < 300) {
+    //   return response.data
+    // }
+    // toastr.info('Hiện không thể xử lí yêu cầu của bạn.')
+    // router.push('/')
     return response.data
   },
   (error) => {
@@ -136,74 +141,6 @@ axiosClient.interceptors.response.use(
         query: { message: error.response?.data?.message ?? 'Lỗi không xác định từ API' },
       }
 
-      switch (error.response.status) {
-        case 401:
-          // Unauthorized
-          toastr.warning(
-            'Phiên đăng nhập đã hết hạn hoặc bạn không có quyền truy cập. Vui lòng đăng nhập lại.',
-          )
-
-          // ? Lưu lịch sử trang web không có quyền truy cập.
-          routeParams.state = {
-            from: router.currentRoute.fullPath,
-          }
-
-          router.push({
-            name: 'Error',
-            params: { status: error.response.status.toString() }, // Chuyển status sang string
-            query: { message: error.response?.data?.message ?? 'Lỗi không xác định từ API' },
-            state: {
-              from: router.currentRoute.fullPath,
-            },
-          })
-          break
-
-        case 403:
-          // Forbidden
-          toastr.error('Bạn không có quyền truy cập vào tài nguyên này.')
-          router.push({
-            name: 'Error',
-            params: { status: error.response.status.toString() }, // Chuyển status sang string
-            query: {
-              message:
-                error.response?.data?.message ?? 'Bạn không có quyền truy cập vào tài nguyên này',
-            },
-          })
-          break
-
-        case 404:
-          // Not Found
-          toastr.error('Không tìm thấy tài nguyên.')
-          router.push({
-            name: 'Error',
-            params: { status: error.response.status.toString() }, // Chuyển status sang string
-            query: { message: error.response?.data?.message ?? 'Không tìm thấy tài nguyên' },
-          })
-          break
-
-        case 500:
-          // Internal Server Error
-          toastr.error('Đã xảy ra lỗi máy chủ. Vui lòng thử lại sau.')
-          router.push({
-            name: 'Error',
-            params: { status: error.response.status.toString() }, // Chuyển status sang string
-            query: {
-              message:
-                error.response?.data?.message ?? 'Đã xảy ra lỗi máy chủ. Vui lòng thử lại sau',
-            },
-          })
-          break
-
-        default:
-          // Các lỗi khác
-          toastr.error('Đã xảy ra lỗi.')
-          router.push({
-            name: 'Error',
-            params: { status: error.response.status.toString() }, // Chuyển status sang string
-            query: { message: error.response?.data?.message ?? 'Đã xảy ra lỗi' },
-          })
-          break
-      }
       // Ném lỗi để các promise khác có thể bắt được
       throw new Error(error.response?.data?.message ?? 'Lỗi không xác định từ API.')
     }

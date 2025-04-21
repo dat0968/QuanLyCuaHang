@@ -222,9 +222,10 @@
                               <div class="row align-items-center">
                                 <div class="col-3">
                                   <img
-                                    :src="getImageUrl(item.hinhAnh, `/HinhAnh/Food_Drink`)"
+                                    :src="getImageUrl(getApiUrl + `/HinhAnh/Food_Drink/${item.hinhAnh}`)"
                                     :alt="item.tenDoiTuong"
                                     class="img-fluid rounded border"
+                                    :data-nameImg="item.hinhAnh"
                                     style="width: 100px; height: 100px; object-fit: cover"
                                   />
                                 </div>
@@ -318,7 +319,7 @@ import 'datatables.net'
 import 'datatables.net-dt/css/dataTables.dataTables.css'
 import pdfMake from 'pdfmake/build/pdfmake'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
-
+import { GetApiUrl } from '@constants/api'
 import * as configsDt from '@/utils/configsDatatable.js'
 import * as axiosClient from '@/utils/axiosClient'
 import { formatCurrency, convertNumberToWords } from '@/constants/formatCurrency'
@@ -336,6 +337,7 @@ export default {
   name: 'OrderClient',
   data() {
     return {
+      getApiUrl: GetApiUrl(),
       orders: [],
       filteredOrders: [], // Dữ liệu sau khi lọc
       selectedOrder: null, // Lưu thông tin hóa đơn để hiển thị chi tiết trong modal
@@ -350,6 +352,7 @@ export default {
   mounted() {
     authService.hasAnyRole(['Customer'])
     this.loadOrders()
+    
   },
   methods: {
     getImageUrl,

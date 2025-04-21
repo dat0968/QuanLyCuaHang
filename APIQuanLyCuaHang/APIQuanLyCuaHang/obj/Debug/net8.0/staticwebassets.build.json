@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "wqHLk9FCabuvpBMm68BPfv5lxv91CuFDQGrepONwKFY=",
+  "Hash": "G2c8T3FB3LZxw2lzfXr8UQM6fG8fXPFxbx/zU4cWokU=",
   "Source": "APIQuanLyCuaHang",
   "BasePath": "_content/APIQuanLyCuaHang",
   "Mode": "Default",
@@ -647,6 +647,27 @@
       "OriginalItemSpec": "wwwroot\\HinhAnh\\Combo\\MiNuoc.jpg"
     },
     {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\1945_1.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/Food_Drink/1945_1#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "mlxe9r3x01",
+      "Integrity": "ZvlXvcHM8kSpKKz15ANGmVMoaf6+yHOsjZVnMOHvFvE=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\Food_Drink\\1945_1.jpg"
+    },
+    {
       "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\2Dui.png",
       "SourceId": "APIQuanLyCuaHang",
       "SourceType": "Discovered",
@@ -876,6 +897,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\HinhAnh\\Food_Drink\\chickenjoy_spicy_2piece_2.jpg"
+    },
+    {
+      "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\download.jpg",
+      "SourceId": "APIQuanLyCuaHang",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\",
+      "BasePath": "_content/APIQuanLyCuaHang",
+      "RelativePath": "HinhAnh/Food_Drink/download#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "5zqsk2i9yn",
+      "Integrity": "b0wIKX/m9irJ0rt2U+ZrPdm6ApFmFkcJ7XkcW2usGoI=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HinhAnh\\Food_Drink\\download.jpg"
     },
     {
       "Identity": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\Dui.png",
@@ -4768,6 +4810,88 @@
       ]
     },
     {
+      "Route": "HinhAnh/Food_Drink/1945_1.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\1945_1.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "441607"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ZvlXvcHM8kSpKKz15ANGmVMoaf6+yHOsjZVnMOHvFvE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 21 Apr 2025 17:47:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-ZvlXvcHM8kSpKKz15ANGmVMoaf6+yHOsjZVnMOHvFvE="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/Food_Drink/1945_1.mlxe9r3x01.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\1945_1.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "441607"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ZvlXvcHM8kSpKKz15ANGmVMoaf6+yHOsjZVnMOHvFvE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 21 Apr 2025 17:47:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "mlxe9r3x01"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/Food_Drink/1945_1.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-ZvlXvcHM8kSpKKz15ANGmVMoaf6+yHOsjZVnMOHvFvE="
+        }
+      ]
+    },
+    {
       "Route": "HinhAnh/Food_Drink/2Dui.png",
       "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\2Dui.png",
       "Selectors": [],
@@ -5666,6 +5790,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-OOpLvis5dBucTBZODNZq+D+6FIExwMnRpNwaXEULNoc="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/Food_Drink/download.5zqsk2i9yn.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\download.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9300"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"b0wIKX/m9irJ0rt2U+ZrPdm6ApFmFkcJ7XkcW2usGoI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 21 Apr 2025 17:47:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5zqsk2i9yn"
+        },
+        {
+          "Name": "label",
+          "Value": "HinhAnh/Food_Drink/download.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-b0wIKX/m9irJ0rt2U+ZrPdm6ApFmFkcJ7XkcW2usGoI="
+        }
+      ]
+    },
+    {
+      "Route": "HinhAnh/Food_Drink/download.jpg",
+      "AssetFile": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\download.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9300"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"b0wIKX/m9irJ0rt2U+ZrPdm6ApFmFkcJ7XkcW2usGoI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 21 Apr 2025 17:47:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-b0wIKX/m9irJ0rt2U+ZrPdm6ApFmFkcJ7XkcW2usGoI="
         }
       ]
     },

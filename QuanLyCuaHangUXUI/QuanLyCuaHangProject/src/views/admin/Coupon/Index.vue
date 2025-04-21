@@ -34,7 +34,17 @@ const itemsPerPage = ref(10);
 
 
 const baseUrl = getApiUrl+'/api/Coupon';
+// Hàm validate ngày
+const validateDates = () => {
+  const startDate = couponForm.value.ngayBatDau ? new Date(couponForm.value.ngayBatDau) : null;
+  const endDate = couponForm.value.ngayKetThuc ? new Date(couponForm.value.ngayKetThuc) : null;
 
+  if (startDate && endDate && startDate > endDate) {
+    Swal.fire('Lỗi', 'Ngày bắt đầu không được lớn hơn ngày kết thúc', 'error');
+    return false;
+  }
+  return true;
+};
 // Fetch all coupons
 const fetchCoupons = async () => {
   try {
@@ -165,7 +175,8 @@ const validateDiscount = () => {
 
 // CRUD operations
 const createCoupon = async () => {
-  if (!validateDiscount()) return;
+  if (!validateDiscount() || !validateDates()) return;
+
 
   try {
     const response = await fetch(`${baseUrl}/Create`, {
@@ -196,7 +207,8 @@ const createCoupon = async () => {
 };
 
 const updateCoupon = async () => {
-  if (!validateDiscount()) return;
+  if (!validateDiscount() || !validateDates()) return;
+
 
   try {
     const response = await fetch(`${baseUrl}/Update`, {

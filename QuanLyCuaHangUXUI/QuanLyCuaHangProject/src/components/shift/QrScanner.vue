@@ -6,8 +6,10 @@
     >
       <qrcode-stream
         @decode="onScanSuccess"
+        @init="onInit"
+        @error="onError"
+        :paused="false"
         style="width: 200px; height: 200px"
-        :disabled="isDisabled"
       ></qrcode-stream>
       <p class="mt-2">Hoặc tải ảnh QR lên:</p>
       <div class="d-flex w-75 mb-2 align-items-center">
@@ -71,6 +73,7 @@ import * as axiosConfig from '@/utils/axiosClient'
 import ConfigsRequest from '@/models/ConfigsRequest'
 import ResponseAPI from '@/models/ResponseAPI'
 import { formatTime } from '@/constants/formatDatetime'
+import Cookies from 'js-cookie'
 
 export default {
   name: 'QrScanner',
@@ -98,7 +101,7 @@ export default {
           ConfigsRequest.takeAuth(),
         )
 
-        console.log(response)
+        // console.log(response)
         if (response.success && response.data.length > 0) {
           this.employeeList = response.data // Lưu danh sách nhân viên
           this.isDisabled = true // Disable các chức năng quét QR và tải ảnh
@@ -112,8 +115,10 @@ export default {
     },
     async onScanSuccess(qrCodeData) {
       try {
+        // console.log(Cookies.get("accessToken"))
         const response = await axiosConfig.postToApi(
           `/Schedule/TimeKeeping?&qrCodeData=${encodeURIComponent(qrCodeData)}`,
+          null,
           ConfigsRequest.takeAuth(),
         )
 
@@ -202,6 +207,14 @@ export default {
       } else {
         toastr.error('Không tìm thấy ca làm việc tương ứng.')
       }
+    },
+    onInit(promise) {
+      promise
+        .then(() => console.log('Camera đã sẵn sàng'))
+        .catch(error => console.error('Lỗi khi khởi tạo camera:', error))
+    },
+    onError(error) {
+      console.error('QR stream error:', error)
     },
   },
 }

@@ -21,6 +21,10 @@
       "PackagePath": "staticwebassets\\HinhAnh\\Combo\\MiNuoc.jpg"
     },
     {
+      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\1945_1.jpg",
+      "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\1945_1.jpg"
+    },
+    {
       "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\2Dui.png",
       "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\2Dui.png"
     },
@@ -107,6 +111,10 @@
     {
       "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\chickenjoy_spicy_2piece_2.jpg",
       "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\chickenjoy_spicy_2piece_2.jpg"
+    },
+    {
+      "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\download.jpg",
+      "PackagePath": "staticwebassets\\HinhAnh\\Food_Drink\\download.jpg"
     },
     {
       "Id": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\wwwroot\\HinhAnh\\Food_Drink\\g_s_t_cay_-_7-compressed.jpg",
