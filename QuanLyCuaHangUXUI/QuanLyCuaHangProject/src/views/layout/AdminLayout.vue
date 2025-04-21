@@ -40,6 +40,23 @@ import '../../assets/admin/plugins/datepicker/datepicker.min.js'
 import '../../assets/admin/plugins/datepicker/i18n/datepicker.en.js'
 //import '../../assets/admin/js/init/dashborad.js'
 import '../../assets/admin/js/main.js'
+import Cookies from 'js-cookie'
+import {ref, onMounted} from 'vue'
+import { ReadToken, ValidateToken } from '../../Authentication_Authorization/auth.js'
+const role = ref('')
+onMounted(async () => {
+  let accesstoken = Cookies.get('accessToken')
+  let refreshtoken = Cookies.get('refreshToken')
+
+  const validatetoken = await ValidateToken(accesstoken, refreshtoken)
+  if (validatetoken) {
+    accesstoken = Cookies.get('accessToken')
+    const readtoken = ReadToken(accesstoken)
+    if (readtoken) {
+      role.value = readtoken.Role
+    }
+  }
+})
 </script>
 <template>
   <div class="xp-vertical">
@@ -65,7 +82,7 @@ import '../../assets/admin/js/main.js'
           <div class="xp-navigationbar">
             <ul class="xp-vertical-menu">
               <li class="xp-vertical-header">Chức năng quản lý</li>
-              <li>
+              <li v-if="role.toLowerCase() == 'admin'">
                 <RouterLink to="/Admin">
                   <i class="icon-speedometer"></i><span>THỐNG KÊ</span>
                 </RouterLink>
@@ -100,27 +117,17 @@ import '../../assets/admin/js/main.js'
                   <i class="icon-note"></i><span>BÀN</span>
                 </RouterLink>
               </li>
-              <li>
+              <li v-if="role.toLowerCase() == 'admin'">
                 <router-link to="/admin/staff">
                   <i class="icon-people"></i><span>NHÂN VIÊN</span>
                 </router-link>
               </li>
-              <li>
+              <li v-if="role.toLowerCase() == 'admin'">
                 <router-link to="/admin/shift-manager">
                   <i class="icon-shield"></i><span>CA LÀM VIỆC</span>
                 </router-link>
               </li>
-              <li>
-                <a href="javaScript:void();">
-                  <i class="icon-social-dropbox"></i><span>Danh sách mục</span
-                  ><i class="icon-arrow-right pull-right"></i>
-                </a>
-                <ul class="xp-vertical-submenu">
-                  <li><a href="d">Mục 1</a></li>
-                  <li><a href="d">Mục 2</a></li>
-                  <li><a href="d">Mục 3</a></li>
-                </ul>
-              </li>
+             
             </ul>
           </div>
           <!-- End XP Navigationbar -->
