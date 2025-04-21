@@ -3,8 +3,7 @@
     <a class="dropdown-item py-3 text-white text-center font-16" href="#"
       >Chào mừng, {{ userName }}</a
     >
-    <!-- dán link sang trang cập nhật vào dòng hồ sơ -->
-    <a class="dropdown-item" href="#"><i class="icon-user text-primary mr-2"></i> Hồ sơ</a>
+
 
     <a class="dropdown-item" href="#">
       <i class="icon-bell text-primary mr-2"></i>

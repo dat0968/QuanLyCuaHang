@@ -5,6 +5,8 @@ import DetailProductModal from '../Product/Details.vue'
 import EditProductModal from '../Product/Edit.vue'
 import Swal from 'sweetalert2'
 import { GetApiUrl } from '@constants/api'
+import { ReadToken, ValidateToken } from '../../../Authentication_Authorization/auth.js'
+import Cookies from 'js-cookie'
 const ListProduct = ref([])
 const TotalPages = ref(0)
 const CurrentPage = ref(1)
@@ -12,9 +14,20 @@ const valueSearch = ref('')
 const valueCategory = ref('')
 const valueSort = ref('')
 const valuePrices = ref('')
+const role = ref('')
+let accesstoken = Cookies.get('accessToken')
+let refreshtoken = Cookies.get('refreshToken')
 let getApiUrl = GetApiUrl()
 async function fetchProducts() {
   try {
+    const validatetoken = await ValidateToken(accesstoken, refreshtoken)
+    if(validatetoken){
+      accesstoken = Cookies.get('accessToken')
+      const readtoken = ReadToken(accesstoken)
+      if(readtoken){
+        role.value = readtoken.Role;
+      }
+    }
     const response = await fetch(
       getApiUrl+`/api/Products?page=${CurrentPage.value}&search=${valueSearch.value}&filterCatories=${valueCategory.value}&sort=${valueSort.value}&filterPrices=${valuePrices.value}`,
       {
@@ -170,7 +183,7 @@ const RemoveProduct = async (id) => {
     </div>
 
     <!-- Nút thêm sản phẩm -->
-    <div class="mb-4">
+    <div class="mb-4" v-if="role.toLowerCase() == 'admin'">
       <button
         type="button"
         class="btn btn-primary"
@@ -205,6 +218,7 @@ const RemoveProduct = async (id) => {
                 data-bs-toggle="modal"
                 :data-bs-target="`#productEditModal_${product.maSp}`"
                 class="btn btn-warning btn-sm"
+                v-if="role.toLowerCase() == 'admin'"
               >
                 ✏️ Sửa
               </button>
@@ -218,7 +232,7 @@ const RemoveProduct = async (id) => {
                 ℹ️ Chi tiết
               </button>
               <DetailProductModal :Product="product" />
-              <button @click="RemoveProduct(product.maSp)" class="btn btn-danger btn-sm">
+              <button v-if="role.toLowerCase() == 'admin'" @click="RemoveProduct(product.maSp)" class="btn btn-danger btn-sm">
                 🗑️ Xóa
               </button>
             </td>

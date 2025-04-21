@@ -5,14 +5,27 @@ import EditCombo from '../Combo/Edit.vue'
 import DetailCombo from '../Combo/Details.vue'
 import Swal from 'sweetalert2'
 import { GetApiUrl } from '@constants/api'
+import { ReadToken, ValidateToken } from '../../../Authentication_Authorization/auth.js'
+import Cookies from 'js-cookie'
 let getApiUrl = GetApiUrl()
 const listCombo = ref([])
 const ListProduct = ref([])
 const TotalPages = ref(0)
 const CurrentPage = ref(1)
 const valueSearch = ref('')
+let accesstoken = Cookies.get('accessToken')
+let refreshtoken = Cookies.get('refreshToken')
+const role = ref('')
 async function fetchCombo() {
   try {
+    const validatetoken = await ValidateToken(accesstoken, refreshtoken)
+    if(validatetoken){
+      accesstoken = Cookies.get('accessToken')
+      const readtoken = ReadToken(accesstoken)
+      if(readtoken){
+        role.value = readtoken.Role;
+      }
+    }
     const response = await fetch(getApiUrl+`/api/Combos?page=${CurrentPage.value}&search=${valueSearch.value}`, {
       method: 'GET',
       headers: {
@@ -116,7 +129,7 @@ onMounted(() => {
 
    
     <!-- Nút thêm combo (tĩnh, không có chức năng) -->
-    <div class="mb-4">
+    <div class="mb-4" v-if="role.toLowerCase() == 'admin'">
       <button
         type="button"
         class="btn btn-primary"
@@ -168,6 +181,7 @@ onMounted(() => {
                 data-bs-toggle="modal"
                 :data-bs-target="`#comboEditModal_${combo.maCombo}`"
                 class="btn btn-warning btn-sm"
+                v-if="role.toLowerCase() == 'admin'"
               >
                 ✏️ Sửa
               </button>
@@ -181,7 +195,7 @@ onMounted(() => {
                 ℹ️ Chi tiết
               </button>
               <DetailCombo :Combo="combo" :ListProduct="ListProduct" />
-              <button @click="removeCombo(combo.maCombo)" class="btn btn-danger btn-sm">
+              <button v-if="role.toLowerCase() == 'admin'" @click="removeCombo(combo.maCombo)" class="btn btn-danger btn-sm">
                 🗑️ Xóa
               </button>
             </td>
