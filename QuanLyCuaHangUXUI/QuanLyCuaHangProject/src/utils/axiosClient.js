@@ -11,7 +11,7 @@ import { GetApiUrl } from '@constants/api'
 let getApiUrl = GetApiUrl()
 // Base Axios Client
 const axiosClient = axios.create({
-  baseURL: getApiUrl+'/api', // Thay bằng base URL của API bạn
+  baseURL: getApiUrl + '/api', // Thay bằng base URL của API bạn
   timeout: 500000, // Giới hạn timeout (ms)
   headers: {
     'Content-Type': 'application/json',
@@ -119,91 +119,12 @@ axiosClient.interceptors.request.use(
 // Xử lý phản hồi với các lỗi
 axiosClient.interceptors.response.use(
   (response) => {
-    if (response.status >= 200 && response.status < 300) {
-      return response.data
-    }
-    toastr.info('Hiện không thể xử lí yêu cầu của bạn.')
-    router.push('/')
     return response.data
   },
   (error) => {
     if (error.response) {
       console.error(`API Error: ${error.response.status}`, error.response.data)
 
-      let routeParams = {
-        name: 'Error',
-        params: { status: error.response.status.toString() }, // Chuyển status sang string
-        query: { message: error.response?.data?.message ?? 'Lỗi không xác định từ API' },
-      }
-
-      switch (error.response.status) {
-        case 401:
-          // Unauthorized
-          toastr.warning(
-            'Phiên đăng nhập đã hết hạn hoặc bạn không có quyền truy cập. Vui lòng đăng nhập lại.',
-          )
-
-          // ? Lưu lịch sử trang web không có quyền truy cập.
-          routeParams.state = {
-            from: router.currentRoute.fullPath,
-          }
-
-          router.push({
-            name: 'Error',
-            params: { status: error.response.status.toString() }, // Chuyển status sang string
-            query: { message: error.response?.data?.message ?? 'Lỗi không xác định từ API' },
-            state: {
-              from: router.currentRoute.fullPath,
-            },
-          })
-          break
-
-        case 403:
-          // Forbidden
-          toastr.error('Bạn không có quyền truy cập vào tài nguyên này.')
-          router.push({
-            name: 'Error',
-            params: { status: error.response.status.toString() }, // Chuyển status sang string
-            query: {
-              message:
-                error.response?.data?.message ?? 'Bạn không có quyền truy cập vào tài nguyên này',
-            },
-          })
-          break
-
-        case 404:
-          // Not Found
-          toastr.error('Không tìm thấy tài nguyên.')
-          router.push({
-            name: 'Error',
-            params: { status: error.response.status.toString() }, // Chuyển status sang string
-            query: { message: error.response?.data?.message ?? 'Không tìm thấy tài nguyên' },
-          })
-          break
-
-        case 500:
-          // Internal Server Error
-          toastr.error('Đã xảy ra lỗi máy chủ. Vui lòng thử lại sau.')
-          router.push({
-            name: 'Error',
-            params: { status: error.response.status.toString() }, // Chuyển status sang string
-            query: {
-              message:
-                error.response?.data?.message ?? 'Đã xảy ra lỗi máy chủ. Vui lòng thử lại sau',
-            },
-          })
-          break
-
-        default:
-          // Các lỗi khác
-          toastr.error('Đã xảy ra lỗi.')
-          router.push({
-            name: 'Error',
-            params: { status: error.response.status.toString() }, // Chuyển status sang string
-            query: { message: error.response?.data?.message ?? 'Đã xảy ra lỗi' },
-          })
-          break
-      }
       // Ném lỗi để các promise khác có thể bắt được
       throw new Error(error.response?.data?.message ?? 'Lỗi không xác định từ API.')
     }

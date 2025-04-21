@@ -4,11 +4,12 @@
       v-if="!showShiftTable"
       class="col d-flex justify-content-center flex-column align-items-center"
     >
-      <qrcode-stream
+      <div
+        id="readerQr"
         @decode="onScanSuccess"
         style="width: 200px; height: 200px"
         :disabled="isDisabled"
-      ></qrcode-stream>
+      ></div>
       <p class="mt-2">Hoặc tải ảnh QR lên:</p>
       <div class="d-flex w-75 mb-2 align-items-center">
         <input
@@ -64,8 +65,8 @@
 </template>
 
 <script>
-import { QrcodeStream } from 'vue-qrcode-reader'
 import jsQR from 'jsqr'
+import { Html5Qrcode } from 'html5-qrcode'
 import toastr from 'toastr'
 import * as axiosConfig from '@/utils/axiosClient'
 import ConfigsRequest from '@/models/ConfigsRequest'
@@ -74,7 +75,7 @@ import { formatTime } from '@/constants/formatDatetime'
 
 export default {
   name: 'QrScanner',
-  components: { QrcodeStream },
+  // components: { QrcodeStream },
   data() {
     return {
       uploadedFile: null,
@@ -82,10 +83,37 @@ export default {
       employeeList: [],
       isDisabled: false,
       loading: false, // Biến kiểm soát trạng thái
+      html5Qrcode: null,
+      lastScanTime: 0, // Thêm biến để theo dõi thời gian quét cuối
     }
   },
   async created() {
     await this.loadEmployeeSchedule() // Gọi API khi component được khởi tạo
+  },
+  mounted() {
+    this.html5Qrcode = new Html5Qrcode('readerQr')
+    this.html5Qrcode
+      .start(
+        { facingMode: 'environment' },
+        {
+          fps: 10,
+          qrbox: { width: 200, height: 200 },
+        },
+        (decodedText, decodedResult) => {
+          const currentTime = Date.now()
+          // Kiểm tra xem đã đủ 5 giây kể từ lần quét cuối chưa
+          if (currentTime - this.lastScanTime >= 5000) {
+            this.lastScanTime = currentTime // Cập nhật thời gian quét
+            this.onScanSuccess(decodedText)
+          }
+        },
+        (errorMessage) => {
+          console.log('Error: ', errorMessage)
+        },
+      )
+      .catch((err) => {
+        console.error(err)
+      })
   },
   methods: {
     formatTime,
@@ -114,6 +142,7 @@ export default {
       try {
         const response = await axiosConfig.postToApi(
           `/Schedule/TimeKeeping?&qrCodeData=${encodeURIComponent(qrCodeData)}`,
+          '',
           ConfigsRequest.takeAuth(),
         )
 
