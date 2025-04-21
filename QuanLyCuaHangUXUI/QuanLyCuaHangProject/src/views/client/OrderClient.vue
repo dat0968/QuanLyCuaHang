@@ -219,7 +219,17 @@
                             :key="item.maDoiTuong"
                           >
                             <td>
-                              <div class="row align-items-center">
+                              <router-link
+                                :to="
+                                  [
+                                    '/',
+                                    item.loaiDoiTuong == 'Combo' ? 'combo' : 'product',
+                                    '/',
+                                    item.maDoiTuong,
+                                  ].join('')
+                                "
+                                class="row align-items-center text-decoration-none"
+                              >
                                 <div class="col-3">
                                   <img
                                     :src="getImageUrl(item.hinhAnh, `/HinhAnh/Food_Drink`)"
@@ -235,7 +245,7 @@
                                     Kích thước: {{ item.kichThuoc || 'N/A' }}
                                   </p>
                                 </div>
-                              </div>
+                              </router-link>
                             </td>
                             <td class="text-center">{{ item.soLuong }}</td>
                             <td>{{ formatCurrency(item.donGia) }}</td>
