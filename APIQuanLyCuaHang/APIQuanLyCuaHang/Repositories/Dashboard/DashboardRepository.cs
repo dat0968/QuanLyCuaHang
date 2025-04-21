@@ -257,10 +257,10 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
 
                 ProductDC productDC = new ProductDC
                 {
-                    MaSp = productDb!.MaSp,
-                    MaDanhMuc = productDb.MaDanhMuc,
-                    TenSanPham = productDb.TenSanPham,
-                    MoTa = productDb.MoTa,
+                    MaSp = productDb != null ? productDb.MaSp : 0,
+                    MaDanhMuc = productDb != null ? productDb.MaDanhMuc : 0,
+                    TenSanPham = productDb != null ? productDb.TenSanPham : "N/A",
+                    MoTa = productDb != null ? productDb.MoTa : "N/A",
                     ChiTietSanPhams = fullDetailOfProductDb
                 };
                 response.SetSuccessResponse("Thông tin các chi tiết liên quan đến sản phẩm đã được lấy!");
@@ -355,7 +355,7 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
                     HinhThucTt = hoadon.HinhThucTt,
                     TinhTrang = hoadon.TinhTrang,
                     MaNv = hoadon.MaNv,
-                    MaKh = hoadon.MaKh.Value,
+                    MaKh = hoadon.MaKh ?? 0,
                     MoTa = hoadon.MoTa,
                     HoTen = hoadon.HoTen ?? "N/A",
                     Sdt = hoadon.Sdt ?? "N/A",
@@ -394,8 +394,8 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
                 DiaChiNhanHang = hoadon.DiaChiNhanHang,
                 HinhThucTt = hoadon.HinhThucTt,
                 TinhTrang = hoadon.TinhTrang,
-                MaNv = hoadon.MaNv,
-                MaKh = hoadon.MaKh.Value,
+                MaNv = hoadon.MaNv ?? 0,
+                MaKh = hoadon.MaKh ?? 0,
                 MoTa = hoadon.MoTa,
                 HoTen = hoadon.HoTen ?? "N/A",
                 Sdt = hoadon.Sdt ?? "N/A",
@@ -486,10 +486,10 @@ namespace APIQuanLyCuaHang.Repositories.Dashboard
                 HinhThucTt = hoadon.HinhThucTt,
                 TinhTrang = hoadon.TinhTrang,
                 MaNv = hoadon.MaNv,
-                MaKh = hoadon.MaKh.Value,
+                MaKh = hoadon.MaKh ?? 0,
                 MoTa = hoadon.MoTa,
-                HoTen = hoadon.HoTen,
-                Sdt = hoadon.Sdt,
+                HoTen = hoadon.HoTen ?? "N/A",
+                Sdt = hoadon.Sdt ?? "N/A",
                 NgayTao = hoadon.NgayTao,
                 NgayNhan = hoadon.NgayNhan,
                 NgayThanhToan = hoadon.NgayThanhToan,

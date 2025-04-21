@@ -1,5 +1,6 @@
 <template>
-  <div class="card-header bg-white">
+  <div>
+    <div class="card-header bg-white">
     <h5 class="card-title text-black mb-0">Biểu đồ doanh thu</h5>
   </div>
   <div class="cart-body">
@@ -24,6 +25,7 @@
         <canvas ref="orderOverviewChart"></canvas>
       </div>
     </div>
+  </div>
   </div>
 </template>
 
