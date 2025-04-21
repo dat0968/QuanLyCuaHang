@@ -165,9 +165,9 @@ namespace APIQuanLyCuaHang.Services
                 }
                 if(NewOrder.MaKh != null)
                 {
-                    await CartRepository.RemoveAllCart(NewOrder.MaKh.Value);
-                    await db.Database.CommitTransactionAsync();
+                    await CartRepository.RemoveAllCart(NewOrder.MaKh.Value);              
                 }
+                await db.Database.CommitTransactionAsync();
                 ModelOrder = await db.Hoadons
                 .Include(h => h.MaNvNavigation)
                 .FirstOrDefaultAsync(h => h.MaHd == ModelOrder.MaHd);
