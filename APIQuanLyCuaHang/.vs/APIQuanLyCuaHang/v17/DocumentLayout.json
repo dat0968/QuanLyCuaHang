@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\repositories\\bill\\billrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\repositories\\bill\\billrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\controllers\\billcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\controllers\\billcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\services\\orderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\services\\orderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -29,10 +37,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\dto\\cartitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\dto\\cartitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\repositories\\bill\\billrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\repositories\\bill\\billrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\repositories\\dashboard\\dashboardrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -64,10 +68,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\repositories\\detailmacoupon\\idetailmacoupon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\repositories\\detailmacoupon\\idetailmacoupon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\controllers\\billcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\controllers\\billcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\dto\\personalinformationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -136,8 +136,8 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 174,
-          "SelectedChildIndex": 14,
+          "DockedWidth": 47,
+          "SelectedChildIndex": 19,
           "Children": [
             {
               "$type": "Bookmark",
@@ -145,7 +145,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "DashboardRepository.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\DashboardRepository.cs",
               "RelativeDocumentMoniker": "..\\..\\DashboardRepository.cs",
@@ -157,7 +157,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "Product.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Product\\Product.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\Product\\Product.cs",
@@ -170,7 +170,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "CounterBillController.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Controllers\\CounterBillController.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Controllers\\CounterBillController.cs",
@@ -183,7 +183,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "Hoadon.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Models\\Hoadon.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Models\\Hoadon.cs",
@@ -208,7 +208,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "DashboardRepository.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Dashboard\\DashboardRepository.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\Dashboard\\DashboardRepository.cs",
@@ -220,7 +220,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "TableController.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Controllers\\TableController.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Controllers\\TableController.cs",
@@ -232,7 +232,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "QuanLyCuaHangContextModelSnapshot.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Migrations\\QuanLyCuaHangContextModelSnapshot.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Migrations\\QuanLyCuaHangContextModelSnapshot.cs",
@@ -244,7 +244,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "DashboardController.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Controllers\\DashboardController.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Controllers\\DashboardController.cs",
@@ -268,7 +268,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "CartRepository.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Cart\\CartRepository.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\Cart\\CartRepository.cs",
@@ -293,7 +293,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "IDetailMaCoupon.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\DetailMaCoupon\\IDetailMaCoupon.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\DetailMaCoupon\\IDetailMaCoupon.cs",
@@ -305,20 +305,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "OrderService.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Services\\OrderService.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Services\\OrderService.cs",
               "ToolTip": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Services\\OrderService.cs",
               "RelativeToolTip": "APIQuanLyCuaHang\\Services\\OrderService.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAADgvykAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAJkAAAAAAAAAAAASwK4AAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-14T06:12:53.962Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "OrderClientController.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Controllers\\OrderClientController.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Controllers\\OrderClientController.cs",
@@ -366,15 +366,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 1,
               "Title": "BillController.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Controllers\\BillController.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Controllers\\BillController.cs",
               "ToolTip": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Controllers\\BillController.cs",
               "RelativeToolTip": "APIQuanLyCuaHang\\Controllers\\BillController.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAiwCAAAAA1AAAAAAAAAA==",
+              "ViewState": "AgIAABUAAAAAAAAAAAA/wBcAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-13T11:27:05.906Z"
+              "WhenOpened": "2025-04-13T11:27:05.906Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -402,7 +403,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "CartController.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Controllers\\CartController.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Controllers\\CartController.cs",
@@ -415,7 +416,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "appsettings.json",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\appsettings.json",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\appsettings.json",
@@ -423,14 +424,13 @@
               "RelativeToolTip": "APIQuanLyCuaHang\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-04-12T15:56:10.229Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-12T15:56:10.229Z"
             }
           ]
         },
         {
-          "DockedWidth": 110,
-          "SelectedChildIndex": 9,
+          "DockedWidth": 237,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -458,15 +458,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 0,
               "Title": "BillRepository.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Bill\\BillRepository.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\Repositories\\Bill\\BillRepository.cs",
               "ToolTip": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\Repositories\\Bill\\BillRepository.cs",
               "RelativeToolTip": "APIQuanLyCuaHang\\Repositories\\Bill\\BillRepository.cs",
-              "ViewState": "AgIAAD0BAAAAAAAAAIA2wEUBAAARAAAAAAAAAA==",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAUwFsAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-21T05:39:50.327Z"
+              "WhenOpened": "2025-04-21T05:39:50.327Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -518,7 +519,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "CartItemDTO.cs",
               "DocumentMoniker": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\APIQuanLyCuaHang\\DTO\\CartItemDTO.cs",
               "RelativeDocumentMoniker": "APIQuanLyCuaHang\\DTO\\CartItemDTO.cs",
