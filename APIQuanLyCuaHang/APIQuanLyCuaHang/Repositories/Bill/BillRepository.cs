@@ -73,48 +73,59 @@ namespace APIQuanLyCuaHang.Repositories.Bill
         // Lấy hóa đơn theo ID
         public async Task<HoaDonDTO?> GetById(int id)
         {
-            var hd = await db.Hoadons.AsNoTracking()
+            try
+            {
+                var hd = await db.Hoadons.AsNoTracking()
                 .Include(p => p.MaNvNavigation)
                 .Include(p => p.MaKhNavigation)
                 .Include(p => p.MaCouponNavigation)
                 .Include(p => p.Chitietcombohoadons)
                 .ThenInclude(c => c.MaComboNavigation)
                 .FirstOrDefaultAsync(p => p.MaHd == id);
-            if (hd == null) return null;
+                if (hd == null) return null;
 
-            return new HoaDonDTO
-            {
-                MaHd = hd.MaHd,
-                MaKh = hd.MaKh.Value,
-                MaNv = hd.MaNv,
-                DiaChiNhanHang = hd.DiaChiNhanHang,
-                NgayTao = hd.NgayTao,
-                BatDauGiao = hd.BatDauGiao,
-                NgayNhan = hd.NgayNhan,
-                NgayThanhToan = hd.NgayThanhToan,
-                HinhThucTt = hd.HinhThucTt,
-                TinhTrang = hd.TinhTrang,
-                MoTa = hd.MoTa,
-                HoTenNguoiNhan = hd.HoTen,
-                HoTenNguoiDat = hd.MaKhNavigation.HoTen,
-                HoTenNv = hd.MaNvNavigation.HoTen,
-                Sdt = hd.Sdt,
-                LyDoHuy = hd.LyDoHuy,
-                PhiVanChuyen = hd.PhiVanChuyen,
-                TienGoc = hd.TienGoc,
-                GiamGiaCoupon = hd.MaCouponNavigation.SoTienGiam.Value == null ?
-                    (hd.MaCouponNavigation.PhanTramGiam.Value == null ? 0 : hd.TienGoc - hd.TienGoc * hd.MaCouponNavigation.PhanTramGiam.Value / 100) : 0,
-                Tongtien = hd.TienGoc + hd.PhiVanChuyen - (hd.MaCouponNavigation.SoTienGiam.Value == null ?
-                    (hd.MaCouponNavigation.PhanTramGiam.Value == null ? 0 : hd.TienGoc - hd.TienGoc * hd.MaCouponNavigation.PhanTramGiam.Value / 100) : 0),
-                ChitietcombohoadonDTOs = hd.Chitietcombohoadons.Select(p => new ChitietcombohoadonDTO
+                return new HoaDonDTO
                 {
                     MaHd = hd.MaHd,
-                    MaCombo = p.MaCombo,
-                    MaCTSp = p.MaCTSp,
-                    SoLuong = p.SoLuong,
-                    DonGia = p.DonGia,
-                }).ToList()
-            };
+                    MaKh = hd.MaKh ?? null,
+                    MaNv = hd.MaNv,
+                    DiaChiNhanHang = hd.DiaChiNhanHang,
+                    NgayTao = hd.NgayTao,
+                    BatDauGiao = hd.BatDauGiao,
+                    NgayNhan = hd.NgayNhan,
+                    NgayThanhToan = hd.NgayThanhToan,
+                    HinhThucTt = hd.HinhThucTt,
+                    TinhTrang = hd.TinhTrang,
+                    MoTa = hd.MoTa,
+                    HoTenNguoiNhan = hd.HoTen,
+                    HoTenNguoiDat = hd.MaKhNavigation == null ? null : hd.MaKhNavigation.HoTen,
+                    HoTenNv = hd.MaNvNavigation == null ? null : hd.MaNvNavigation.HoTen,
+                    Sdt = hd.Sdt,
+                    LyDoHuy = hd.LyDoHuy,
+                    PhiVanChuyen = hd.PhiVanChuyen,
+                    TienGoc = hd.TienGoc,
+                    GiamGiaCoupon = hd.MaCouponNavigation == null ? 0 :
+                        (hd.MaCouponNavigation.SoTienGiam.HasValue ? hd.MaCouponNavigation.SoTienGiam.Value :
+                        (hd.MaCouponNavigation.PhanTramGiam.HasValue ? (hd.TienGoc * hd.MaCouponNavigation.PhanTramGiam.Value / 100) : 0)),
+                    Tongtien = hd.TienGoc + hd.PhiVanChuyen - (hd.MaCouponNavigation == null ? 0 :
+                        (hd.MaCouponNavigation.SoTienGiam.HasValue ? hd.MaCouponNavigation.SoTienGiam.Value :
+                        (hd.MaCouponNavigation.PhanTramGiam.HasValue ? (hd.TienGoc * hd.MaCouponNavigation.PhanTramGiam.Value / 100) : 0))),
+                    ChitietcombohoadonDTOs = hd.Chitietcombohoadons == null ? new List<ChitietcombohoadonDTO>() :
+                        hd.Chitietcombohoadons.Select(p => new ChitietcombohoadonDTO
+                        {
+                            MaHd = hd.MaHd,
+                            MaCombo = p.MaCombo,
+                            MaCTSp = p.MaCTSp,
+                            SoLuong = p.SoLuong,
+                            DonGia = p.DonGia,
+                        }).ToList()
+                };
+            }catch(Exception ex)
+            {
+                throw new Exception("Loi", ex.InnerException);
+                throw;
+            }
+            
         }
 
         public async Task<(IEnumerable<HoaDonDTO>, int)> GetFilteredBill(string? maHD, string? hinhThucTt, string? tinhTrang, int page, int pageSize)
@@ -257,7 +268,7 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                 var HoaDonDTOWithDetails = new HoaDonDTOWithDetails
                 {
                     MaHd = bill.MaHd,
-                    MaKh = bill.MaKh.Value,
+                    MaKh = bill.MaKh ?? null,
                     MaNv = bill.MaNv,
                     HoTenNv = bill.MaNvNavigation != null ? bill.MaNvNavigation.HoTen : null,
                     DiaChiNhanHang = bill.DiaChiNhanHang,
@@ -268,8 +279,8 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                     HinhThucTt = bill.HinhThucTt,
                     TinhTrang = bill.TinhTrang,
                     MoTa = bill.MoTa,
-                    HoTenNguoiNhan = bill.HoTen,
-                    HoTenNguoiDat = bill.MaKhNavigation.HoTen,
+                    HoTenNguoiNhan = bill.HoTen ?? null,
+                    HoTenNguoiDat = bill.MaKhNavigation == null ? null : bill.MaKhNavigation.HoTen,
                     Sdt = bill.Sdt,
                     LyDoHuy = bill.LyDoHuy,
                     PhiVanChuyen = bill.PhiVanChuyen,
@@ -389,7 +400,7 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                         throw new Exception($"Không tìm chi tiết mã coupon {existingHoaDon.MaCoupon}");
                     }
                     db.ChitietmaCoupons.Remove(detailCoupon);
-                }               
+                }
                 await db.SaveChangesAsync();
                 await db.Database.CommitTransactionAsync();
             }

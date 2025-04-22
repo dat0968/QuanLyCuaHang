@@ -4,13 +4,12 @@
       v-if="!showShiftTable"
       class="col d-flex justify-content-center flex-column align-items-center"
     >
-      <qrcode-stream
+      <div
+        id="readerQr"
         @decode="onScanSuccess"
-        @init="onInit"
-        @error="onError"
-        :paused="false"
         style="width: 200px; height: 200px"
-      ></qrcode-stream>
+        :disabled="isDisabled"
+      ></div>
       <p class="mt-2">Hoặc tải ảnh QR lên:</p>
       <div class="d-flex w-75 mb-2 align-items-center">
         <input
@@ -37,7 +36,7 @@
       </div>
 
       <div v-else class="mt-3">
-        <h5>Nhân Viên cùng đăng kí Ca {{ employeeList[0].maCaKip }}</h5>
+        <h5>Nhân Viên cùng đăng kí Ca {{ employeeList[0].tenCa }}</h5>
         <div style="overflow-x: auto">
           <table class="table table-bordered mt-2" id="dt-employeeList">
             <thead>
@@ -66,18 +65,17 @@
 </template>
 
 <script>
-import { QrcodeStream } from 'vue-qrcode-reader'
 import jsQR from 'jsqr'
+import { Html5Qrcode } from 'html5-qrcode'
 import toastr from 'toastr'
 import * as axiosConfig from '@/utils/axiosClient'
 import ConfigsRequest from '@/models/ConfigsRequest'
 import ResponseAPI from '@/models/ResponseAPI'
 import { formatTime } from '@/constants/formatDatetime'
-import Cookies from 'js-cookie'
 
 export default {
   name: 'QrScanner',
-  components: { QrcodeStream },
+  // components: { QrcodeStream },
   data() {
     return {
       uploadedFile: null,
@@ -85,10 +83,37 @@ export default {
       employeeList: [],
       isDisabled: false,
       loading: false, // Biến kiểm soát trạng thái
+      html5Qrcode: null,
+      lastScanTime: 0, // Thêm biến để theo dõi thời gian quét cuối
     }
   },
   async created() {
     await this.loadEmployeeSchedule() // Gọi API khi component được khởi tạo
+  },
+  mounted() {
+    this.html5Qrcode = new Html5Qrcode('readerQr')
+    this.html5Qrcode
+      .start(
+        { facingMode: 'environment' },
+        {
+          fps: 10,
+          qrbox: { width: 200, height: 200 },
+        },
+        (decodedText, decodedResult) => {
+          const currentTime = Date.now()
+          // Kiểm tra xem đã đủ 5 giây kể từ lần quét cuối chưa
+          if (currentTime - this.lastScanTime >= 5000) {
+            this.lastScanTime = currentTime // Cập nhật thời gian quét
+            this.onScanSuccess(decodedText)
+          }
+        },
+        (errorMessage) => {
+          console.log('Error: ', errorMessage)
+        },
+      )
+      .catch((err) => {
+        console.error(err)
+      })
   },
   methods: {
     formatTime,
@@ -101,7 +126,7 @@ export default {
           ConfigsRequest.takeAuth(),
         )
 
-        // console.log(response)
+        console.log(response)
         if (response.success && response.data.length > 0) {
           this.employeeList = response.data // Lưu danh sách nhân viên
           this.isDisabled = true // Disable các chức năng quét QR và tải ảnh
@@ -115,10 +140,9 @@ export default {
     },
     async onScanSuccess(qrCodeData) {
       try {
-        // console.log(Cookies.get("accessToken"))
         const response = await axiosConfig.postToApi(
           `/Schedule/TimeKeeping?&qrCodeData=${encodeURIComponent(qrCodeData)}`,
-          null,
+          '',
           ConfigsRequest.takeAuth(),
         )
 
@@ -130,7 +154,11 @@ export default {
         const maCaKip = Number(qrCodeData.split('-')[0]) // ID ca làm việc từ mã QR
         this.filterEmployeesByShift(maCaKip)
       } catch (error) {
-        toastr.error('Lỗi khi chấm công: ' + error.message)
+        Swal.fire({
+          icon: 'error',
+          title: 'Lỗi khi chấm công',
+          text: error.message,
+        });
       }
     },
     async onFileUpload(event) {
@@ -147,7 +175,12 @@ export default {
             const qrData = await this.decodeQrFromImage(img)
             this.onScanSuccess(qrData)
           } catch (error) {
-            toastr.info(error.message)
+            Swal.fire({
+              icon: 'info',
+              title: 'Thông báo',
+              text: error.message,
+            });
+
           }
         }
       }
@@ -167,7 +200,11 @@ export default {
             const qrData = await this.decodeQrFromImage(img)
             this.onScanSuccess(qrData)
           } catch (error) {
-            toastr.error(error.message)
+            Swal.fire({
+              icon: 'error',
+              title: 'Lỗi',
+              text: error.message,
+            });
           }
         }
       }
@@ -196,7 +233,7 @@ export default {
       if (currentShift) {
         // Lọc `schedules` chỉ lấy nhân viên có `trangThai === "Đi làm"`
         this.employeeList = (currentShift.schedules || []).filter(
-          (employee) => employee.trangThai === 'Đi làm',
+          (employee) => employee.trangThai == 'Đi làm' || employee.trangThai == "Chờ xác nhận",
         )
 
         if (this.employeeList.length === 0) {
@@ -205,16 +242,12 @@ export default {
           this.showShiftTable = true // Hiển thị bảng nhân viên
         }
       } else {
-        toastr.error('Không tìm thấy ca làm việc tương ứng.')
+        Swal.fire({
+          icon: 'error',
+          title: 'Lỗi',
+          text: 'Không tìm thấy ca làm việc tương ứng.',
+        });
       }
-    },
-    onInit(promise) {
-      promise
-        .then(() => console.log('Camera đã sẵn sàng'))
-        .catch(error => console.error('Lỗi khi khởi tạo camera:', error))
-    },
-    onError(error) {
-      console.error('QR stream error:', error)
     },
   },
 }

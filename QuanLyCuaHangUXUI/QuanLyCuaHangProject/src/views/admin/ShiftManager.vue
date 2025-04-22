@@ -257,11 +257,11 @@ export default {
               const tenCa = row.tenCa || 'N/A'
               const soNguoiHienTai = row.soNguoiHienTai || 0
               const soNguoiToiDa = row.soNguoiToiDa || 'N/A'
-
+//                  <span class="text-disabled">[${row.maCaKip}]</span><br/>
               return `
                 <div>
-                  <strong>${tenCa}</strong><br/>
-                  <span>Số người làm: ${soNguoiHienTai}/${soNguoiToiDa}</span>
+                  <strong>${tenCa}</strong> </br>
+                  <span>Số người làm: ${soNguoiHienTai}/${soNguoiToiDa} </span>
                 </div>
               `
             },

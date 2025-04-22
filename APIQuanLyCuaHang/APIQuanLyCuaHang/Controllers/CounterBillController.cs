@@ -209,7 +209,7 @@ namespace APIQuanLyCuaHang.Controllers
                     <div class='bill-info'>
                         <p><strong>Mã hóa đơn:</strong> {billDetails.MaHd}</p>
                         <p><strong>Nhân viên:</strong> {tenNv}</p>
-                        {(billDetails.MaKh != 0 ? $"<p><strong>Khách hàng:</strong> {billDetails.MaKh}</p>" : "")}
+                 
                         <p><strong>Ngày tạo:</strong> {billDetails.NgayTao:dd/MM/yyyy HH:mm:ss}</p>
                         <p><strong>Hình thức thanh toán:</strong> {billDetails.HinhThucTt}</p>
                         <p><strong>Địa chỉ:</strong> {billDetails.DiaChiNhanHang}</p>

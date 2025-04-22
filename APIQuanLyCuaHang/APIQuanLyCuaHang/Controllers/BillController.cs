@@ -22,10 +22,10 @@ namespace APIQuanLyCuaHang.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var hoaDon = await _billRepository.GetById(id);
-            if (hoaDon == null)
-            {
-                return NotFound(new { message = "Không tìm thấy hóa đơn!" });
-            }
+            //if (hoaDon == null)
+            //{
+            //    return NotFound(new { message = "Không tìm thấy hóa đơn!" });
+            //}
             return Ok(hoaDon);
         }
 
