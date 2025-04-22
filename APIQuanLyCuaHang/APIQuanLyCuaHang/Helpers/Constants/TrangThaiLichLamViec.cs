@@ -65,6 +65,7 @@ namespace APIQuanLyCuaHang.Constants
                 case TrangThaiLichLamViec.NghiPhep:
                 case TrangThaiLichLamViec.NghiKhongPhep:
                 case TrangThaiLichLamViec.Tre:
+                case TrangThaiLichLamViec.KhongDuocXacNhan:
                     if (string.IsNullOrEmpty(request.GhiChu))
                     {
                         throw new ArgumentException("Ghi chú không được để trống cho trạng thái bất thường.");

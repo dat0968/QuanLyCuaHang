@@ -37,7 +37,7 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                 .Select(hd => new HoaDonDTO
                 {
                     MaHd = hd.MaHd,
-                    MaKh = hd.MaKh.Value,
+                    MaKh = hd.MaKh ?? null,
                     MaNv = hd.MaNv,
                     DiaChiNhanHang = hd.DiaChiNhanHang,
                     NgayTao = hd.NgayTao,
@@ -74,13 +74,14 @@ namespace APIQuanLyCuaHang.Repositories.Bill
         public async Task<HoaDonDTO?> GetById(int id)
         {
             var hd = await db.Hoadons.AsNoTracking()
-                .Include(p => p.MaNvNavigation)
-                .Include(p => p.MaKhNavigation)
-                .Include(p => p.MaCouponNavigation)
-                .Include(p => p.Chitietcombohoadons)
-                .ThenInclude(c => c.MaComboNavigation)
-                .FirstOrDefaultAsync(p => p.MaHd == id);
+            .Include(p => p.MaNvNavigation)
+            .Include(p => p.MaKhNavigation)
+            .Include(p => p.MaCouponNavigation)
+            .Include(p => p.Chitietcombohoadons)
+            .ThenInclude(c => c.MaComboNavigation)
+            .FirstOrDefaultAsync(p => p.MaHd == id);
             if (hd == null) return null;
+
 
             return new HoaDonDTO
             {
@@ -392,7 +393,7 @@ namespace APIQuanLyCuaHang.Repositories.Bill
                         throw new Exception($"Không tìm chi tiết mã coupon {existingHoaDon.MaCoupon}");
                     }
                     db.ChitietmaCoupons.Remove(detailCoupon);
-                }               
+                }
                 await db.SaveChangesAsync();
                 await db.Database.CommitTransactionAsync();
             }

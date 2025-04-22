@@ -11,6 +11,8 @@ namespace APIQuanLyCuaHang.DTO
 
         public int MaNv { get; set; }
 
+        public string? TenCa { get; set; }
+
         public string? TenNhanVien { get; set; }
 
         public int MaCaKip { get; set; }

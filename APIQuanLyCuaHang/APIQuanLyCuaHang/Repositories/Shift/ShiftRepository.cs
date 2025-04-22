@@ -124,6 +124,7 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
                 var dataFormatted = new CaKipDTO
                 {
                     MaCaKip = maCaKip,
+                    TenCa = dataOrigin.TenCa ?? "N/A",
                     SoNguoiToiDa = dataOrigin.SoNguoiToiDa,
                     SoNguoiHienTai = dataOrigin.SoNguoiHienTai,
                     GioBatDau = dataOrigin.GioBatDau,
@@ -399,6 +400,7 @@ namespace APIQuanLyCuaHang.Repositories.CaKip
                         MaNv = ls.MaNv,
                         TenNhanVien = nhanVienDict[ls.MaNv].HoTen,
                         MaCaKip = ls.MaCaKip,
+                        TenCa = caKip.TenCa,
                         NgayThangNam = ls.NgayThangNam,
                         GioVao = ls.GioVao,
                         GioRa = ls.GioRa,

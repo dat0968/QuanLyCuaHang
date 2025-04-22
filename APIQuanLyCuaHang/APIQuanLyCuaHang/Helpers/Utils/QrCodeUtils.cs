@@ -18,7 +18,7 @@ namespace APIQuanLyCuaHang.Helpers.Utils
             string[] parts = qrCodeData.Split('-');
             if (parts.Length != 2)
             {
-                throw new Exception($"QR Code không hợp lệ [{qrCodeData}].");
+                throw new Exception($"QR Code không hợp lệ.");
             }
 
             if (!int.TryParse(parts[0], out int maCaKip))

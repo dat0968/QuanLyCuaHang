@@ -17,7 +17,7 @@
           <div class="col-md-6 text-center">
             <img
               v-if="profile.hinhDaiDien"
-              :src="'https://localhost:7139' + profile.hinhDaiDien"
+              :src="'https://api.jollibeefood.site' + profile.hinhDaiDien"
               alt="Hình đại diện"
               class="avatar-img mb-3"
             />
@@ -68,7 +68,7 @@
                   <div class="avatar-container">
                     <img
                       v-if="editProfile.hinhDaiDien && !editProfile.anh"
-                      :src="'https://localhost:7139' + editProfile.hinhDaiDien"
+                      :src="'https://api.jollibeefood.site' + editProfile.hinhDaiDien"
                       alt="Hình đại diện"
                       class="avatar-img"
                     />
@@ -234,7 +234,7 @@ export default {
         const refresh = Cookies.get('refreshToken');
         if (!refresh) throw new Error('Không tìm thấy refresh token');
 
-        const response = await axios.post('https://localhost:7139/api/Account/RefreshToken', {
+        const response = await axios.post(getApiUrl + '/api/Account/RefreshToken', {
           refreshToken: refresh,
         });
 

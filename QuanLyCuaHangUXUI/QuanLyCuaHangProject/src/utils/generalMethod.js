@@ -1,5 +1,5 @@
 export function getImageUrl(imageName, pathFolder = '/') {
-  const baseUrl = 'https://localhost:7139'
+  const baseUrl = 'https://api.jollibeefood.site'
   // Kiểm tra xem imageName có phải là một URL đầy đủ hay không
   const isUrl = /^https?:\/\//i.test(imageName)
 
