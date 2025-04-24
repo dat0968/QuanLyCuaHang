@@ -26,6 +26,7 @@ const statusOptions = [
   'Đã thanh toán',
   'Đã hủy',
   'Hoàn trả/Hoàn tiền',
+  'Tại quầy'
 ]
 const chitietcombohoadonDTOs = ref([])
 const paymentOptions = ['COD', 'VNPAY']

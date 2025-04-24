@@ -184,7 +184,8 @@ window.navigateToCombo = navigateToCombo
                     </a>
                   </div>
                   <a
-                    href="https://www.youtube.com/watch?v=pBFQdxA-apI"
+                    href="https://www.youtube.com/watch?v=nbWi1ev5MkU"
+                    target="_blank"
                     class="popup-youtube video_popup"
                   >
                     <span><img src="@/assets/client/img/icon/play.svg" alt="" /></span> Xem câu
@@ -325,7 +326,7 @@ window.navigateToCombo = navigateToCombo
           <img
             src="/src/assets/client/img/Red and Yellow Illustrative Fried Chicken Logo.png"
             alt="Thu hút chú ý đến tính năng trò chuyện"
-            style="max-width: 50px; height: 50px; border-radius: 50%"
+            style="max-width: 120px; height: 120px; border-radius: 50%"
           />
         </div>
       </div>

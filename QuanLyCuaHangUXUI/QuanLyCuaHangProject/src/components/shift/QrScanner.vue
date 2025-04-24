@@ -7,7 +7,7 @@
       <div
         id="readerQr"
         @decode="onScanSuccess"
-        style="width: 200px; height: 200px"
+        style="width: 300px; height: 300px"
         :disabled="isDisabled"
       ></div>
       <p class="mt-2">Hoặc tải ảnh QR lên:</p>

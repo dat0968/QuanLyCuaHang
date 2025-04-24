@@ -257,7 +257,7 @@ const handleRegister = async () => {
                 <div class="card-body">
                   <h3 class="text-center mt-0 m-b-15">
                     <a href="index.html" class="xp-web-logo">
-                      <img src="../../assets/admin/images/logo.svg" height="40" alt="logo" />
+                      <img src="../../assets/client/img/logo.png" height="150" alt="logo" />
                     </a>
                   </h3>
                   <div class="p-3">

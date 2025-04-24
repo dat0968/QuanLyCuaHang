@@ -43,6 +43,15 @@ namespace APIQuanLyCuaHang.Services
             await db.Database.BeginTransactionAsync();
             try
             {
+                var tinhtrangthanhtoan = "Chờ xác nhận";
+                if(NewOrder.HinhThucTt.ToLower() == "vnpay")
+                {
+                    tinhtrangthanhtoan = "Đang xử lí VNPAY";
+                }
+                if(NewOrder.HinhThucTt.ToLower() == "tại quầy")
+                {
+                    tinhtrangthanhtoan = "Tại quầy";
+                }
                 // Thêm hóa đơn mới
                 var ModelOrder = new Hoadon
                 {
@@ -54,7 +63,7 @@ namespace APIQuanLyCuaHang.Services
                     DiaChiNhanHang = NewOrder.DiaChiNhanHang,
                     NgayThanhToan = NewOrder.HinhThucTt.ToLower() == "cod" ? null : DateTime.Now,
                     HinhThucTt = NewOrder.HinhThucTt,
-                    TinhTrang = NewOrder.HinhThucTt.ToLower() == "cod" ? "Chờ xác nhận" : "Đang xử lý VNPAY",
+                    TinhTrang = tinhtrangthanhtoan,
                     MoTa = NewOrder.MoTa,
                     HoTen = NewOrder.HoTen,
                     Sdt = NewOrder.Sdt,

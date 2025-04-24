@@ -52,7 +52,7 @@
         <table class="table table-hover custom-table">
           <thead>
             <tr>
-              <th>Hình Đại Diện</th>
+              <!-- <th>Hình Đại Diện</th> -->
               <th>Họ Tên</th>
               <th>Giới Tính</th>
               <th>Số Điện Thoại</th>
@@ -63,7 +63,7 @@
           </thead>
           <tbody>
             <tr v-for="customer in customers" :key="customer.maKh">
-              <td>
+              <!-- <td>
                 <img
                   v-if="customer.hinhDaiDien"
                   :src="getApiUrl + `/Hinh/AnhKhachHang/` + customer.hinhDaiDien"
@@ -80,7 +80,7 @@
                   @click="openDetailModal(customer)"
                   style="height: 100px;width: 100px;"
                 />
-              </td>
+              </td> -->
               <td>
                 <a href="#" @click.prevent="openDetailModal(customer)" class="text-primary fw-semibold">{{ customer.hoTen }}</a>
               </td>
