@@ -28,7 +28,10 @@
       const isLoggedIn = ref(false);
       onMounted(async () => {
         const validateToken = await ValidateToken(Cookies.get('accessToken'), Cookies.get('refreshToken'));
-        isLoggedIn.value = validateToken;
+        console.log(validateToken)
+        if(validateToken == true){
+          isLoggedIn.value = true;
+        }
       });
       const handleSelection = async (event) => {
         const value = event.target.value;

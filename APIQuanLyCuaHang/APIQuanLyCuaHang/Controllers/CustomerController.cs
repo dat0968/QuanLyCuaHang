@@ -95,7 +95,7 @@ namespace APIQuanLyCuaHang.Controllers
                 if (customerDto.Anh != null && customerDto.Anh.Length > 0)
                 {
                     var fileName = Guid.NewGuid().ToString() + Path.GetExtension(customerDto.Anh.FileName);
-                    var filePath = Path.Combine(_environment.WebRootPath, "Hinh", "AnhKhachHang", fileName);
+                    var filePath = Path.Combine(_environment.WebRootPath, "HinhAnh", "AnhKhachHang", fileName);
                     var directory = Path.GetDirectoryName(filePath);
 
                     if (!Directory.Exists(directory))
@@ -106,7 +106,7 @@ namespace APIQuanLyCuaHang.Controllers
                         await customerDto.Anh.CopyToAsync(stream);
                     }
 
-                    customer.HinhDaiDien = $"/Hinh/AnhKhachHang/{fileName}";
+                    customer.HinhDaiDien = $"/HinhAnh/AnhKhachHang/{fileName}";
                 }
 
                 var addedCustomer = await _customerRepository.AddCustomerAsync(customer);
@@ -151,14 +151,14 @@ namespace APIQuanLyCuaHang.Controllers
                     HinhDaiDien = existingCustomer.HinhDaiDien, // Giữ nguyên ảnh cũ mặc định
                     NgayTao = existingCustomer.NgayTao, // Giữ nguyên ngày tạo cũ
                     TinhTrang = customerDto.TinhTrang,
-                    IsDelete = customerDto.IsDelete
+                    IsDelete = false,
                 };
 
                 // Nếu có ảnh mới được tải lên, cập nhật ảnh
                 if (customerDto.Anh != null && customerDto.Anh.Length > 0)
                 {
                     var fileName = Guid.NewGuid().ToString() + Path.GetExtension(customerDto.Anh.FileName);
-                    var filePath = Path.Combine(_environment.WebRootPath, "Hinh", "AnhKhachHang", fileName);
+                    var filePath = Path.Combine(_environment.WebRootPath, "HinhAnh", "AnhKhachHang", fileName);
                     var directory = Path.GetDirectoryName(filePath);
 
                     if (!Directory.Exists(directory))
@@ -179,7 +179,7 @@ namespace APIQuanLyCuaHang.Controllers
                         }
                     }
 
-                    customer.HinhDaiDien = $"/Hinh/AnhKhachHang/{fileName}";
+                    customer.HinhDaiDien = $"{fileName}";
                 }
 
                 var updatedCustomer = await _customerRepository.UpdateCustomerAsync(id, customer);

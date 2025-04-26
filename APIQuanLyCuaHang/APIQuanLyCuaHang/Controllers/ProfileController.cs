@@ -1,6 +1,6 @@
 ﻿using APIQuanLyCuaHang.DTO;
 using APIQuanLyCuaHang.Models;
-using APIQuanLyCuaHang.Respositoies.HashPassword;
+using APIQuanLyCuaHang.Repositories.HashPassword;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

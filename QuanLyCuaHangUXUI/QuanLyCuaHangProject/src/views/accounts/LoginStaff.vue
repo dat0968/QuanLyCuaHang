@@ -154,7 +154,7 @@ const handleLogin = async () => {
                 <div class="card-body">
                   <h3 class="text-center mt-0 m-b-15">
                     <a href="index.html" class="xp-web-logo">
-                      <img src="../../assets/admin/images/logo.svg" height="40" alt="logo" />
+                      <img src="../../assets/client/img/logo.png" height="150" alt="logo" />
                     </a>
                   </h3>
                   <div class="p-3">
@@ -192,14 +192,7 @@ const handleLogin = async () => {
                         </span>
                       </div>
                       <div class="form-row">
-                        <div class="form-group col-6">
-                          <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="rememberme" />
-                            <label class="custom-control-label" for="rememberme"
-                              >Nhớ tài khoản</label
-                            >
-                          </div>
-                        </div>
+                       
                         <div class="form-group col-6 text-right">
                           <label class="forgot-psw">
                             <router-link to="/ForgotPasswordStaff">Quên mật khẩu</router-link>

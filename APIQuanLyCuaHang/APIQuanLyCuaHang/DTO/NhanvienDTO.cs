@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 namespace APIQuanLyCuaHang.DTO
 {
     public class NhanvienDTO
@@ -13,10 +14,12 @@ namespace APIQuanLyCuaHang.DTO
         public string Email { get; set; }
         public DateOnly NgayVaoLam { get; set; }
         public string TenTaiKhoan { get; set; }
-        public string MatKhau { get; set; }
+        public string? MatKhau { get; set; }
         public string TinhTrang { get; set; }
         public bool? IsDelete { get; set; }
         public int? MaChucVu { get; set; }
+        [JsonIgnore]
+        public string? TenChucVu { get; set; }
         public IFormFile? HinhAnh { get; set; } // Dùng để upload file, không bắt buộc
 
         public string? HinhAnhDuongDan { get; set; }

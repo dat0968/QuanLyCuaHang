@@ -1,7 +1,5 @@
 ﻿using APIQuanLyCuaHang.Models;
 using APIQuanLyCuaHang.DTO;
-using APIQuanLyCuaHang.Respositoies.HashPassword;
-using APIQuanLyCuaHang.Respositoies.Token;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Win32;
 using APIBanXeDap.ViewModels;
@@ -13,6 +11,8 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
+using APIQuanLyCuaHang.Repositories.Token;
+using APIQuanLyCuaHang.Repositories.HashPassword;
 
 
 namespace APIQuanLyCuaHang.Controllers

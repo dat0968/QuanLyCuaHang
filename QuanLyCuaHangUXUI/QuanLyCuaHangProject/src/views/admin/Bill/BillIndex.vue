@@ -28,7 +28,7 @@ const statusOptions = [
   'Hoàn trả/Hoàn tiền',
 ]
 const chitietcombohoadonDTOs = ref([])
-const paymentOptions = ['COD', 'VNPAY']
+const paymentOptions = ['COD', 'VNPAY', 'Tại quầy']
 let accesstoken = Cookies.get('accessToken')
 const refreshtoken = Cookies.get('refreshToken')
 let validateToken = true

@@ -3,8 +3,8 @@ import Home from '../views/client/Home.vue'
 import About from '../views/client/About.vue'
 import Menu from '../views/client/FoodMenu.vue'
 import Chef from '../views/client/Chef.vue'
-import dashboard from '../views/admin/Index.vue'
-import Staff from '../views/admin/Staff.vue'
+import dashboard from '../views/admin/statistical/Index.vue'
+import Staff from '../views/admin/Staff/Staff.vue'
 import ClientLayout from '../views/layout/ClientLayout.vue'
 import AdminLayout from '../views/layout/AdminLayout.vue'
 import Login from '../views/accounts/Login.vue'
@@ -16,7 +16,7 @@ import ProductIndex from '../views/admin/Product/Index.vue'
 import Coupon from '../views/admin/Coupon/Index.vue'
 import ForgotPasswordStaff from '../views/accounts/ForgotPasswordStaff.vue'
 import GoogleLoginSuccess from '../views/accounts/GoogleLoginSuccess.vue'
-import CustomerIndex from '../views/Customer/Index.vue'
+import CustomerIndex from '../views/admin/Customer/Index.vue'
 import ComboIndex from '../views/admin/Combo/Index.vue'
 import BillIndex from '@/views/admin/Bill/BillIndex.vue'
 import Checkout from '@/views/client/Checkout.vue'
@@ -30,7 +30,6 @@ import VNPAYresponse from '../views/client/VNPaySuccess.vue'
 import { ReadToken, ValidateToken } from '../Authentication_Authorization/auth.js'
 import Cookies from 'js-cookie'
 import Swal from 'sweetalert2'
-import ShiftManager from '@/views/admin/ShiftManager.vue'
 const routes = [
   {
     path: '/',
@@ -92,7 +91,6 @@ const routes = [
       { path: '/admin/Coupon', name: 'Coupon', component: Coupon },
       { path: '/admin/Table', component: TableIndex },
       { path: 'staff', name: 'Staff', component: Staff },
-      { path: '/admin/shift-manager', component: ShiftManager },
     ],
   },
   {
@@ -145,11 +143,15 @@ router.beforeEach(async (to, from, next) => {
 
   }
   const validateToken = await ValidateToken(accessToken, refreshToken)
+  console.log(validateToken)
   if (validateToken == true) {
     accessToken = Cookies.get('accessToken')
     const readtoken = ReadToken(accessToken)
     const role = readtoken.Role
     if ((role !== 'Customer') && customerOnlyPages.includes(to.path)) {
+      if(to.path == '/'){
+        return next('/Admin/Product')
+      }
       if (to.path !== '/Error/401') {
         return next('/Error/401')
       }

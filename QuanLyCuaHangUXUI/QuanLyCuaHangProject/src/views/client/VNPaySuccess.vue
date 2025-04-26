@@ -40,10 +40,7 @@
           <i class="bi bi-house-door"></i>
           Về trang chủ
         </button>
-        <button @click="viewOrder" class="btn-order">
-          <i class="bi bi-receipt"></i>
-          Xem đơn hàng
-        </button>
+       
       </div>
     </div>
   </div>

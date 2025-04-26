@@ -8,7 +8,6 @@ const hoTen = ref('');
 const tenTaiKhoan = ref('');
 const email = ref('');
 const matKhau = ref('');
-const termsAccepted = ref(false);
 const errorMessage = ref('');
 const usernameValid = ref(true); // Trạng thái hợp lệ của tên tài khoản
 const emailValid = ref(true); // Trạng thái hợp lệ của email
@@ -154,16 +153,7 @@ const handleRegister = async () => {
     return;
   }
 
-  // Kiểm tra điều khoản
-  if (!termsAccepted.value) {
-    await Swal.fire({
-      icon: 'error',
-      title: 'Đăng ký thất bại!',
-      text: 'Vui lòng đồng ý với các điều khoản và điều kiện!',
-      confirmButtonText: 'OK',
-    });
-    return;
-  }
+ 
 
   // Kiểm tra định dạng mật khẩu
   if (!isValidPassword(matKhau.value)) {
@@ -257,7 +247,7 @@ const handleRegister = async () => {
                 <div class="card-body">
                   <h3 class="text-center mt-0 m-b-15">
                     <a href="index.html" class="xp-web-logo">
-                      <img src="../../assets/admin/images/logo.svg" height="40" alt="logo" />
+                      <img src="../../assets/client/img/logo.png" height="150" alt="logo" />
                     </a>
                   </h3>
                   <div class="p-3">
@@ -318,20 +308,7 @@ const handleRegister = async () => {
                           Mật khẩu phải có ít nhất 6 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt (!@#$%^&*).
                         </small>
                       </div>
-                      <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                          <input
-                            v-model="termsAccepted"
-                            type="checkbox"
-                            class="custom-control-input"
-                            id="terms"
-                            required
-                          />
-                          <label class="custom-control-label" for="terms">
-                            Tôi đồng ý với các điều khoản & điều kiện
-                          </label>
-                        </div>
-                      </div>
+                      
                       <button type="submit" class="btn btn-primary btn-rounded btn-lg btn-block">
                         Tạo tài khoản
                       </button>

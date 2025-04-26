@@ -13,7 +13,7 @@ const cartComponent = ref(null)
         <div class="col-lg-12">
           <nav class="navbar navbar-expand-lg navbar-light">
             <RouterLink class="navbar-brand" to="/">
-              <img src="../assets/client/img/logo.png" alt="logo" />
+              <img src="../assets/client/img/logo.png" alt="logo" style="height: 100px;" />
             </RouterLink>
             <button
               class="navbar-toggler"
