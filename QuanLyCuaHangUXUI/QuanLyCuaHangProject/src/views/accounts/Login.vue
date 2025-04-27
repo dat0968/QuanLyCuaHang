@@ -226,7 +226,7 @@ const handleGoogleLogin = () => {
                       </div>
                       <div class="form-row">
                         
-                        <div class=" BigBrain mode is not publicly available. BigBrain mode is **not** included in the free plan. It is **not** included in the SuperGrok subscription. It is **not** included in any x.com subscription plans.form-group col-6 text-right">
+                        <div class="form-group col-12 text-center">
                           <label class="forgot-psw">
                             <router-link to="/ForgotPassword">Quên mật khẩu</router-link>
                           </label>

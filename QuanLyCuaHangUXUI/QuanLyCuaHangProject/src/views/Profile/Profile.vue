@@ -17,8 +17,8 @@
           <div class="col-md-6 text-center">
             <img
               v-if="profile.hinhDaiDien"
-              :src="'https://api.jollibeefood.site' + profile.hinhDaiDien"
-              alt="Hình đại diện"
+              :src="getApiUrl + '/HinhAnh/AnhKhachHang/' + profile.hinhDaiDien"
+              :alt="getApiUrl + '/HinhAnh/AnhKhachHang/' + profile.hinhDaiDienn"
               class="avatar-img mb-3"
             />
             <img
@@ -37,15 +37,6 @@
             <p><strong>Số điện thoại:</strong> {{ profile.sdt }}</p>
             <p><strong>Email:</strong> {{ profile.email || 'Chưa có' }}</p>
             <p><strong>Tên tài khoản:</strong> {{ profile.tenTaiKhoan }}</p>
-            <p>
-              <strong>Trạng thái:</strong>
-              <span :class="{
-                'badge bg-success': profile.tinhTrang === 'Đang hoạt động',
-                'badge bg-warning': profile.tinhTrang === 'Đã tạm khóa'
-              }">
-                {{ profile.tinhTrang }}
-              </span>
-            </p>
             <button class="btn btn-primary custom-btn" @click="showEditModal">Sửa thông tin</button>
           </div>
         </div>
@@ -68,7 +59,7 @@
                   <div class="avatar-container">
                     <img
                       v-if="editProfile.hinhDaiDien && !editProfile.anh"
-                      :src="'https://api.jollibeefood.site' + editProfile.hinhDaiDien"
+                      :src="getApiUrl + '/HinhAnh/AnhKhachHang/' + editProfile.hinhDaiDien"
                       alt="Hình đại diện"
                       class="avatar-img"
                     />
@@ -162,7 +153,8 @@ export default {
     const error = ref(null);
     const router = useRouter();
     let editModal = null;
-    let getApiUrl = GetApiUrl()
+    const getApiUrl = ref('')
+    getApiUrl.value = GetApiUrl()
     const fetchProfile = async () => {
       try {
         const token = Cookies.get('accessToken');
@@ -173,15 +165,11 @@ export default {
           return;
         }
 
-        const response = await axios.get(getApiUrl + '/api/Profile/GetProfile', {
+        const response = await axios.get(getApiUrl.value + '/api/Profile/GetProfile', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-
-        console.log('API Response (GetProfile):', response.data);
-
-
         if (response.data.success) {
           profile.value = response.data.data
           editProfile.value = { ...response.data.data, anh: null }
@@ -209,19 +197,6 @@ export default {
     const onFileChange = (event) => {
       const file = event.target.files[0]
       if (file) {
-        const validExtensions = ['image/jpeg', 'image/png', 'image/jpg'];
-        if (!validExtensions.includes(file.type)) {
-          Swal.fire('Lỗi!', 'Chỉ hỗ trợ file .jpg, .jpeg, .png', 'error');
-          event.target.value = '';
-          editProfile.value.anh = null;
-          return;
-        }
-        if (file.size > 5 * 1024 * 1024) {
-          Swal.fire('Lỗi!', 'Kích thước file không được vượt quá 5MB', 'error');
-          event.target.value = '';
-          editProfile.value.anh = null;
-          return;
-        }
         editProfile.value.anh = file;
       } else {
         editProfile.value.anh = null;
@@ -234,7 +209,7 @@ export default {
         const refresh = Cookies.get('refreshToken');
         if (!refresh) throw new Error('Không tìm thấy refresh token');
 
-        const response = await axios.post(getApiUrl + '/api/Account/RefreshToken', {
+        const response = await axios.post(getApiUrl.value + '/api/Account/RefreshToken', {
           refreshToken: refresh,
         });
 
@@ -329,13 +304,6 @@ export default {
       if (editProfile.value.anh) {
         formData.append('Anh', editProfile.value.anh)
       }
-
-      // Log dữ liệu gửi lên API
-      console.log('Dữ liệu gửi lên API:');
-      for (let [key, value] of formData.entries()) {
-        console.log(`${key}: ${value instanceof File ? value.name : value}`);
-      }
-
       let token = Cookies.get('accessToken');
       if (!token) {
         Swal.fire('Lỗi!', 'Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại.', 'error');
@@ -344,7 +312,7 @@ export default {
       }
 
       try {
-        const response = await axios.put(getApiUrl + '/api/Profile/UpdateProfile', formData, {
+        const response = await axios.put(getApiUrl.value + '/api/Profile/UpdateProfile', formData, {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'multipart/form-data',
@@ -364,7 +332,7 @@ export default {
           token = await refreshToken();
           if (token) {
             try {
-              const retryResponse = await axios.put(getApiUrl + '/api/Profile/UpdateProfile', formData, {
+              const retryResponse = await axios.put(getApiUrl.value + '/api/Profile/UpdateProfile', formData, {
                 headers: {
                   Authorization: `Bearer ${token}`,
                   'Content-Type': 'multipart/form-data',
@@ -418,6 +386,7 @@ export default {
     })
 
     return {
+      getApiUrl,
       profile,
       editProfile,
       loading,

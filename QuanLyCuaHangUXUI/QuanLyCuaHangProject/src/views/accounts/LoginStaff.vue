@@ -193,7 +193,7 @@ const handleLogin = async () => {
                       </div>
                       <div class="form-row">
                        
-                        <div class="form-group col-6 text-right">
+                        <div class="form-group col-12 text-center">
                           <label class="forgot-psw">
                             <router-link to="/ForgotPasswordStaff">Quên mật khẩu</router-link>
                           </label>
