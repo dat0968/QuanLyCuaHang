@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using APIQuanLyCuaHang.Services;
 
 namespace APIQuanLyCuaHang.Controllers
 {
@@ -34,7 +35,13 @@ namespace APIQuanLyCuaHang.Controllers
             this._logger = logger;
             this._authSettings = authSettings.Value;
         }
-
+        [HttpGet("recommend/{userId}")]
+        public async Task<IActionResult> GetRecommendations(int userId)
+        {
+            var recommender = new MLRecommendationSystem(db);
+            var recommendations = await recommender.Recommend(userId);
+            return Ok(recommendations);
+        }
         // Các endpoint hiện có (giữ nguyên)
         [HttpGet("all-products")]
         public async Task<IActionResult> GetAllProducts([FromQuery] string? search, int? filterCategories, string? sort, string? filterPrices)

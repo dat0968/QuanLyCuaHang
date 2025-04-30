@@ -6,13 +6,15 @@ import Swal from 'sweetalert2'
 import Cookies from 'js-cookie'
 import { ReadToken, ValidateToken } from '../../Authentication_Authorization/auth.js'
 import { GetApiUrl } from '@constants/api'
+import ProductRecommend from './ProductRecommend.vue'
 const route = useRoute()
 const router = useRouter()
 const product = ref(null)
 const selectedVariant = ref(null)
 const quantity = ref(1)
 const quantityError = ref('')
-let accesstoken = Cookies.get('accessToken')
+const accesstoken = ref('')
+accesstoken.value = Cookies.get('accessToken')
 const refreshtoken = Cookies.get('refreshToken')
 let getApiUrl = GetApiUrl()
 // Thêm hàm scrollToTop
@@ -125,10 +127,10 @@ const addToCart = async () => {
   if (!selectedVariant.value) return
 
   let IdUser = ''
-  const validateToken = await ValidateToken(accesstoken, refreshtoken)
+  const validateToken = await ValidateToken(accesstoken.value, refreshtoken)
   if (validateToken == true) {
-    accesstoken = Cookies.get('accessToken')
-    const readtoken = ReadToken(accesstoken)
+    accesstoken.value = Cookies.get('accessToken')
+    const readtoken = ReadToken(accesstoken.value)
     if (readtoken) {
       IdUser = readtoken.IdUser
     }
@@ -154,7 +156,7 @@ const addToCart = async () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${accesstoken}`,
+        Authorization: `Bearer ${accesstoken.value}`,
       },
       body: JSON.stringify(cartItem),
     })
@@ -295,6 +297,7 @@ onMounted(() => {
       </div>
     </div>
     <!-- food_menu part end-->
+     <ProductRecommend :token="accesstoken"/>
   </div>
 </template>
 
