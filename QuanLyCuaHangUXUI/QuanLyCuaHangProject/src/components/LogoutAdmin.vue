@@ -3,13 +3,6 @@
     <a class="dropdown-item py-3 text-white text-center font-16" href="#"
       >Chào mừng, {{ userName }}</a
     >
-    <!-- dán link sang trang cập nhật vào dòng hồ sơ -->
-    <a class="dropdown-item" href="#"><i class="icon-user text-primary mr-2"></i> Hồ sơ</a>
-
-    <a class="dropdown-item" href="#">
-      <i class="icon-bell text-primary mr-2"></i>
-      <QrScanAndShiftManagerModal />
-    </a>
     <a v-if="isLoggedIn" class="dropdown-item" @click.prevent="handleLogout">
       <i class="icon-power text-danger mr-2"></i> Đăng xuất
     </a>
@@ -22,11 +15,7 @@ import Cookies from 'js-cookie'
 import Swal from 'sweetalert2'
 import { ReadToken } from '../Authentication_Authorization/auth.js'
 import { GetApiUrl } from '@constants/api'
-import QrScanAndShiftManagerModal from '@/components/shift/QrScanAndShiftManagerModal.vue'
 let getApiUrl = GetApiUrl()
-components: {
-  QrScanAndShiftManagerModal
-}
 // Kiểm tra trạng thái đăng nhập
 const isLoggedIn = computed(() => {
   return !!Cookies.get('accessToken')

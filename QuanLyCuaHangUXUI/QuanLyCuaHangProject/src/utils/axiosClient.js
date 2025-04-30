@@ -77,13 +77,16 @@ async function refreshAccessToken() {
 // Middleware (interceptors) thêm Authorization header và xử lý refresh token
 axiosClient.interceptors.request.use(
   async (config) => {
-    const requiresAuth = !config.headers.skipAuth
+    const isRequiresAuth = !config.headers.skipAuth
+    // console.log(isRequiresAuth)
+    const requiresAuth = isRequiresAuth
 
     if (!requiresAuth) {
       return config // Không yêu cầu xác thực, bỏ qua
     }
 
     const accessToken = Cookies.get('accessToken')
+    // console.log(accessToken)
 
     if (!accessToken) {
       // Yêu cầu xác thực nhưng không có token
@@ -109,6 +112,8 @@ axiosClient.interceptors.request.use(
       config.headers.Authorization = `Bearer ${accessToken}`
     }
 
+    // console.log(config)
+
     return config
   },
   (error) => {
@@ -124,6 +129,12 @@ axiosClient.interceptors.response.use(
   (error) => {
     if (error.response) {
       console.error(`API Error: ${error.response.status}`, error.response.data)
+
+      let routeParams = {
+        name: 'Error',
+        params: { status: error.response.status.toString() }, // Chuyển status sang string
+        query: { message: error.response?.data?.message ?? 'Lỗi không xác định từ API' },
+      }
 
       // Ném lỗi để các promise khác có thể bắt được
       throw new Error(error.response?.data?.message ?? 'Lỗi không xác định từ API.')

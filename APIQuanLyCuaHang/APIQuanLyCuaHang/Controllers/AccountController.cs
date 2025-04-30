@@ -1,7 +1,5 @@
 ﻿using APIQuanLyCuaHang.Models;
 using APIQuanLyCuaHang.DTO;
-using APIQuanLyCuaHang.Respositoies.HashPassword;
-using APIQuanLyCuaHang.Respositoies.Token;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Win32;
 using APIBanXeDap.ViewModels;
@@ -13,6 +11,8 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
+using APIQuanLyCuaHang.Repositories.Token;
+using APIQuanLyCuaHang.Repositories.HashPassword;
 
 
 namespace APIQuanLyCuaHang.Controllers
@@ -92,12 +92,20 @@ namespace APIQuanLyCuaHang.Controllers
             }
             else
             {
-                if (findUser.TinhTrang?.Trim().ToLower() != "Đang hoạt động".Trim().ToLower())
+                if (findUser.TinhTrang.Trim().ToLower() != "Đang hoạt động".Trim().ToLower())
                 {
                     return Ok(new
                     {
                         Success = false,
                         Message = "Tài khoản đang bị tạm khóa"
+                    });
+                }
+                if (findUser.IsDelete != false)
+                {
+                    return Ok(new
+                    {
+                        Success = false,
+                        Message = "false"
                     });
                 }
                 bool isPasswordValid = _hasher.VerifyPassword(model.MatKhau, findUser.MatKhau.Trim());
@@ -176,6 +184,14 @@ namespace APIQuanLyCuaHang.Controllers
                     {
                         Success = false,
                         Message = "Tài khoản đang bị tạm khóa"
+                    });
+                }
+                if (findUser.IsDelete != false)
+                {
+                    return Ok(new
+                    {
+                        Success = false,
+                        Message = "false"
                     });
                 }
                 if (findUser.MatKhau?.Trim().ToLower() != model.MatKhau.Trim().ToLower())
@@ -394,11 +410,15 @@ namespace APIQuanLyCuaHang.Controllers
 
             if (!result.Succeeded || result.Principal == null)
             {
-                return RedirectToAction("Index", "Home", new { area = "" });
+                return Redirect($"http://localhost:5173/GoogleLoginSuccess?error={Uri.EscapeDataString("Xác thực Google thất bại. Vui lòng thử lại!")}");
             }
             var email = result.Principal.FindFirstValue(ClaimTypes.Email);
             var name = result.Principal.FindFirstValue(ClaimTypes.Name);
             var existingUser = db.Khachhangs.FirstOrDefault(u => u.Email == email);
+            if (string.IsNullOrWhiteSpace(existingUser.TinhTrang) || existingUser.TinhTrang.Trim().ToLower() != "đang hoạt động")
+            {
+                return Redirect($"http://localhost:5173/GoogleLoginSuccess?error={Uri.EscapeDataString("Tài khoản đang bị tạm khóa hoặc không hợp lệ")}");
+            }
             if (existingUser == null)
             {
                 existingUser = new Khachhang

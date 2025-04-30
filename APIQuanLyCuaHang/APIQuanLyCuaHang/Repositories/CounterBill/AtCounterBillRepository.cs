@@ -51,7 +51,7 @@ namespace APIQuanLyCuaHang.Repositories.AtCounterBill
                 .Include(hd => hd.Cthoadons)
                 .ThenInclude(ct => ct.MaCtspNavigation)
                 .ThenInclude(ctsp => ctsp.MaSpNavigation)
-                .Where(hd => hd.MaHd == maHd)
+      
                 .FirstOrDefaultAsync();
 
             if (bill == null) return null;
@@ -59,12 +59,12 @@ namespace APIQuanLyCuaHang.Repositories.AtCounterBill
             return new HoaDonDTOWithDetails
             {
                 MaHd = bill.MaHd,
-                MaKh = bill.MaKh,
+            
                 MaNv = bill.MaNv,
                 DiaChiNhanHang = bill.DiaChiNhanHang,
                 NgayTao = bill.NgayTao,
-                BatDauGiao = bill.BatDauGiao,
-                NgayNhan = bill.NgayNhan,
+                //BatDauGiao = bill.BatDauGiao,
+                //NgayNhan = bill.NgayNhan,
                 NgayThanhToan = bill.NgayThanhToan,
                 HinhThucTt = bill.HinhThucTt,
                 TinhTrang = bill.TinhTrang,

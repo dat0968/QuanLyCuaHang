@@ -67,7 +67,7 @@ export default {
       switch (this.status) {
         case '401':
           this.statusMessage = this.status
-          this.errorSubtitle = 'Cấm truy cập!'
+          this.errorSubtitle = 'Trang không tồn tại hoặc phiên đăng nhập của bạn đã hết!'
           this.errorMessage = 'Vui lòng quay lại trang bạn có thể truy cập.'
           this.redirectLink = '/'
           break

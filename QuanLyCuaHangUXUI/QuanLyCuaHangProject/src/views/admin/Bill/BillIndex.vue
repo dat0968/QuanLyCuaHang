@@ -28,7 +28,7 @@ const statusOptions = [
   'Hoàn trả/Hoàn tiền',
 ]
 const chitietcombohoadonDTOs = ref([])
-const paymentOptions = ['COD', 'VNPAY']
+const paymentOptions = ['COD', 'VNPAY', 'Tại quầy']
 let accesstoken = Cookies.get('accessToken')
 const refreshtoken = Cookies.get('refreshToken')
 let validateToken = true
@@ -332,7 +332,8 @@ const filteredStatusOptions = computed(() => {
         <tbody>
           <tr v-for="order in orders" :key="order.maHd">
             <td class="text-center">{{ order.maHd }}</td>
-            <td class="text-center">{{ order.hoTenNguoiDat }} (id: {{ order.maKh }})</td>
+            <td v-if="order.maKh" class="text-center">{{ order.hoTenNguoiDat }} (id: {{ order.maKh }})</td>
+            <td v-else class="text-center">Khách tại quầy</td>
             <td class="text-center">{{ order.hinhThucTt }}</td>
             <td class="text-center">
               <select

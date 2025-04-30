@@ -1,11 +1,12 @@
 ﻿using APIQuanLyCuaHang.DTO;
 using APIQuanLyCuaHang.Models;
-using APIQuanLyCuaHang.Respositoies;
-using APIQuanLyCuaHang.Respositoies.HashPassword;
+using APIQuanLyCuaHang.Repositories.HashPassword;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text.RegularExpressions;
 
 namespace APIQuanLyCuaHang.Controllers
 {
@@ -25,22 +26,33 @@ namespace APIQuanLyCuaHang.Controllers
         }
 
         [HttpGet("GetProfile")]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> GetProfile()
         {
             try
             {
-                Console.WriteLine($"User ID from token: {104}");
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                var userIdClaim = identity?.FindFirst(ClaimTypes.NameIdentifier);
 
-                var customer = await _db.Khachhangs.AsNoTracking()
-                    .FirstOrDefaultAsync(p => p.MaKh == 104);
+                if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+                {
+                    return Unauthorized(new
+                    {
+                        Success = false,
+                        Message = "Không tìm thấy userId trong token"
+                    });
+                }
+
+                var customer = await _db.Khachhangs
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(p => p.MaKh == userId);
 
                 if (customer == null)
                 {
                     return Ok(new
                     {
                         Success = false,
-                        Message = "Không tìm thấy thông tin người dùng"
+                        Message = $"Không tìm thấy khách hàng với MaKh = {userId}"
                     });
                 }
 
@@ -48,13 +60,13 @@ namespace APIQuanLyCuaHang.Controllers
                 {
                     MaKh = customer.MaKh,
                     HoTen = customer.HoTen,
-                    GioiTinh = customer.GioiTinh ?? "Chưa cập nhật",
+                    GioiTinh = customer.GioiTinh,
                     NgaySinh = customer.NgaySinh,
-                    DiaChi = customer.DiaChi ?? "Chưa cập nhật",
-                    Cccd = customer.Cccd ?? "Chưa cập nhật",
-                    Sdt = customer.Sdt ?? "Chưa cập nhật",
+                    DiaChi = customer.DiaChi,
+                    Cccd = customer.Cccd,
+                    Sdt = customer.Sdt,
                     Email = customer.Email,
-                    TenTaiKhoan = customer.TenTaiKhoan ?? "Chưa cập nhật",
+                    TenTaiKhoan = customer.TenTaiKhoan,
                     MatKhau = null,
                     HinhDaiDien = customer.HinhDaiDien,
                     NgayTao = customer.NgayTao,
@@ -65,12 +77,12 @@ namespace APIQuanLyCuaHang.Controllers
                 return Ok(new
                 {
                     Success = true,
+                    Message = "Lấy thông tin hồ sơ thành công",
                     Data = profile
                 });
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Lỗi trong GetProfile: {ex.Message}");
                 return StatusCode(500, new
                 {
                     Success = false,
@@ -81,81 +93,142 @@ namespace APIQuanLyCuaHang.Controllers
         }
 
         [HttpPut("UpdateProfile")]
-        //[Authorize]
-        public async Task<IActionResult> UpdateProfile([FromForm] KhachhangDTO model)
+        [Authorize]
+        public async Task<IActionResult> UpdateProfile([FromForm] KhachhangDTO khachhang)
         {
             try
             {
-                //string userIdClaim = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
-                //if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
-                //{
-                //    return Unauthorized(new
-                //    {
-                //        Success = false,
-                //        Message = "Token không hợp lệ hoặc thiếu thông tin userId"
-                //    });
-                //}
+                Console.WriteLine("Nhận được request UpdateProfile...");
+                Console.WriteLine($"Dữ liệu nhận được: HoTen={khachhang.HoTen}, Sdt={khachhang.Sdt}, Email={khachhang.Email}");
 
-                var customer = await _db.Khachhangs.FirstOrDefaultAsync(p => p.MaKh == model.MaKh);
-                if (customer == null)
+                // Validation dữ liệu
+                if (string.IsNullOrWhiteSpace(khachhang.HoTen))
                 {
-                    return Ok(new
+                    return BadRequest(new
                     {
                         Success = false,
-                        Message = "Không tìm thấy thông tin người dùng"
+                        Message = "Họ tên không được để trống"
+                    });
+                }
+                if (string.IsNullOrWhiteSpace(khachhang.GioiTinh))
+                {
+                    return BadRequest(new
+                    {
+                        Success = false,
+                        Message = "Giới tính không được để trống"
+                    });
+                }
+                if (string.IsNullOrWhiteSpace(khachhang.DiaChi))
+                {
+                    return BadRequest(new
+                    {
+                        Success = false,
+                        Message = "Địa chỉ không được để trống"
+                    });
+                }
+                if (string.IsNullOrWhiteSpace(khachhang.Cccd) || !Regex.IsMatch(khachhang.Cccd, @"^\d{12}$"))
+                {
+                    return BadRequest(new
+                    {
+                        Success = false,
+                        Message = "CCCD phải là 12 chữ số"
+                    });
+                }
+                if (string.IsNullOrWhiteSpace(khachhang.Sdt) || !Regex.IsMatch(khachhang.Sdt, @"^0\d{9,10}$"))
+                {
+                    return BadRequest(new
+                    {
+                        Success = false,
+                        Message = "Số điện thoại phải bắt đầu bằng 0 và có 10-11 chữ số"
+                    });
+                }
+                if (!string.IsNullOrWhiteSpace(khachhang.Email) && !Regex.IsMatch(khachhang.Email, @"^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$"))
+                {
+                    return BadRequest(new
+                    {
+                        Success = false,
+                        Message = "Email không hợp lệ"
                     });
                 }
 
-                // Cập nhật các trường thông tin giữ nguyên logic cũ
-                customer.HoTen = string.IsNullOrEmpty(model.HoTen) ? customer.HoTen : model.HoTen;
-                customer.GioiTinh = string.IsNullOrEmpty(model.GioiTinh) ? customer.GioiTinh : model.GioiTinh;
-                customer.NgaySinh = model.NgaySinh.HasValue ? model.NgaySinh : customer.NgaySinh;
-                customer.DiaChi = string.IsNullOrEmpty(model.DiaChi) ? customer.DiaChi : model.DiaChi;
-                customer.Cccd = string.IsNullOrEmpty(model.Cccd) ? customer.Cccd : model.Cccd;
-                customer.Sdt = string.IsNullOrEmpty(model.Sdt) ? customer.Sdt : model.Sdt;
-                customer.Email = string.IsNullOrEmpty(model.Email) ? customer.Email : model.Email;
-                //customer.MatKhau = passwordHasher.HashPassword(model.MatKhau); // nếu muốn cho cập nhật mật khẩu
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                var userIdClaim = identity?.FindFirst(ClaimTypes.NameIdentifier);
 
-                // Xử lý hình ảnh giống CustomerController
-                if (model.Anh != null && model.Anh.Length > 0)
+                if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
                 {
-                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.Anh.FileName);
-                    var filePath = Path.Combine(_environment.WebRootPath, "Hinh", "AnhKhachHang", fileName);
-                    var directory = Path.GetDirectoryName(filePath);
+                    return Unauthorized(new
+                    {
+                        Success = false,
+                        Message = "Không tìm thấy userId trong token"
+                    });
+                }
 
-                    if (!Directory.Exists(directory))
-                        Directory.CreateDirectory(directory);
+                var existingKh = await _db.Khachhangs.FirstOrDefaultAsync(p => p.MaKh == userId);
+                if (existingKh == null)
+                {
+                    return NotFound(new
+                    {
+                        Success = false,
+                        Message = $"Không tìm thấy khách hàng với MaKh = {userId}"
+                    });
+                }
+
+                existingKh.HoTen = khachhang.HoTen;
+                existingKh.GioiTinh = khachhang.GioiTinh;
+                existingKh.NgaySinh = khachhang.NgaySinh;
+                existingKh.DiaChi = khachhang.DiaChi;
+                existingKh.Cccd = khachhang.Cccd;
+                existingKh.Sdt = khachhang.Sdt;
+                existingKh.Email = khachhang.Email;
+
+                if (khachhang.Anh != null && khachhang.Anh.Length > 0)
+                {
+                    Console.WriteLine("Bắt đầu xử lý file ảnh...");
+                    if (khachhang.Anh.Length > 5 * 1024 * 1024) // 5MB
+                    {
+                        return BadRequest(new
+                        {
+                            Success = false,
+                            Message = "Kích thước file không được vượt quá 5MB"
+                        });
+                    }
+
+                    var validExtensions = new[] { ".jpg", ".jpeg", ".png" };
+                    var extension = Path.GetExtension(khachhang.Anh.FileName).ToLower();
+                    if (!validExtensions.Contains(extension))
+                    {
+                        return BadRequest(new
+                        {
+                            Success = false,
+                            Message = "Chỉ hỗ trợ file .jpg, .jpeg, .png"
+                        });
+                    }
+
+                    var uploadsFolder = Path.Combine(_environment.WebRootPath ?? "wwwroot", "images");
+                    if (!Directory.Exists(uploadsFolder))
+                    {
+                        Console.WriteLine("Tạo thư mục uploads...");
+                        Directory.CreateDirectory(uploadsFolder);
+                    }
+
+                    var fileName = $"{Guid.NewGuid()}_{khachhang.Anh.FileName}";
+                    var filePath = Path.Combine(uploadsFolder, fileName);
 
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
-                        await model.Anh.CopyToAsync(stream);
+                        await khachhang.Anh.CopyToAsync(stream);
                     }
 
-                    // Xóa ảnh cũ nếu tồn tại
-                    if (!string.IsNullOrEmpty(customer.HinhDaiDien))
-                    {
-                        var oldFilePath = Path.Combine(_environment.WebRootPath, customer.HinhDaiDien.TrimStart('/'));
-                        if (System.IO.File.Exists(oldFilePath))
-                        {
-                            System.IO.File.Delete(oldFilePath);
-                        }
-                    }
-
-                    customer.HinhDaiDien = $"/Hinh/AnhKhachHang/{fileName}";
+                    existingKh.HinhDaiDien = $"/images/{fileName}";
                 }
 
-                _db.Khachhangs.Update(customer);
                 await _db.SaveChangesAsync();
-
-                return Ok(new
-                {
-                    Success = true,
-                    Message = "Cập nhật thông tin thành công"
-                });
+                Console.WriteLine("Cập nhật thành công!");
+                return Ok(new { Success = true, Message = "Cập nhật thông tin thành công" });
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Lỗi trong UpdateProfile: {ex.Message}");
+                Console.WriteLine($"Lỗi khi cập nhật hồ sơ: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 return StatusCode(500, new
                 {
                     Success = false,

@@ -1,5 +1,5 @@
 ﻿using APIQuanLyCuaHang.DTO;
-using APIQuanLyCuaHang.Repositories;
+using APIQuanLyCuaHang.Repositories.Staff;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -26,12 +26,6 @@ namespace APIQuanLyCuaHang.Controllers
             try
             {
                 var staffList = await _staffRepository.GetAllStaff(search, gioiTinh, tinhTrang);
-
-                if (staffList == null || !staffList.Any())
-                {
-                    return NotFound("Không tìm thấy nhân viên nào.");
-                }
-
                 return Ok(staffList);
             }
             catch (Exception ex)
@@ -74,20 +68,7 @@ namespace APIQuanLyCuaHang.Controllers
                 {
                     return BadRequest("Mật Khẩu là bắt buộc khi thêm mới nhân viên.");
                 }
-                if (staffDto.HinhAnh != null)
-                {
-                    var validExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
-                    var extension = Path.GetExtension(staffDto.HinhAnh.FileName).ToLower();
-                    if (!validExtensions.Contains(extension))
-                    {
-                        return BadRequest("Định dạng file ảnh không hợp lệ. Chỉ chấp nhận .jpg, .jpeg, .png, .gif");
-                    }
-
-                    if (staffDto.HinhAnh.Length > 5 * 1024 * 1024)
-                    {
-                        return BadRequest("Kích thước file ảnh không được vượt quá 5MB");
-                    }
-                }
+                
                 if (staffDto.HinhAnh == null && string.IsNullOrEmpty(staffDto.HinhAnhDuongDan))
                 {
                     staffDto.HinhAnhDuongDan = DefaultImagePath;

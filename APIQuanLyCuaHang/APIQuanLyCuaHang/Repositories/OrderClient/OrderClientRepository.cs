@@ -34,7 +34,7 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                 }
 
                 // Lấy danh sách hóa đơn của người dùng
-                var listOrigin = await base.GetAllAsync(x => x.MaKh == userId, "Cthoadons,Cthoadons.MaCtspNavigation,Cthoadons.MaCtspNavigation.MaSpNavigation,Chitietcombohoadons,Chitietcombohoadons.MaComboNavigation,MaCouponNavigation");
+                var listOrigin = await base.GetAllAsync(x => x.MaKh == userId, "Cthoadons,Cthoadons.MaCtspNavigation,Cthoadons.MaCtspNavigation.MaSpNavigation,Cthoadons.MaCtspNavigation.Hinhanhs,Chitietcombohoadons,Chitietcombohoadons.MaComboNavigation,MaCouponNavigation");
 
                 List<HoaDonKhachDTO> listDTO = new();
 
@@ -116,7 +116,7 @@ namespace APIQuanLyCuaHang.Repositories.OrderClient
                                 configDataDTO.ChiTietHoaDonKhachs.Add(configDetailDTO); // Thêm chi tiết vào danh sách
                             }
                         }
-                        configDataDTO.TongTien = configDataDTO.TienGoc - configDataDTO.GiamGiaCoupon - configDataDTO.PhiVanChuyen;
+                        configDataDTO.TongTien = configDataDTO.TienGoc - configDataDTO.GiamGiaCoupon + configDataDTO.PhiVanChuyen;
                         listDTO.Add(configDataDTO); // Thêm hóa đơn vào danh sách kết quả
                     }
                 }

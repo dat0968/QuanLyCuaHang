@@ -51,6 +51,8 @@ export async function ValidateToken(accessToken, refreshToken) {
                     Cookies.set('accessToken', result.data.accessToken, { expires: 3 / 24 });
                     return true;
                 } else {
+                    Cookies.remove('accessToken', { path: '/' });
+                    Cookies.remove('refreshToken', { path: '/' });
                     return false;
                 }
             }
@@ -59,6 +61,8 @@ export async function ValidateToken(accessToken, refreshToken) {
             console.log('Lỗi', error)
         }
     }else{
+        Cookies.remove('accessToken', { path: '/' });
+        Cookies.remove('refreshToken', { path: '/' });
         return false;
     }
 }

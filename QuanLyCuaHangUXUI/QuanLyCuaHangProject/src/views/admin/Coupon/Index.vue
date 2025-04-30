@@ -8,6 +8,9 @@ let getApiUrl = GetApiUrl()
 const coupons = ref([]);
 const showModal = ref(false);
 const isEdit = ref(false);
+let accesstoken = Cookies.get('accessToken')
+let refreshtoken = Cookies.get('refreshToken')
+const role = ref('')
 const couponForm = ref({
   maCode: '', // Sửa từ masabCode thành maCode để đồng bộ
   soTienGiam: null,
@@ -31,10 +34,28 @@ const itemsPerPage = ref(10);
 
 
 const baseUrl = getApiUrl+'/api/Coupon';
+// Hàm validate ngày
+const validateDates = () => {
+  const startDate = couponForm.value.ngayBatDau ? new Date(couponForm.value.ngayBatDau) : null;
+  const endDate = couponForm.value.ngayKetThuc ? new Date(couponForm.value.ngayKetThuc) : null;
 
+  if (startDate && endDate && startDate > endDate) {
+    Swal.fire('Lỗi', 'Ngày bắt đầu không được lớn hơn ngày kết thúc', 'error');
+    return false;
+  }
+  return true;
+};
 // Fetch all coupons
 const fetchCoupons = async () => {
   try {
+    const validatetoken = await ValidateToken(accesstoken, refreshtoken)
+    if(validatetoken){
+      accesstoken = Cookies.get('accessToken')
+      const readtoken = ReadToken(accesstoken)
+      if(readtoken){
+        role.value = readtoken.Role;
+      }
+    }
     const response = await fetch(`${baseUrl}/GetAll`);
     const data = await response.json();
     if (data.success) {
@@ -154,7 +175,8 @@ const validateDiscount = () => {
 
 // CRUD operations
 const createCoupon = async () => {
-  if (!validateDiscount()) return;
+  if (!validateDiscount() || !validateDates()) return;
+
 
   try {
     const response = await fetch(`${baseUrl}/Create`, {
@@ -185,7 +207,8 @@ const createCoupon = async () => {
 };
 
 const updateCoupon = async () => {
-  if (!validateDiscount()) return;
+  if (!validateDiscount() || !validateDates()) return;
+
 
   try {
     const response = await fetch(`${baseUrl}/Update`, {
@@ -303,7 +326,7 @@ onMounted(() => {
       </div>
       <div class="col-md-3">
       <label class="form-label invisible">Ẩn label</label>
-      <button class="btn btn-primary w-100" @click="showAddModal">Thêm mới</button>
+      <button v-if="role.toLowerCase() == 'admin'" class="btn btn-primary w-100" @click="showAddModal">Thêm mới</button>
     </div>
     </div>
 
@@ -328,7 +351,7 @@ onMounted(() => {
           <th>Đơn tối thiểu</th>
           <th>Số lượng</th>
           <th>Trạng thái</th>
-          <th>Hành động</th>
+          <th v-if="role.toLowerCase() == 'admin'" >Hành động</th>
         </tr>
       </thead>
       <tbody>
@@ -343,14 +366,14 @@ onMounted(() => {
           <td>{{ coupon.trangThai ? 'Hoạt động' : 'Đã hủy' }}</td>
           <td>
             <button 
-              v-if="coupon.trangThai" 
+              v-if="coupon.trangThai && role.toLowerCase() == 'admin'" 
               class="btn btn-warning btn-sm me-2" 
               @click="showEditModal(coupon)"
             >
               Sửa
             </button>
             <button 
-              v-if="coupon.trangThai" 
+              v-if="coupon.trangThai && role.toLowerCase() == 'admin'" 
               class="btn btn-danger btn-sm" 
               @click="deleteCoupon(coupon.maCode)"
             >

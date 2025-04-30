@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using APIQuanLyCuaHang.DbInitializer;
 using APIQuanLyCuaHang.Models;
 using APIQuanLyCuaHang.Repositories.Bill;
 using APIQuanLyCuaHang.Repositories.Category;
@@ -11,8 +10,6 @@ using APIQuanLyCuaHang.Repositories.DetailProduct;
 using APIQuanLyCuaHang.Repositories.ImageProduct;
 using APIQuanLyCuaHang.Repositories.Product;
 using APIQuanLyCuaHang.Repositories.Table;
-using APIQuanLyCuaHang.Respositoies.HashPassword;
-using APIQuanLyCuaHang.Respositoies.Token;
 using APIQuanLyCuaHang.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
@@ -30,6 +27,10 @@ using APIQuanLyCuaHang.Repositories.DetailComboOrder;
 using APIQuanLyCuaHang.Repositories.DetailMaCoupon;
 using APIQuanLyCuaHang.Repositories.VNPAY;
 using static APIQuanLyCuaHang.Controllers.HomeController;
+using APIQuanLyCuaHang.Repositories.Token;
+using APIQuanLyCuaHang.Repositories.HashPassword;
+using APIQuanLyCuaHang.Repositories.Staff;
+using APIQuanLyCuaHang.Repositories.Role;
 var builder = WebApplication.CreateBuilder(args);
 ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 // Add services to the container.
@@ -84,8 +85,14 @@ builder.Services.AddCors(options =>
         ops.AllowAnyHeader();
         ops.AllowAnyMethod();
         ops.WithOrigins("http://localhost:5173");
+        ops.SetPreflightMaxAge(TimeSpan.FromMinutes(10));
     });
 });
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.Limits.MaxRequestBodySize = 50 * 1024 * 1024; 
+});
+
 builder.Services.AddScoped<IProduct, Product>();
 builder.Services.AddScoped<IDetailProduct, DetailProduct>();
 builder.Services.AddScoped<IimageProduct, imageProduct>();
@@ -112,7 +119,7 @@ builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
 builder.Services.AddScoped<IDetailComboOrderRepository, DetailComboOrderRepository>();
 builder.Services.AddScoped<IDetailMaCoupon, DetailMaCoupon>();
 builder.Services.AddScoped<IVnPayService, VnPayService>();
-builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+builder.Services.AddScoped<IRole, Role>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.Configure<AuthSettings>(builder.Configuration.GetSection("GeminiSettings"));
 builder.Services.AddAuthentication(options =>
@@ -160,25 +167,5 @@ app.UseCors("MyPolicy");
 app.UseAuthentication();
 app.UseAuthorization(); 
 app.MapControllers();
-
-SeedDb();
-
 app.Run();
 
-void SeedDb()
-{
-    using (var scope = app.Services.CreateScope())
-    {
-        {
-            var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
-            try
-            {
-                dbInitializer.Initializer();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Gặp lỗi khi khởi tại dữ liệu: " + ex.Message);
-            }
-        }
-    }
-}

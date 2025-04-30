@@ -81,7 +81,6 @@ onMounted(async () => {
           <!-- Start XP Navigationbar -->
           <div class="xp-navigationbar">
             <ul class="xp-vertical-menu">
-              <li class="xp-vertical-header">Chức năng quản lý</li>
               <li v-if="role.toLowerCase() == 'admin'">
                 <RouterLink to="/Admin">
                   <i class="icon-speedometer"></i><span>THỐNG KÊ</span>
@@ -121,13 +120,7 @@ onMounted(async () => {
                 <router-link to="/admin/staff">
                   <i class="icon-people"></i><span>NHÂN VIÊN</span>
                 </router-link>
-              </li>
-              <li v-if="role.toLowerCase() == 'admin'">
-                <router-link to="/admin/shift-manager">
-                  <i class="icon-shield"></i><span>CA LÀM VIỆC</span>
-                </router-link>
-              </li>
-             
+              </li>          
             </ul>
           </div>
           <!-- End XP Navigationbar -->
@@ -167,7 +160,7 @@ onMounted(async () => {
                         aria-haspopup="true"
                         aria-expanded="false"
                         ><img
-                          src="../../assets/admin/images/topbar/user.jpg"
+                          src="../../assets/admin/images/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg"
                           alt="user-profile"
                           class="rounded-circle img-fluid" /><span class="xp-user-live"></span
                       ></a>

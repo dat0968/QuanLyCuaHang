@@ -140,7 +140,7 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
 
                 await _db.SaveChangesAsync();
 
-                response.SetSuccessResponse("Fine");
+                response.SetSuccessResponse("Đã đăng kí ca làm việc thành công.");
                 response.SetData(scheduleData);
             }
             catch (Exception ex)
@@ -392,12 +392,19 @@ namespace APIQuanLyCuaHang.Repositories.Schedule
         #region [PRIVATE METHOD]
         private async Task<List<ScheduleDTO>> GetSchedulesActiveOfShift(int shiftId)
         {
+            var caKip = (await _db.Cakips.FirstOrDefaultAsync(x => x.MaCaKip == shiftId));
+            if (caKip == null)
+            {
+                throw new Exception("Khong thay ca kip");
+            }
+            string? tenCa = caKip.TenCa ?? "N/A";
             var dataOrigin = await base.GetAllAsync(x => x.MaCaKip == shiftId && (x.TrangThai == TrangThaiLichLamViec.DiLam || x.TrangThai == TrangThaiLichLamViec.ChoXacNhan), "MaNvNavigation");
 
             List<ScheduleDTO> scheduleData = dataOrigin.Select(d => new ScheduleDTO
             {
                 Id = d.Id,
                 MaNv = d.MaNv,
+                TenCa = tenCa,
                 TenNhanVien = d.MaNvNavigation.HoTen,
                 MaCaKip = d.MaCaKip,
                 NgayThangNam = d.NgayThangNam,

@@ -247,15 +247,16 @@ namespace APIQuanLyCuaHang.Repositories.Customer
         public async Task<bool> HideCustomerAsync(int id)
         {
             var customer = await _context.Khachhangs
-                .FirstOrDefaultAsync(kh => kh.MaKh == id && kh.IsDelete != true);
+                .FirstOrDefaultAsync(kh => kh.MaKh == id);
             if (customer == null)
                 throw new KeyNotFoundException("Khách hàng không tồn tại");
 
             customer.IsDelete = true;
-            customer.Email = null;
+            customer.Email = "";
             customer.TenTaiKhoan = null;
-            customer.MatKhau = null;
-
+            customer.Cccd = null;
+            customer.Sdt = null;
+            _context.Update(customer);
             await _context.SaveChangesAsync();
 
             return true;

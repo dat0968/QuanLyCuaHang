@@ -1,6 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "F:\\CSHARP_6\\QuanLyCuaHang\\APIQuanLyCuaHang\\",
+<<<<<<< HEAD
   "Documents": [
     {
       "AbsoluteMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|f:\\csharp_6\\quanlycuahang\\apiquanlycuahang\\apiquanlycuahang\\controllers\\counterbillcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -131,18 +132,27 @@
       "RelativeMoniker": "D:0:0:{1545BE79-1885-4A20-8FC8-6E2A20D4ACD6}|APIQuanLyCuaHang\\APIQuanLyCuaHang.csproj|solutionrelative:apiquanlycuahang\\migrations\\20250417061025_fixtimecakip.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
+=======
+  "Documents": [],
+>>>>>>> origin/master
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
+<<<<<<< HEAD
           "DockedWidth": 212,
           "SelectedChildIndex": 2,
+=======
+          "DockedWidth": 219,
+          "SelectedChildIndex": -1,
+>>>>>>> origin/master
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+<<<<<<< HEAD
             },
             {
               "$type": "Document",
@@ -422,13 +432,19 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2025-04-12T15:56:10.229Z"
+=======
+>>>>>>> origin/master
             }
           ]
         },
         {
-          "DockedWidth": 72,
-          "SelectedChildIndex": 4,
+          "DockedWidth": 140,
+          "SelectedChildIndex": -1,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{a80febb4-e7e0-4147-b476-21aaf2453969}"
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
@@ -440,6 +456,7 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+<<<<<<< HEAD
             },
             {
               "$type": "Document",
@@ -564,6 +581,8 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-14T05:08:47.375Z"
+=======
+>>>>>>> origin/master
             }
           ]
         },
