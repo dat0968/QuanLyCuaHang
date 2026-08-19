@@ -84,7 +84,7 @@ builder.Services.AddCors(options =>
     {
         ops.AllowAnyHeader();
         ops.AllowAnyMethod();
-        ops.WithOrigins("http://localhost:5173");
+        ops.AllowAnyOrigin();
         ops.SetPreflightMaxAge(TimeSpan.FromMinutes(10));
     });
 });
